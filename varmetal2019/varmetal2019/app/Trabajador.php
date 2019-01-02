@@ -6,16 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class Trabajador extends Model
 {
+    public $primaryKey = 'idTrabajador';
+    protected $table = 'trabajador';
+
     public function user()
     {
-        return $this->belongsTo('App/User');
+        return $this->belongsTo('App\User', 'users_id_user');
     }
     public function pausa()
     {
-        return $this->hasMany('App/Pausa');
+        return $this->hasMany('App\Pausa');
     }
-    public fuction producto()
+    public function producto()
     {
-        return $this->belongsToMany('App/Producto');
+        return $this->belongsToMany('App\Producto', 'trabajadores_producto', 'trabajador_id_trabajador', 'producto_id_producto');
     }
 }

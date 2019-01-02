@@ -15,9 +15,9 @@ class TrabajadoresProductoTable extends Migration
     {
         Schema::create('trabajadores_producto', function (Blueprint $table) {
             $table->integer('trabajador_id_trabajador')->unsigned()->nullable();
-            $table->integer('pausa_id_pausa')->unsigned()->nullable();
+            $table->integer('producto_id_producto')->unsigned()->nullable();
             $table->foreign('trabajador_id_trabajador')->references('idTrabajador')->on('trabajador');
-            $table->foreign('pausa_id_pausa')->references('idProducto')->on('producto');
+            $table->foreign('producto_id_producto')->references('idProducto')->on('producto');
         });
     }
 
