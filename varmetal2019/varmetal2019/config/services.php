@@ -40,4 +40,12 @@ return [
         ],
     ],
 
+    'firebase' => [
+        'api_key' => 'AIzaSyDGI70vcos12irlqc_D-7Nz2d_-p_GI5LI',
+        'auth_domain' => 'varmetal-informatica-2019.firebaseapp.com',
+        'database_url' => 'https://varmetal-informatica-2019.firebaseio.com',
+        'secret' => 'y1IhdXlmmQaTf5qmSWu3QR1Fx6VuBfVRXLHpk3fN',
+        'storage_bucket' => 'varmetal-informatica-2019.appspot.com',
+    ],
+
 ];

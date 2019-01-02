@@ -8,6 +8,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
+    public function trabajador()
+    {
+        return $this->hasOne('App/Trabajador');
+    }
+
     use Notifiable;
 
     /**
