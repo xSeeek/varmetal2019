@@ -28,6 +28,17 @@ class PausaController extends Controller
     {
       $newPausa=new Pausa;
       $mytime = Carbon/Carbon::now();
-      $newPausa->fechaInicio= $mytime;
+      $newPausa->fechaInicio = $mytime;
+      $newPausa->fechaFin = null;
+      $newPausa->descripcion = null;
+      return 1;
+    }
+
+    public function pausaControl($data)
+    {
+      if($data == 'undefined')
+      {
+        return redirect()->route('')
+      }
     }
 }
