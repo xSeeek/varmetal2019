@@ -20,7 +20,7 @@ class PausaControllerController extends Controller
             ->with('producto', $datos_producto);
     }
 
-    public function addPausa()
+    public function addPausa($data)
     {
       return view('trabajador.addPausa');
     }
