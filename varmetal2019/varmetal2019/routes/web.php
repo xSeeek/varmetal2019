@@ -38,6 +38,10 @@ Route::get('/admin', 'AdminController@admin')
         Route::get('/addTrabajador', 'TrabajadorController@addTrabajador')
                     ->middleware('is_admin')
                     ->name('trabajador/addTrabajador');
+
+        Route::get('/addPausa', 'PausaController@addPausa')
+                    ->middleware('is__trabajador')
+                    -name('producto/addPausa');
         /* [** POST **] */
         Route::post('/createPassword', 'TrabajadorController@createPassword')
                     ->middleware('is_admin')
@@ -49,6 +53,9 @@ Route::get('/admin', 'AdminController@admin')
                     ->middleware('is_admin')
                     ->name('trabajador/deleteTrabajador');
 
+        Route::post('/pausaControl/addPausa', ['uses' => 'PausaController@insertPausa'])
+                    ->middleware('is_trabajador')
+                    ->name('producto/pausaProducto');
     /* [** VISTA GENERAL **] */
         /* [** GET **] */
         Route::get('/homepage/Trabajador', 'TrabajadorController@productosTrabajador')
