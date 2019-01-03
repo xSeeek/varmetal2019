@@ -3,24 +3,23 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Producto;
 
-class PausaControllerController extends Controller
+class PausaController extends Controller
 {
-    public function pausaControl($data)
+    public function addPausa($data)
     {
-      if($data == 'indefined')
-        return redirect()->route('detalleProducto');
+        if($data == 'undefined')
+            return redirect()->route('detalleProducto', $data);
 
-      $datos_pausa = Pausa::find($data);
-      $producto = $datos_pausa->producto;
-      $pausas = $datos_productos->pausa
+        $producto = Producto::find($data);
 
-      return view('trabajador.pausa_control')
-            ->with('pausa', $datos_pausa)
-            ->with('producto', $datos_producto);
+        return view('trabajador.addPausa')
+                ->with('pausa', null)
+                ->with('producto', $producto);
     }
 
-    public function addPausa($data)
+    public function savePausa($data)
     {
       return view('trabajador.addPausa');
     }
