@@ -21,6 +21,7 @@ class ProductoTable extends Migration
             $table->integer('pesoKg')->nullable();
             $table->integer('cantPausa')->default(1);
             $table->integer('estado')->default('1');
+            $table->integer('prioridad')->default('3');
         });
     }
 

@@ -21,4 +21,10 @@ class Trabajador extends Model
     {
         return $this->belongsToMany('App\Producto', 'trabajadores_producto', 'trabajador_id_trabajador', 'producto_id_producto');
     }
+    public function validateData($var)
+    {
+        if($var == NULL)
+            return false;
+        return true;
+    }
 }

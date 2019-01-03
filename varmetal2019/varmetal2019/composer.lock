@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "197bd53350cce7390390fa71a209cdac",
+    "content-hash": "bbbee7cf39398747c3cfbcddd3bf02da",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -461,6 +461,64 @@
             "description": "A simple library to encode and decode JSON Web Tokens (JWT) in PHP. Should conform to the current spec.",
             "homepage": "https://github.com/firebase/php-jwt",
             "time": "2017-06-27T22:17:23+00:00"
+        },
+        {
+            "name": "freshwork/chilean-bundle",
+            "version": "2.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/freshworkstudio/ChileanBundle.git",
+                "reference": "76480562b93a4ab9f64beb0471ec92907a642627"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/freshworkstudio/ChileanBundle/zipball/76480562b93a4ab9f64beb0471ec92907a642627",
+                "reference": "76480562b93a4ab9f64beb0471ec92907a642627",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "codeception/codeception": "^2.1",
+                "codeception/specify": "^0.4.3"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Freshwork\\ChileanBundle\\Laravel\\ChileanBundleServiceProvider"
+                    ],
+                    "aliases": {
+                        "Rut": "Freshwork\\ChileanBundle\\Facades\\Rut"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Freshwork\\ChileanBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Gonzalo De Spirito | Freshwork Studio Chile",
+                    "email": "gonzalo@freshworkstudio.com"
+                }
+            ],
+            "description": "A PHP composer package with Chilean validations, common variables, etc. (RUT, IVA, ETC). Ready for Laravel 5. Grande chile ctm :)",
+            "keywords": [
+                "chile",
+                "freshwork",
+                "laravel",
+                "rut",
+                "tools",
+                "validation"
+            ],
+            "time": "2018-07-06T21:11:09+00:00"
         },
         {
             "name": "google/auth",

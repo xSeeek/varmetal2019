@@ -92,10 +92,29 @@
                 <h6>
                     Borrar Trabajador:
                 </br>
-                    <a class="btn btn-outline-primary btn-sm" role="button" onclick="deleteTrabajador()">Borrar</a>
+                    <a class="btn btn-outline-primary btn-sm" role="button" onclick="deleteTrabajador({{$trabajador->idTrabajador}})">Borrar</a>
                 </h6>
             </div>
         </div>
     </div>
 </div>
+<script type="text/javascript">
+
+
+    function deleteTrabajador(data)
+    {
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: "POST",
+            data: {DATA:data},
+            url: "{{url('/trabajadorControl/deleteTrabajador')}}",
+            success: function(response){
+                console.log(response);
+                window.location.href = response.redirect;
+            }
+        });
+    }
+</script>
 @endsection
