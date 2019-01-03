@@ -14,9 +14,9 @@
                     <div class="card=body">
                       <div class="input-group">
                         <div class="input-group-prepend">
-                          <span class="input-group-text">Detalles</span>
+                          <span class="input-group-text">Crear Pausa</span>
                         </div>
-                        <textarea class="form-control" aria-label="Detalles"></textarea>
+                        <textarea class="form-control" aria-label="Crear Pausa"></textarea>
                       </div>
                   </div>
                   <div class="card header">{{$producto->fechaFin}}</div>
