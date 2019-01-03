@@ -21,7 +21,7 @@ class TrabajadorTable extends Migration
             $table->timestamps();
 
             $table->integer('users_id_user')->unsigned();
-            $table->foreign('users_id_user')->references('id')->on('users');
+            $table->foreign('users_id_user')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

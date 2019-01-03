@@ -19,7 +19,7 @@
                         <textarea class="form-control" aria-label="Crear Pausa"></textarea>
                       </div>
                   </div>
-                  <div class="card header">{{$producto->fechaFin}}</div>
+                  <div class="card header"></div>
                   <a class="btn btn-primary btn-lg" role="button" href="{{url('detallepProducto', [$producto->idProducto])}}" onclick="$producto->fechaFin=now()"><b>Fin</b></a>
                   <a class="btn btn-primary btn-lg" role="button" href="{{url('detalleProducto', [$producto->idProducto])}}"><b>Volver</b></a>
             </div>
