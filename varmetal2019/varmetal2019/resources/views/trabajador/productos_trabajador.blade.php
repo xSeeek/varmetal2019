@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -11,19 +10,47 @@
                             <div class="input-group-prepend">
                                 <label class="input-group-text" for="inputGroupSelect01">Filtro</label>
                             </div>
-                            <input class="form-control" type="text" id="inputRUT" onkeyup="filterRUT()" placeholder="Ingrese el nombre del producto" title="Nombre del producto">
+                            <input class="form-control" type="text" id="inputNombre" onkeyup="filterName()" placeholder="Ingrese el nombre del producto" title="Nombre del producto">
                         </div>
-
+                        @if(($productos != NULL) && (count($productos) > 0))
+                        <table id="tablaAdministracion" style="width:90%; margin:20px;" align="center">
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Peso (Kg)</th>
+                                <th>Estado</th>
+                                <th>Prioridad</th>
+                                <th>Opciones</th>
+                            </tr>
+                            @foreach($productos as $key => $producto)
+                            <tr id="id_producto{{ $producto->idProducto }}">
+                                <td scope="col">{{ $producto->nombre }}</td>
+                                <td scope="col">{{ $producto->pesoKg }}</td>
+                                @if($producto->estado == 0)
+                                    <td scope="col">Por Realizar</td>
+                                @elseif($producto->estado == 1)
+                                    <td scope="col">Finalizado</td>
+                                @elseif($producto->estado == 2)
+                                    <td scope="col">En realización</td>
+                                @endif
+                                <td scope="col">{{ $producto->prioridad }}</td>
+                                <td><a class="btn btn-outline-success my-2 my-sm-0" href="{{url('/detalleProducto', [$producto->idProducto])}}" role="button" style="cursor: pointer;">Ver Detalles</a></td>
+                            </tr>
+                            @endforeach
+                        </table>
+                        @else
+                        <br>
+                            <h4 align="center">No tiene productos activos en desarrollo</h4>
+                        <br>
+                        @endif
                     </div>
             </div>
         </div>
     </div>
-</div>
 <script type="text/javascript">
-    function filterRUT()
+    function filterName()
     {
         var input, table, tr, tdYear, i;
-        inputRUT = document.getElementById("inputRUT").value;
+        inputNombre = document.getElementById("inputNombre").value;
         table = document.getElementById("tablaAdministracion");
         tr = table.getElementsByTagName("tr");
 
@@ -32,7 +59,7 @@
             tdYear = tr[i].getElementsByTagName("td")[0];
             if(tdYear)
             {
-                if ((tdYear.innerHTML.indexOf(inputRUT) > -1))
+                if ((tdYear.innerHTML.indexOf(inputNombre) > -1))
                     tr[i].style.display = "";
                 else
                     tr[i].style.display = "none";

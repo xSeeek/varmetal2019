@@ -23,7 +23,7 @@
                                 <th>Opciones</th>
                             </tr>
                             @foreach($trabajadores_almacenados as $key => $trabajador)
-                            <tr id="id_alumnoSistema{{ $trabajador->idTrabajador }}">
+                            <tr id="id_trabajador{{ $trabajador->idTrabajador }}">
                                 <td scope="col">{{ $trabajador->rut }}</td>
                                 <td scope="col">{{ $trabajador->nombre }}</td>
                                 @if($trabajador->estado == 1)

@@ -54,3 +54,13 @@ Route::get('/admin', 'AdminController@admin')
         Route::get('/homepage/Trabajador', 'TrabajadorController@productosTrabajador')
                     ->middleware('is_trabajador')
                     ->name('/homepage/Trabajador');
+
+/* [** Producto Controller **] */
+    /* [** ADMINISTRACIÓN **] */
+        /* [** GET **] */
+        /* [** POST **] */
+    /* [** VISTA GENERAL **] */
+        /* [** GET **] */
+        Route::get('/detalleProducto/{id}', ['uses' => 'ProductoController@detalleProducto'])
+                    ->middleware('is_trabajador')
+                    ->name('/detalleProducto');
