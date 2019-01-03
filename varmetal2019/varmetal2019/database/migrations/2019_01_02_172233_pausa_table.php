@@ -18,6 +18,9 @@ class PausaTable extends Migration
             $table->string('descripcion');
             $table->date('fechaInicio')->timestamps();
             $table->date('fechaFin')->nullable();
+
+            $table->integer('producto_id_producto')->unsigned();
+            $table->foreign('producto_id_producto')->references('idProducto')->on('producto')->onDelete('cascade');
         });
     }
 
