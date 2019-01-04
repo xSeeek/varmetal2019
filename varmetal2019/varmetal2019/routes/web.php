@@ -15,6 +15,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/asistencia', function () {
+    return redirect()->route('asistencia/home');
+});
 
 Auth::routes();
 
@@ -80,3 +83,7 @@ Route::get('/admin', 'AdminController@admin')
         Route::post('/addPausa/{id}', ['uses' => 'PausaController@insertPausa'])
                     ->middleware('is_trabajador')
                     ->name('pausaControl/addPausa');
+
+/* [**Asistencia**] */
+  /* [**GET**] */
+  Route::get('/asistencia/home', 'AsistenciaController@home')->name('asistencia/home');
