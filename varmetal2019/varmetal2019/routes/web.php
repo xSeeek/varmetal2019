@@ -1,5 +1,5 @@
 <?php
-
+use App\Mail\Varmetal;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,6 +14,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
 
 Auth::routes();
 

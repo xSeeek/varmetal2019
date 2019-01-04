@@ -20,10 +20,6 @@
                       </div>
                       {{$producto->idProducto}}
                   </div>
-<<<<<<< HEAD
-=======
-                  <div class="card header"></div>
->>>>>>> 1d0e3842ec7e8c9f23d4657a6d0cfac361ed9d71
                   <a class="btn btn-primary btn-lg" role="button" href="{{url('detallepProducto', [$producto->idProducto])}}" onclick="$producto->fechaFin=now()"><b>Fin</b></a>
                   <a class="btn btn-primary btn-lg" role="button" href="{{url('detalleProducto', [$producto->idProducto])}}"><b>Volver</b></a>
             </div>
