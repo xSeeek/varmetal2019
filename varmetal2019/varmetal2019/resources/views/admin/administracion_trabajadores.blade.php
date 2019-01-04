@@ -11,7 +11,7 @@
                             <div class="input-group-prepend">
                                 <label class="input-group-text" for="inputGroupSelect01">Filtro</label>
                             </div>
-                            <input class="form-control" type="text" id="inputRUT" onkeyup="filterRUT()" placeholder="Ingrese el RUT" title="RUT del Alumno">
+                            <input class="form-control" type="text" id="inputTrabajador" onkeyup="filterTrabajador()" placeholder="Ingrese el RUT" title="RUT del Alumno">
                             <a class="btn btn-secondary btn-sm" role="button" href="{{url('addTrabajador')}}"><b>Agregar Nuevo Trabajador</b></a>
                         </div>
                         @if(($trabajadores_almacenados != NULL) && (count($trabajadores_almacenados) > 0))
@@ -48,10 +48,10 @@
     </div>
 </div>
 <script type="text/javascript">
-    function filterRUT()
+    function filterTrabajador()
     {
         var input, table, tr, tdYear, i;
-        inputRUT = document.getElementById("inputRUT").value;
+        inputRUT = document.getElementById("inputTrabajador").value;
         table = document.getElementById("tablaAdministracion");
         tr = table.getElementsByTagName("tr");
 

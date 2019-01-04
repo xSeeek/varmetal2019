@@ -25,7 +25,7 @@
                     <table id="tablaAdministracion" style="width:50%; margin:15px;">
                         <tr>
                             <th>Productos</th>
-                            <td><a class="btn btn-outline-success my-2 my-sm-0" href="" role="button" style="cursor: pointer;">Ingresar</a></td>
+                            <td><a class="btn btn-outline-success my-2 my-sm-0" href="{{url('adminProducto')}}" role="button" style="cursor: pointer;">Ingresar</a></td>
                         </tr>
                         <tr>
                             <th>Trabajadores</th>

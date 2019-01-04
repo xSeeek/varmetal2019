@@ -59,6 +59,12 @@ Route::get('/admin', 'AdminController@admin')
 /* [** Producto Controller **] */
     /* [** ADMINISTRACIÓN **] */
         /* [** GET **] */
+        Route::get('/adminProducto', 'ProductoController@adminProducto')
+                    ->middleware('is_admin')
+                    ->name('adminProducto');
+        Route::get('/productoControl/{id}', ['uses' => 'ProductoController@productoControl'])
+                    ->middleware('is_admin')
+                    ->name('/productoControl');
         /* [** POST **] */
     /* [** VISTA GENERAL **] */
         /* [** GET **] */

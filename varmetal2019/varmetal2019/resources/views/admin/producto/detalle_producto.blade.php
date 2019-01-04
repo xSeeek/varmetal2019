@@ -75,6 +75,34 @@
                     </h5>
                 </div>
             </div>
+            <br>
+            <div class="card">
+                <div class="card-header">Trabajadores activos</div>
+                <div class="card-body">
+
+                @if(($trabajadores != NULL) && (count($trabajadores)>0))
+                <table id="tablaCursosAlumno" style="width:90%; margin:20px;">
+                    <tr>
+                        <th>RUT</th>
+                        <th>Nombre</th>
+                        <th>Cargo</th>
+                    </tr>
+                    @foreach($trabajadores as $key => $trabajador)
+                    <tr id="id_Trabajador{{ $trabajador->idTrabajador }}">
+                        <td scope="col">{{ $trabajador->rut }}</td>
+                        <td scope="col">{{ $trabajador->nombre }}</td>
+                        <td scope="col">{{ $trabajador->cargo }}</td>
+                        <td scope="col"><a class="btn btn-secondary btn-sm" role="button" onclick="{{url('detalleTrabajador', [$trabajador->idTrabajador])}}"><b>Eliminar</b></a>
+                    </tr>
+                    @endforeach
+                </table>
+                @else
+                </br>
+                    <h4 align="center">No hay trabajadores asignados.</h4>
+                </br>
+                @endif
+                </div>
+        </div>
         </div>
         <div class="card">
             <div class="card-header">Opciones de Administración</div>
@@ -89,7 +117,7 @@
     </div>
     </br>
     <div class="row justify-content-center">
-            <a class="btn btn-primary btn-lg" role="button" href="{{url('adminTrabajador')}}"><b>Volver</b></a>
+            <a class="btn btn-primary btn-lg" role="button" href="{{url('adminProducto')}}"><b>Volver</b></a>
     </div>
 </div>
 @endsection
