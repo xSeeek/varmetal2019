@@ -11,6 +11,11 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{!! asset('js/jquery.rut.js') !!}}">
+    <script src="{{!! asset('js/mensajes.js') !!}}">
+    <script src="{{!! asset('js/notify.js') !!}}">
+
+    </script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
