@@ -1,0 +1,5 @@
+{
+    "require": {
+        "freshwork/chilean-bundle": "^2.1"
+    }
+}
