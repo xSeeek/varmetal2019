@@ -17,6 +17,7 @@ class TrabajadorTable extends Migration
             $table->increments('idTrabajador');
             $table->string('nombre');
             $table->string('rut')->unique();
+            $table->string('cargo')->default('M1');
             $table->boolean('estado')->default('true');
             $table->timestamps();
 

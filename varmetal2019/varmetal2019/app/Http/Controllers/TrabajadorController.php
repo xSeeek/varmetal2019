@@ -49,29 +49,21 @@ class TrabajadorController extends Controller
 
     public function insertTrabajador(Request $data)
     {
-        if($data->statusUser == 0)
-        {
-            $newUserTrabajador = new User;
-            $newUserTrabajador->email = $data->email;
-            $newUserTrabajador->password = bcrypt($data->password);
-            $newUserTrabajador->type = User::DEFAULT_TYPE;
+        $newUserTrabajador = new User;
+        $newUserTrabajador->email = $data->email;
+        $newUserTrabajador->password = bcrypt($data->password);
+        $newUserTrabajador->type = User::DEFAULT_TYPE;
 
-            $verify = User::where('email', '=', $data->email)
-                                    ->get();
+        $verify = User::where('email', '=', $data->email)
+                                ->get();
 
-            if(count($verify))
-                return "Correo ya registrado en el sistema, ingrese otro correo.";
+        if(count($verify))
+            return "Correo ya registrado en el sistema, ingrese otro correo.";
 
-            if($newUserTrabajador->validateData($data->email) == false)
-                return "Tiene que ingresar un email para el usuario.";
-            if($newUserTrabajador->validateData($data->password) == false)
-                return "Tiene que ingresar o generar una contraseña para el usuario.";
-        }
-        else
-        {
-            $newUserTrabajador = User::where('email', '=', $data->email)
-                                ->first();
-        }
+        if($newUserTrabajador->validateData($data->email) == false)
+            return "Tiene que ingresar un email para el usuario.";
+        if($newUserTrabajador->validateData($data->password) == false)
+            return "Tiene que ingresar o generar una contraseña para el usuario.";
 
         $newTrabajador = new Trabajador;
         $newTrabajador->nombre = $data->nameTrabajador;
@@ -85,8 +77,7 @@ class TrabajadorController extends Controller
         if((Rut::parse($data->rutTrabajador)->validate()) == false)
             return "RUT no válido.";
 
-        if($data->statusUser == 0)
-            $newUserTrabajador->save();
+        $newUserTrabajador->save();
         $newUserTrabajador->trabajador()->save($newTrabajador);
 
         return 1;

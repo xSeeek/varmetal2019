@@ -11,16 +11,7 @@
             <div class="card">
                 <div class="card-header">Agregar nuevo trabajador</div>
                 <div class="card-body">
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <label class="input-group-text" for="inputGroupSelect01">Usuario</label>
-                        </div>
-                        <select class="custom-select" id="verifyUser" onchange="validateStatus()">
-                            <option default value="0">No Existente</option>
-                            <option value="1">Existente</option>
-                        </select>
-                    </div>
-                    <form method="POST" name="nuevoAlumno" id="nuevoAlumnoForm">
+                    <form method="POST" name="nuevoTrabajadorForm" id="nuevoTrabajadorForm">
                         <div class="form-group row">
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Usuario') }}</label>
                             <div class="col-md-6">
@@ -55,7 +46,6 @@
                                 <input type="text" class="form-control" aria-describedby="rutTrabajador" placeholder="RUT del Trabajador" name="rutTrabajador" required>
                             </div>
                         </div>
-                        <input id="statusUser" aria-describedby="password" name="statusUser" value="0" hidden>
                     </form>
                     <div class="col-md-6">
                         <button class="btn btn-primary mb-2" id='saveTrabajador' onclick="saveTrabajador()">Registrar Cambios</a>
@@ -75,7 +65,7 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             type: "POST",
-            data: $('#nuevoAlumnoForm').serialize(),
+            data: $('#nuevoTrabajadorForm').serialize(),
             url: "{{url('trabajadorControl/addTrabajador')}}",
             success: function(response){
                 if(response != 1)

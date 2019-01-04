@@ -7,6 +7,25 @@ use Varmetal\Producto;
 
 class ProductoController extends Controller
 {
+    public function adminProducto()
+    {
+        $productos = Producto::get();
+
+        return view('admin.administracion_productos')
+                ->with('productos', $productos);
+    }
+
+    public function productoControl($id)
+    {
+        $producto = Producto::find($id);
+        $trabajadores = $producto->trabajador;
+        var_dump($trabajadores);
+
+        return view('admin.producto.detalle_producto')
+                ->with('producto', $producto)
+                ->with('trabajadores', $trabajadores);
+    }
+
     public function detalleProducto($id)
     {
         $producto = Producto::find($id);
