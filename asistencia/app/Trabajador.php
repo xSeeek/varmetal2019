@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace Asistencia;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -9,6 +9,6 @@ class Trabajador extends Model
   protected $table = "trabajador";
   public function user()
   {
-    $this->belongsTo('App\User');
+    $this->belongsTo('Asistencia\User');
   }
 }

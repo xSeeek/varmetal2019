@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace Asistencia;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -31,11 +31,11 @@ class User extends Authenticatable
 
     public function trabajador()
     {
-      $this->hasOne('App\Trabajador');
+      $this->hasOne('Asistencia\Trabajador');
     }
 
     public function encargado()
     {
-      $this->hasOne('App\Encargado');
+      $this->hasOne('Asistencia\Encargado');
     }
 }
