@@ -26,11 +26,19 @@ class PausaController extends Controller
 
     public function insertPausa(Request $data)
     {
+
+      $response=json_decode($data->DATA);
+
+      $producto=find($response[0]);
+
       $newPausa=new Pausa;
       $mytime = Carbon/Carbon::now();
-      $newPausa->fechaInicio = $mytime;
+      $newPausa->fechaInicio = $response[3];
       $newPausa->fechaFin = null;
-      $newPausa->descripcion = null;
+      $newPausa->descripcion = $response[2];
+
+      $producto->newPausa()->associate($newPausa);
+
       return 1;
     }
 

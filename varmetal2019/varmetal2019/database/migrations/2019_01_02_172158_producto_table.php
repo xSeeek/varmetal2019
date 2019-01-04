@@ -19,7 +19,7 @@ class ProductoTable extends Migration
             $table->date('fechaInicio')->timestamps();
             $table->date('fechaFin')->nullable();
             $table->integer('pesoKg')->nullable();
-            $table->integer('cantPausa')->default(1);
+            $table->integer('cantPausa')->default(0);
             $table->integer('estado')->default('1');
             $table->integer('prioridad')->default('3');
         });

@@ -5,26 +5,50 @@
 @endsection
 
 @section('content')
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{$producto->nombre}}</div>
-                <div class="card-header">{{$producto->fechaInicio}}</div>
-                    <div class="card=body">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">Crear Pausa</span>
-                        </div>
-                        <textarea class="form-control" aria-label="Crear Pausa"></textarea>
+                <div class="card=body">
+                  <label for="fechaInicio" id="fechaInicio" class="col-md-4 col-form-label text-md-right">{{ __('now()')}}</label>
+
+                      <div class="input-group row">
+                        <div class="input-group mb-3">
+                        <textarea id="detalle" class="form-control" aria-label="Crear Pausa"></textarea>
                       </div>
-                      {{$producto->idProducto}}
                   </div>
-                  <a class="btn btn-primary btn-lg" role="button" href="{{url('detallepProducto', [$producto->idProducto])}}" onclick="$producto->fechaFin=now()"><b>Fin</b></a>
-                  <a class="btn btn-primary btn-lg" role="button" href="{{url('detalleProducto', [$producto->idProducto])}}"><b>Volver</b></a>
-            </div>
-        </br>
-            <a class="btn btn-primary btn-lg" role="button" href="{{url('admin')}}"><b>Volver</b></a>
+                  <a class="btn btn-outline-success my-2 my-sm-0" role="button" href="{{url('detalleProducto', [$producto->idProducto])}}" onclick="asignarPausa"><b>Fin</b></a>            </div>
+          </div>
+          <a class="btn btn-outline-success my-2 my-sm-0" role="button" href="{{url('detalleProducto', [$producto->idProducto])}}"><b>Volver</b></a>
         </div>
-    </div>
+|  </div>
 </div>
+<script type="text/javascript">
+function saveChanges()
+    {
+        var updatedCurso, json_text;
+
+        updatedCurso = Array();
+        updatedCurso[0] = document.getElementById("{{$producto->idProducto}}").value;
+        updatedCurso[1] = document.getElementById("detalle").value;
+        updatedCurso[2] = document.getElementById("fechaInicio").value;
+
+        json_text = JSON.stringify(updatedCurso);
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: "POST",
+            data: {DATA:json_text},
+            url: "{{url('pausaControl/addPausa')}}",
+            success: function(msg){
+                alert(msg);
+            }
+        });
+        changeStatus();
+        return;
+    }
+</script>
