@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers;
+namespace Varmetal\Providers;
 
 use Illuminate\Support\ServiceProvider;
 

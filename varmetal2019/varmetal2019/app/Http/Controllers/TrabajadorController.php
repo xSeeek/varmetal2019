@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Varmetal\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Trabajador;
-use App\User;
+use Varmetal\Trabajador;
+use Varmetal\User;
 use Freshwork\ChileanBundle\Rut;
 use Illuminate\Support\Facades\Auth;
 

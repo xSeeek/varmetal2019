@@ -169,11 +169,11 @@ return [
         /*
          * Application Service Providers...
          */
-        App\Providers\AppServiceProvider::class,
-        App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
-        App\Providers\EventServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
+        Varmetal\Providers\AppServiceProvider::class,
+        Varmetal\Providers\AuthServiceProvider::class,
+        // Varmetal\Providers\BroadcastServiceProvider::class,
+        Varmetal\Providers\EventServiceProvider::class,
+        Varmetal\Providers\RouteServiceProvider::class,
 
     ],
 

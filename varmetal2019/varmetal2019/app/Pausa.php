@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace Varmetal;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,10 +11,10 @@ class Pausa extends Model
 
     public function productos()
     {
-        return $this->belongsTo('App\Producto');
+        return $this->belongsTo('Varmetal\Producto');
     }
     public function trabajador()
     {
-        return $this->belongsTo('App\Trabajador');
+        return $this->belongsTo('Varmetal\Trabajador');
     }
 }

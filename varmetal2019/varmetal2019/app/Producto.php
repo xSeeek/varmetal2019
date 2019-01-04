@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace Varmetal;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,10 +11,10 @@ class Producto extends Model
 
     public function trabajador()
     {
-        return $this->belongsToMany('App\Producto');
+        return $this->belongsToMany('Varmetal\Producto');
     }
     public function pausa()
     {
-        return $this->hasMany('App\Pausa');
+        return $this->hasMany('Varmetal\Pausa');
     }
 }

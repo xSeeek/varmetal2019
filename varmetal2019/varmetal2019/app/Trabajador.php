@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace Varmetal;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,15 +11,15 @@ class Trabajador extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\User', 'users_id_user');
+        return $this->belongsTo('Varmetal\User', 'users_id_user');
     }
     public function pausa()
     {
-        return $this->hasMany('App\Pausa');
+        return $this->hasMany('Varmetal\Pausa');
     }
     public function producto()
     {
-        return $this->belongsToMany('App\Producto', 'trabajadores_producto', 'trabajador_id_trabajador', 'producto_id_producto');
+        return $this->belongsToMany('Varmetal\Producto', 'trabajadores_producto', 'trabajador_id_trabajador', 'producto_id_producto');
     }
     public function validateData($var)
     {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Middleware;
+namespace Varmetal\Http\Middleware;
 
 use Closure;
 

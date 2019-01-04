@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Notifications;
+namespace Varmetal\Notifications;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Auth\Notifications\ResetPassword;
@@ -21,12 +21,13 @@ class MyResetPassword extends Notification
     public function toMail($notifiable)
     {
       return (new MailMessage)
-            ->subject('Cambiar Contraseña')
-            ->greeting('Hola')
+            ->subject('Cambiao de Contraseña')
+            ->greeting('Hola', $this->token)
             ->line('Estás recibiendo este email, porque nosotros revibimos una solicitud de cambio de contraseña para tu cuenta.')
+            //->action('Reestablecer contraseña', url(config('app.url').route('password.reset',$this->token,false)))
             ->action('Cambio de Contraseña', route('password.reset', $this->token))
             ->line('Si tú no pediste la solicitud, ignora este correo.')
-            ->salutation('Saludos'. config('app.name'));
+            ->salutation('Saludos '. 'Varmetal');
     }
 
     /**

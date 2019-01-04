@@ -1,11 +1,11 @@
 <?php
 
-namespace App;
+namespace Varmetal;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use App\Notifications\MyResetPassword;
+use Varmetal\Notifications\MyResetPassword;
 
 class User extends Authenticatable
 {
@@ -14,7 +14,7 @@ class User extends Authenticatable
 
     public function trabajador()
     {
-        return $this->hasOne('App\Trabajador', 'users_id_user');
+        return $this->hasOne('Varmetal\Trabajador', 'users_id_user');
     }
 
     public function isAdmin()

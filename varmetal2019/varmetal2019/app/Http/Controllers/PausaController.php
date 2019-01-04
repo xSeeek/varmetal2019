@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Varmetal\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Producto;
+use Varmetal\Producto;
 
 class PausaController extends Controller
 {
