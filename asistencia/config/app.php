@@ -161,7 +161,6 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-        Freshwork\ChileanBundle\Laravel\ChileanBundleServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -175,6 +174,13 @@ return [
         // Asistencia\Providers\BroadcastServiceProvider::class,
         Asistencia\Providers\EventServiceProvider::class,
         Asistencia\Providers\RouteServiceProvider::class,
+
+        /*
+        * External providers
+        */
+        Freshwork\ChileanBundle\Laravel\ChileanBundleServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
+
 
     ],
 
@@ -224,8 +230,12 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'Rut' => Freshwork\ChileanBundle\Laravel\Facades\Rut::class,
 
+        /**
+         * External
+         */
+        'Rut' => Freshwork\ChileanBundle\Laravel\Facades\Rut::class,
+        'Image' => Intervention\Image\Facades\Image::class,
     ],
 
 ];

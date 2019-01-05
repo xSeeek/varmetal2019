@@ -11,10 +11,23 @@
 |
 */
 
+/**
+ * [[Default route]]
+ * [Redirecciona a la vista home]
+ */
 Route::get('/', function () {
     return redirect()->route('home');
 });
 
+/**
+ * [[Rutas del sitema de registro y login]]
+ */
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+//------------------------------------------------//
+
+/**
+ * [[Rutas del controlador HomeController]]
+ * [Ruta home: página principal]
+ */
+ Route::get('/home', 'HomeController@index')->name('home');
