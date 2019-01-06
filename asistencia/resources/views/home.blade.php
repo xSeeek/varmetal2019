@@ -12,9 +12,12 @@
               <div class="alert alert-success" role="alert">
                 {{ session('status') }}
               </div>
-            @endif
 
-            
+              @if(Auth::user()->isAdmin())
+                Admin
+              @endif
+
+            @endif
           </div>
         </div>
       </div>
