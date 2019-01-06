@@ -11,7 +11,7 @@ class Trabajador extends Model
 
   public function user()
   {
-      return $this->belongsTo('Varmetal\User', 'users_id_user');
+      return $this->belongsTo('Asistencia\User', 'users_id_user');
   }
   public function validateData($var)
   {

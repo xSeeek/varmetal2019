@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class TrabajadorTable extends Migration
+class Trabajador extends Migration
 {
   /**
    * Run the migrations.
@@ -19,7 +19,6 @@ class TrabajadorTable extends Migration
           $table->string('rut')->unique();
           $table->boolean('estado')->default('true');
           $table->timestamps();
-
           $table->integer('users_id_user')->unsigned();
           $table->foreign('users_id_user')->references('id')->on('users')->onDelete('cascade');
       });
@@ -32,6 +31,7 @@ class TrabajadorTable extends Migration
    */
   public function down()
   {
+      Schema::disableForeignKeyConstraints();
       Schema::dropIfExists('trabajador');
   }
 }

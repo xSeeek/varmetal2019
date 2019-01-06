@@ -13,7 +13,7 @@ class User extends Authenticatable
 
   public function trabajador()
   {
-      return $this->hasOne('Varmetal\Trabajador', 'users_id_user');
+      return $this->hasOne('Asistencia\Trabajador', 'users_id_user');
   }
 
   public function isAdmin()
@@ -57,7 +57,7 @@ class User extends Authenticatable
    * @var array
    */
   protected $fillable = [
-      'name', 'email', 'password',
+      'email', 'password',
   ];
 
   /**
