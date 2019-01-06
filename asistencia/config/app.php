@@ -80,7 +80,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'es',
 
     /*
     |--------------------------------------------------------------------------
@@ -180,7 +180,7 @@ return [
         */
         Freshwork\ChileanBundle\Laravel\ChileanBundleServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
-
+        Laraveles\Spanish\SpanishServiceProvider::class,
 
     ],
 
