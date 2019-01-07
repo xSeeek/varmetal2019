@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.navbar')
 
 @section('content')
   <div class="container">
@@ -12,11 +12,9 @@
               <div class="alert alert-success" role="alert">
                 {{ session('status') }}
               </div>
-
-              @if(Auth::user()->isAdmin())
-                Admin
-              @endif
-
+            @endif
+            @if(Auth::user()->isAdmin())
+              Admin
             @endif
           </div>
         </div>

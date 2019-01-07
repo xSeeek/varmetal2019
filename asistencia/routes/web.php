@@ -12,17 +12,14 @@
 */
 
 /**
- * [[Default route]]
- * [Redirecciona a la vista home]
+ * [[Rutas del controlador IndexController]]
  */
-Route::get('/', function () {
-    return redirect()->route('home');
-});
+  Route::get('/', 'IndexController@index')->name('index');
 
 /**
  * [[Rutas del sitema de registro y login]]
  */
-Auth::routes();
+ Auth::routes();
 
 //------------------------------------------------//
 
@@ -30,4 +27,4 @@ Auth::routes();
  * [[Rutas del controlador HomeController]]
  * [Ruta home: página principal]
  */
- Route::get('/home', 'HomeController@index')->name('home');
+  Route::get('/home', 'HomeController@index')->name('home');
