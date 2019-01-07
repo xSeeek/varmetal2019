@@ -31,9 +31,10 @@ function saveChanges()
         var updatedCurso, json_text;
 
         updatedCurso = Array();
-        updatedCurso[0] = document.getElementById("{{$producto->idProducto}}").value;
+        updatedCurso[0] = {{$producto->idProducto}};
         updatedCurso[1] = document.getElementById("detalle").value;
         updatedCurso[2] = document.getElementById("fechaInicio").value;
+        updatedCurso[3] = {{$trabajador->idTrabajador}};
 
         json_text = JSON.stringify(updatedCurso);
 
