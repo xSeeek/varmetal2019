@@ -67,6 +67,9 @@ Route::get('/admin', 'AdminController@admin')
         Route::get('/addProducto', 'ProductoController@addProducto')
                     ->middleware('is_admin')
                     ->name('producto/addProducto');
+        Route::get('/producto/asignarTrabajo/{id}', ['uses' => 'ProductoController@asignarTrabajo'])
+                    ->middleware('is_admin')
+                    ->name('/producto/asignarTrabajo');
         /* [** POST **] */
         Route::post('/productoControl/addProducto', ['uses' => 'ProductoController@insertProducto'])
                     ->middleware('is_admin')
@@ -74,6 +77,9 @@ Route::get('/admin', 'AdminController@admin')
         Route::post('/productoControl/deleteProducto', ['uses' => 'ProductoController@deleteProducto'])
                     ->middleware('is_admin')
                     ->name('productoControl/deleteProducto');
+        Route::post('/productoControl/addWorker', ['uses' => 'ProductoController@addWorker'])
+                    ->middleware('is_admin')
+                    ->name('/productoControl/addWorker');
     /* [** VISTA GENERAL **] */
         /* [** GET **] */
         Route::get('/detalleProducto/{id}', ['uses' => 'ProductoController@detalleProducto'])
