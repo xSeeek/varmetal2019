@@ -71,12 +71,9 @@ Route::get('/admin', 'AdminController@admin')
         Route::post('/productoControl/addProducto', ['uses' => 'ProductoController@insertProducto'])
                     ->middleware('is_admin')
                     ->name('productoControl/addProducto');
-<<<<<<< HEAD
-=======
         Route::post('/productoControl/deleteProducto', ['uses' => 'ProductoController@deleteProducto'])
                     ->middleware('is_admin')
                     ->name('productoControl/deleteProducto');
->>>>>>> 258c339cdfdbe3d20dd5db5af7ac7f8283347368
     /* [** VISTA GENERAL **] */
         /* [** GET **] */
         Route::get('/detalleProducto/{id}', ['uses' => 'ProductoController@detalleProducto'])
