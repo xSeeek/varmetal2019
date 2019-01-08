@@ -26,7 +26,7 @@
             @endif
           </div>
           <div class="form-group">
-            <img src="" id="img_show" width="200px" />
+            <img src="" id="img_show" width="100%" class="img-thumbnail"/>
           </div>
           <div class="form-group">
             <button class="btn btn-success" type="button" onclick="marcar_asistencia()">Marcar Asistencia</button>
