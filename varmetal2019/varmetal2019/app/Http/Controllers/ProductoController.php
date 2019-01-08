@@ -4,6 +4,7 @@ namespace Varmetal\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Varmetal\Producto;
+use Varmetal\Trabajador;
 
 class ProductoController extends Controller
 {
@@ -71,6 +72,45 @@ class ProductoController extends Controller
     {
         $producto = Producto::find($request)->first();
         $producto->delete();
+        return 1;
+    }
+
+    public function asignarTrabajo($data)
+    {
+        $producto = Producto::find($data)->first();
+        $trabajadores_almacenados = Trabajador::get();
+        $trabajadores = $producto->trabajador;
+
+        $trabajador_disponibles = null;
+        $i = 0;
+        $cont = 0;
+
+        foreach($trabajadores_almacenados as $t_saved)
+        {
+            foreach($trabajadores as $t_asig)
+                if($t_saved->idTrabajador == $t_asig->idTrabajador)
+                    $cont++;
+            if($cont == 0)
+            {
+                $trabajador_disponibles[$i] = $t_saved;
+                $i++;
+            }
+            $cont = 0;
+        }
+
+        return view('admin.producto.trabajadores_disponibles')
+                ->with('trabajadores_almacenados', $trabajador_disponibles)
+                ->with('idProducto', $data);
+    }
+
+    public function addWorker(Request $request)
+    {
+        $response = json_decode($request->DATA);
+
+        $trabajador = Trabajador::find($response[1]);
+        $producto = Producto::find($response[0]);
+
+        $trabajador->producto()->attach($producto->idProducto);
         return 1;
     }
 }
