@@ -9,6 +9,6 @@ class AsistenciaController extends Controller
 {
   public function registrarAsistencia(RegistrarAsistencia $request)
   {
-    
+
   }
 }

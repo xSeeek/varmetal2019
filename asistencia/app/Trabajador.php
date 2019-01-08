@@ -9,6 +9,10 @@ class Trabajador extends Model
   public $primaryKey = 'idTrabajador';
   protected $table = 'trabajador';
 
+  protected $fillable = [
+      'rut',
+  ];
+
   public function user()
   {
       return $this->belongsTo('Asistencia\User', 'users_id_user');

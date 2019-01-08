@@ -7,7 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class RegistrarAsistencia extends FormRequest
 {
-    /public function authorize()
+    public function authorize()
     {
         return true;
     }
@@ -16,7 +16,7 @@ class RegistrarAsistencia extends FormRequest
     {
         return [
             'rut'=>'required|cl_rut',
-            'file' => 'required',
+            'image' => 'required',
         ];
     }
 

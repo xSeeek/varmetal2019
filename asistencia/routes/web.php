@@ -29,6 +29,9 @@
  */
   Route::get('/home', 'HomeController@index')->name('home');
 
-
-Route::post('/registrarAsistencia', 'AsistenciaController@registrarAsistencia')
+/**
+ * [[Rutas Controlador AsistenciaController]]
+ */
+ //Ruta para registrar una asistencia
+Route::post('/registrarAsistencia', ['uses'=>'AsistenciaController@registrarAsistencia'])
   ->name('registrarAsistencia');

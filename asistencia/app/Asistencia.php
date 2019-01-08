@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Asistencia extends Model
 {
+  protected $fillable = [
+      'image',
+  ];
   public $primaryKey = 'idAsistencia';
   protected $table = 'asistencia';
 

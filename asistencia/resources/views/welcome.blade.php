@@ -7,15 +7,27 @@
     <p class="lead">Si desea marcar asistencia ingrese su rut</p>
     <div class="row">
       <div class="col-6 col-md-4">
-        <form id="form_registrar_asistencia" action="{{route('registrarAsistencia')}}">
+        <form method="post" id="form_registrar_asistencia" action="{{route('registrarAsistencia')}}">
           <div class="form-group">
-            <input class="form-control" id="rut" type="text" name="rut" placeholder="Ingrese su rut">
+            @csrf
+            <input class="form-control" id="rut" type="text" name="rut" placeholder="Ingrese su rut" value="{{old('email')}}">
+            @if ($errors->has('rut'))
+              <span class="invalid-feedback" role="alert">
+                <strong>{{ $errors->first('rut') }}</strong>
+              </span>
+            @endif
           </div>
           <div class="form-group">
-            <button class="btn btn-success" type="button" onclick="marcar_asistencia()">Marcar Asistencia</button>
+            <input type="file" accept="image/*" capture="camera" name="image"/>
+            @if ($errors->has('image'))
+              <span class="invalid-feedback" role="alert">
+                <strong>{{ $errors->first('image') }}</strong>
+              </span>
+            @endif
           </div>
-          <input type="file" accept="image/*" capture="camera" />
-          {{ csrf_field() }}
+          <div class="form-group">
+            <button class="btn btn-success" type="submit" >Marcar Asistencia</button>
+          </div>
         </form>
       </div>
     </div>
@@ -25,23 +37,6 @@
     $(document).ready(function() {
       $("input#rut").rut({formatOn: 'keyup', ignoreControlKeys: false});
     });
-
-    function marcar_asistencia()
-    {
-
-      var form = $('#form_registrar_asistencia');
-      $.ajax({
-        url: form.attr('action'),
-        type: form.attr('method'),
-        data: form.serialize(),
-        dataType: 'json',
-        success : function(json)
-        {
-
-        },
-
-      });
-    }
 
 
   </script>
