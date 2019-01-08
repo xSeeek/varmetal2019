@@ -57,10 +57,11 @@ class ProductoController extends Controller
         $producto->pesoKg = $request->pesoProducto;
         $producto->cantPausa = 0;
         $producto->prioridad = $request->inputPrioridad;
-        $producto->fechaInicio = $request->fechaFin;
+        $producto->fechaInicio = now();
         $producto->cantProducto = $request->cantidadProducto;
         $producto->fechaFin = NULL;
 
-        return $producto;
+        $producto->save();
+        return 1;
     }
 }

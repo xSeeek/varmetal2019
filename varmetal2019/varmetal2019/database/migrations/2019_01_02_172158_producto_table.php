@@ -23,6 +23,7 @@ class ProductoTable extends Migration
             $table->integer('cantProducto')->default(1);
             $table->integer('estado')->default('1');
             $table->integer('prioridad')->default('3');
+            $table->timestamps();
         });
     }
 
