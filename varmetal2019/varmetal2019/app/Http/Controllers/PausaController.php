@@ -42,6 +42,9 @@ class PausaController extends Controller
 
     public function insertPausa(Request $data)
     {
+        $usuarioActual = Auth::user();
+        $trabajador = $usuarioActual->trabajador;
+
       $response=json_decode($data->DATA);
 
       $producto = Producto::find($response[0]);

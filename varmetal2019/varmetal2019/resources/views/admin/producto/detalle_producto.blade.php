@@ -111,7 +111,7 @@
                 <h6>
                     Solicitar Pausa:
                 </br>
-                    <a class="btn btn-outline-success btn-md" id="pauseButton" role="button" href="{{url('addPausa', [$trabajador->idTrabajador], [$producto->idProducto])}}">Pausar</a>
+                    <a class="btn btn-outline-success btn-md" id="pauseButton" role="button" href="{{url('addPausa', [$producto->idProducto])}}">Pausar</a>
                 </h6>
                 <br>
                 <h6>
