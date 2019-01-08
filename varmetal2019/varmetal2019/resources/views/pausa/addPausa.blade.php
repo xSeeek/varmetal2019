@@ -44,7 +44,7 @@ function saveChanges()
             },
             type: "POST",
             data: {DATA:json_text},
-            url: "{{url('pausaControl/addPausa')}}",
+            url: "{{url('pausa/addPausa')}}",
             success: function(msg){
                 alert(msg);
             }
