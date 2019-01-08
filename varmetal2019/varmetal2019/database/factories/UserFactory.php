@@ -18,7 +18,7 @@ $factory->define(Varmetal\User::class, function (Faker $faker) {
         'email' => $faker->unique()->safeEmail,
         'email_verified_at' => now(),
         'password' => bcrypt('abc123456'), // secret
-        'type' => User::DEFAULT_TYPE,
+        'type' => Varmetal\User::DEFAULT_TYPE,
         'remember_token' => str_random(10),
     ];
 });
