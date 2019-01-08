@@ -23,14 +23,12 @@ class PausaController extends Controller
                 ->with('trabajador_pausa', $trabajado);
     }
 
-    public function addPausa($idTrabajador, $idProducto)
+    public function addPausa($idProducto)
     {
       $fechaInicio=now();
       $producto=Producto::find($idProducto);
-      $trabajador=Trabajador::find($idTrabajador);
       return view('pausa.addPausa')
               ->with('producto', $producto)
-              ->with('trabajador', $trabajador)
               ->with('fechaInicio', $fechaInicio);
     }
 
@@ -42,6 +40,7 @@ class PausaController extends Controller
 
     public function insertPausa(Request $data)
     {
+      alert('entro al insert');
       $response=json_decode($data->DATA);
 
       $producto = Producto::find($response[0]);

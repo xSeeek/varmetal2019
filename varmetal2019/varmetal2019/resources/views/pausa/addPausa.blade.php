@@ -9,7 +9,6 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-              @if($producto !=NULL)
                 <div class="card-header">Nombre del Producto: {{$producto->nombre}}</div>
                 <div class="card=body">
                   <label for="fechaInicio" id="fechaInicio">Fecha Inicio: {{$fechaInicio}}</label>
@@ -19,10 +18,6 @@
                     </div>
                   <a class="btn btn-outline-success my-1 my-sm-0" role="button" onclick="savePausa()"><b>Terminar Pausa</b></a>
                   <a class="btn btn-outline-success my-2 my-sm-0" role="button" href="{{url('detalleProducto', [$producto->idProducto])}}"><b>Volver</b></a>
-                  @else
-                  <div class="input-group mb-3">No existen productos</div>
-                  <a class="btn btn-outline-success my-2 my-sm-0" role="button" href="{{url('detalleProducto', [$producto->idProducto])}}"><b>Volver</b></a>
-                  @endif
                 </div>
             </div>
           </div>
@@ -36,19 +31,24 @@ function savePausa()
         datosPausa = Array();
         datosPausa[0] = {{$producto->idProducto}};
         datosPausa[1] = document.getElementById("detalle").value;
-        datosPausa[2] = document.getElementById("fechaInicio").value;
+        datosPausa[2] = 'weaInicio';
         datosPausa[3] = {{$trabajador->idTrabajador}};
-        datosPausa[4] = 'wea';
+        datosPausa[4] = 'weafin';
+        alert('Producto: '+datosPausa[0]+
+        ' - descripcion: '+datosPausa[1]+
+        ' - fechaInicio: '+datosPausa[2]+
+        ' - trabajador : '+datosPausa[3]+
+        ' - fechaFin   : '+datosPausa[4]);
 
         json_text = JSON.stringify(datosPausa);
-
+        alert('pasando de too');
         $.ajax({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             type: "POST",
             data: {DATA:json_text},
-            url: "{{url('/pausaControl/addPausa/', [ $trabajador->idTrabajador], [ $producto->idProducto])}}",
+            url: "{{url('/pausaControl/addPausa')}}",
             success: function(response){
                 if(response!=1)
                 {

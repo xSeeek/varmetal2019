@@ -83,15 +83,15 @@ Route::get('/admin', 'AdminController@admin')
     /* [** ADMINISTRACIÓN **] */
         /* [** GET **] */
         Route::get('/adminPausa', 'PausaController@adminPausas')
-                    ->middleware('is_admin')
+                    //->middleware('is_admin')
                     ->name('adminPausa');
         Route::get('/pausaControl/{id}', ['uses' => 'PausaController@pausaControl'])
-                    ->middleware('is_trabajador')
+                    //->middleware('is_trabajador')
                     ->name('pausaControl');
-        Route::get('/addPausa/{id_trabajador}/{id_producto}', ['uses' => 'PausaController@addPausa'])
+        Route::get('/addPausa/{idTrabador}/{idProducto}', ['uses' => 'PausaController@addPausa'])
                     //->middleware('is_trabajador')
                     ->name('addPausa');
         /* [** POST **] */
         Route::post('/pausaControl/addPausa/', ['uses' => 'PausaController@insertPausa'])
-                    ->middleware('is_trabajador')
-                    ->name('pausa/addPausa');
+                    //->middleware('is_trabajador')
+                    ->name('pausaControl/addPausa');
