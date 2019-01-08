@@ -18,7 +18,8 @@
             @endif
           </div>
           <div class="form-group">
-            <input type="file" accept="image/*" capture="camera" name="image"/>
+            <input type="file" accept="image/*" id="img_select" capture="camera" name="image"/>
+            <img src="" id="img_show" width="200px" />
             @if ($errors->has('image'))
               <span class="invalid-feedback" role="alert">
                 <strong>{{ $errors->first('image') }}</strong>
@@ -26,7 +27,7 @@
             @endif
           </div>
           <div class="form-group">
-            <button class="btn btn-success" type="submit" >Marcar Asistencia</button>
+            <button class="btn btn-success" type="button" onclick="marcar_asistencia()">Marcar Asistencia</button>
           </div>
         </form>
       </div>
@@ -38,6 +39,29 @@
       $("input#rut").rut({formatOn: 'keyup', ignoreControlKeys: false});
     });
 
-
   </script>
+
+  <script type="text/javascript">
+      function readURL(input) {
+          if (input.files && input.files[0]) {
+              var reader = new FileReader();
+
+              reader.onload = function (e) {
+                  $('#img_show').attr('src', e.target.result);
+              }
+              reader.readAsDataURL(input.files[0]);
+          }
+      }
+      $("#img_select").change(function(){
+          readURL(this);
+      });
+  </script>
+
+  <script type="text/javascript">
+    function marcar_asistencia()
+    {
+    }
+  </script>
+
+
 @endsection
