@@ -19,12 +19,14 @@
           </div>
           <div class="form-group">
             <input type="file" accept="image/*" id="img_select" capture="camera" name="image"/>
-            <img src="" id="img_show" width="200px" />
             @if ($errors->has('image'))
               <span class="invalid-feedback" role="alert">
                 <strong>{{ $errors->first('image') }}</strong>
               </span>
             @endif
+          </div>
+          <div class="form-group">
+            <img src="" id="img_show" width="200px" />
           </div>
           <div class="form-group">
             <button class="btn btn-success" type="button" onclick="marcar_asistencia()">Marcar Asistencia</button>
