@@ -21,6 +21,12 @@ class Trabajador extends Model
     {
         return $this->belongsToMany('Varmetal\Producto', 'trabajadores_producto', 'trabajador_id_trabajador', 'producto_id_producto');
     }
+    public function productoIncompleto()
+    {
+        $instance = $this->belongsToMany('Varmetal\Producto', 'trabajadores_producto', 'trabajador_id_trabajador', 'producto_id_producto');
+        $instance->getQuery()->where('estado', '<>', 1);
+        return $instance;
+    }
     public function validateData($var)
     {
         if($var == NULL)
