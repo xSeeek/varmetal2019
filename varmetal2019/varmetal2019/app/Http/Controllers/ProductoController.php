@@ -9,7 +9,7 @@ class ProductoController extends Controller
 {
     public function adminProducto()
     {
-        $productos = Producto::get();
+        $productos = Producto::orderBy('prioridad', 'DESC')->get();
 
         return view('admin.administracion_productos')
                 ->with('productos', $productos);
@@ -17,9 +17,11 @@ class ProductoController extends Controller
 
     public function productoControl($id)
     {
+        if($id == 'undefined')
+            return redirect()->route('adminProducto');
+
         $producto = Producto::find($id);
         $trabajadores = $producto->trabajador;
-        var_dump($trabajadores);
 
         return view('admin.producto.detalle_producto')
                 ->with('producto', $producto)
@@ -62,6 +64,13 @@ class ProductoController extends Controller
         $producto->fechaFin = NULL;
 
         $producto->save();
+        return 1;
+    }
+
+    public function deleteProducto(Request $request)
+    {
+        $producto = Producto::find($request)->first();
+        $producto->delete();
         return 1;
     }
 }

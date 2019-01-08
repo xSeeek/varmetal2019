@@ -86,13 +86,14 @@
                         <th>RUT</th>
                         <th>Nombre</th>
                         <th>Cargo</th>
+                        <th>Opciones</th>
                     </tr>
                     @foreach($trabajadores as $key => $trabajador)
                     <tr id="id_Trabajador{{ $trabajador->idTrabajador }}">
                         <td scope="col">{{ $trabajador->rut }}</td>
                         <td scope="col">{{ $trabajador->nombre }}</td>
                         <td scope="col">{{ $trabajador->cargo }}</td>
-                        <td scope="col"><a class="btn btn-secondary btn-sm" role="button" onclick="{{url('detalleTrabajador', [$trabajador->idTrabajador])}}"><b>Eliminar</b></a>
+                        <td scope="col"><a class="btn btn-outline-secondary btn-sm" href="{{url('trabajadorControl', [$trabajador->idTrabajador])}}" role="button"><b>Ficha Trabajador</b></a>
                     </tr>
                     @endforeach
                 </table>
@@ -112,6 +113,12 @@
                 </br>
                     <a class="btn btn-outline-success btn-md" id="pauseButton" role="button" href="{{url('pausa.addPausa', [$producto->idProducto])}}">Pausar</a>
                 </h6>
+                <br>
+                <h6>
+                    Eliminar Producto:
+                </br>
+                    <a class="btn btn-outline-success btn-md" id="deleteButton" role="button" onclick="deleteProducto({{$producto->idProducto}})">Eliminar</a>
+                </h6>
             </div>
         </div>
     </div>
@@ -120,4 +127,21 @@
             <a class="btn btn-primary btn-lg" role="button" href="{{url('adminProducto')}}"><b>Volver</b></a>
     </div>
 </div>
+<script type="text/javascript">
+    function deleteProducto(data)
+    {
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: "POST",
+            data: {DATA:data},
+            url: "{{url('/productoControl/deleteProducto')}}",
+            success: function(response){
+                console.log(response);
+                window.location.href = response.redirect;
+            }
+        });
+    }
+</script>
 @endsection

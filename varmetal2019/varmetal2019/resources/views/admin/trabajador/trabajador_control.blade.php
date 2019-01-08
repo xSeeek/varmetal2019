@@ -41,7 +41,7 @@
             </div>
         </br>
             <div class="card">
-                <div class="card-header">Productos Realizados Por El Trabajador</div>
+                <div class="card-header">Productos a Realizar</div>
                 <div class="card-body">
 
                 @if(($productos_trabajador != NULL) && (count($productos_trabajador)>0))
@@ -52,19 +52,31 @@
                         <th>Fecha Fin</th>
                         <th>Estado</th>
                         <th>Peso (kg)</th>
+                        <th>Opciones</th>
                     </tr>
                     @foreach($productos_trabajador as $key => $productos)
                         <tr id="id_cursoAlumno{{ $productos->idProductos }}">
                             <td scope="col">{{ $productos->nombre }}</td>
                             <td scope="col">{{ $productos->fechaInicio }}</td>
-                            <td scope="col">{{ $productos->fechaFin }}</td>
-                            @if($productos->estado == 2)
-                                <td scope="col">Terminado</td>
-                            @elseif($productos->estado == 3)
-                                <td scope="col">En Pausa</td>
+                            @if($productos->fechaFin != NULL)
+                                <td scope="col">{{ $productos->fechaFin }}</td>
                             @else
-                                <td scope="col">En Proceso</td>
+                                <td scope="col">No determinada</td>
                             @endif
+                            @switch($productos->estado)
+                                @case(0)
+                                    <td scope="col">Por realizar</td>
+                                    @break
+                                @case(1)
+                                    <td scope="col">Finalizado</td>
+                                    @break
+                                @case(2)
+                                    <td scope="col">En realización</td>
+                                    @break
+                                @default
+                                    <td scope="col">Sin estado definido</td>
+                                    @break
+                            @endswitch
                             <td scope="col">{{ $productos->pesoKg }}</td>
                             <td scope="col"><a class="btn btn-secondary btn-sm" role="button" onclick="removeProducto({{ $trabajador->idTrabajador }}, {{ $productos->idProductos }})"><b>Eliminar</b></a>
                         </tr>

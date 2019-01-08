@@ -28,7 +28,7 @@ class TrabajadorController extends Controller
 
         $datos_trabajador = Trabajador::find($data);
         $userTrabajador = $datos_trabajador->user;
-        $productos = $datos_trabajador->producto;
+        $productos = $datos_trabajador->productoIncompleto;
 
         return view('admin.trabajador.trabajador_control')
                                 ->with('trabajador', $datos_trabajador)
