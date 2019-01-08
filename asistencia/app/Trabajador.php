@@ -17,6 +17,12 @@ class Trabajador extends Model
   {
       return $this->belongsTo('Asistencia\User', 'users_id_user');
   }
+
+  public function asistencias()
+  {
+    return $this->hasMany('Asistencia\Asistencia', 'trabajador_id_trabajador');
+  }
+
   public function validateData($var)
   {
       if($var == NULL)

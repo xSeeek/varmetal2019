@@ -14,6 +14,6 @@ class Asistencia extends Model
 
   public function trabajador()
   {
-    return $this->belongsToMany('Asistencia\Trabajador', 'asistencias_trabajador', 'trabajador_id_trabajador', 'asistencia_id_asistencia');
+    return $this->belongsTo('Asistencia\Trabajador', 'trabajador_id_trabajador');
   }
 }
