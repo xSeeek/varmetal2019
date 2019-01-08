@@ -42,17 +42,15 @@ class PausaController extends Controller
     {
 
       $usuarioActual = Auth::user();
+      $trabajador = $usuarioActual->trabajador;
+      if($usuarioActual->type == User::DEFAULT_TYPE)
           $trabajador = $usuarioActual->trabajador;
-          if($usuarioActual->type == User::DEFAULT_TYPE)
-              $trabajador = $usuarioActual->trabajador;
-          else
-              return -1;
+      else
+          return -1;
 
       $response=json_decode($data->DATA);
 
       $producto = Producto::find($response[0]);
-      $trabajador = Trabajador::find($response[3]);
-
       $newPausa=new Pausa;
       $mytime = Carbon/Carbon::now();
       $newPausa->fechaInicio = $response[2];

@@ -32,12 +32,10 @@ function savePausa()
         datosPausa[0] = {{$producto->idProducto}};
         datosPausa[1] = document.getElementById("detalle").value;
         datosPausa[2] = 'weaInicio';
-        datosPausa[3] = {{$trabajador->idTrabajador}};
         datosPausa[4] = 'weafin';
         alert('Producto: '+datosPausa[0]+
         ' - descripcion: '+datosPausa[1]+
         ' - fechaInicio: '+datosPausa[2]+
-        ' - trabajador : '+datosPausa[3]+
         ' - fechaFin   : '+datosPausa[4]);
 
         json_text = JSON.stringify(datosPausa);
