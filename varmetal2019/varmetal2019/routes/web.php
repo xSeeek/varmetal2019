@@ -68,13 +68,9 @@ Route::get('/admin', 'AdminController@admin')
                     ->middleware('is_admin')
                     ->name('producto/addProducto');
         /* [** POST **] */
-<<<<<<< HEAD
-
-=======
         Route::post('/productoControl/addProducto', ['uses' => 'ProductoController@insertProducto'])
                     ->middleware('is_admin')
                     ->name('productoControl/addProducto');
->>>>>>> 46ba87cb3d663e0dcdacfdc0ec3def899f7dc744
     /* [** VISTA GENERAL **] */
         /* [** GET **] */
         Route::get('/detalleProducto/{id}', ['uses' => 'ProductoController@detalleProducto'])
@@ -89,9 +85,9 @@ Route::get('/admin', 'AdminController@admin')
         Route::get('/pausaControl/{id}', ['uses' => 'PausaController@pausaControl'])
                     ->middleware('is_trabajador')
                     ->name('pausaControl');
-        Route::get('/pausa/addPausa', ['uses' => 'PausaController@addPausa'])
-                    ->middleware('is_trabajador')
-                    ->name('pausa/addPausa');
+        Route::get('/addPausa/{id_trabajador}/{id_producto}', ['uses' => 'PausaController@addPausa'])
+                    //->middleware('is_trabajador')
+                    ->name('addPausa');
         /* [** POST **] */
         Route::post('/pausaControl/addPausa/', ['uses' => 'PausaController@insertPausa'])
                     ->middleware('is_trabajador')

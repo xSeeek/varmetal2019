@@ -4,12 +4,13 @@ namespace Varmetal\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Varmetal\Producto;
+use Varmetal\Trabajador;
 
 class PausaController extends Controller
 {
     public function pausaControl($data)
     {
-        if($data 'undefined')
+        if($data == 'undefined')
             return redirect()->route('detalleProducto', $idProducto);
 
         $datos_pausa = Pausa::find($data);
@@ -22,9 +23,13 @@ class PausaController extends Controller
                 ->with('trabajador_pausa', $trabajado);
     }
 
-    public function addPausa()
+    public function addPausa($idTrabajador, $idProducto)
     {
-      return view('pausa.addPausa');
+      $producto=Producto::find($idProducto);
+      $trabajador=Trabajador::find($idTrabajador);
+      return view('pausa.addPausa')
+              ->with('producto', $producto)
+              ->with('trabajador', $trabajador);
     }
 
     public function adminPausas()

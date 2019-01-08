@@ -20,11 +20,11 @@
                       </div>
                   </div>
                   <a class="btn btn-outline-success my-2 my-sm-0" role="button" href="{{url('detalleProducto', [$producto->idProducto])}}" onclick="asignarPausa"><b>Fin</b></a>            </div>
+                </div>
           </div>
           <a class="btn btn-outline-success my-2 my-sm-0" role="button" href="{{url('detalleProducto', [$producto->idProducto])}}"><b>Volver</b></a>
         </div>
 |  </div>
-</div>
 <script type="text/javascript">
 function saveChanges()
     {
