@@ -7,8 +7,8 @@ use Asistencia\Http\Requests\RegistrarAsistencia;
 
 class AsistenciaController extends Controller
 {
-    public function registrarAsistencia(RegistrarAsistencia $request)
-    {
-      
-    }
+  public function registrarAsistencia(RegistrarAsistencia $request)
+  {
+    
+  }
 }

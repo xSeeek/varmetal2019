@@ -17,6 +17,8 @@
     <!-- Sweet Alerts 2-->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.28.4/dist/sweetalert2.all.min.js"></script>
 
+    <!-- js ui -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
     <!--Data table-->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
@@ -35,6 +37,9 @@
 
     <!--Rut Formater-->
     <script src={{asset("js/jquery.rut.js")}}></script>
+
+    <!--Date Picker-->
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <!-- JS Mensajes -->
     <script src="/js/mensajes.js"></script>

@@ -28,3 +28,7 @@
  * [Ruta home: página principal]
  */
   Route::get('/home', 'HomeController@index')->name('home');
+
+
+Route::post('/registrarAsistencia', 'AsistenciaController@registrarAsistencia')
+  ->name('registrarAsistencia');
