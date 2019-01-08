@@ -25,11 +25,13 @@ class PausaController extends Controller
 
     public function addPausa($idTrabajador, $idProducto)
     {
+      $fechaInicio=now();
       $producto=Producto::find($idProducto);
       $trabajador=Trabajador::find($idTrabajador);
       return view('pausa.addPausa')
               ->with('producto', $producto)
-              ->with('trabajador', $trabajador);
+              ->with('trabajador', $trabajador)
+              ->with('fechaInicio', $fechaInicio);
     }
 
     public function adminPausas()
@@ -40,7 +42,6 @@ class PausaController extends Controller
 
     public function insertPausa(Request $data)
     {
-
       $response=json_decode($data->DATA);
 
       $producto = Producto::find($response[0]);
@@ -51,9 +52,12 @@ class PausaController extends Controller
       $newPausa->fechaInicio = $response[2];
       $newPausa->fechaFin = null;
       $newPausa->descripcion = $response[1];
+      $newPausa->fechaFin=$response[4];
 
       $producto->newPausa()->associate($newPausa);
       $newPausa->trabajador()->associate($trabajador);
+
+      $newPausa->save();
 
       return 1;
     }

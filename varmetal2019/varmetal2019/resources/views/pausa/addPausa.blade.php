@@ -1,42 +1,46 @@
 @extends('layouts.app')
 
 @section('head')
-<title>PAUSA</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 
 @section('content')
-
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{$producto->nombre}}</div>
+              @if($producto !=NULL)
+                <div class="card-header">Nombre del Producto: {{$producto->nombre}}</div>
                 <div class="card=body">
-                  <label for="fechaInicio" id="fechaInicio" class="col-md-4 col-form-label text-md-right">{{ __('now()')}}</label>
-
-                      <div class="input-group row">
-                        <div class="input-group mb-3">
-                        <textarea id="detalle" class="form-control" aria-label="Crear Pausa"></textarea>
-                      </div>
-                  </div>
-                  <a class="btn btn-outline-success my-2 my-sm-0" role="button" href="{{url('detalleProducto', [$producto->idProducto])}}" onclick="asignarPausa"><b>Fin</b></a>            </div>
+                  <label for="fechaInicio" id="fechaInicio">Fecha Inicio: {{$fechaInicio}}</label>
+                  <br>Descripción</br>
+                    <div>
+                      <textarea id="detalle" aria-label="Crear Pausa"></textarea>
+                    </div>
+                  <a class="btn btn-outline-success my-1 my-sm-0" role="button" onclick="savePausa()"><b>Terminar Pausa</b></a>
+                  <a class="btn btn-outline-success my-2 my-sm-0" role="button" href="{{url('detalleProducto', [$producto->idProducto])}}"><b>Volver</b></a>
+                  @else
+                  <div class="input-group mb-3">No existen productos</div>
+                  <a class="btn btn-outline-success my-2 my-sm-0" role="button" href="{{url('detalleProducto', [$producto->idProducto])}}"><b>Volver</b></a>
+                  @endif
                 </div>
+            </div>
           </div>
-          <a class="btn btn-outline-success my-2 my-sm-0" role="button" href="{{url('detalleProducto', [$producto->idProducto])}}"><b>Volver</b></a>
         </div>
-|  </div>
+  </div>
 <script type="text/javascript">
-function saveChanges()
+function savePausa()
     {
-        var updatedCurso, json_text;
+        var datosPausa, json_text;
 
-        updatedCurso = Array();
-        updatedCurso[0] = {{$producto->idProducto}};
-        updatedCurso[1] = document.getElementById("detalle").value;
-        updatedCurso[2] = document.getElementById("fechaInicio").value;
-        updatedCurso[3] = {{$trabajador->idTrabajador}};
+        datosPausa = Array();
+        datosPausa[0] = {{$producto->idProducto}};
+        datosPausa[1] = document.getElementById("detalle").value;
+        datosPausa[2] = document.getElementById("fechaInicio").value;
+        datosPausa[3] = {{$trabajador->idTrabajador}};
+        datosPausa[4] = 'wea';
 
-        json_text = JSON.stringify(updatedCurso);
+        json_text = JSON.stringify(datosPausa);
 
         $.ajax({
             headers: {
@@ -44,12 +48,18 @@ function saveChanges()
             },
             type: "POST",
             data: {DATA:json_text},
-            url: "{{url('pausa/addPausa')}}",
-            success: function(msg){
-                alert(msg);
+            url: "{{url('/pausaControl/addPausa/', [ $trabajador->idTrabajador], [ $producto->idProducto])}}",
+            success: function(response){
+                if(response!=1)
+                {
+                    alert('sorry compare');
+                    console.log(response);
+                }
+                else
+                    alert('wena compare');
+                    window.location.href="{{url('/detalleProducto', [$producto->idProducto])}}";
             }
         });
-        changeStatus();
-        return;
     }
 </script>
+@endsection
