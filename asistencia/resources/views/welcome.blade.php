@@ -1,20 +1,7 @@
-@extends('layouts.headers')
+@extends('layouts.navbar')
 
-@section('body')
-  <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
-    <div class="container">
-      <a class="navbar-brand" href="{!! route('index') !!}">
-        <h4>{{ config('app.name', 'Laravel') }}</h4>
-      </a>
-      <ul class="navbar-nav ml-auto">
-        @guest
-          <li class="nav-item">
-            <a class="nav-link" href="{{ route('login') }}">{{ __('Ingresar al perfil de administrador') }}</a>
-          </li>
-        @endguest
-      </ul>
-    </div>
-  </nav>
+@section('main')
+
   <div class="jumbotron">
     <h1 class="display-4">Bienvenido</h1>
     <p class="lead">Si desea marcar asistencia ingrese su rut</p>
