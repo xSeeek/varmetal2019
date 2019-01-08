@@ -16,13 +16,14 @@ class ProductoTable extends Migration
         Schema::create('producto', function (Blueprint $table) {
             $table->increments('idProducto');
             $table->string('nombre');
-            $table->date('fechaInicio')->timestamps();
-            $table->date('fechaFin')->nullable();
+            $table->time('fechaInicio')->timestamps();
+            $table->time('fechaFin')->nullable();
             $table->integer('pesoKg')->nullable();
             $table->integer('cantPausa')->default(0);
             $table->integer('cantProducto')->default(1);
-            $table->integer('estado')->default('1');
+            $table->integer('estado')->default('0');
             $table->integer('prioridad')->default('3');
+            $table->timestamps();
         });
     }
 

@@ -5,13 +5,13 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Trabajadores</div>
+                <div class="card-header">Productos</div>
                     <div class="card=body">
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <label class="input-group-text" for="inputGroupSelect01">Filtro</label>
                             </div>
-                            <input class="form-control" type="text" id="inputProducto" onkeyup="filterProducto()" placeholder="Ingrese el RUT" title="RUT del Alumno">
+                            <input class="form-control" type="text" id="inputProducto" onkeyup="filterProducto()" placeholder="Ingrese el Nombre del Producto" title="RUT del Alumno">
                             <a class="btn btn-secondary btn-sm" role="button" href="{{url('addProducto')}}"><b>Agregar Nuevo Producto</b></a>
                         </div>
                         @if(($productos != NULL) && (count($productos) > 0))
@@ -61,7 +61,7 @@
                                         <td scope="col">Sin estado definido</th>
                                         @break
                                 @endswitch
-                                <td scope="col">{{ $producto->cantidad }}</td>
+                                <td scope="col">{{ $producto->cantProducto }}</td>
                                 <td scope="col">{{ $producto->pesoKg }}</td>
                                 <td><a class="btn btn-outline-success my-2 my-sm-0" href="{{url('productoControl', [$producto->idProducto])}}" role="button" style="cursor: pointer;">Ver Detalles</a></td>
                             </tr>

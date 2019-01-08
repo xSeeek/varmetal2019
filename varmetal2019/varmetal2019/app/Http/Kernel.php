@@ -9,7 +9,7 @@ class Kernel extends HttpKernel
     /**
      * The application's global HTTP middleware stack.
      *
-     * These middleware are run during every request to your application.
+     * These middleware are run during every request to your application. Ja
      *
      * @var array
      */
@@ -60,8 +60,8 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'is_admin' => \Varmetal\Http\Middleware\IsAdmin::class,
-        'is_trabajador' => \Varmetal\Http\Middleware\IsTrabajador::class,
+        'is_admin' => \Varmetal\Http\Middleware\isAdmin::class,
+        'is_trabajador' => \Varmetal\Http\Middleware\isTrabajador::class,
     ];
 
     /**

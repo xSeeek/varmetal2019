@@ -11,7 +11,7 @@ class Producto extends Model
 
     public function trabajador()
     {
-        return $this->belongsToMany('Varmetal\Producto', 'trabajadores_producto', 'producto_id_producto', 'trabajador_id_trabajador');
+        return $this->belongsToMany('Varmetal\Trabajador', 'trabajadores_producto', 'producto_id_producto', 'trabajador_id_trabajador');
     }
     public function pausa()
     {

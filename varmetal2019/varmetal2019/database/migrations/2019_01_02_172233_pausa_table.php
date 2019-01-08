@@ -21,6 +21,9 @@ class PausaTable extends Migration
 
             $table->integer('producto_id_producto')->unsigned();
             $table->foreign('producto_id_producto')->references('idProducto')->on('producto')->onDelete('cascade');
+
+            $table->integer('trabajador_id_trabajador')->unsigned();
+            $table->foreign('trabajador_id_trabajador')->references('idTrabajador')->on('trabajador')->onDelete('cascade');
         });
     }
 
