@@ -7,29 +7,30 @@ use Varmetal\Producto;
 
 class PausaController extends Controller
 {
-    public function addPausa($idTrabajador, $idProducto)
+    public function pausaControl($data)
     {
-        if($idTrabajador == 'undefined' || $idProducto )
+        if($data 'undefined')
             return redirect()->route('detalleProducto', $idProducto);
 
-        $producto = Producto::find($idProducto);
-        $trabajador = Trabajador::find($idTrabajador);
+        $datos_pausa = Pausa::find($data);
+        $productos_pausa = $datos_pausa->productos;
+        $trabajador_pausa = $datos_pausa->trabajador;
 
-        return view('trabajador.addPausa')
-                ->with('pausa', null)
-                ->with('producto', $producto)
-                ->with('trabajador', $trabajador);
+        return view('admin.pausa.pausa_control')
+                ->with('pausa', $datos_pausa)
+                ->with('productos_pausa', $productoPausa)
+                ->with('trabajador_pausa', $trabajado);
     }
 
-    public function savePausa($data)
+    public function addPausa()
     {
-      return view('trabajador.addPausa');
+      return view('pausa.addPausa');
     }
 
     public function adminPausas()
     {
         $pausas_registradas = Pausa::get();
-        return view('admin.administracion_pausas')->with('pausas_almacenadas', $pausas_registradas);
+        return view('admin.pausa.administracion_pausas')->with('pausas_almacenadas', $pausas_registradas);
     }
 
     public function insertPausa(Request $data)
@@ -50,13 +51,5 @@ class PausaController extends Controller
       $newPausa->trabajador()->associate($trabajador);
 
       return 1;
-    }
-
-    public function pausaControl($data)
-    {
-      if($data == 'undefined')
-      {
-        return redirect()->route('')
-      }
     }
 }

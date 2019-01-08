@@ -32,7 +32,7 @@
                                     <td scope="col">Inactivo</td>
                                 @endif
                                 <td><a class="btn btn-outline-success my-2 my-sm-0" href="{{url('trabajadorControl', [$trabajador->idTrabajador])}}" role="button" style="cursor: pointer;">Ver Detalles</a></td>
-                            </tr>
+                            </tr> 
                             @endforeach
                         </table>
                         @else

@@ -11,7 +11,7 @@ class ProductoController extends Controller
     {
         $productos = Producto::get();
 
-        return view('admin.administracion_productos')
+        return view('admin.producto.administracion_productos')
                 ->with('productos', $productos);
     }
 
