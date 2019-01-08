@@ -43,7 +43,10 @@ class PausaController extends Controller
     public function insertPausa(Request $data)
     {
         $usuarioActual = Auth::user();
-        $trabajador = $usuarioActual->trabajador;
+        if($usuarioActual->type == User::DEFAULT_TYPE)
+            $trabajador = $usuarioActual->trabajador;
+        else
+            return -1;
 
       $response=json_decode($data->DATA);
 
