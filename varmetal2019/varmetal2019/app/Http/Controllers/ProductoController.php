@@ -11,7 +11,7 @@ class ProductoController extends Controller
     {
         $productos = Producto::orderBy('prioridad', 'DESC')->get();
 
-        return view('admin.producto.administracion_productos')
+        return view('admin.administracion_productos')
                 ->with('productos', $productos);
     }
 

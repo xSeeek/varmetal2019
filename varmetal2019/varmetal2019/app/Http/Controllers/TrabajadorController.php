@@ -18,7 +18,7 @@ class TrabajadorController extends Controller
     public function adminTrabajadores()
     {
         $trabajadores_registrados = Trabajador::get();
-        return view('admin.trabajador.administracion_trabajadores')->with('trabajadores_almacenados', $trabajadores_registrados);
+        return view('admin.administracion_trabajadores')->with('trabajadores_almacenados', $trabajadores_registrados);
     }
 
     public function trabajadorControl($data)
