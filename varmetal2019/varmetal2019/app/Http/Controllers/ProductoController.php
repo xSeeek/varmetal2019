@@ -111,6 +111,8 @@ class ProductoController extends Controller
         $producto = Producto::find($response[0]);
 
         $trabajador->producto()->attach($producto->idProducto);
+        $producto->estado = 2;
+        $producto->save();
         return 1;
     }
 
@@ -120,6 +122,14 @@ class ProductoController extends Controller
 
         $trabajador = Trabajador::find($response[0]);
         $trabajador->producto()->detach($response[1]);
+
+        $producto = Producto::find($response[1]);
+        $trabajadores_producto = $producto->trabajador;
+        if(($trabajadores_producto == NULL) || (count($trabajadores_producto) <= 0))
+        {
+            $producto->estado = 0;
+            $producto->save();
+        }
 
         return 1;
     }

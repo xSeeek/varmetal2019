@@ -42,7 +42,7 @@
                                     <input type="text" readonly id="estadoProducto" class="form-control-plaintext" value="Finalizado">
                                     @break
                                 @case(2)
-                                    <input type="text" readonly id="estadoProducto" class="form-control-plaintext" value="En realización">
+                                    <input type="text" readonly id="estadoProducto" class="form-control-plaintext" value="En proceso de desarrollo">
                                     @break
                                 @default
                                     <input type="text" readonly id="estadoProducto" class="form-control-plaintext" value="Sin estado definido">
@@ -72,6 +72,13 @@
                                     @break
                             @endswitch
                         </div>
+                        @if($producto->estado == 1)
+                            <br>
+                            <b style="color:red">Información Importante:</b>
+                            <div class="col-sm-10">
+                                <input type="text" readonly id="pesoProducto" style="color:red" class="form-control-plaintext" value="Este producto se marcó como terminado.">
+                            </div>
+                        @endif
                     </h5>
                 </div>
             </div>
@@ -131,6 +138,20 @@
                 </br>
                     <a class="btn btn-outline-success btn-md" id="insertButton" role="button" href="{{url('producto/asignarTrabajo', [$producto->idProducto])}}">Asignar</a>
                 </h6>
+                @if($producto->estado == 1)
+                <br>
+                <h6>
+                    Reiniciar Producción:
+                </br>
+                    <a class="btn btn-warning btn-md" id="resetButton" role="button" href="{{url('producto/asignarTrabajo', [$producto->idProducto])}}">Reiniciar</a>
+                </h6>
+                <br>
+                <h6>
+                    Terminar Producto:
+                </br>
+                    <a class="btn btn-outline-danger btn-md" id="finishButton" role="button" href="{{url('producto/asignarTrabajo', [$producto->idProducto])}}">Terminar</a>
+                </h6>
+                @endif
             </div>
         </div>
     </div>
