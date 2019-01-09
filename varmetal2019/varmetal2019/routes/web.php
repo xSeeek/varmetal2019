@@ -91,12 +91,15 @@ Route::get('/admin', 'AdminController@admin')
 /* [** Pausa Controller **] */
     /* [** ADMINISTRACIÓN **] */
         /* [** GET **] */
-        Route::get('/adminPausa', 'PausaController@adminPausas')
+        Route::get('/adminPausas', 'PausaController@adminPausas')
                     ->middleware('is_admin')
-                    ->name('adminPausa');
+                    ->name('adminPausas');
         Route::get('/pausaControl/{id}', ['uses' => 'PausaController@pausaControl'])
                     ->middleware('is_trabajador')
                     ->name('pausaControlGet');
+        Route::get('/adminPausaControlGet/{id}', ['uses' => 'PausaController@pausaControl'])
+                    ->middleware('is_admin')
+                    ->name('adminPausaControlGet');
         Route::get('/addPausa/{idProducto}', ['uses' => 'PausaController@addPausa'])
                     ->middleware('is_trabajador')
                     ->name('addPausaGet');

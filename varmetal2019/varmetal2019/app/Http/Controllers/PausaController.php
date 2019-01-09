@@ -8,7 +8,7 @@ use Varmetal\Trabajador;
 use Varmetal\Pausa;
 use Auth;
 use Varmetal\User;
-use DateTime;
+use Carbon\Carbon;
 
 class PausaController extends Controller
 {
@@ -17,32 +17,34 @@ class PausaController extends Controller
     {
         if($data == 'undefined')
             return redirect()->route('detalleProducto', $idProducto);
-        $datos_pausa = Pausa::find($data);
+        $datos_pausa = Pausa::find($data); //id de la pausa
         if($datos_pausa == NULL )
             return redirect()->route('detalleProducto', $idProducto);
-        $productos_pausa = $datos_pausa->productos;
-        $trabajador_pausa = $datos_pausa->trabajador;
+        $productoPausa = $datos_pausa->productos;
+        $trabajador = $datos_pausa->trabajador;
 
         return view('admin.pausa.pausa_control')
                 ->with('pausa', $datos_pausa)
                 ->with('productos_pausa', $productoPausa)
-                ->with('trabajador_pausa', $trabajado);
+                ->with('trabajador_pausa', $trabajador);
     }
 
     public function addPausa($idProducto)
     {
-      $fechaInicio=now();
+      $date = Carbon::now();
       $producto=Producto::find($idProducto);
       return view('pausa.addPausa')
               ->with('producto', $producto)
-              ->with('fechaInicio', $fechaInicio);
+              ->with('fechaInicio', $date);
     }
 
     public function adminPausas()
     {
         $pausas_registradas = Pausa::get();
+        $productos_registrados = Producto::get();
         return view('admin.administracion_pausas')
-                ->with('pausas_almacenadas', $pausas_registradas);
+                ->with('pausas_almacenadas', $pausas_registradas)
+                ->with('productos_almacenados', $productos_registrados);
     }
 
     public function insertPausa(Request $data)
@@ -52,16 +54,13 @@ class PausaController extends Controller
 
       $idProducto = $response[0];
       $descripcion = $response[1];
-      $fechaInicio = $response[2];
+      //$fechaInicio = $response[2];
 
       $newPausa=new Pausa;
-      $newPausa->fechaInicio = '2019-03-03';
-      $newPausa->fechaFin = now()->format('Y-m-d H:m:s');
-      $newPausa->descripcion = 'holaholaholahola';
-      /*echo'
-            fechaInicio: ',$newPausa->fechaInicio,'
-            fechaFin: ',$newPausa->fechaFin,'
-            descripcion: ',$newPausa->descripcion;*/
+      $newPausa->fechaInicio = now();
+      $newPausa->fechaFin = NULL;
+      $newPausa->descripcion = $descripcion;
+
       $producto = Producto::find($idProducto);
       $newPausa->producto()->associate($producto);
       $usuarioActual = Auth::user();

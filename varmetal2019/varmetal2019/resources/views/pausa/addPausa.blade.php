@@ -60,7 +60,7 @@ function savePausa()
       datosPausa = Array();
       datosPausa[0] = {{$producto->idProducto}};
       datosPausa[1] = document.getElementById("descripcion").value;
-      datosPausa[2] = {{$fechaInicio->format('Y-m-d')}};
+      //datosPausa[2] = {{$fechaInicio}};
       alert('ARREGLO: '+datosPausa);
       json_text = JSON.stringify(datosPausa);
       alert('STRINGIFY: '+json_text);

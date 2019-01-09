@@ -23,17 +23,17 @@
                                 <th>Fecha Fin</th>
                             </tr>
                             @foreach($pausas_almacenadas as $key => $pausa)
-                            <tr id="id_pausa{{ $pausa->idPausa }}">
-                              <?php
-                                $producto = Producto::find($pausa->producto_id_producto);
-                              ?>
-                                <td scope="col">{{ $producto->idProducto }}</td>
-                                <td scope="col">{{ $producto->nombre }}</td>
-                                <td scope="col">{{$pausa->fechaInicio}}</td>
-                                <td scope="col">{{$pausa->descripcion}}</td>
-                                <td scope="col">{{$pausa->fechaFin}}</td>
-                                <td><a class="btn btn-outline-success my-2 my-sm-0" href="{{url('pausaControl', [$pausa->idPausa])}}" role="button" style="cursor: pointer;">Ver Detalles</a></td>
-                            </tr>
+                              @foreach($productos_almacenados as $key => $producto)
+                                @if($pausa->producto_id_producto == $producto->idProducto)
+                                  <tr id="id_pausa{{ $pausa->idPausa }}">                                <td scope="col">{{ $producto->idProducto }}</td>
+                                      <td scope="col">{{ $producto->nombre }}</td>
+                                      <td scope="col">{{$pausa->fechaInicio}}</td>
+                                      <td scope="col">{{$pausa->descripcion}}</td>
+                                      <td scope="col">{{$pausa->fechaFin}}</td>
+                                      <td><a class="btn btn-outline-success my-2 my-sm-0" href="{{url('adminPausaControlGet', [$pausa->idPausa])}}" role="button" style="cursor: pointer;">Ver Detalles</a></td>
+                                  </tr>
+                                @endif
+                              @endforeach
                             @endforeach
                         </table>
                         @else

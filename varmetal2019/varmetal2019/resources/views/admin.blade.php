@@ -32,8 +32,8 @@
                             <td><a class="btn btn-outline-success my-2 my-sm-0" href="{{url('adminTrabajador')}}" role="button" style="cursor: pointer;">Ingresar</a></td>
                         </tr>
                         <tr>
-                            <th>Descargar Archivos</th>
-                            <td><a class="btn btn-outline-success my-2 my-sm-0" href="" role="button" style="cursor: pointer;">Ingresar</a></td>
+                            <th>Pausas</th>
+                            <td><a class="btn btn-outline-success my-2 my-sm-0" href="{{url('adminPausas')}}" role="button" style="cursor: pointer;">Ingresar</a></td>
                         </tr>
                     </table>
                 </div>
