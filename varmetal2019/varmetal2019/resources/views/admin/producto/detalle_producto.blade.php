@@ -129,7 +129,7 @@
                 <h6>
                     Asignar más trabajadores:
                 </br>
-                    <a class="btn btn-outline-success btn-md" id="deleteButton" role="button" href="{{url('producto/asignarTrabajo', [$producto->idProducto])}}">Asignar</a>
+                    <a class="btn btn-outline-success btn-md" id="insertButton" role="button" href="{{url('producto/asignarTrabajo', [$producto->idProducto])}}">Asignar</a>
                 </h6>
             </div>
         </div>
