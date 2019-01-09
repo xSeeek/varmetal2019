@@ -5,6 +5,7 @@ namespace Varmetal\Http\Controllers;
 use Illuminate\Http\Request;
 use Varmetal\Trabajador;
 use Varmetal\User;
+use Varmetal\Producto;
 use Freshwork\ChileanBundle\Rut;
 use Illuminate\Support\Facades\Auth;
 
@@ -103,5 +104,33 @@ class TrabajadorController extends Controller
 
         return view('trabajador.productos_trabajador')
                 ->with('productos', $productos);
+    }
+
+    public function asignarTrabajo($data)
+    {
+        $trabajador = Trabajador::find($data);
+        $productos_almacenados = Producto::get();
+        $productos = $trabajador->producto;
+
+        $productos_disponibles = null;
+        $i = 0;
+        $cont = 0;
+
+        foreach($productos_almacenados as $p_saved)
+        {
+            foreach($productos as $p_asig)
+                if($p_saved->idProducto == $p_asig->idProducto)
+                    $cont++;
+            if($cont == 0)
+            {
+                $productos_disponibles[$i] = $p_saved;
+                $i++;
+            }
+            $cont = 0;
+        }
+
+        return view('admin.trabajador.productos_disponibles')
+                ->with('productos_almacenados', $productos_disponibles)
+                ->with('idTrabajador', $data);
     }
 }

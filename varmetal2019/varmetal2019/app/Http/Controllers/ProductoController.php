@@ -77,7 +77,7 @@ class ProductoController extends Controller
 
     public function asignarTrabajo($data)
     {
-        $producto = Producto::find($data)->first();
+        $producto = Producto::find($data);
         $trabajadores_almacenados = Trabajador::get();
         $trabajadores = $producto->trabajador;
 
