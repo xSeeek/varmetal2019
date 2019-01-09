@@ -45,42 +45,46 @@
                 <div class="card-body">
 
                 @if(($productos_trabajador != NULL) && (count($productos_trabajador)>0))
-                <table id="tablaCursosAlumno" style="width:90%; margin:20px;">
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Fecha Inicio</th>
-                        <th>Fecha Fin</th>
-                        <th>Estado</th>
-                        <th>Peso (kg)</th>
-                        <th>Opciones</th>
-                    </tr>
-                    @foreach($productos_trabajador as $key => $productos)
-                        <tr id="id_cursoAlumno{{ $productos->idProductos }}">
-                            <td scope="col">{{ $productos->nombre }}</td>
-                            <td scope="col">{{ $productos->fechaInicio }}</td>
-                            @if($productos->fechaFin != NULL)
-                                <td scope="col">{{ $productos->fechaFin }}</td>
-                            @else
-                                <td scope="col">No determinada</td>
-                            @endif
-                            @switch($productos->estado)
-                                @case(0)
-                                    <td scope="col">Por realizar</td>
-                                    @break
-                                @case(1)
-                                    <td scope="col">Finalizado</td>
-                                    @break
-                                @case(2)
-                                    <td scope="col">En realización</td>
-                                    @break
-                                @default
-                                    <td scope="col">Sin estado definido</td>
-                                    @break
-                            @endswitch
-                            <td scope="col">{{ $productos->pesoKg }}</td>
-                            <td scope="col"><a class="btn btn-secondary btn-sm" role="button" onclick="removeProducto({{ $trabajador->idTrabajador }}, {{ $productos->idProductos }})"><b>Eliminar</b></a>
+                <table id="tablaAdministracion" style="width:100%" align="center">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Fecha Inicio</th>
+                            <th>Fecha Fin</th>
+                            <th>Estado</th>
+                            <th>Peso (kg)</th>
+                            <th>Opciones</th>
                         </tr>
-                    @endforeach
+                    </thead>
+                    <tbody>
+                        @foreach($productos_trabajador as $key => $productos)
+                            <tr id="id_productoTrabajador{{ $productos->idProductos }}">
+                                <td scope="col">{{ $productos->nombre }}</td>
+                                <td scope="col">{{ $productos->fechaInicio }}</td>
+                                @if($productos->fechaFin != NULL)
+                                    <td scope="col">{{ $productos->fechaFin }}</td>
+                                @else
+                                    <td scope="col">No determinada</td>
+                                @endif
+                                @switch($productos->estado)
+                                    @case(0)
+                                        <td scope="col">Por realizar</td>
+                                        @break
+                                    @case(1)
+                                        <td scope="col">Finalizado</td>
+                                        @break
+                                    @case(2)
+                                        <td scope="col">En realización</td>
+                                        @break
+                                    @default
+                                        <td scope="col">Sin estado definido</td>
+                                        @break
+                                @endswitch
+                                <td scope="col">{{ $productos->pesoKg }}</td>
+                                <td scope="col"><a class="btn btn-outline-secondary btn-sm" onclick="deleteProducto({{ $trabajador->idTrabajador }}, {{ $productos->idProducto }})" role="button"><b>Eliminar</b></a>
+                            </tr>
+                        @endforeach
+                    </tbody>
                 </table>
                 @else
                 </br>
@@ -94,25 +98,41 @@
         </div>
         <div class="card">
             <div class="card-header">Opciones de Administración</div>
-            <div class="card-body">
+            <div class="card-body" align="center">
                 <h6>
                     Edicion de datos:
                 </br>
-                    <a class="btn btn-outline-primary btn-sm" id="enableChangesButton" role="button" onclick="changeStatus()">Habilitar/Deshabilitar</a>
+                    <a class="btn btn-outline-success btn-md" id="enableChangesButton" role="button" onclick="changeStatus()">Habilitar/Deshabilitar</a>
                 </h6>
             <br>
                 <h6>
                     Borrar Trabajador:
                 </br>
-                    <a class="btn btn-outline-primary btn-sm" role="button" onclick="deleteTrabajador({{$trabajador->idTrabajador}})">Borrar</a>
+                    <a class="btn btn-outline-success btn-md" role="button" onclick="deleteTrabajador({{$trabajador->idTrabajador}})">Borrar</a>
+                </h6>
+            </br>
+                <h6>
+                    Asignar nuevos productos:
+                </br>
+                    <a class="btn btn-outline-success btn-md" id="deleteButton" role="button" href="{{url('trabajador/asignarProducto', [$trabajador->idTrabajador])}}">Asignar</a>
                 </h6>
             </div>
         </div>
     </div>
 </div>
 <script type="text/javascript">
-
-
+    window.onload = function formatTable()
+    {
+        var table = $('#tablaAdministracion').DataTable({
+            "language":{
+                "url":"//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+            },
+            "scrollX": true,
+       });
+       $(function () {
+           $('[data-toggle="tooltip"]').tooltip();
+       });
+    }
     function deleteTrabajador(data)
     {
         $.ajax({
@@ -125,6 +145,29 @@
             success: function(response){
                 console.log(response);
                 window.location.href = response.redirect;
+            }
+        });
+    }
+    function deleteProducto(idTrabajador, idProducto)
+    {
+        var data, json_data;
+
+        data = Array();
+        data[0] = idTrabajador;
+        data[1] = idProducto;
+
+        json_data = JSON.stringify(data);
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: "POST",
+            data: {DATA:json_data},
+            url: "{{url('/productoControl/removeWorker')}}",
+            success: function(response){
+                console.log('asd');
+                window.location.href = "{{url('trabajadorControl', [$trabajador->idTrabajador])}}";
             }
         });
     }

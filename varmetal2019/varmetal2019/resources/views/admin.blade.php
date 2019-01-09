@@ -21,7 +21,7 @@
             </br>
             <div class="card">
                 <div class="card-header">Administracion</div>
-                <div class="card=body">
+                <div class="card=body container mt-3">
                     <table id="tablaAdministracion" style="width:50%; margin:15px;">
                         <tr>
                             <th>Productos</th>

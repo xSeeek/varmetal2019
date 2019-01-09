@@ -38,6 +38,9 @@ Route::get('/admin', 'AdminController@admin')
         Route::get('/addTrabajador', 'TrabajadorController@addTrabajador')
                     ->middleware('is_admin')
                     ->name('trabajador/addTrabajador');
+        Route::get('/trabajador/asignarProducto/{id}', ['uses' => 'TrabajadorController@asignarTrabajo'])
+                    ->middleware('is_admin')
+                    ->name('/trabajador/asignarProducto');
         /* [** POST **] */
         Route::post('/createPassword', 'TrabajadorController@createPassword')
                     ->middleware('is_admin')
