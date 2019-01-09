@@ -18,7 +18,7 @@
             @endif
           </div>
           <div class="form-group">
-            <input src="{{storage_path('upload/defalut.jpg')}}" type="file" accept="file/*" class="form-control-file{{ $errors->has('file') ? ' is-invalid' : '' }}" id="img_select" value="{{ old('file') }}" capture="camera" name="file" required autofocus/>
+            <input type="file" accept="file/*" class="form-control-file{{ $errors->has('file') ? ' is-invalid' : '' }}" id="img_select" value="{{ old('file') }}" capture="camera" name="file" required autofocus/>
             @if ($errors->has('file'))
               <span class="invalid-feedback" role="alert">
                 <strong>{{ $errors->first('file') }}</strong>
@@ -31,10 +31,8 @@
 
         </form>
         <div class="form-group">
-          <img src="" id="img_show" width="100%" class="img-thumbnail"/>
+          <img src="{{Storage::url('uploads/asistencias/default.jpg')}}" id="img_show" width="100%" class="img-thumbnail"/>
         </div>
-
-
       </div>
     </div>
   </div>

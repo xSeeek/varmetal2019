@@ -1,7 +1,6 @@
 <?php
 
 namespace Asistencia\Http\Controllers;
-use Image;
 use Freshwork\ChileanBundle\Rut;
 use Asistencia\Trabajador;
 use Illuminate\Http\Request;
@@ -18,8 +17,9 @@ class AsistenciaController extends Controller
   {
       $this->middleware('auth');
   }
-  
+
   public function registrarAsistencia(MarcarAsistencia $request)
   {
+
   }
 }
