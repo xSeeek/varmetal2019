@@ -113,4 +113,14 @@ class ProductoController extends Controller
         $trabajador->producto()->attach($producto->idProducto);
         return 1;
     }
+
+    public function removeWorker(Request $request)
+    {
+        $response = json_decode($request->DATA);
+
+        $trabajador = Trabajador::find($response[0]);
+        $trabajador->producto()->detach($response[1]);
+
+        return 1;
+    }
 }
