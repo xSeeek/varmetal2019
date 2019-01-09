@@ -70,12 +70,15 @@
             data: $('#nuevoProductoForm').serialize(),
             url: "{{url('productoControl/addProducto')}}",
             success: function(response){
-                if(response != 1)
+                if(response != 1 && response !=2)
                 {
-                    alert(response);
+                    alert('Ocurrio un ERROR');
                     console.log(response);
                 }
-                else
+                if(response == 2)
+                {
+                  alert('Tiene que ingresar una descripcion para hacer valida la pausa');
+                }
                     window.location.href = "{{url('adminProducto')}}";
             }
         });

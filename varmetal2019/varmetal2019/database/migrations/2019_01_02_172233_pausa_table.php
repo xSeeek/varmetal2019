@@ -11,6 +11,8 @@ class PausaTable extends Migration
      *
      * @return void
      */
+    public $timestamps = false;
+
     public function up()
     {
         Schema::create('pausa', function (Blueprint $table) {

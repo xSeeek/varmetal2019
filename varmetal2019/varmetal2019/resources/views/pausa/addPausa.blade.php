@@ -9,53 +9,84 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Nombre del Producto: {{$producto->nombre}}</div>
-                <div class="card=body">
-                  <label for="fechaInicio" id="fechaInicio">Fecha Inicio: {{$fechaInicio}}</label>
-                  <br>Descripción</br>
-                    <div>
-                      <textarea id="detalle" aria-label="Crear Pausa"></textarea>
+              <div class="card-header">Pausa Del Producto
+                <div class="card-body">
+                  <form method="POST" name="nuevaPausa" id="nuevaPausa">
+                    <div class="form-group row">
+                      <label class="col-md-4 col-form-label text-md-right">Nombre del Producto</label>
+                      <div class="col-md-6">
+                        <input id="nombreProducto" value="{{$producto->nombre}}" type="text" class="form-control" aria-describedby="nombreProducto" placeholder="Nombre del Producto" name="nombreProducto" readonly=”readonly”>
+                      </div>
                     </div>
-                  <a class="btn btn-outline-success my-1 my-sm-0" role="button" onclick="savePausa()"><b>Terminar Pausa</b></a>
+                    <div class="form-group row">
+                      <label class="col-md-4 col-form-label text-md-right">ID del Producto:</label>
+                        <div class="col-md-6">
+                          <input id="idProducto" value="{{$producto->idProducto}}" type="text" class="form-control" aria-describedby="idProducto" placeholder="Id del Producto" name="idProducto" readonly=”readonly”>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-4 col-form-label text-md-right">Fecha Inicio de la Pausa:</label>
+                        <div class="col-md-6">
+                          <input id="fechaInicio" value="{{$fechaInicio}}" type="text" class="form-control" aria-describedby="fechaInicio" placeholder="Fecha de Inicio" name="fechaInicio" readonly=”readonly”>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-4 col-form-label text-md-right">Descripción: (Mientras ocurre el suceso, detalle con esmeración)
+                        <div class="col-md-6">
+                          <textarea id="descripcion" type="text" class="form-control" aria-describedby="descripcion" placeholder="Descripcion" name="descripcion" cols="50" onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
+                        </div>
+                    </div>
+                  </form>
+                  <a class="btn btn-outline-success my-1 my-sm-0" role="button" onclick="savePausa()"><b>Registrar Cambios</b></a>
                   <a class="btn btn-outline-success my-2 my-sm-0" role="button" href="{{url('detalleProducto', [$producto->idProducto])}}"><b>Volver</b></a>
-                </div>
-            </div>
+              </div>
           </div>
         </div>
+      </div>
+    </div>
   </div>
 <script type="text/javascript">
+
+function textAreaAdjust(o)
+    {
+        o.style.height = "1px";
+        o.style.height = (25+o.scrollHeight)+"px";
+    }
+
 function savePausa()
     {
-        var datosPausa, json_text;
 
-        datosPausa = Array();
-        datosPausa[0] = {{$producto->idProducto}};
-        datosPausa[1] = document.getElementById("detalle").value;
-        datosPausa[2] = 'weaInicio';
-        datosPausa[4] = 'weafin';
-        alert('Producto: '+datosPausa[0]+
+      var datosPausa, json_text;
+
+      datosPausa = Array();
+      datosPausa[0] = {{$producto->idProducto}};
+      datosPausa[1] = document.getElementById("descripcion").value;
+      datosPausa[2] = {{$fechaInicio->format('Y-m-d')}};
+      datosPausa[3] = 'FIN';
+      alert('Producto: '+datosPausa[0]+
         ' - descripcion: '+datosPausa[1]+
         ' - fechaInicio: '+datosPausa[2]+
-        ' - fechaFin   : '+datosPausa[4]);
+        ' - fechaFin   : '+datosPausa[3]);
 
         json_text = JSON.stringify(datosPausa);
-        alert('pasando de too');
+
         $.ajax({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             type: "POST",
             data: {DATA:json_text},
-            url: "{{url('/pausaControl/addPausa')}}",
+            url: "{{url('/SuperPausaControl')}}",
             success: function(response){
                 if(response!=1)
                 {
-                    alert('sorry compare');
+                    alert(response);
                     console.log(response);
                 }
-                else
-                    alert('wena compare');
+                else{
+                    alert(response);
                     window.location.href="{{url('/detalleProducto', [$producto->idProducto])}}";
+                  }
             }
         });
     }
