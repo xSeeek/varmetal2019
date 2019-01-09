@@ -15,7 +15,7 @@ class Trabajador extends Model
     }
     public function pausa()
     {
-        return $this->hasMany('Varmetal\Pausa');
+        return $this->hasMany('Varmetal\Pausa','pausa_id_pausa');
     }
     public function producto()
     {

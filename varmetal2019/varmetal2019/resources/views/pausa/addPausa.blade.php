@@ -13,7 +13,7 @@
                 <div class="card-body">
                   <form method="POST" name="nuevaPausa" id="nuevaPausa">
                     <div class="form-group row">
-                      <label class="col-md-4 col-form-label text-md-right">Nombre del Producto</label>
+                      <label class="col-md-4 col-form-label text-md-right">Producto:</label>
                       <div class="col-md-6">
                         <input id="nombreProducto" value="{{$producto->nombre}}" type="text" class="form-control" aria-describedby="nombreProducto" placeholder="Nombre del Producto" name="nombreProducto" readonly=”readonly”>
                       </div>
@@ -25,15 +25,15 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                      <label class="col-md-4 col-form-label text-md-right">Fecha Inicio de la Pausa:</label>
+                      <label class="col-md-4 col-form-label text-md-right">Inicio:</label>
                         <div class="col-md-6">
                           <input id="fechaInicio" value="{{$fechaInicio}}" type="text" class="form-control" aria-describedby="fechaInicio" placeholder="Fecha de Inicio" name="fechaInicio" readonly=”readonly”>
                         </div>
                     </div>
                     <div class="form-group row">
-                      <label class="col-md-4 col-form-label text-md-right">Descripción: (Mientras ocurre el suceso, detalle con esmeración)
+                      <label class="text-md-right">Descripción: (Mientras ocurre el suceso, detalle con esmeración)
                         <div class="col-md-6">
-                          <textarea id="descripcion" type="text" class="form-control" aria-describedby="descripcion" placeholder="Descripcion" name="descripcion" cols="50" onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
+                          <textarea id="descripcion" type="text" aria-describedby="descripcion" placeholder="Descripcion" name="descripcion" cols="50" onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
                         </div>
                     </div>
                   </form>
@@ -55,40 +55,35 @@ function textAreaAdjust(o)
 
 function savePausa()
     {
-
       var datosPausa, json_text;
 
       datosPausa = Array();
       datosPausa[0] = {{$producto->idProducto}};
       datosPausa[1] = document.getElementById("descripcion").value;
       datosPausa[2] = {{$fechaInicio->format('Y-m-d')}};
-      datosPausa[3] = 'FIN';
-      alert('Producto: '+datosPausa[0]+
-        ' - descripcion: '+datosPausa[1]+
-        ' - fechaInicio: '+datosPausa[2]+
-        ' - fechaFin   : '+datosPausa[3]);
+      alert('ARREGLO: '+datosPausa);
+      json_text = JSON.stringify(datosPausa);
+      alert('STRINGIFY: '+json_text);
 
-        json_text = JSON.stringify(datosPausa);
-
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            type: "POST",
-            data: {DATA:json_text},
-            url: "{{url('/SuperPausaControl')}}",
-            success: function(response){
-                if(response!=1)
-                {
-                    alert(response);
-                    console.log(response);
+      $.ajax({
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          type: "POST",
+          data: {DATA:json_text},
+          url: "{{url('/SuperPausaControl')}}",
+          success: function(response){
+              if(response!='Datos almacenados')
+              {
+                  alert('Error al almacenar la pausa');
+                  console.log(response);
+              }
+              else{
+                  alert(response);
+                  window.location.href="{{url('/detalleProducto', [$producto->idProducto])}}";
                 }
-                else{
-                    alert(response);
-                    window.location.href="{{url('/detalleProducto', [$producto->idProducto])}}";
-                  }
-            }
-        });
+          }
+      });
     }
 </script>
 @endsection

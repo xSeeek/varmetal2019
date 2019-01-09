@@ -11,20 +11,20 @@ class PausaTable extends Migration
      *
      * @return void
      */
-    public $timestamps = false;
 
     public function up()
     {
         Schema::create('pausa', function (Blueprint $table) {
+            $table->timestamps();
             $table->increments('idPausa');
             $table->string('descripcion');
             $table->date('fechaInicio')->timestamps();
             $table->date('fechaFin')->nullable();
 
-            $table->integer('producto_id_producto')->unsigned();
+            $table->integer('producto_id_producto')->unsigned()->nullable();
             $table->foreign('producto_id_producto')->references('idProducto')->on('producto')->onDelete('cascade');
 
-            $table->integer('trabajador_id_trabajador')->unsigned();
+            $table->integer('trabajador_id_trabajador')->unsigned()->nullable();
             $table->foreign('trabajador_id_trabajador')->references('idTrabajador')->on('trabajador')->onDelete('cascade');
         });
     }

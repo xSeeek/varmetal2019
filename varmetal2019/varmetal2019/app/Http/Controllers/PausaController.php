@@ -12,6 +12,7 @@ use DateTime;
 
 class PausaController extends Controller
 {
+
     public function pausaControl($data)
     {
         if($data == 'undefined')
@@ -46,35 +47,32 @@ class PausaController extends Controller
 
     public function insertPausa(Request $data)
     {
+
       $response = json_decode($data->DATA, true);
 
-      $fechaInicio = new DateTime($response[2]);
-
-      $usuarioActual = Auth::user();
-
-      $trabajador = $usuarioActual->trabajador;
-      if($usuarioActual->type == User::DEFAULT_TYPE)
-          $trabajador = $usuarioActual->trabajador;
-      else
-          return 'Usted no es un Trabajador';
-
-      if($response[1] == NULL)
-          return 2;
+      $idProducto = $response[0];
+      $descripcion = $response[1];
+      $fechaInicio = $response[2];
 
       $newPausa=new Pausa;
-
-      $newPausa->fechaInicio = $fechaInicio->format('Y-m-d');
-      $newPausa->fechaFin = now()->format('Y-m-d');
-      $newPausa->descripcion = $response[1];
-      //$newPausa->updated_at=now()->format('Y-m-d');
-      //$newPausa->created_at=now()->format('Y-m-d');
+      $newPausa->fechaInicio = '2019-03-03';
+      $newPausa->fechaFin = now()->format('Y-m-d H:m:s');
+      $newPausa->descripcion = 'holaholaholahola';
+      /*echo'
+            fechaInicio: ',$newPausa->fechaInicio,'
+            fechaFin: ',$newPausa->fechaFin,'
+            descripcion: ',$newPausa->descripcion;*/
+      $producto = Producto::find($idProducto);
+      $newPausa->producto()->associate($producto);
+      $usuarioActual = Auth::user();
+      $trabajador = $usuarioActual->trabajador;
+      if($usuarioActual->type == User::DEFAULT_TYPE){
+          $trabajador = $usuarioActual->trabajador;
+          $newPausa->trabajador()->associate($trabajador);
+        }
+      else
+          return 'Usted no es un Trabajador';
       $newPausa->save();
-
-      $producto = Producto::find($response[0]);
-
-      $producto->newPausa()->associate($newPausa);
-      $newPausa->trabajador()->associate($trabajador);
-
-      return 1;
+      return 'Datos almacenados';
     }
 }

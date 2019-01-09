@@ -103,4 +103,4 @@ Route::get('/admin', 'AdminController@admin')
                     ->name('pausaControlPost');
         Route::get('/SuperPausaControl', ['uses' =>'PausaController@insertPausa'])
                     ->middleware('is_trabajador')
-                    ->name('pausaControlPost');
+                  ->name('pausaControlGet');
