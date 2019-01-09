@@ -31,7 +31,8 @@
 
         </form>
         <div class="form-group">
-          <img src="{{Storage::url('uploads/asistencias/default.jpg')}}" id="img_show" width="100%" class="img-thumbnail"/>
+          <img src="{{Storage::disk('asistencia')->url('default.jpg')}}" id="img_show" width="100%" class="img-thumbnail"/>
+
         </div>
       </div>
     </div>
@@ -40,8 +41,19 @@
   <script type="text/javascript">
     $(document).ready(function() {
       $("input#rut").rut({formatOn: 'keyup', ignoreControlKeys: false});
+      $("#img_select").change(function(){
+          readURL(this);
+      });
     });
 
+  </script>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      @if (session()->has('success'))
+        showMensajeSwall(MSG_SUCCESS, "{{session()->get('success')}}");
+       @endif
+     });
   </script>
 
   <script type="text/javascript">

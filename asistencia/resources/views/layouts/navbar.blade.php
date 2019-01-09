@@ -2,7 +2,7 @@
 
 @section('body')
   <div id="app">
-    <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
+    <nav class="navbar sticky-top navbar-expand-md navbar-light navbar-laravel">
       <div class="container">
         @guest
           <a class="navbar-brand" href="{{ route('index') }}">

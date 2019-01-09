@@ -64,6 +64,13 @@ return [
             'url' => env('AWS_URL'),
         ],
 
+        'asistencia' => [
+          'driver' => 'local',
+          'root' => storage_path('app/public/asistencia'),
+          'url' => env('APP_URL').'/storage/asistencia',
+        ],
+
+
     ],
 
 ];
