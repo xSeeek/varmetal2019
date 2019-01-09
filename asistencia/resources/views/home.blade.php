@@ -3,10 +3,11 @@
 @section('main')
 
   <div class="jumbotron">
-    <h1 class="display-4">Bienvenido</h1>
-    <p class="lead">Si desea marcar asistencia ingrese un rut</p>
+
     <div class="row">
-      <div class="col-4 col-md-4">
+      <div class="col">
+        <h1 class="display-4">Bienvenido</h1>
+        <p class="lead">Si desea marcar asistencia ingrese un rut</p>
         <form method="post" id="form_registrar_asistencia" action="{{route('registrarAsistencia')}}" enctype="multipart/form-data">
           <div class="form-group">
             @csrf
@@ -31,9 +32,11 @@
 
         </form>
         <div class="form-group">
-          <img src="{{Storage::disk('asistencia')->url('default.jpg')}}" id="img_show" width="100%" class="img-thumbnail"/>
-
+          <img id="img_show" width="100%" class="img-thumbnail" src="{{ Storage::disk('asistencia')->url('default.jpg') }}"/>
         </div>
+      </div>
+      <div class="col">
+        <h2>Ingresar al menu del administrador</h2>
       </div>
     </div>
   </div>
