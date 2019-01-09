@@ -2,6 +2,12 @@
 
 @section('head')
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <style>
+    div.texto {
+        display: flex;
+        justify-content: center;
+    }
+    </style>
 @endsection
 
 @section('content')
@@ -30,11 +36,15 @@
                           <input id="fechaInicio" value="{{$fechaInicio}}" type="text" class="form-control" aria-describedby="fechaInicio" placeholder="Fecha de Inicio" name="fechaInicio" readonly=”readonly”>
                         </div>
                     </div>
-                    <div class="form-group row">
-                      <label class="text-md-right">Descripción: (Mientras ocurre el suceso, detalle con esmeración)
-                        <div class="col-md-6">
-                          <textarea id="descripcion" type="text" aria-describedby="descripcion" placeholder="Descripcion" name="descripcion" cols="50" onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
+                    <div class="col-sm-10 form-group" aling="center">
+                    <div class="col-sm-10">
+                    <div class="col-sm-10">
+                      <label class="col-form-label text-md-center">Descripción: (Mientras ocurre el suceso, detalle con esmeración)
+                        <div class="texto text-md-center">
+                          <textarea class="texto" id="descripcion" type="text" aria-describedby="descripcion" placeholder="Descripcion" name="descripcion" cols="50" onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
                         </div>
+                    </div>
+                    </div>
                     </div>
                   </form>
                   <a class="btn btn-outline-success my-1 my-sm-0" role="button" onclick="savePausa()"><b>Registrar Cambios</b></a>
