@@ -32,7 +32,7 @@
 
         </form>
         <div class="form-group">
-          <img id="img_show" width="100%" class="img-thumbnail" src="{{ Storage::disk('asistencia')->url('default.jpg') }}"/>
+          <img id="img_show" width="100%" class="img-thumbnail" src="{{ Storage::disk('asistencia')->url('default.jpeg') }}"/>
         </div>
       </div>
       <div class="col">
