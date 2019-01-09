@@ -43,7 +43,7 @@
                     </div>
             </div>
         </br>
-            <a class="btn btn-primary btn-lg" role="button" href="{{url('admin')}}"><b>Volver</b></a>
+            <a class="btn btn-primary btn-lg" role="button" href="{{url('productoControl', [$idProducto])}}"><b>Volver</b></a>
         </div>
     </div>
 </div>
@@ -67,7 +67,7 @@
             }
         }
     }
-    window.onload = function loadYears()
+    window.onload = function formatTable()
     {
         var table = $('#tablaAdministracion').DataTable({
             "language":{
@@ -98,12 +98,11 @@
             url: "{{url('/productoControl/addWorker')}}",
             success: function(response){
                 if(response == 1)
-                    window.location.href = "{{url('productoControl', [$idProducto])}}";
+                    window.location.href = "{{url('producto/asignarTrabajo', [$idProducto])}}";
                 else
                     alert('Error al asignar al trabajador');
             }
         });
-    return;
     }
 </script>
 @endsection

@@ -80,6 +80,9 @@ Route::get('/admin', 'AdminController@admin')
         Route::post('/productoControl/addWorker', ['uses' => 'ProductoController@addWorker'])
                     ->middleware('is_admin')
                     ->name('/productoControl/addWorker');
+        Route::post('/productoControl/removeWorker', ['uses' => 'ProductoController@removeWorker'])
+                    ->middleware('is_admin')
+                    ->name('/productoControl/removeWorker');
     /* [** VISTA GENERAL **] */
         /* [** GET **] */
         Route::get('/detalleProducto/{id}', ['uses' => 'ProductoController@detalleProducto'])

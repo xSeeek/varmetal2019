@@ -81,21 +81,27 @@
                 <div class="card-body">
 
                 @if(($trabajadores != NULL) && (count($trabajadores)>0))
-                <table id="tablaCursosAlumno" style="width:90%; margin:20px;">
-                    <tr>
-                        <th>RUT</th>
-                        <th>Nombre</th>
-                        <th>Cargo</th>
-                        <th>Opciones</th>
-                    </tr>
-                    @foreach($trabajadores as $key => $trabajador)
-                    <tr id="id_Trabajador{{ $trabajador->idTrabajador }}">
-                        <td scope="col">{{ $trabajador->rut }}</td>
-                        <td scope="col">{{ $trabajador->nombre }}</td>
-                        <td scope="col">{{ $trabajador->cargo }}</td>
-                        <td scope="col"><a class="btn btn-outline-secondary btn-sm" href="{{url('trabajadorControl', [$trabajador->idTrabajador])}}" role="button"><b>Ficha Trabajador</b></a>
-                    </tr>
-                    @endforeach
+                <table id="tablaAdministracion" style="width:100%" align="center">
+                    <thead>
+                        <tr>
+                            <th>RUT</th>
+                            <th>Nombre</th>
+                            <th>Cargo</th>
+                            <th>Ficha</th>
+                            <th>Eliminar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($trabajadores as $key => $trabajador)
+                        <tr id="id_Trabajador{{ $trabajador->idTrabajador }}">
+                            <td scope="col">{{ $trabajador->rut }}</td>
+                            <td scope="col">{{ $trabajador->nombre }}</td>
+                            <td scope="col">{{ $trabajador->cargo }}</td>
+                            <td scope="col"><a class="btn btn-outline-secondary btn-sm" href="{{url('trabajadorControl', [$trabajador->idTrabajador])}}" role="button"><b>Ficha Trabajador</b></a>
+                            <td scope="col"><a class="btn btn-outline-secondary btn-sm" onclick="deleteWorker({{ $trabajador->idTrabajador }}, {{ $producto->idProducto }})" role="button"><b>Eliminar</b></a>
+                        </tr>
+                        @endforeach
+                    </tbody>
                 </table>
                 @else
                 </br>
@@ -148,6 +154,42 @@
                 window.location.href = response.redirect;
             }
         });
+    }
+
+    function deleteWorker(idTrabajador, idProducto)
+    {
+        var data, json_data;
+
+        data = Array();
+        data[0] = idTrabajador;
+        data[1] = idProducto;
+
+        json_data = JSON.stringify(data);
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: "POST",
+            data: {DATA:json_data},
+            url: "{{url('/productoControl/removeWorker')}}",
+            success: function(response){
+                console.log('asd');
+                window.location.href = "{{url('productoControl', [$producto->idProducto])}}";
+            }
+        });
+    }
+    window.onload = function formatTable()
+    {
+        var table = $('#tablaAdministracion').DataTable({
+            "language":{
+                "url":"//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+            },
+            "scrollX": true,
+       });
+       $(function () {
+           $('[data-toggle="tooltip"]').tooltip();
+       });
     }
 </script>
 @endsection
