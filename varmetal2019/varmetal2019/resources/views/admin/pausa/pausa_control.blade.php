@@ -20,22 +20,23 @@
                         <th>ID Producto</th>
                         <th>Nombre Producto</th>
                         @if(($trabajador_pausa !=NULL && (count($trabajador_pausa)>0)))
-                        <table id="tablaTrabajadores" style="width:90%; margin:20px;">
-                          <tr>
-                              <th>Nombre Trabajador</th>
-                              <th>Rut<th>
-                          </tr>
-                          @foreach($trabajador_pausa as $key => $trabajador)
-                              <tr id="id_curso{{ $trabajador->idTrabajador }}">
-                                <td scope="col">{{ $trabajador->rut}}</td>
-                                <td scope="col">{{ $trabajador->nombre}}</td>
-                              </tr>
-                          @endforeach
-                        </table>
-                        @else
-                        </br>
-                            <h4 align="center">No se ha realizado ninguna pausa.</h4>
-                        </br>
+                          <table id="tablaTrabajadores" style="width:90%; margin:20px;">
+                            <tr>
+                                <th>Nombre Trabajador</th>
+                                <th>Rut<th>
+                            </tr>
+                            @foreach($trabajador_pausa as $key => $trabajador)
+                                <tr id="id_curso{{ $trabajador->idTrabajador }}">
+                                  <td scope="col">{{ $trabajador->rut}}</td>
+                                  <td scope="col">{{ $trabajador->nombre}}</td>
+                                </tr>
+                            @endforeach
+                          </table>
+                          @else
+                          </br>
+                              <h4 align="center">No se ha realizado ninguna pausa.</h4>
+                          </br>
+                        @endif
                         <th>Fecha Inicio</th>
                         <th>Descripcion</th>
                         <th>Fecha Fin</th>

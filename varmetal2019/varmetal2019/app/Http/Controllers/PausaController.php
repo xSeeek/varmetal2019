@@ -8,73 +8,70 @@ use Varmetal\Trabajador;
 use Varmetal\Pausa;
 use Auth;
 use Varmetal\User;
-use DateTime;
+use Carbon\Carbon;
 
 class PausaController extends Controller
 {
+
     public function pausaControl($data)
     {
         if($data == 'undefined')
             return redirect()->route('detalleProducto', $idProducto);
-        $datos_pausa = Pausa::find($data);
+        $datos_pausa = Pausa::find($data); //id de la pausa
         if($datos_pausa == NULL )
             return redirect()->route('detalleProducto', $idProducto);
-        $productos_pausa = $datos_pausa->productos;
-        $trabajador_pausa = $datos_pausa->trabajador;
+        $productoPausa = $datos_pausa->productos;
+        $trabajador = $datos_pausa->trabajador;
 
         return view('admin.pausa.pausa_control')
                 ->with('pausa', $datos_pausa)
                 ->with('productos_pausa', $productoPausa)
-                ->with('trabajador_pausa', $trabajado);
+                ->with('trabajador_pausa', $trabajador);
     }
 
     public function addPausa($idProducto)
     {
-      $fechaInicio=now();
+      $date = Carbon::now();
       $producto=Producto::find($idProducto);
       return view('pausa.addPausa')
               ->with('producto', $producto)
-              ->with('fechaInicio', $fechaInicio);
+              ->with('fechaInicio', $date);
     }
 
     public function adminPausas()
     {
         $pausas_registradas = Pausa::get();
+        $productos_registrados = Producto::get();
         return view('admin.administracion_pausas')
-                ->with('pausas_almacenadas', $pausas_registradas);
+                ->with('pausas_almacenadas', $pausas_registradas)
+                ->with('productos_almacenados', $productos_registrados);
     }
 
     public function insertPausa(Request $data)
     {
+
       $response = json_decode($data->DATA, true);
 
-      $fechaInicio = new DateTime($response[2]);
-
-      $usuarioActual = Auth::user();
-
-      $trabajador = $usuarioActual->trabajador;
-      if($usuarioActual->type == User::DEFAULT_TYPE)
-          $trabajador = $usuarioActual->trabajador;
-      else
-          return 'Usted no es un Trabajador';
-
-      if($response[1] == NULL)
-          return 2;
+      $idProducto = $response[0];
+      $descripcion = $response[1];
+      //$fechaInicio = $response[2];
 
       $newPausa=new Pausa;
+      $newPausa->fechaInicio = now();
+      $newPausa->fechaFin = NULL;
+      $newPausa->descripcion = $descripcion;
 
-      $newPausa->fechaInicio = $fechaInicio->format('Y-m-d');
-      $newPausa->fechaFin = now()->format('Y-m-d');
-      $newPausa->descripcion = $response[1];
-      //$newPausa->updated_at=now()->format('Y-m-d');
-      //$newPausa->created_at=now()->format('Y-m-d');
+      $producto = Producto::find($idProducto);
+      $newPausa->producto()->associate($producto);
+      $usuarioActual = Auth::user();
+      $trabajador = $usuarioActual->trabajador;
+      if($usuarioActual->type == User::DEFAULT_TYPE){
+          $trabajador = $usuarioActual->trabajador;
+          $newPausa->trabajador()->associate($trabajador);
+        }
+      else
+          return 'Usted no es un Trabajador';
       $newPausa->save();
-
-      $producto = Producto::find($response[0]);
-
-      $producto->newPausa()->associate($newPausa);
-      $newPausa->trabajador()->associate($trabajador);
-
-      return 1;
+      return 'Datos almacenados';
     }
 }

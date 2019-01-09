@@ -25,6 +25,9 @@ class ProductoTable extends Migration
             $table->integer('prioridad')->default('3');
             $table->boolean('terminado')->default('false');
             $table->timestamps();
+
+            //$table->integer('pausa_id_pausa')->unsigned()->nullable();
+            //$table->foreign('pausa_id_pausa')->references('idPausa')->on('pausa')->onDelete('cascade');
         });
     }
 
