@@ -38,13 +38,10 @@
                     </div>
                     <div class="col-sm-10 form-group" aling="center">
                     <div class="col-sm-10">
-                    <div class="col-sm-10">
                       <label class="col-form-label text-md-center">Descripción: (Mientras ocurre el suceso, detalle con esmeración)
                         <div class="texto text-md-center">
                           <textarea class="texto" id="descripcion" type="text" aria-describedby="descripcion" placeholder="Descripcion" name="descripcion" cols="50" onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
                         </div>
-                    </div>
-                    </div>
                     </div>
                   </form>
                   <a class="btn btn-outline-success my-1 my-sm-0" role="button" onclick="savePausa()"><b>Registrar Cambios</b></a>
@@ -53,6 +50,22 @@
           </div>
         </div>
       </div>
+    </div>
+    <div class="card">
+        <div class="card-header">Pausas</div>
+        <div class="card-body" align='center'>
+            <h6>
+                @if(($pausas_almacenadas!=NULL) && (count($pausas_almacenadas)>0))
+                  @foreach($pausas_almacenadas as $key => $pausa)
+                    @if(($pausa->producto_id_producto == $producto->idProducto) && ($pausa->fechaFin == NULL))
+                      <a class="btn btn-outline-success btn-md" id="finPausa" role="button" onclick="updateFechaFin({{$pausa->idPausa}})">Finalizar{{$pausa->idPausa}}</a>
+                      <br>
+                      <br>
+                    @endif
+                  @endforeach
+                @endif
+            </h6>
+        </div>
     </div>
   </div>
 <script type="text/javascript">
@@ -71,9 +84,7 @@ function savePausa()
       datosPausa[0] = {{$producto->idProducto}};
       datosPausa[1] = document.getElementById("descripcion").value;
       //datosPausa[2] = {{$fechaInicio}};
-      alert('ARREGLO: '+datosPausa);
       json_text = JSON.stringify(datosPausa);
-      alert('STRINGIFY: '+json_text);
 
       $.ajax({
           headers: {
@@ -85,15 +96,31 @@ function savePausa()
           success: function(response){
               if(response!='Datos almacenados')
               {
-                  alert('Error al almacenar la pausa');
+                  alert(response);
                   console.log(response);
               }
               else{
                   alert(response);
-                  window.location.href="{{url('/detalleProducto', [$producto->idProducto])}}";
+                  window.location.href="{{url('/addPausa', [$producto->idProducto])}}";
                 }
           }
       });
+    }
+
+    function updateFechaFin(data)
+    {
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: "POST",
+            data: {DATA:data},
+            url: "{{url('/trabajadorUpdateFechaFinPost')}}",
+            success: function(response){
+                console.log(response);
+                window.location.href = "{{url('/addPausa', [$producto->idProducto])}}";
+            }
+        });
     }
 </script>
 @endsection

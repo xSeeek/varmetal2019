@@ -122,9 +122,9 @@
             <div class="card-header">Opciones de Administración</div>
             <div class="card-body" align='center'>
                 <h6>
-                    Solicitar Pausa:
+                    Ver Pausas:
                 </br>
-                    <a class="btn btn-outline-success btn-md" id="pauseButton" role="button" href="{{url('addPausa', [$producto->idProducto])}}">Pausar</a>
+                    <a class="btn btn-outline-success btn-md" id="pauseButton" role="button" href="{{url('adminPausasAlmacenadas', [$producto->idProducto])}}">Pausas</a>
                 </h6>
                 <br>
                 <h6>

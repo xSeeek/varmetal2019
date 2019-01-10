@@ -15,27 +15,42 @@ class PausaController extends Controller
 
     public function pausaControl($data)
     {
-        if($data == 'undefined')
-            return redirect()->route('detalleProducto', $idProducto);
         $datos_pausa = Pausa::find($data); //id de la pausa
-        if($datos_pausa == NULL )
-            return redirect()->route('detalleProducto', $idProducto);
-        $productoPausa = $datos_pausa->productos;
-        $trabajador = $datos_pausa->trabajador;
+        $producto = Producto::find($datos_pausa->producto_id_producto);
+        $trabajador = Trabajador::find($datos_pausa->trabajador_id_trabajador);
 
-        return view('admin.pausa.pausa_control')
+        return view('admin.pausa.detalle_pausa')
                 ->with('pausa', $datos_pausa)
-                ->with('productos_pausa', $productoPausa)
-                ->with('trabajador_pausa', $trabajador);
+                ->with('producto', $producto)
+                ->with('trabajador', $trabajador);
     }
 
     public function addPausa($idProducto)
     {
+      $pausas_registradas = Pausa::get();
       $date = Carbon::now();
       $producto=Producto::find($idProducto);
       return view('pausa.addPausa')
               ->with('producto', $producto)
-              ->with('fechaInicio', $date);
+              ->with('fechaInicio', $date)
+              ->with('pausas_almacenadas', $pausas_registradas);
+    }
+
+    public function updateFechaFin(Request $data)
+    {
+      $pausa = Pausa::find($data->DATA);
+      $pausa->fechaFin=now();
+      $pausa->save();
+      return 1;
+    }
+
+    public function adminPausasDeProducto($idProducto)
+    {
+      $producto = Producto::find($idProducto);
+      $pausas_registradas = Pausa::get();
+      return view('admin.administracion_pausas_producto')
+              ->with('producto', $producto)
+              ->with('pausas_almacenadas', $pausas_registradas);
     }
 
     public function adminPausas()

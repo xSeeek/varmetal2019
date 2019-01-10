@@ -97,10 +97,13 @@ Route::get('/admin', 'AdminController@admin')
         Route::get('/adminPausas', 'PausaController@adminPausas')
                     ->middleware('is_admin')
                     ->name('adminPausas');
-        Route::get('/pausaControl/{id}', ['uses' => 'PausaController@pausaControl'])
+        Route::get('/adminPausasAlmacenadas/{id_producto}', ['uses' => 'PausaController@adminPausasDeProducto'])
+                    ->middleware('is_admin')
+                    ->name('adminPausasAlmacenadas');
+        /*Route::get('/detallesPausaGet/{id}', ['uses' => 'PausaController@pausaControl'])
                     ->middleware('is_trabajador')
-                    ->name('pausaControlGet');
-        Route::get('/adminPausaControlGet/{id}', ['uses' => 'PausaController@pausaControl'])
+                    ->name('pausaControlGet');*/
+        Route::get('/adminDetallesPausaGet/{id}', ['uses' => 'PausaController@pausaControl'])
                     ->middleware('is_admin')
                     ->name('adminPausaControlGet');
         Route::get('/addPausa/{idProducto}', ['uses' => 'PausaController@addPausa'])
@@ -110,6 +113,12 @@ Route::get('/admin', 'AdminController@admin')
         Route::post('/SuperPausaControl', ['uses' =>'PausaController@insertPausa'])
                     ->middleware('is_trabajador')
                     ->name('pausaControlPost');
-        Route::get('/SuperPausaControl', ['uses' =>'PausaController@insertPausa'])
+        Route::post('/adminUpdateFechaFinPost', ['uses' =>'PausaController@updateFechaFin'])
+                    ->middleware('is_admin')
+                    ->name('adminUpdateFechaFinPost');
+        Route::post('/trabajadorUpdateFechaFinPost', ['uses' =>'PausaController@updateFechaFin'])
                     ->middleware('is_trabajador')
-                  ->name('pausaControlGet');
+                    ->name('trabajadorUpdateFechaFinPost');
+        /*Route::get('/SuperPausaControl', ['uses' =>'PausaController@insertPausa'])
+                    ->middleware('is_trabajador')
+                  ->name('pausaControlGet');*/
