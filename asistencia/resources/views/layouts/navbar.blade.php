@@ -59,4 +59,12 @@
       @yield('main')
     </main>
   </div>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      @if (session()->has('success'))
+        showMensajeSwall(MSG_SUCCESS, "{{session()->get('success')}}");
+       @endif
+     });
+  </script>
 @endsection

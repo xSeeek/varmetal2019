@@ -6,7 +6,7 @@
       <div class="col">
         <div class="card">
           <div class="card-header">
-            <h5 class="card-tittle">Administrar Obras Administrador</h5>
+            <h3 class="card-tittle">Administrar Obras Administrador</h3>
           </div>
           <div class="card-body">
             <div class="row">
@@ -40,17 +40,10 @@
                       <h2>No registra ninguna obra</h2>
                     @endif
                   </div>
+                  <a href="{!! route('administrador.agregarObra') !!}" class="btn btn-success btn-lg btn-block text-light">Agregar nuevas obras</a>
                 </div>
-                <a href="" class="btn btn-success btn-lg btn-block text-light">Agregar nuevas obras</a>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card">
-          <div class="card-body">
-            
           </div>
         </div>
       </div>

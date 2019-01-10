@@ -39,3 +39,11 @@ Route::post('/registrarAsistencia', ['uses'=>'AsistenciaController@registrarAsis
 Route::get('/menuAdministrador', 'AsistenciaController@menuAdministrador')
   ->name('administrador.menuAdministrador')
   ->middleware('is_admin');
+
+Route::get('/menuAdministrador/agregarObra', 'ObraController@agregarObra')
+  ->name('administrador.agregarObra')
+  ->middleware('is_admin');
+
+Route::post('menuAdministrador/agregarObra/insert', 'ObraController@insertObra')
+  ->name('administrador.insertObra')
+  ->middleware('is_admin');

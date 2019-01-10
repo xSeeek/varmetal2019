@@ -55,14 +55,6 @@
   </script>
 
   <script type="text/javascript">
-    $(document).ready(function() {
-      @if (session()->has('success'))
-        showMensajeSwall(MSG_SUCCESS, "{{session()->get('success')}}");
-       @endif
-     });
-  </script>
-
-  <script type="text/javascript">
       function readURL(input) {
           if (input.files && input.files[0]) {
               var reader = new FileReader();
