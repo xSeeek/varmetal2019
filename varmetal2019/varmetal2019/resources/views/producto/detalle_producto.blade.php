@@ -109,7 +109,6 @@
             </div>
         <br>
         </div>
-<<<<<<< HEAD
     </div>
     </br>
     <div class="row justify-content-center">
@@ -127,24 +126,11 @@
             </div>
             <div class="modal-body" align="center">
                 <h5>
-=======
-        <div class="card">
-            <div class="card-header">Opciones de Administración</div>
-            <div class="card-body" align='center'>
-              @if($producto->fechaFin == NULL)
-                <h6>
->>>>>>> 7e8fd41766f9e89cb46b7924adcc5b5abcbec12e
                     Solicitar Pausa:
                 <br>
                     <a class="btn btn-outline-success btn-md" id="pauseButton" role="button" href="{{url('addPausa', [$producto->idProducto])}}">Pausar</a>
-<<<<<<< HEAD
                 </h5>
                 <br>
-=======
-                </h6>
-              @endif
-                </br>
->>>>>>> 7e8fd41766f9e89cb46b7924adcc5b5abcbec12e
                 @if($producto->terminado == false)
                     @if($producto->estado == 2)
                         <h5>

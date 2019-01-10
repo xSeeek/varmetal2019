@@ -121,7 +121,6 @@
                 </div>
             </div>
         </div>
-<<<<<<< HEAD
     </div>
     </br>
     <div class="row justify-content-center">
@@ -143,18 +142,6 @@
                 </br>
                     <a class="btn btn-outline-success btn-md" id="pauseButton" role="button" href="{{url('adminPausasAlmacenadas', [$producto->idProducto])}}">Pausas</a>
                 </h5>
-=======
-        <div class="card">
-            <div class="card-header">Opciones de Administración</div>
-            <div class="card-body" align='center'>
-              @if($producto->terminado == false)
-                <h6>
-                    Ver Pausas:
-                </br>
-                      <a class="btn btn-outline-success btn-md" id="pauseButton" role="button" href="{{url('adminPausasAlmacenadas', [$producto->idProducto])}}">Pausas</a>
-                </h6>
-              @endif
->>>>>>> 7e8fd41766f9e89cb46b7924adcc5b5abcbec12e
                 <br>
                 <h5>
                     Eliminar Producto:
