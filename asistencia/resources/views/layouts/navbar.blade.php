@@ -66,5 +66,8 @@
         showMensajeSwall(MSG_SUCCESS, "{{session()->get('success')}}");
        @endif
      });
+     $(function () {
+       $('[data-toggle="tooltip"]').tooltip();
+     });
   </script>
 @endsection

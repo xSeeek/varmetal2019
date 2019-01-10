@@ -27,7 +27,7 @@
                             <td class="text-center">{{$obra->nombre}}</td>
                             <td class="text-center">
                               <div class="btn-group" role="group">
-                                <button class="btn btn-primary">Asistencia</button>
+                                <button class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Ver Asistencias">Asistencia</button>
                                 <button class="btn btn-success">Editar</button>
                                 <button class="btn btn-danger">Eliminar</button>
                               </div>
