@@ -5,6 +5,7 @@ namespace Varmetal\Http\Controllers;
 use Illuminate\Http\Request;
 use Varmetal\Producto;
 use Varmetal\Trabajador;
+use Carbon\Carbon;
 
 class ProductoController extends Controller
 {
@@ -57,12 +58,16 @@ class ProductoController extends Controller
         if($request->pesoProducto < 0)
             return 'La cantidad tiene que ser mayor a 0';
 
+        $carbon = new Carbon();
+        if($request->fechaInicio < $carbon->now())
+            return 'La fecha seleccionada no es válida';
+
         $producto = new Producto;
         $producto->nombre = $request->nombreProducto;
         $producto->pesoKg = $request->pesoProducto;
         $producto->cantPausa = 0;
         $producto->prioridad = $request->inputPrioridad;
-        $producto->fechaInicio = now();
+        $producto->fechaInicio = $request->fechaInicio;
         $producto->cantProducto = $request->cantidadProducto;
         $producto->fechaFin = NULL;
 
@@ -145,7 +150,11 @@ class ProductoController extends Controller
             if($producto->estado == 1)
                 return 'El producto fue marcado como finalizado por otro trabajador';
 
-            $date = new \Carbon\Carbon();
+            $date = new Carbon();
+
+            if($producto->fechaInicio > $date->now())
+                return 'Se debe esperar hasta la hora de inicio para poder detener la producción.';
+
             $producto->estado = 1;
             $producto->fechaFin = $date->now();
 
@@ -179,7 +188,7 @@ class ProductoController extends Controller
 
         if($producto->terminado == false)
         {
-            $date = new \Carbon\Carbon();
+            $date = new Carbon();
             $producto->estado = 1;
             $producto->fechaFin = $date->now();
             $producto->terminado = true;

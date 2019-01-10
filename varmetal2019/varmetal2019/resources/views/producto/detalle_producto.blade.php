@@ -99,7 +99,7 @@
                 </table>
                 @else
                 </br>
-                    <h4 align="center">No hay compañeres asignados.</h4>
+                    <h4 align="center">No hay trabajadores asignados.</h4>
                 </br>
                 @endif
                 </div>
