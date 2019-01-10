@@ -9,7 +9,10 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Detalle del producto</div>
+                <div class="card-header">
+                    Detalle del producto
+                    <button type="button" class="btn btn-primary float-sm-right" data-toggle="modal" data-target="#modalOpciones"><i class="fas fa-cogs"></i></button>
+                </div>
                 <div class="card-body">
                     <h5>
                         <b>Nombre del Producto:</b>
@@ -98,44 +101,53 @@
                     </tbody>
                 </table>
                 @else
-                </br>
+                <br>
                     <h4 align="center">No hay trabajadores asignados.</h4>
-                </br>
+                <br>
                 @endif
                 </div>
             </div>
-        </br>
-        </div>
-        <div class="card">
-            <div class="card-header">Opciones de Administración</div>
-            <div class="card-body" align='center'>
-                <h6>
-                    Solicitar Pausa:
-                </br>
-                    <a class="btn btn-outline-success btn-md" id="pauseButton" role="button" href="{{url('addPausa', [$producto->idProducto])}}">Pausar</a>
-                </h6>
-                </br>
-                @if($producto->terminado == false)
-                    @if($producto->estado == 2)
-                        <h6>
-                            Marcar como terminado:
-                        </br>
-                            <a class="btn btn-outline-warning btn-md" id="stopButton" role="button" onclick="markAsFinished({{$producto->idProducto}})">Terminar</a>
-                        </h6>
-                    @else
-                        <h6>
-                            Anular termino:
-                        </br>
-                            <a class="btn btn-outline-danger btn-md" id="stopButton" role="button" onclick="unmarkAsFinished({{$producto->idProducto}})">Anular</a>
-                        </h6>
-                    @endif
-                @endif
-            </div>
+        <br>
         </div>
     </div>
     </br>
     <div class="row justify-content-center">
             <a class="btn btn-primary btn-lg" role="button" href="{{url('adminTrabajador')}}"><b>Volver</b></a>
+    </div>
+</div>
+<div class="modal fade" id="modalOpciones" tabindex="-1" role="dialog" aria-labelledby="Opciones disponibles" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Opciones disponibles:</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" align="center">
+                <h5>
+                    Solicitar Pausa:
+                <br>
+                    <a class="btn btn-outline-success btn-md" id="pauseButton" role="button" href="{{url('addPausa', [$producto->idProducto])}}">Pausar</a>
+                </h5>
+                <br>
+                @if($producto->terminado == false)
+                    @if($producto->estado == 2)
+                        <h5>
+                            Marcar como terminado:
+                        <br>
+                            <a class="btn btn-outline-warning btn-md" id="stopButton" role="button" onclick="markAsFinished({{$producto->idProducto}})">Terminar</a>
+                        </h5>
+                    @else
+                        <h5>
+                            Anular termino:
+                        <br>
+                            <a class="btn btn-outline-danger btn-md" id="stopButton" role="button" onclick="unmarkAsFinished({{$producto->idProducto}})">Anular</a>
+                        </h5>
+                    @endif
+                @endif
+            </div>
+        </div>
     </div>
 </div>
 <script type="text/javascript">

@@ -9,7 +9,10 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Información del Trabajador</div>
+                <div class="card-header">
+                    Información del Trabajador
+                    <button type="button" class="btn btn-primary float-sm-right" data-toggle="modal" data-target="#modalOpciones"><i class="fas fa-cogs"></i></button>
+                </div>
                 <div class="card-body">
                     <h5>
                         <b>Nombre Completo:</b>
@@ -96,26 +99,35 @@
         </br>
             <a class="btn btn-primary btn-lg" role="button" href="{{url('adminTrabajador')}}"><b>Volver</b></a>
         </div>
-        <div class="card">
-            <div class="card-header">Opciones de Administración</div>
-            <div class="card-body" align="center">
-                <h6>
+    </div>
+</div>
+<div class="modal fade" id="modalOpciones" tabindex="-1" role="dialog" aria-labelledby="Opciones disponibles" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Opciones disponibles:</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" align="center">
+                <h5>
                     Edicion de datos:
                 </br>
                     <a class="btn btn-outline-success btn-md" id="enableChangesButton" role="button" onclick="changeStatus()">Habilitar/Deshabilitar</a>
-                </h6>
-            <br>
-                <h6>
+                </h5>
+                <br>
+                <h5>
                     Borrar Trabajador:
-                </br>
+                <br>
                     <a class="btn btn-outline-success btn-md" role="button" onclick="deleteTrabajador({{$trabajador->idTrabajador}})">Borrar</a>
-                </h6>
-            </br>
-                <h6>
+                </h5>
+                <br>
+                <h5>
                     Asignar nuevos productos:
-                </br>
+                <br>
                     <a class="btn btn-outline-success btn-md" id="deleteButton" role="button" href="{{url('trabajador/asignarProducto', [$trabajador->idTrabajador])}}">Asignar</a>
-                </h6>
+                </h5>
             </div>
         </div>
     </div>

@@ -9,7 +9,10 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Detalle del producto</div>
+                <div class="card-header">
+                    Detalle del producto
+                    <button type="button" class="btn btn-primary float-sm-right" data-toggle="modal" data-target="#modalOpciones"><i class="fas fa-cogs"></i></button>
+                </div>
                 <div class="card-body">
                     <h5>
                         <b>Nombre del Producto:</b>
@@ -118,55 +121,64 @@
                 </div>
             </div>
         </div>
-        <div class="card">
-            <div class="card-header">Opciones de Administración</div>
-            <div class="card-body" align='center'>
-                <h6>
-                    Ver Pausas:
-                </br>
-                    <a class="btn btn-outline-success btn-md" id="pauseButton" role="button" href="{{url('adminPausasAlmacenadas', [$producto->idProducto])}}">Pausas</a>
-                </h6>
-                <br>
-                <h6>
-                    Eliminar Producto:
-                </br>
-                    <a class="btn btn-outline-success btn-md" id="deleteButton" role="button" onclick="deleteProducto({{$producto->idProducto}})">Eliminar</a>
-                </h6>
-                <br>
-                <h6>
-                    Asignar más trabajadores:
-                </br>
-                    <a class="btn btn-outline-success btn-md" id="insertButton" role="button" href="{{url('producto/asignarTrabajo', [$producto->idProducto])}}">Asignar</a>
-                </h6>
-                @if($producto->terminado == false)
-                    @if($producto->estado == 1)
-                    <br>
-                    <h6>
-                        Anular Termino:
-                    </br>
-                        <a class="btn btn-warning btn-md" id="resetButton" role="button" onclick="resetProduccion({{$producto->idProducto}})">Reiniciar</a>
-                    </h6>
-                    <br>
-                    <h6>
-                        Terminar Producto:
-                    </br>
-                        <a class="btn btn-outline-danger btn-md" id="finishButton" role="button" onclick="finishProduccion({{$producto->idProducto}})">Terminar</a>
-                    </h6>
-                @endif
-            @else
-                <br>
-                <h6>
-                    Reiniciar Producto:
-                </br>
-                    <a class="btn btn-warning btn-md" id="resetButton" role="button" onclick="resetProducto({{$producto->idProducto}})">Reiniciar</a>
-                </h6>
-            @endif
-            </div>
-        </div>
     </div>
     </br>
     <div class="row justify-content-center">
             <a class="btn btn-primary btn-lg" role="button" href="{{url('adminProducto')}}"><b>Volver</b></a>
+    </div>
+</div>
+<div class="modal fade" id="modalOpciones" tabindex="-1" role="dialog" aria-labelledby="Opciones disponibles" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Opciones disponibles:</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" align="center">
+                <h5>
+                    Ver Pausas:
+                </br>
+                    <a class="btn btn-outline-success btn-md" id="pauseButton" role="button" href="{{url('adminPausasAlmacenadas', [$producto->idProducto])}}">Pausas</a>
+                </h5>
+                <br>
+                <h5>
+                    Eliminar Producto:
+                </br>
+                    <a class="btn btn-outline-success btn-md" id="deleteButton" role="button" onclick="deleteProducto({{$producto->idProducto}})">Eliminar</a>
+                </h5>
+                <br>
+                <h5>
+                    Asignar más trabajadores:
+                </br>
+                    <a class="btn btn-outline-success btn-md" id="insertButton" role="button" href="{{url('producto/asignarTrabajo', [$producto->idProducto])}}">Asignar</a>
+                </h5>
+                @if($producto->terminado == false)
+                    @if($producto->estado == 1)
+                        <br>
+                        <h5>
+                            Anular Termino:
+                        </br>
+                            <a class="btn btn-warning btn-md" id="resetButton" role="button" onclick="resetProduccion({{$producto->idProducto}})">Reiniciar</a>
+                        </h5>
+                        <br>
+                        <h5>
+                            Terminar Producto:
+                        </br>
+                            <a class="btn btn-outline-danger btn-md" id="finishButton" role="button" onclick="finishProduccion({{$producto->idProducto}})">Terminar</a>
+                        </h5>
+                    @endif
+                @else
+                    <br>
+                    <h5>
+                        Reiniciar Producto:
+                    </br>
+                        <a class="btn btn-warning btn-md" id="resetButton" role="button" onclick="resetProducto({{$producto->idProducto}})">Reiniciar</a>
+                    </h5>
+                @endif
+            </div>
+        </div>
     </div>
 </div>
 <script type="text/javascript">
