@@ -16,6 +16,7 @@
                         @if(($pausas_almacenadas != NULL) && (count($pausas_almacenadas) > 0))
                         <table id="tablaAdministracion" style="width:90%; margin:20px;" align="center">
                             <tr>
+                                <th>ID Pausa</th>
                                 <th>ID Producto</th>
                                 <th>Nombre Producto</th>
                                 <th>Fecha Inicio</th>
@@ -25,6 +26,7 @@
                               @foreach($productos_almacenados as $key => $producto)
                                 @if($pausa->producto_id_producto == $producto->idProducto)
                                   <tr id="id_pausa{{ $pausa->idPausa }}">
+                                      <td scope="col">{{ $pausa->idPausa}}</td>
                                       <td scope="col">{{ $producto->idProducto }}</td>
                                       <td scope="col">{{ $producto->nombre }}</td>
                                       <td scope="col">{{$pausa->fechaInicio}}</td>

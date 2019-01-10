@@ -36,9 +36,17 @@
                         <div class="col-sm-10">
                             <input type="text" readonly id="nombreTrabajador" class="form-control-plaintext" value="{{$trabajador->nombre}}">
                         </div>
-                        <b>Descripcion:</b>
+                        @if($pausa->fechaFin == NULL)
+                          <b>Descripcion: (Editable)</b>
+                        @else
+                          <b>Descripcion:</b>
+                        @endif
                         <div class="col-sm-10">
-                          <input type="text" readonly id="descripcion" class="form-control-plaintext" value="{{$pausa->descripcion}}">
+                          @if($pausa->fechaFin == NULL)
+                            <input type="text" id="descripcion" class="form-control-plaintext" value="{{$pausa->descripcion}}">
+                          @else
+                            <input type="text" readonly id="descripcion" class="form-control-plaintext" value="{{$pausa->descripcion}}">
+                          @endif
                         </div>
                     </h5>
                 </div>
@@ -49,25 +57,39 @@
             <div class="card-body" align='center'>
                 <h6>
                     @if($pausa->fechaFin==NULL)
-                      <a class="btn btn-outline-success btn-md" id="finPausa" role="button" onclick="updateFechaFin({{$pausa->idPausa}})">Finalizar</a>
+                        @if($usuarioActual->type == 'Admin')
+                          <a class="btn btn-outline-success btn-md" id="finPausa" role="button" onclick="adminUpdateFechaFin({{$pausa->idPausa}})">Finalizar</a>
+                        @else
+                            <a class="btn btn-outline-success btn-md" id="finPausa" role="button" onclick="trabajadorUpdateFechaFin()">Finalizar</a>
+                        @endif
                     @else
-                      <a class="btn btn-outline-success btn-md" id="finPausa" role="button" onclick="alert('Pausa ya finalizada. No editable')">Finalizar</a>
+                        Pausa Finalizada
                     @endif
                     <br><br>
-                    <a class="btn btn-outline-success btn-md" id="detallesTrabajador" role="button" href="{{url('/trabajadorControl', [$trabajador->idTrabajador])}}">Trabajador</a>
-                    <br><br>
-                    <a class="btn btn-outline-success btn-md" id="detallesProducto" role="button" href="{{url('/productoControl', [$producto->idProducto])}}">Producto</a>
+                    @if($usuarioActual->type == 'Admin')
+                      <a class="btn btn-outline-success btn-md" id="detallesTrabajador" role="button" href="{{url('/trabajadorControl', [$trabajador->idTrabajador])}}">Trabajador</a>
+                      <br><br>
+                      <a class="btn btn-outline-success btn-md" id="detallesProducto" role="button" href="{{url('/productoControl', [$producto->idProducto])}}">Producto</a>
+                      <br><br>
+                    @else
+                      <a class="btn btn-outline-success btn-md" id="detallesProducto" role="button" href="{{url('/detalleProducto', [$producto->idProducto])}}">Producto</a>
+                      <br><br>
+                    @endif
                 </h6>
             </div>
         </div>
     </div>
     </br>
     <div class="row justify-content-center">
-            <a class="btn btn-primary btn-lg" role="button" href="{{url('/adminPausas')}}"><b>Volver</b></a>
+            @if($usuarioActual->type=='Admin')
+              <a class="btn btn-primary btn-lg" role="button" href="{{url('/adminPausas')}}"><b>Volver</b></a>
+            @else
+              <a class="btn btn-primary btn-lg" role="button" href="{{url('addPausa', [$producto->idProducto])}}"><b>Volver</b></a>
+            @endif
     </div>
 </div>
 <script>
-  function updateFechaFin(data)
+  function adminUpdateFechaFin(data)
   {
       $.ajax({
           headers: {
@@ -79,6 +101,28 @@
           success: function(response){
               console.log(response);
               window.location.href = "{{url('/adminDetallesPausaGet', [$pausa->idPausa])}}";
+          }
+      });
+  }
+  function trabajadorUpdateFechaFin()
+  {
+
+    var datosPausa, json_text;
+
+    datosPausa = Array();
+    datosPausa[0] = {{$pausa->idPausa}};
+    datosPausa[1] = document.getElementById("descripcion").value;
+    json_text = JSON.stringify(datosPausa);
+      $.ajax({
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          type: "POST",
+          data: {DATA:json_text},
+          url: "{{url('trabajadorUpdateFechaFinPost')}}",
+          success: function(response){
+              console.log(response);
+              window.location.href = "{{url('/trabajadorDetallesPausaGet', [$pausa->idPausa])}}";
           }
       });
   }

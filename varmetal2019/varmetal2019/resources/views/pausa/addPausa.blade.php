@@ -31,34 +31,41 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                      <label class="col-md-4 col-form-label text-md-right">Inicio:</label>
+                      <label class="col-md-4 col-form-label text-md-right">Inicio Pausa:</label>
                         <div class="col-md-6">
                           <input id="fechaInicio" value="{{$fechaInicio}}" type="text" class="form-control" aria-describedby="fechaInicio" placeholder="Fecha de Inicio" name="fechaInicio" readonly=”readonly”>
                         </div>
                     </div>
-                    <div class="col-sm-10 form-group" aling="center">
-                    <div class="col-sm-10">
+                    <div class="text-center" aling="center">
+                    <div class="text-center">
                       <label class="col-form-label text-md-center">Descripción: (Mientras ocurre el suceso, detalle con esmeración)
-                        <div class="texto text-md-center">
+                        <div class="col-md-6">
                           <textarea class="texto" id="descripcion" type="text" aria-describedby="descripcion" placeholder="Descripcion" name="descripcion" cols="50" onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
                         </div>
                     </div>
                   </form>
-                  <a class="btn btn-outline-success my-1 my-sm-0" role="button" onclick="savePausa()"><b>Registrar Cambios</b></a>
-                  <a class="btn btn-outline-success my-2 my-sm-0" role="button" href="{{url('detalleProducto', [$producto->idProducto])}}"><b>Volver</b></a>
+                  @if(($pausas_almacenadas!=NULL) && (count($pausas_almacenadas)>0))
+                      @if(($pausas_almacenadas->last()->producto_id_producto == $producto->idProducto) && ($pausas_almacenadas->last()->fechaFin == NULL))
+                        <a class="btn btn-outline-success my-1 my-sm-0" role="button" onclick="alert('Primero, Finaliza la pausa pendiente')"><b>Registrar Cambios</b></a>
+                      @else
+                        @if(($pausas_almacenadas->last()->producto_id_producto == $producto->idProducto) && ($pausas_almacenadas->last()->fechaFin != NULL))
+                          <a class="btn btn-outline-success my-1 my-sm-0" role="button" onclick="savePausa()"><b>Registrar Cambios</b></a>
+                        @endif
+                      @endif
+                  @endif
               </div>
           </div>
         </div>
       </div>
     </div>
     <div class="card">
-        <div class="card-header">Pausas</div>
+        <div class="card-header">Pausa Pendiente</div>
         <div class="card-body" align='center'>
             <h6>
                 @if(($pausas_almacenadas!=NULL) && (count($pausas_almacenadas)>0))
                   @foreach($pausas_almacenadas as $key => $pausa)
                     @if(($pausa->producto_id_producto == $producto->idProducto) && ($pausa->fechaFin == NULL))
-                      <a class="btn btn-outline-success btn-md" id="finPausa" role="button" onclick="updateFechaFin({{$pausa->idPausa}})">Finalizar{{$pausa->idPausa}}</a>
+                      <a class="btn btn-outline-success btn-md" id="finPausa" role="button" href="{{url('trabajadorDetallesPausaGet', [$pausa->idPausa])}}">Ver Pausa {{$pausa->idPausa}}</a>
                       <br>
                       <br>
                     @endif
@@ -69,6 +76,14 @@
     </div>
   </div>
 <script type="text/javascript">
+
+/*function removerAtributo()
+{
+  var boton;
+  boton = document.getElementById("botonLoco");
+  boton.removeAttribute("onclick");
+  boton.setAttribute("onclick", 'alert('Debe finalizar la Pausa Pendiente')');
+}*/
 
 function textAreaAdjust(o)
     {
@@ -96,13 +111,10 @@ function savePausa()
           success: function(response){
               if(response!='Datos almacenados')
               {
-                  alert(response);
                   console.log(response);
               }
-              else{
-                  alert(response);
+              else
                   window.location.href="{{url('/addPausa', [$producto->idProducto])}}";
-                }
           }
       });
     }

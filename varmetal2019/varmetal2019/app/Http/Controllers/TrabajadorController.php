@@ -16,6 +16,15 @@ class TrabajadorController extends Controller
         $this->middleware('auth');
     }
 
+    public function detallesCuentaTrabajador()
+    {
+      $usuarioActual = Auth::user();
+      $trabajadorActual = $usuarioActual->trabajador;
+      return view('trabajador')
+                  ->with('user', $usuarioActual)
+                  ->with('trabajador', $trabajadorActual);
+    }
+
     public function adminTrabajadores()
     {
         $trabajadores_registrados = Trabajador::get();

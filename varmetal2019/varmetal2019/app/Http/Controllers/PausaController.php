@@ -18,11 +18,13 @@ class PausaController extends Controller
         $datos_pausa = Pausa::find($data); //id de la pausa
         $producto = Producto::find($datos_pausa->producto_id_producto);
         $trabajador = Trabajador::find($datos_pausa->trabajador_id_trabajador);
+        $usuarioActual = Auth::user();
 
         return view('admin.pausa.detalle_pausa')
                 ->with('pausa', $datos_pausa)
                 ->with('producto', $producto)
-                ->with('trabajador', $trabajador);
+                ->with('trabajador', $trabajador)
+                ->with('usuarioActual', $usuarioActual);
     }
 
     public function addPausa($idProducto)
@@ -34,6 +36,19 @@ class PausaController extends Controller
               ->with('producto', $producto)
               ->with('fechaInicio', $date)
               ->with('pausas_almacenadas', $pausas_registradas);
+    }
+
+    public function trabajadorUpdateFechaFin(Request $data)
+    {
+      $response = json_decode($data->DATA, true);
+      $idPausa = $response[0];
+      $descripcion = $response[1];
+      $pausa = Pausa::find($idPausa);
+      $pausa->fechaFin=now();
+      //return $idPausa;
+      $pausa->descripcion=$descripcion;
+      $pausa->save();
+      return 1;
     }
 
     public function updateFechaFin(Request $data)
@@ -69,7 +84,8 @@ class PausaController extends Controller
 
       $idProducto = $response[0];
       $descripcion = $response[1];
-      //$fechaInicio = $response[2];
+      if($descripcion==NULL)
+        return 'Añade una descripción';
 
       $newPausa=new Pausa;
       $newPausa->fechaInicio = now();

@@ -53,9 +53,12 @@ Route::get('/admin', 'AdminController@admin')
                     ->name('trabajador/deleteTrabajador');
     /* [** VISTA GENERAL **] */
         /* [** GET **] */
-        Route::get('/homepage/Trabajador', 'TrabajadorController@productosTrabajador')
+        Route::get('/homepage/Trabajador', 'TrabajadorController@detallesCuentaTrabajador')
                     ->middleware('is_trabajador')
                     ->name('/homepage/Trabajador');
+        Route::get('/productosTrabajador', 'TrabajadorController@productosTrabajador')
+                    ->middleware('is_trabajador')
+                    ->name('productosTrabajador');
 
 /* [** Producto Controller **] */
     /* [** ADMINISTRACIÓN **] */
@@ -121,6 +124,9 @@ Route::get('/admin', 'AdminController@admin')
         Route::get('/adminDetallesPausaGet/{id}', ['uses' => 'PausaController@pausaControl'])
                     ->middleware('is_admin')
                     ->name('adminPausaControlGet');
+        Route::get('/trabajadorDetallesPausaGet/{id}', ['uses' => 'PausaController@pausaControl'])
+                    ->middleware('is_trabajador')
+                    ->name('trabajadorDetallesPausaGet');
         Route::get('/addPausa/{idProducto}', ['uses' => 'PausaController@addPausa'])
                     ->middleware('is_trabajador')
                     ->name('addPausaGet');
@@ -131,9 +137,12 @@ Route::get('/admin', 'AdminController@admin')
         Route::post('/adminUpdateFechaFinPost', ['uses' =>'PausaController@updateFechaFin'])
                     ->middleware('is_admin')
                     ->name('adminUpdateFechaFinPost');
-        Route::post('/trabajadorUpdateFechaFinPost', ['uses' =>'PausaController@updateFechaFin'])
+        Route::post('/trabajadorUpdateFechaFinPost', ['uses' =>'PausaController@trabajadorUpdateFechaFin'])
                     ->middleware('is_trabajador')
                     ->name('trabajadorUpdateFechaFinPost');
         /*Route::get('/SuperPausaControl', ['uses' =>'PausaController@insertPausa'])
                     ->middleware('is_trabajador')
                   ->name('pausaControlGet');*/
+        Route::get('/detallesCuentaTrabajador', ['uses' => 'TrabajadorController@detallesCuentaTrabajador'])
+                    ->middleware('is_trabajador')
+                    ->name('detallesCuentaTrabajador');
