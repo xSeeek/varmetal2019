@@ -6,14 +6,14 @@
       <div class="col">
         <div class="card">
           <div class="card-header">
-            <h3 class="card-tittle">Administrar Obras Administrador</h3>
+            <h3 class="card-tittle">Administrar Obras</h3>
           </div>
           <div class="card-body">
             <div class="row">
               <div class="col">
                 <div class="card">
                   <div class="card-body container">
-                    @if(count($trabajador->obras) > 0)
+                    @if(count($obras) > 0)
                       <table id="tabla_obras" class="table display" style="width:100%">
                         <thead class="thead-dark">
                           <tr>
@@ -22,14 +22,17 @@
                           </tr>
                         </thead>
                         <tbody>
-                          @foreach ($trabajador->obras as $obra)
+                          @foreach ($obras as $obra)
                           <tr>
                             <td class="text-center">{{$obra->nombre}}</td>
                             <td class="text-center">
                               <div class="btn-group" role="group">
-                                <button class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Ver Asistencias"><i class="fas fa-users"></i></button>
-                                <button class="btn btn-success" data-toggle="tooltip" data-placement="top" title="Editar Obra"><i class="fas fa-edit"></i></button>
-                                <button class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Eliminar Obra"><i class="fas fa-trash"></i></button>
+                                <a href="{!! route('administrador.detallesObra', ['id'=>$obra->idObra]) !!}"
+                                   class="btn btn-primary text-light"
+                                   role="button" data-toggle="tooltip" data-placement="top"
+                                   title="Ver Detalles">
+                                   Ver Detalles
+                                 </a>
                               </div>
                             </td>
                           </tr>

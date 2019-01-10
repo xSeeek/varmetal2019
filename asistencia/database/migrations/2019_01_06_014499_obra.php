@@ -16,8 +16,6 @@ class Obra extends Migration
       Schema::create('obra', function (Blueprint $table) {
           $table->increments('idObra');
           $table->string('nombre');
-          $table->integer('encargado_id_encargado')->unsigned();
-          $table->foreign('encargado_id_encargado')->references('idTrabajador')->on('trabajador')->onDelete('cascade');
           $table->timestamps();
       });
   }

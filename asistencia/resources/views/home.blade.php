@@ -5,10 +5,10 @@
   <div class="jumbotron">
 
     <div class="row">
-      <div class="col">
+      <div class="col-sm-5">
         <h1 class="display-4">Bienvenido</h1>
         <p class="lead">Si desea marcar asistencia ingrese un rut</p>
-        <form method="post" id="form_registrar_asistencia" action="{{route('registrarAsistencia')}}" enctype="multipart/form-data">
+        <form method="post" id="form_registrar_asistencia" action="{{route('registrarAsistencia')}}">
           <div class="form-group">
             @csrf
             <input class="form-control{{ $errors->has('rut') ? ' is-invalid' : '' }}" id="rut" type="text" name="rut" placeholder="Ingrese un rut" value="{{ old('rut') }}" required autofocus>
@@ -35,12 +35,6 @@
           <img id="img_show" width="100%" class="img-thumbnail" src="{{ Storage::disk('asistencia')->url('default.jpeg') }}"/>
         </div>
       </div>
-      @if(Auth::user()->isAdmin())
-        <div class="col">
-          <h2>Ingresar al menu del administrador</h2>
-          <a role="button" name="button" class="btn btn-success text-light" href='{!! route('administrador.menuAdministrador') !!}'>Menu Administrador</a>
-        </div>
-      @endif
     </div>
   </div>
 

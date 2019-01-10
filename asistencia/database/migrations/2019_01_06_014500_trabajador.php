@@ -18,9 +18,11 @@ class Trabajador extends Migration
           $table->string('nombre');
           $table->string('rut')->unique();
           $table->boolean('estado')->default('true');
-          $table->timestamps();
           $table->integer('users_id_user')->unsigned();
           $table->foreign('users_id_user')->references('id')->on('users')->onDelete('cascade');
+          $table->integer('obra_id_obra')->unsigned()->nullable();
+          $table->foreign('obra_id_obra')->references('idObra')->on('obra');
+          $table->timestamps();
       });
   }
 

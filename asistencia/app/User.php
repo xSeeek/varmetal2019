@@ -10,6 +10,7 @@ class User extends Authenticatable
 {
   const ADMIN_TYPE = 'Admin';
   const DEFAULT_TYPE = 'Trabajador';
+  const SUPERVISOR_TYPE = 'Supervisor';
 
   public function trabajador()
   {
@@ -19,6 +20,11 @@ class User extends Authenticatable
   public function isAdmin()
   {
       return $this->type === self::ADMIN_TYPE;
+  }
+
+  public function isSupervisor()
+  {
+    return $this->type === self::SUPERVISOR_TYPE;
   }
 
   public function isTrabajador()

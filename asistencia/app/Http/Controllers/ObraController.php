@@ -23,7 +23,7 @@ class ObraController extends Controller
 
   public function agregarObra()
   {
-    $encargados = User::where('type', User::ADMIN_TYPE)->get();
+    $encargados = User::where('type', User::SUPERVISOR_TYPE)->get();
     return view('obra.agregarObra')->with('encargados', $encargados);
   }
 
@@ -31,9 +31,21 @@ class ObraController extends Controller
   {
     $trabajador = Trabajador::where('rut', $request->encargado)->first();
 
-    $obra = new Obra();
-    $obra->nombre = $request->name;
-    $trabajador->obras()->save($obra);
-    return redirect()->route('administrador.agregarObra')->with('success', 'Obra ' . $obra->nombre . ' registrada con éxito');
+    if($tabajador->obra != null)
+    {
+      $obra = new Obra();
+      $obra->nombre = $request->name;
+      $obra->save();
+
+      $obra->trabajadores()->save($trabajador);
+      return redirect()->route('administrador.agregarObra')->with('success', 'Obra ' . $obra->nombre . ' registrada con éxito');
+    }
+    return redirect()->route('administrador.agregarObra')->with('error', 'El encargado seleccionado ya posee una obra asignada');
+  }
+
+  public function detallesObra($id)
+  {
+    $obra = Obra::find($id);
+    return view('obra.detallesObra')->with('obra', $obra);
   }
 }

@@ -4,7 +4,7 @@ namespace Asistencia\Http\Controllers;
 
 use Freshwork\ChileanBundle\Rut;
 
-use Asistencia\Trabajador;
+use Asistencia\Obra;
 use Asistencia\Asistencia;
 use Illuminate\Http\Request;
 use Asistencia\Http\Requests\MarcarAsistencia;
@@ -58,6 +58,6 @@ class AsistenciaController extends Controller
 
   public function menuAdministrador()
   {
-    return view('administrador.menuAdministrador')->with('trabajador', Auth::user()->trabajador);
+    return view('administrador.menuAdministrador')->with('obras', Obra::all());
   }
 }

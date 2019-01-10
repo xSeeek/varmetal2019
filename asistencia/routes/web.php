@@ -40,6 +40,10 @@ Route::get('/menuAdministrador', 'AsistenciaController@menuAdministrador')
   ->name('administrador.menuAdministrador')
   ->middleware('is_admin');
 
+Route::get('/menuAdministrador/detallesObra/{id}', ['uses'=>'ObraController@detallesObra'])
+  ->name('administrador.detallesObra')
+  ->middleware('is_admin');
+
 Route::get('/menuAdministrador/agregarObra', 'ObraController@agregarObra')
   ->name('administrador.agregarObra')
   ->middleware('is_admin');
