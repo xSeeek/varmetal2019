@@ -78,10 +78,16 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="">
+                                  @if(Auth::user()->type == 'Admin')
+                                    <a class="dropdown-item" href="{{url('/admin')}}">
                                         Detalles Cuenta
                                     </a>
-                                    <a class="dropdown-item" href="">
+                                  @else
+                                  <a class="dropdown-item" href="{{url('/homepage/Trabajador')}}">
+                                      Detalles Cuenta
+                                  </a>
+                                  @endif
+                                    <a class="dropdown-item" href="{{url('/contrasena')}}">
                                         Cambiar Contraseña
                                     </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"

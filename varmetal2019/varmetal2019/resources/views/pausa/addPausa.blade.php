@@ -44,6 +44,7 @@
                         </div>
                     </div>
                   </form>
+                <div class="row justify-content-center">
                   @if(($pausas_almacenadas!=NULL) && (count($pausas_almacenadas)>0))
                       @if(($pausas_almacenadas->last()->producto_id_producto == $producto->idProducto) && ($pausas_almacenadas->last()->fechaFin == NULL))
                         <a class="btn btn-outline-success my-1 my-sm-0" role="button" onclick="alert('Primero, Finaliza la pausa pendiente')"><b>Registrar Cambios</b></a>
@@ -53,6 +54,8 @@
                         @endif
                       @endif
                   @endif
+                  <a class="btn btn-primary btn-lg" role="button" href="{{url('/addPausa', [$producto->idProducto])}}"><b>volver</b></a>
+                </div>
               </div>
           </div>
         </div>

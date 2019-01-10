@@ -15,6 +15,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/contrasena', function () {
+      Auth::logout();
+      return redirect()->route('password.request');
+});
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')
