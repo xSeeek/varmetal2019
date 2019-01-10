@@ -121,11 +121,13 @@
         <div class="card">
             <div class="card-header">Opciones de Administración</div>
             <div class="card-body" align='center'>
+              @if($producto->terminado == false)
                 <h6>
                     Ver Pausas:
                 </br>
-                    <a class="btn btn-outline-success btn-md" id="pauseButton" role="button" href="{{url('adminPausasAlmacenadas', [$producto->idProducto])}}">Pausas</a>
+                      <a class="btn btn-outline-success btn-md" id="pauseButton" role="button" href="{{url('adminPausasAlmacenadas', [$producto->idProducto])}}">Pausas</a>
                 </h6>
+              @endif
                 <br>
                 <h6>
                     Eliminar Producto:

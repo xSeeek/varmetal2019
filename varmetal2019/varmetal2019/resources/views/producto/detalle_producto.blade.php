@@ -109,11 +109,13 @@
         <div class="card">
             <div class="card-header">Opciones de Administración</div>
             <div class="card-body" align='center'>
+              @if($producto->fechaFin == NULL)
                 <h6>
                     Solicitar Pausa:
                 </br>
                     <a class="btn btn-outline-success btn-md" id="pauseButton" role="button" href="{{url('addPausa', [$producto->idProducto])}}">Pausar</a>
                 </h6>
+              @endif
                 </br>
                 @if($producto->terminado == false)
                     @if($producto->estado == 2)
