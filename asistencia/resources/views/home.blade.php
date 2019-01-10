@@ -35,9 +35,12 @@
           <img id="img_show" width="100%" class="img-thumbnail" src="{{ Storage::disk('asistencia')->url('default.jpeg') }}"/>
         </div>
       </div>
-      <div class="col">
-        <h2>Ingresar al menu del administrador</h2>
-      </div>
+      @if(Auth::user()->isAdmin())
+        <div class="col">
+          <h2>Ingresar al menu del administrador</h2>
+          <a role="button" name="button" class="btn btn-success text-light" href='{!! route('administrador.menuAdministrador') !!}'>Menu Administrador</a>
+        </div>
+      @endif
     </div>
   </div>
 

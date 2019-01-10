@@ -18,6 +18,8 @@ class Asistencia extends Migration
           $table->string('image')->nullable();
           $table->integer('trabajador_id_trabajador')->unsigned();
           $table->foreign('trabajador_id_trabajador')->references('idTrabajador')->on('trabajador')->onDelete('cascade');
+          $table->integer('obra_id_obra')->unsigned();
+          $table->foreign('obra_id_obra')->references('idObra')->on('obra')->onDelete('cascade');
           $table->timestamps();
       });
   }

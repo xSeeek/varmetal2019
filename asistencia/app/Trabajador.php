@@ -23,6 +23,11 @@ class Trabajador extends Model
     return $this->hasMany('Asistencia\Asistencia', 'trabajador_id_trabajador');
   }
 
+  public function obras()
+  {
+    return $this->hasMany('Asistencia\Obra', 'encargado_id_encargado');
+  }
+
   public function validateData($var)
   {
       if($var == NULL)

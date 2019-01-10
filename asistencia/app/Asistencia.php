@@ -16,4 +16,9 @@ class Asistencia extends Model
   {
     return $this->belongsTo('Asistencia\Trabajador', 'trabajador_id_trabajador');
   }
+
+  public function obra()
+  {
+    return $this->belongsTo('Asistencia\Obra', 'obra_id_obra');
+  }
 }

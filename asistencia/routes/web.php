@@ -35,3 +35,7 @@
  //Ruta para registrar una asistencia
 Route::post('/registrarAsistencia', ['uses'=>'AsistenciaController@registrarAsistencia'])
   ->name('registrarAsistencia');
+
+Route::get('/menuAdministrador', 'AsistenciaController@menuAdministrador')
+  ->name('administrador.menuAdministrador')
+  ->middleware('is_admin');
