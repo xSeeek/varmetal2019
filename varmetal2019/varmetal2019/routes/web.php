@@ -51,7 +51,6 @@ Route::get('/admin', 'AdminController@admin')
         Route::post('/trabajadorControl/deleteTrabajador', ['uses' => 'TrabajadorController@deleteTrabajador'])
                     ->middleware('is_admin')
                     ->name('trabajador/deleteTrabajador');
-
     /* [** VISTA GENERAL **] */
         /* [** GET **] */
         Route::get('/homepage/Trabajador', 'TrabajadorController@productosTrabajador')
@@ -86,11 +85,27 @@ Route::get('/admin', 'AdminController@admin')
         Route::post('/productoControl/removeWorker', ['uses' => 'ProductoController@removeWorker'])
                     ->middleware('is_admin')
                     ->name('/productoControl/removeWorker');
+        Route::post('/productoControl/resetProduccion', ['uses' => 'ProductoController@unmarkAsFinished'])
+                    ->middleware('is_admin')
+                    ->name('/productoControl/resetProduccion');
+        Route::post('/productoControl/finishProduccion', ['uses' => 'ProductoController@finishProducto'])
+                    ->middleware('is_admin')
+                    ->name('/productoControl/finishProduccion');
+        Route::post('/productoControl/resetProducto', ['uses' => 'ProductoController@resetProducto'])
+                    ->middleware('is_admin')
+                    ->name('/productoControl/resetProducto');
     /* [** VISTA GENERAL **] */
         /* [** GET **] */
         Route::get('/detalleProducto/{id}', ['uses' => 'ProductoController@detalleProducto'])
                     ->middleware('is_trabajador')
                     ->name('/detalleProducto');
+        /* [** POST **] */
+        Route::post('/producto/Finalizar', ['uses' => 'ProductoController@markAsFinished'])
+                    ->middleware('is_trabajador')
+                    ->name('/producto/Finalizar');
+        Route::post('/producto/Anular', ['uses' => 'ProductoController@unmarkAsFinished'])
+                    ->middleware('is_trabajador')
+                    ->name('/producto/Anular');
 /* [** Pausa Controller **] */
     /* [** ADMINISTRACIÓN **] */
         /* [** GET **] */

@@ -25,12 +25,40 @@
                                     <tr id="id_trabajador{{ $producto->idProducto }}">
                                         <td scope="col"><button class="btn btn-success" onclick="asignarTrabajo({{$idTrabajador}}, {{$producto->idProducto}})"><i class="far fa-check-square success"></i></button></td>
                                         <td scope="col">{{ $producto->nombre }}</td>
-                                        <td scope="col">{{ $producto->prioridad }}</td>
-                                        @if(1 == 1)
-                                            <td scope="col">Activo</td>
-                                        @else
-                                            <td scope="col">Inactivo</td>
-                                        @endif
+                                        @switch($producto->prioridad)
+                                            @case(1)
+                                                <td scope="col">Baja</td>
+                                                @break
+                                            @case(2)
+                                                <td scope="col">Media Baja</td>
+                                                @break
+                                            @case(3)
+                                                <td scope="col">Media</td>
+                                                @break
+                                            @case(4)
+                                                <td scope="col">Media Alta</td>
+                                                @break
+                                            @case(5)
+                                                <td scope="col">Alta</td>
+                                                @break
+                                            @default
+                                                <td scope="col">Sin prioridad</td>
+                                                @break
+                                        @endswitch
+                                        @switch($producto->estado)
+                                            @case(0)
+                                                <td scope="col">Por realizar</th>
+                                                @break
+                                            @case(1)
+                                                <td scope="col">Finalizado</th>
+                                                @break
+                                            @case(2)
+                                                <td scope="col">En proceso de desarrollo</th>
+                                                @break
+                                            @default
+                                                <td scope="col">Sin estado definido</th>
+                                                @break
+                                        @endswitch
                                         <td scope="col">{{ $producto->cantProducto }}</td>
                                         <td scope="col">{{ $producto->pesoKg }}</td>
                                     </tr>
@@ -52,18 +80,6 @@
     </div>
 </div>
 <script type="text/javascript">
-    window.onload = function formatTable()
-    {
-        var table = $('#tablaAdministracion').DataTable({
-            "language":{
-                "url":"//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
-            },
-            "scrollX": true,
-       });
-       $(function () {
-           $('[data-toggle="tooltip"]').tooltip();
-       });
-    }
     function asignarTrabajo(idTrabajador, idProducto)
     {
         var datosWorker, json_data;

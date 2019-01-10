@@ -32,9 +32,11 @@ class ProductoController extends Controller
     public function detalleProducto($id)
     {
         $producto = Producto::find($id);
+        $trabajadores = $producto->trabajador;
 
         return view('producto.detalle_producto')
-                ->with('producto', $producto);
+                ->with('producto', $producto)
+                ->with('trabajadores', $trabajadores);
     }
 
     public function addProducto()
@@ -131,6 +133,73 @@ class ProductoController extends Controller
             $producto->save();
         }
 
+        return 1;
+    }
+
+    public function markAsFinished(Request $request)
+    {
+        $producto = Producto::findOrFail($request)->first();
+
+        if($producto->terminado == false)
+        {
+            if($producto->estado == 1)
+                return 'El producto fue marcado como finalizado por otro trabajador';
+
+            $date = new \Carbon\Carbon();
+            $producto->estado = 1;
+            $producto->fechaFin = $date->now();
+
+            $producto->save();
+            return 1;
+        }
+        return 'El producto fue finalizado por el supervisor';
+    }
+
+    public function unmarkAsFinished(Request $request)
+    {
+        $producto = Producto::findOrFail($request)->first();
+
+        if($producto->terminado == false)
+        {
+            if($producto->estado == 2)
+                return 'El desarrollo del producto fue reiniciado por otro trabajador';
+
+            $producto->estado = 2;
+            $producto->fechaFin = NULL;
+
+            $producto->save();
+            return 1;
+        }
+        return 'El producto fue finalizado por el supervisor';
+    }
+
+    public function finishProducto(Request $request)
+    {
+        $producto = Producto::findOrFail($request)->first();
+
+        if($producto->terminado == false)
+        {
+            $date = new \Carbon\Carbon();
+            $producto->estado = 1;
+            $producto->fechaFin = $date->now();
+            $producto->terminado = true;
+
+            $producto->save();
+            return 1;
+        }
+
+        return 'Este producto finalizó su desarrollo';
+    }
+
+    public function resetProducto(Request $request)
+    {
+        $producto = Producto::findOrFail($request)->first();
+
+        $producto->estado = 2;
+        $producto->fechaFin = NULL;
+        $producto->terminado = false;
+
+        $producto->save();
         return 1;
     }
 }

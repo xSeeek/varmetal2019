@@ -16,8 +16,8 @@ class ProductoTable extends Migration
         Schema::create('producto', function (Blueprint $table) {
             $table->increments('idProducto');
             $table->string('nombre');
-            $table->time('fechaInicio')->timestamps();
-            $table->time('fechaFin')->nullable();
+            $table->timestamp('fechaInicio')->timestamps();
+            $table->timestamp('fechaFin')->nullable();
             $table->integer('pesoKg')->nullable();
             $table->integer('cantPausa')->default(0);
             $table->integer('cantProducto')->default(1);
@@ -25,9 +25,6 @@ class ProductoTable extends Migration
             $table->integer('prioridad')->default('3');
             $table->boolean('terminado')->default('false');
             $table->timestamps();
-
-            //$table->integer('pausa_id_pausa')->unsigned()->nullable();
-            //$table->foreign('pausa_id_pausa')->references('idPausa')->on('pausa')->onDelete('cascade');
         });
     }
 
