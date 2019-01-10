@@ -18,7 +18,7 @@
                         <thead class="thead-dark">
                           <tr>
                             <th class="text-center">Nombre</th>
-                            <th class="text-center">Herramientas</th>
+                            <th class="text-center" data-toggle="tooltip" title="Configuraciones"><i class="fas fa-cogs"></i></th>
                           </tr>
                         </thead>
                         <tbody>
@@ -27,9 +27,9 @@
                             <td class="text-center">{{$obra->nombre}}</td>
                             <td class="text-center">
                               <div class="btn-group" role="group">
-                                <button class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Ver Asistencias">Asistencia</button>
-                                <button class="btn btn-success">Editar</button>
-                                <button class="btn btn-danger">Eliminar</button>
+                                <button class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Ver Asistencias"><i class="fas fa-users"></i></button>
+                                <button class="btn btn-success" data-toggle="tooltip" data-placement="top" title="Editar Obra"><i class="fas fa-edit"></i></button>
+                                <button class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Eliminar Obra"><i class="fas fa-trash"></i></button>
                               </div>
                             </td>
                           </tr>
@@ -57,7 +57,7 @@
           "url":"//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
         },
         "scrollX": true,
-
+        "autoWidth": false,
       });
     });
 
