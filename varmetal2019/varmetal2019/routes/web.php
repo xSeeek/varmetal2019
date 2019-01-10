@@ -59,6 +59,10 @@ Route::get('/admin', 'AdminController@admin')
         Route::get('/productosTrabajador', 'TrabajadorController@productosTrabajador')
                     ->middleware('is_trabajador')
                     ->name('productosTrabajador');
+        /* [** POST **] */
+        Route::post('/trabajadorControl/setStartTime', ['uses' => 'TrabajadorController@setStartTime'])
+                    ->middleware('is_trabajador')
+                    ->name('/trabajadorControl/setStartTime');
 
 /* [** Producto Controller **] */
     /* [** ADMINISTRACIÓN **] */

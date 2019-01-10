@@ -18,7 +18,7 @@ class ProductoTable extends Migration
             $table->string('nombre');
             $table->timestamp('fechaInicio')->timestamps();
             $table->timestamp('fechaFin')->nullable();
-            $table->string('obra')-defaul('NoEspecificada');
+            $table->string('obra')-defaul('No Especificada');
             $table->integer('pesoKg')->nullable();
             $table->integer('cantPausa')->default(0);
             $table->integer('cantProducto')->default(0);
