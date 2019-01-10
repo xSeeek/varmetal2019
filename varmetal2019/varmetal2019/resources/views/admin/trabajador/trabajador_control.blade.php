@@ -88,7 +88,7 @@
                 </table>
                 @else
                 </br>
-                    <h4 align="center">El trabajador no ha realizado ningún trabajo.</h4>
+                    <h4 align="center">El trabajador tiene ningún trabajo en desarrollo.</h4>
                 </br>
                 @endif
                 </div>

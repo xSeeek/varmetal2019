@@ -42,7 +42,7 @@
                                     <input type="text" readonly id="estadoProducto" class="form-control-plaintext" value="Finalizado">
                                     @break
                                 @case(2)
-                                    <input type="text" readonly id="estadoProducto" class="form-control-plaintext" value="En realización">
+                                    <input type="text" readonly id="estadoProducto" class="form-control-plaintext" value="En proceso de desarrollo">
                                     @break
                                 @default
                                     <input type="text" readonly id="estadoProducto" class="form-control-plaintext" value="Sin estado definido">
@@ -75,6 +75,36 @@
                     </h5>
                 </div>
             </div>
+            <br>
+            <div class="card">
+                <div class="card-header">Trabajadores activos</div>
+                <div class="card-body">
+
+                @if(($trabajadores != NULL) && (count($trabajadores)>0))
+                <table id="tablaAdministracion" style="width:100%" align="center">
+                    <thead>
+                        <tr>
+                            <th>RUT</th>
+                            <th>Nombre</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($trabajadores as $key => $trabajador)
+                        <tr id="id_Trabajador{{ $trabajador->idTrabajador }}">
+                            <td scope="col">{{ $trabajador->rut }}</td>
+                            <td scope="col">{{ $trabajador->nombre }}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                @else
+                </br>
+                    <h4 align="center">No hay trabajadores asignados.</h4>
+                </br>
+                @endif
+                </div>
+            </div>
+        </br>
         </div>
         <div class="card">
             <div class="card-header">Opciones de Administración</div>
@@ -84,6 +114,22 @@
                 </br>
                     <a class="btn btn-outline-success btn-md" id="pauseButton" role="button" href="{{url('addPausa', [$producto->idProducto])}}">Pausar</a>
                 </h6>
+                </br>
+                @if($producto->terminado == false)
+                    @if($producto->estado == 2)
+                        <h6>
+                            Marcar como terminado:
+                        </br>
+                            <a class="btn btn-outline-warning btn-md" id="stopButton" role="button" onclick="markAsFinished({{$producto->idProducto}})">Terminar</a>
+                        </h6>
+                    @else
+                        <h6>
+                            Anular termino:
+                        </br>
+                            <a class="btn btn-outline-danger btn-md" id="stopButton" role="button" onclick="unmarkAsFinished({{$producto->idProducto}})">Anular</a>
+                        </h6>
+                    @endif
+                @endif
             </div>
         </div>
     </div>
@@ -92,4 +138,42 @@
             <a class="btn btn-primary btn-lg" role="button" href="{{url('adminTrabajador')}}"><b>Volver</b></a>
     </div>
 </div>
+<script type="text/javascript">
+    function markAsFinished(data)
+    {
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: "POST",
+            data: {DATA:data},
+            url: "{{url('producto/Finalizar')}}",
+            success: function(response){
+                if(response == 1)
+                    window.location.href = "{{url('/detalleProducto', [$producto->idProducto])}}";
+                else {
+                    alert(response);
+                }
+            }
+        });
+    }
+    function unmarkAsFinished(data)
+    {
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: "POST",
+            data: {DATA:data},
+            url: "{{url('producto/Anular')}}",
+            success: function(response){
+                if(response == 1)
+                    window.location.href = "{{url('/detalleProducto', [$producto->idProducto])}}";
+                else {
+                        alert(response);
+                    }
+            }
+        });
+    }
+</script>
 @endsection

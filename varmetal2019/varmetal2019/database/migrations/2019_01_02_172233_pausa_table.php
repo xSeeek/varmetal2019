@@ -15,11 +15,11 @@ class PausaTable extends Migration
     public function up()
     {
         Schema::create('pausa', function (Blueprint $table) {
-            $table->timestamps();
             $table->increments('idPausa');
             $table->string('descripcion');
             $table->date('fechaInicio')->timestamps();
             $table->date('fechaFin')->nullable();
+            $table->timestamps();
 
             $table->integer('producto_id_producto')->unsigned()->nullable();
             $table->foreign('producto_id_producto')->references('idProducto')->on('producto')->onDelete('cascade');

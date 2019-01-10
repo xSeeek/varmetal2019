@@ -5,6 +5,7 @@ namespace Varmetal\Http\Controllers;
 use Illuminate\Http\Request;
 use Varmetal\Producto;
 use Varmetal\Trabajador;
+use Carbon\Carbon;
 
 class ProductoController extends Controller
 {
@@ -32,9 +33,11 @@ class ProductoController extends Controller
     public function detalleProducto($id)
     {
         $producto = Producto::find($id);
+        $trabajadores = $producto->trabajador;
 
         return view('producto.detalle_producto')
-                ->with('producto', $producto);
+                ->with('producto', $producto)
+                ->with('trabajadores', $trabajadores);
     }
 
     public function addProducto()
@@ -55,12 +58,16 @@ class ProductoController extends Controller
         if($request->pesoProducto < 0)
             return 'La cantidad tiene que ser mayor a 0';
 
+        $carbon = new Carbon();
+        if($request->fechaInicio < $carbon->now())
+            return 'La fecha seleccionada no es válida';
+
         $producto = new Producto;
         $producto->nombre = $request->nombreProducto;
         $producto->pesoKg = $request->pesoProducto;
         $producto->cantPausa = 0;
         $producto->prioridad = $request->inputPrioridad;
-        $producto->fechaInicio = now();
+        $producto->fechaInicio = $request->fechaInicio;
         $producto->cantProducto = $request->cantidadProducto;
         $producto->fechaFin = NULL;
 
@@ -131,6 +138,77 @@ class ProductoController extends Controller
             $producto->save();
         }
 
+        return 1;
+    }
+
+    public function markAsFinished(Request $request)
+    {
+        $producto = Producto::findOrFail($request)->first();
+
+        if($producto->terminado == false)
+        {
+            if($producto->estado == 1)
+                return 'El producto fue marcado como finalizado por otro trabajador';
+
+            $date = new Carbon();
+
+            if($producto->fechaInicio > $date->now())
+                return 'Se debe esperar hasta la hora de inicio para poder detener la producción.';
+
+            $producto->estado = 1;
+            $producto->fechaFin = $date->now();
+
+            $producto->save();
+            return 1;
+        }
+        return 'El producto fue finalizado por el supervisor';
+    }
+
+    public function unmarkAsFinished(Request $request)
+    {
+        $producto = Producto::findOrFail($request)->first();
+
+        if($producto->terminado == false)
+        {
+            if($producto->estado == 2)
+                return 'El desarrollo del producto fue reiniciado por otro trabajador';
+
+            $producto->estado = 2;
+            $producto->fechaFin = NULL;
+
+            $producto->save();
+            return 1;
+        }
+        return 'El producto fue finalizado por el supervisor';
+    }
+
+    public function finishProducto(Request $request)
+    {
+        $producto = Producto::findOrFail($request)->first();
+
+        if($producto->terminado == false)
+        {
+            $date = new Carbon();
+            $producto->estado = 1;
+            $producto->fechaFin = $date->now();
+            $producto->terminado = true;
+
+            $producto->save();
+            return 1;
+        }
+
+        return 'Este producto finalizó su desarrollo';
+    }
+
+    public function resetProducto(Request $request)
+    {
+        $producto = Producto::findOrFail($request)->first();
+
+        $producto->estado = 2;
+        $producto->fechaFin = NULL;
+        $producto->terminado = false;
+
+        $producto->save();
         return 1;
     }
 }

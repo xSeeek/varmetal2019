@@ -21,7 +21,7 @@
                         <div class="form-group row">
                             <label class="col-md-4 col-form-label text-md-right">Fecha Inicio</label>
                             <div class='col-sm-6'>
-                                <input class="form-control" type="datetime-local" value="2019-01-08T12:00:00" id="fechaInicio" name="fechaInicio">
+                                <input class="form-control" type="datetime-local" id="fechaInicio" name="fechaInicio">
                             </div>
                         </div>
                         <div class="form-group row">

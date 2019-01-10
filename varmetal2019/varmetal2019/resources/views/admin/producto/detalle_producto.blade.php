@@ -72,7 +72,7 @@
                                     @break
                             @endswitch
                         </div>
-                        @if($producto->estado == 1)
+                        @if($producto->estado == 1 && $producto->terminado == false)
                             <br>
                             <b style="color:red">Información Importante:</b>
                             <div class="col-sm-10">
@@ -116,7 +116,7 @@
                 </br>
                 @endif
                 </div>
-        </div>
+            </div>
         </div>
         <div class="card">
             <div class="card-header">Opciones de Administración</div>
@@ -138,20 +138,29 @@
                 </br>
                     <a class="btn btn-outline-success btn-md" id="insertButton" role="button" href="{{url('producto/asignarTrabajo', [$producto->idProducto])}}">Asignar</a>
                 </h6>
-                @if($producto->estado == 1)
-                <br>
-                <h6>
-                    Reiniciar Producción:
-                </br>
-                    <a class="btn btn-warning btn-md" id="resetButton" role="button" href="{{url('producto/asignarTrabajo', [$producto->idProducto])}}">Reiniciar</a>
-                </h6>
-                <br>
-                <h6>
-                    Terminar Producto:
-                </br>
-                    <a class="btn btn-outline-danger btn-md" id="finishButton" role="button" href="{{url('producto/asignarTrabajo', [$producto->idProducto])}}">Terminar</a>
-                </h6>
+                @if($producto->terminado == false)
+                    @if($producto->estado == 1)
+                    <br>
+                    <h6>
+                        Anular Termino:
+                    </br>
+                        <a class="btn btn-warning btn-md" id="resetButton" role="button" onclick="resetProduccion({{$producto->idProducto}})">Reiniciar</a>
+                    </h6>
+                    <br>
+                    <h6>
+                        Terminar Producto:
+                    </br>
+                        <a class="btn btn-outline-danger btn-md" id="finishButton" role="button" onclick="finishProduccion({{$producto->idProducto}})">Terminar</a>
+                    </h6>
                 @endif
+            @else
+                <br>
+                <h6>
+                    Reiniciar Producto:
+                </br>
+                    <a class="btn btn-warning btn-md" id="resetButton" role="button" onclick="resetProducto({{$producto->idProducto}})">Reiniciar</a>
+                </h6>
+            @endif
             </div>
         </div>
     </div>
@@ -171,12 +180,10 @@
             data: {DATA:data},
             url: "{{url('/productoControl/deleteProducto')}}",
             success: function(response){
-                console.log(response);
                 window.location.href = response.redirect;
             }
         });
     }
-
     function deleteWorker(idTrabajador, idProducto)
     {
         var data, json_data;
@@ -195,22 +202,54 @@
             data: {DATA:json_data},
             url: "{{url('/productoControl/removeWorker')}}",
             success: function(response){
-                console.log('asd');
                 window.location.href = "{{url('productoControl', [$producto->idProducto])}}";
             }
         });
     }
-    window.onload = function formatTable()
+    function resetProduccion(idProducto)
     {
-        var table = $('#tablaAdministracion').DataTable({
-            "language":{
-                "url":"//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            "scrollX": true,
-       });
-       $(function () {
-           $('[data-toggle="tooltip"]').tooltip();
-       });
+            type: "POST",
+            data: {DATA:idProducto},
+            url: "{{url('/productoControl/resetProduccion')}}",
+            success: function(response){
+                window.location.href = "{{url('productoControl', [$producto->idProducto])}}";
+            }
+        });
+    }
+    function finishProduccion(idProducto)
+    {
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: "POST",
+            data: {DATA:idProducto},
+            url: "{{url('/productoControl/finishProduccion')}}",
+            success: function(response){
+                if(response == 1)
+                    window.location.href = "{{url('productoControl', [$producto->idProducto])}}";
+                else
+                    alert(response);
+            }
+        });
+    }
+    function resetProducto(idProducto)
+    {
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: "POST",
+            data: {DATA:idProducto},
+            url: "{{url('/productoControl/resetProducto')}}",
+            success: function(response){
+                window.location.href = "{{url('productoControl', [$producto->idProducto])}}";
+            }
+        });
     }
 </script>
 @endsection
