@@ -118,7 +118,7 @@ class TrabajadorController extends Controller
     public function asignarTrabajo($data)
     {
         $trabajador = Trabajador::find($data);
-        $productos_almacenados = Producto::get();
+        $productos_almacenados = Producto::where('terminado', '=', 'false')->get();
         $productos = $trabajador->producto;
 
         $productos_disponibles = null;
