@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use Asistencia\User;
 use Asistencia\Http\Requests\InsertObraRequest;
+use Asistencia\Http\Requests\InsertTrabajadorRequest;
 use Asistencia\Trabajador;
 use Asistencia\Obra;
 
@@ -38,9 +39,11 @@ class ObraController extends Controller
       $obra->save();
 
       $obra->trabajadores()->save($trabajador);
-      return redirect()->route('administrador.agregarObra')->with('success', 'Obra ' . $obra->nombre . ' registrada con éxito');
+      return redirect()->back()->with('success', 'Obra ' . $obra->nombre . ' registrada con éxito');
     }
-    return redirect()->route('administrador.agregarObra')->with('error', 'El encargado seleccionado ya posee una obra asignada');
+    return redirect()->back()
+      ->withInput()
+      ->with('error', 'El encargado seleccionado ya posee una obra asignada');
   }
 
   public function detallesObra($id)
@@ -60,5 +63,25 @@ class ObraController extends Controller
       ->with('encargado', $encargado)
       ->with('trabajadores', $trabajadoresTodos);
 
+  }
+
+  public function registrarTrabajadores(InsertTrabajadorRequest $request, $idObra)
+  {
+    $obra = Obra::find($idObra);
+    $trabajador = Trabajador::where('rut', $request->trabajador)->first();
+    if($trabajador->obra == null)
+    {
+      if(!$trabajador->user->isSupervisor()){
+        $obra->trabajadores()->save($trabajador);
+        return redirect()->back()->with('success', 'Trabajador ' . $trabajador->nombre . ' registrado con éxito en la obra');
+      }else{
+        return redirect()->back()
+          ->withInput()
+          ->with('error', 'No puede agregar un supervisor como trabajador a una obra');
+      }
+    }
+    return redirect()->back()
+      ->withInput()
+      ->with('error', 'El trabajador seleccionado ya posee una obra asignada');
   }
 }
