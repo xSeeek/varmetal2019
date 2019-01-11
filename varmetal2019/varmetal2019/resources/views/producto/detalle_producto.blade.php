@@ -140,11 +140,13 @@
                 </button>
             </div>
             <div class="modal-body" align="center">
+              @if($producto->fechaFin == NULL)
                 <h5>
                     Solicitar Pausa:
                 <br>
-                    <a class="btn btn-outline-success btn-md" id="pauseButton" role="button" href="{{url('addPausa', [$producto->idProducto])}}">Pausar</a>
+                      <a class="btn btn-outline-success btn-md" id="pauseButton" role="button" href="{{url('addPausa', [$producto->idProducto])}}">Pausar</a>
                 </h5>
+              @endif
                 <br>
                 @if($producto->terminado == false)
                     @if($producto->estado == 2)

@@ -16,11 +16,6 @@ class UserSeeder extends Seeder
             'type' => 'Admin',
             'password' => bcrypt('abc123456'),
         ]);
-        DB::table('trabajador')->insert([
-            'email' => 'elmacaco@gmail.com',
-            'type' => 'Trabajador',
-            'password' => bcrypt('Raideon133'),
-        ]);
-        //factory(Varmetal\User::class, 100)->create();
+        factory(Varmetal\User::class, 100)->create();
     }
 }
