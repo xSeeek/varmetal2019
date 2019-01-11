@@ -46,6 +46,15 @@
                                 <input type="text" class="form-control" id="rut" aria-describedby="rutTrabajador" placeholder="RUT del Trabajador" name="rutTrabajador" required>
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label class="col-md-4 col-form-label text-md-right">Tipo:</label>
+                            <div class="col-md-6">
+                                <select class="custom-select" id="inputType" aria-describedby="inputType" name="type" required>
+                                        <option value="1">Supervisor</option>
+                                        <option selected value="0">Trabajador</option>
+                                </select>
+                            </div>
+                        </div>
                     </form>
                     <div class="col-md-6">
                         <button class="btn btn-primary mb-2" id='saveTrabajador' onclick="saveTrabajador()">Registrar Cambios</a>

@@ -158,3 +158,19 @@ Route::get('/admin', 'AdminController@admin')
         Route::get('/detallesCuentaTrabajador', ['uses' => 'TrabajadorController@detallesCuentaTrabajador'])
                     ->middleware('is_trabajador')
                     ->name('detallesCuentaTrabajador');
+/* [** Pausa Controller **] */
+    /* [** ADMINISTRACIÓN **] */
+        /* [** GET **] */
+        Route::get('/adminObras', 'ObraController@adminObra')
+                    ->middleware('is_admin')
+                    ->name('adminObras');
+        Route::get('/obraControl/{id}', ['uses' => 'ObraController@obraControl'])
+                    ->middleware('is_admin')
+                    ->name('/obraControl');
+        Route::get('/addObra', 'ObraController@addObra')
+                    ->middleware('is_admin')
+                    ->name('obra/addObra');
+        /* [** POST **] */
+        Route::post('/obraControl/addObra', ['uses' => 'ObraController@insertObra'])
+                ->middleware('is_admin')
+                ->name('/obraControl/addObra');

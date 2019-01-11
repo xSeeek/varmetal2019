@@ -28,7 +28,7 @@ class TrabajadorController extends Controller
 
     public function adminTrabajadores()
     {
-        $trabajadores_registrados = Trabajador::get();
+        $trabajadores_registrados = Trabajador::join('users', 'users_id_user', 'id')->where('type', 'like', User::DEFAULT_TYPE)->get();
         return view('admin.administracion_trabajadores')->with('trabajadores_almacenados', $trabajadores_registrados);
     }
 
@@ -63,7 +63,11 @@ class TrabajadorController extends Controller
         $newUserTrabajador = new User;
         $newUserTrabajador->email = $data->email;
         $newUserTrabajador->password = bcrypt($data->password);
-        $newUserTrabajador->type = User::DEFAULT_TYPE;
+
+        if($data->type == 0)
+            $newUserTrabajador->type = User::DEFAULT_TYPE;
+        else
+            $newUserTrabajador->type = User::ADMIN_TYPE;
 
         $verify = User::where('email', '=', $data->email)
                                 ->get();

@@ -23,6 +23,6 @@ class Producto extends Model
     }
     public function obra()
     {
-        return $this->hasOne('Varmetal\Obra', 'obras_id_obra');
+        return $this->belongsTo('Varmetal\Obra', 'obras_id_obra');
     }
 }

@@ -41,7 +41,7 @@
                         </div>
                         <b>Obra:</b>
                         <div class="col-sm-10">
-                            <input type="text" readonly id="obraProducto" class="form-control-plaintext" value="{{$producto->obra}}">
+                            <input type="text" readonly id="obraProducto" class="form-control-plaintext" value="{{$obra->nombre}}">
                         </div>
                         <b>Estado Actual:</b>
                         <div class="col-sm-10">

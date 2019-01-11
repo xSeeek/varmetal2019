@@ -26,6 +26,7 @@ class ProductoController extends Controller
 
         $producto = Producto::find($id);
         $trabajadores = $producto->trabajadorWithAtributtes;
+        $obra = $producto->obra;
 
         $cantidadProducida = 0;
         foreach($trabajadores as $trabajador)
@@ -34,7 +35,8 @@ class ProductoController extends Controller
         return view('admin.producto.detalle_producto')
                 ->with('producto', $producto)
                 ->with('trabajadores', $trabajadores)
-                ->with('cantidadProducida', $cantidadProducida);
+                ->with('cantidadProducida', $cantidadProducida)
+                ->with('obra', $obra);
     }
 
     public function detalleProducto($id)
@@ -46,10 +48,13 @@ class ProductoController extends Controller
         foreach($trabajadores as $trabajador)
             $cantidadProducida += $trabajador->pivot->productosRealizados;
 
+        $obra = $producto->obra;
+
         return view('producto.detalle_producto')
                 ->with('producto', $producto)
                 ->with('trabajadores', $trabajadores)
-                ->with('cantidadProducida', $cantidadProducida);
+                ->with('cantidadProducida', $cantidadProducida)
+                ->with('obra', $obra);
     }
 
     public function addProducto()
@@ -73,6 +78,17 @@ class ProductoController extends Controller
         if($request->codigoProducto == NULL)
             return 'El código del producto no puede estar en blanco.';
 
+        switch($request->obraProducto)
+        {
+            case(1):
+                break;
+            case(2):
+                break;
+            default:
+                return 'Se tiene que seleccionar una obra para el producto.';
+        }
+
+
         $carbon = new Carbon();
         if($request->fechaInicio < $carbon->now())
             return 'La fecha seleccionada no es válida';
@@ -86,7 +102,7 @@ class ProductoController extends Controller
         $producto->fechaInicio = $request->fechaInicio;
         $producto->cantProducto = $request->cantidadProducto;
         $producto->fechaFin = NULL;
-        $producto->obra = $request->obraProducto;
+        $producto->obras_id_obra = $request->obraProducto;
 
         $producto->save();
         return 1;
