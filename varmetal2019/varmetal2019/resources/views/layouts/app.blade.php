@@ -60,12 +60,12 @@
                 <a class="navbar-brand" href="{{ url('/') }}">
                     Varmetal
                 </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                <!--button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
-                </button>
+                </button-->
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!--ul class="navbar-nav mr-auto"></ul-->
+                    <ul class="navbar-nav mr-auto"></ul>
                     <ul class="navbar-nav ml-auto">
                         @guest
                             <li class="nav-item">
@@ -78,10 +78,16 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="">
+                                  @if(Auth::user()->type == 'Admin')
+                                    <a class="dropdown-item" href="{{url('/admin')}}">
                                         Detalles Cuenta
                                     </a>
-                                    <a class="dropdown-item" href="">
+                                  @else
+                                  <a class="dropdown-item" href="{{url('/homepage/Trabajador')}}">
+                                      Detalles Cuenta
+                                  </a>
+                                  @endif
+                                    <a class="dropdown-item" href="{{url('/contrasena')}}">
                                         Cambiar Contraseña
                                     </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"

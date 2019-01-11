@@ -45,7 +45,6 @@ class PausaController extends Controller
       $descripcion = $response[1];
       $pausa = Pausa::find($idPausa);
       $pausa->fechaFin=now();
-      //return $idPausa;
       $pausa->descripcion=$descripcion;
       $pausa->save();
       return 1;
@@ -94,6 +93,8 @@ class PausaController extends Controller
 
       $producto = Producto::find($idProducto);
       $newPausa->producto()->associate($producto);
+      $producto->cantPausa++;
+      $producto->save();
       $usuarioActual = Auth::user();
       $trabajador = $usuarioActual->trabajador;
       if($usuarioActual->type == User::DEFAULT_TYPE){
@@ -103,6 +104,7 @@ class PausaController extends Controller
       else
           return 'Usted no es un Trabajador';
       $newPausa->save();
+
       return 'Datos almacenados';
     }
 }
