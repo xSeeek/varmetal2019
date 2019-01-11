@@ -50,11 +50,12 @@ class ObraController extends Controller
     foreach ($trabajadores as $trabajador) {
       if($trabajador->user->isSupervisor()){
         $encargado = $trabajador;
-        break; 
+        break;
       }
     }
     return view('obra.detallesObra')
       ->with('obra', $obra)
       ->with('encargado', $encargado);
+
   }
 }
