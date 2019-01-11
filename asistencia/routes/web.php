@@ -40,9 +40,14 @@ Route::get('/menuAdministrador', 'AsistenciaController@menuAdministrador')
   ->name('administrador.menuAdministrador')
   ->middleware('is_admin');
 
+
+/**
+ * [[Controller Obra]]
+ */
 Route::get('/menuAdministrador/detallesObra/{id}', ['uses'=>'ObraController@detallesObra'])
   ->name('administrador.detallesObra')
   ->middleware('is_admin');
+
 
 Route::get('/menuAdministrador/agregarObra', 'ObraController@agregarObra')
   ->name('administrador.agregarObra')
@@ -50,4 +55,8 @@ Route::get('/menuAdministrador/agregarObra', 'ObraController@agregarObra')
 
 Route::post('menuAdministrador/agregarObra/insert', 'ObraController@insertObra')
   ->name('administrador.insertObra')
+  ->middleware('is_admin');
+
+Route::post('menuAdministrador/detallesObra/{idObra}/registrarTrabajador', ['uses'=>'ObraController@registrarTrabajadores'])
+  ->name('administrador.registrarTrabajadorObra')
   ->middleware('is_admin');
