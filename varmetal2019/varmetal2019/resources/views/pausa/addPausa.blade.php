@@ -67,31 +67,34 @@
       </div>
         <div class="text-center">
           <br>
-          <a class="btn btn-primary btn-lg" role="button" href="{{url('/addPausa', [$producto->idProducto])}}"><b>volver</b></a>
+          <a class="btn btn-primary btn-lg" role="button" href="{{url('detalleProducto', [$producto->idProducto])}}"><b>Volver</b></a>
         </div>
     </div>
     <div class="card">
         <div class="card-header">Cantidad Pausas</div>
-        <div class="card-body" aling='center'>
+        <div class="text-center" aling='center'>
           <h6>
+            <br>
             <b>{{$producto->cantPausa}}</b>
+            <br>
           </h6>
         </div>
-        <div class="card-header">Pausa Pendiente</div>
-        <div class="card-body" align='center'>
-            <h6>
-                @if(($pausas_almacenadas!=NULL) && (count($pausas_almacenadas)>0))
-                  @foreach($pausas_almacenadas as $key => $pausa)
-                    @if(($pausa->producto_id_producto == $producto->idProducto) && ($pausa->fechaFin == NULL))
-                      <a class="btn btn-outline-success btn-md" id="finPausa" role="button" href="{{url('trabajadorDetallesPausaGet', [$pausa->idPausa])}}">Ver Pausa {{$producto->cantPausa}}</a>
-                      <br>
-                      <br>
-                      @break
-                    @endif
-                  @endforeach
-                @endif
-            </h6>
-        </div>
+          @if(($pausas_almacenadas!=NULL) && (count($pausas_almacenadas)>0))
+            @foreach($pausas_almacenadas as $key => $pausa)
+              @if(($pausa->producto_id_producto == $producto->idProducto) && ($pausa->fechaFin == NULL))
+              <div class="card-header">Pausa Pendiente</div>
+                <div class="card-body" align='center'>
+                  <h6>
+                    <a class="btn btn-outline-success btn-md" id="finPausa" role="button" href="{{url('trabajadorDetallesPausaGet', [$pausa->idPausa])}}">Ver Pausa {{$producto->cantPausa}}</a>
+                    <br><br>
+                  </h6>
+                </div>
+            </div>
+              @break
+            @endif
+          @endforeach
+        @endif
+      </div>
     </div>
   </div>
 <script type="text/javascript">
@@ -117,9 +120,9 @@ function savePausa()
       datosPausa = Array();
       datosPausa[0] = {{$producto->idProducto}};
       datosPausa[1] = document.getElementById("descripcion").value;
-      //datosPausa[2] = {{$fechaInicio}};
+      datosPausa[2] = document.getElementById("fechaInicio").value;
       json_text = JSON.stringify(datosPausa);
-
+      alert(json_text);
       $.ajax({
           headers: {
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -130,6 +133,7 @@ function savePausa()
           success: function(response){
               if(response!='Datos almacenados')
               {
+                  alert(response);
                   console.log(response);
               }
               else

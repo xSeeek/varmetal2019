@@ -15,13 +15,13 @@ class PausaController extends Controller
 
     public function pausaControl($data)
     {
-        $datos_pausa = Pausa::find($data); //id de la pausa
-        $producto = Producto::find($datos_pausa->producto_id_producto);
-        $trabajador = Trabajador::find($datos_pausa->trabajador_id_trabajador);
+        $pausa = Pausa::find($data); //id de la pausa
+        $producto = Producto::find($pausa->producto_id_producto);
+        $trabajador = Trabajador::find($pausa->trabajador_id_trabajador);
         $usuarioActual = Auth::user();
 
         return view('admin.pausa.detalle_pausa')
-                ->with('pausa', $datos_pausa)
+                ->with('pausa', $pausa)
                 ->with('producto', $producto)
                 ->with('trabajador', $trabajador)
                 ->with('usuarioActual', $usuarioActual);
@@ -52,8 +52,9 @@ class PausaController extends Controller
 
     public function updateFechaFin(Request $data)
     {
+      $fechaHora = Carbon::now();
       $pausa = Pausa::find($data->DATA);
-      $pausa->fechaFin=now();
+      $pausa->fechaFin= $fechaHora->toDateTimeString();
       $pausa->save();
       return 1;
     }
@@ -80,14 +81,14 @@ class PausaController extends Controller
     {
 
       $response = json_decode($data->DATA, true);
-
       $idProducto = $response[0];
       $descripcion = $response[1];
+      $fechaInicio = $response[2];
       if($descripcion==NULL)
-        return 'Añade una descripción';
+        return 'Añada una descripción';
 
       $newPausa=new Pausa;
-      $newPausa->fechaInicio = now();
+      $newPausa->fechaInicio = $fechaInicio;
       $newPausa->fechaFin = NULL;
       $newPausa->descripcion = $descripcion;
 
@@ -102,12 +103,34 @@ class PausaController extends Controller
       else
           return 'Usted no es un Trabajador';
       $productos = $trabajador->productoWithAtributes()->where('producto_id_producto', '=', $producto->idProducto)->get()->first();
-      return 'Datos almacenados';
       $productos->pivot->pausasRealizadas++;
       $productos->pivot->save();
       $producto->cantPausa++;
       $producto->save();
       $newPausa->save();
       return 'Datos almacenados';
+    }
+
+    public function deletePausa(Request $data)
+    {
+      $response = json_decode($data->DATA, true);
+      $idProducto = $response[1];
+      $idPausa = $response[0];
+      $pausa = Pausa::find($idPausa);
+      $producto = Producto::find($idProducto);
+
+      $usuarioActual = Auth::user();
+      if($usuarioActual->trabajador == NULL)
+          return redirect()->route('/home');
+
+      $datos_trabajador = $usuarioActual->trabajador;
+      $productos = $datos_trabajador->productoWithAtributes()->where('producto_id_producto', '=', $idProducto)->get()->first();
+      $productos->pivot->pausasRealizadas--;
+      $productos->pivot->save();
+      $producto->cantPausa--;
+      $producto->save();
+      $pausa->delete();
+
+      return 'Pausa eliminada';
     }
 }
