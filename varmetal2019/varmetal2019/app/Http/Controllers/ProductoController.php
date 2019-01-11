@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Varmetal\Producto;
 use Varmetal\Trabajador;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class ProductoController extends Controller
 {
@@ -25,19 +26,29 @@ class ProductoController extends Controller
         $producto = Producto::find($id);
         $trabajadores = $producto->trabajadorWithAtributtes;
 
+        $cantidadProducida = 0;
+        foreach($trabajadores as $trabajador)
+            $cantidadProducida += $trabajador->pivot->productosRealizados;
+
         return view('admin.producto.detalle_producto')
                 ->with('producto', $producto)
-                ->with('trabajadores', $trabajadores);
+                ->with('trabajadores', $trabajadores)
+                ->with('cantidadProducida', $cantidadProducida);
     }
 
     public function detalleProducto($id)
     {
         $producto = Producto::find($id);
-        $trabajadores = $producto->trabajador;
+        $trabajadores = $producto->trabajadorWithAtributtes;
+
+        $cantidadProducida = 0;
+        foreach($trabajadores as $trabajador)
+            $cantidadProducida += $trabajador->pivot->productosRealizados;
 
         return view('producto.detalle_producto')
                 ->with('producto', $producto)
-                ->with('trabajadores', $trabajadores);
+                ->with('trabajadores', $trabajadores)
+                ->with('cantidadProducida', $cantidadProducida);
     }
 
     public function addProducto()
@@ -47,8 +58,6 @@ class ProductoController extends Controller
 
     public function insertProducto(Request $request)
     {
-        if($request->nombreProducto == NULL)
-            return 'Tiene que ingresar un nombre para el producto';
         if($request->pesoProducto == NULL)
             return 'Tiene que ingresar el peso del producto.';;
         if($request->cantidadProducto == NULL)
@@ -57,6 +66,8 @@ class ProductoController extends Controller
             return 'La cantidad tiene que ser mayor a 0';
         if($request->pesoProducto < 0)
             return 'La cantidad tiene que ser mayor a 0';
+        if($request->codigoProducto == NULL)
+            return 'El código del producto no puede estar en blanco.';
 
         $carbon = new Carbon();
         if($request->fechaInicio < $carbon->now())
@@ -64,6 +75,7 @@ class ProductoController extends Controller
 
         $producto = new Producto;
         $producto->nombre = $request->nombreProducto;
+        $producto->codigo = $request->codigoProducto;
         $producto->pesoKg = $request->pesoProducto;
         $producto->cantPausa = 0;
         $producto->prioridad = $request->inputPrioridad;
@@ -210,6 +222,25 @@ class ProductoController extends Controller
         $producto->terminado = false;
 
         $producto->save();
+        return 1;
+    }
+
+    public function updateCantidadProducto(Request $request)
+    {
+        $usuarioActual = Auth::user();
+
+        if($usuarioActual->trabajador == NULL)
+            return redirect()->route('/home');
+
+        $datos_trabajador = $usuarioActual->trabajador;
+        $producto = Producto::find($request->DATA);
+
+        $dataProducto = $producto->trabajadorWithAtributtes()->where('trabajador_id_trabajador', '=', $datos_trabajador->idTrabajador)->get()->first();
+        $dataProducto->pivot->productosRealizados = ($dataProducto->pivot->productosRealizados) + 1;
+        $dataProducto->pivot->kilosTrabajados = ($dataProducto->pivot->productosRealizados) * $producto->pesoKg;
+        $dataProducto->pivot->save();
+        $dataProducto->save();
+
         return 1;
     }
 }
