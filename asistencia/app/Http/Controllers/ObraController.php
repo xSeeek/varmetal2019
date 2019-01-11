@@ -53,9 +53,12 @@ class ObraController extends Controller
         break;
       }
     }
+
+    $trabajadoresTodos = Trabajador::all();
     return view('obra.detallesObra')
       ->with('obra', $obra)
-      ->with('encargado', $encargado);
+      ->with('encargado', $encargado)
+      ->with('trabajadores', $trabajadoresTodos);
 
   }
 }
