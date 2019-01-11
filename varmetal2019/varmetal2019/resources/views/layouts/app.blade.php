@@ -57,50 +57,50 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    Varmetal
-                </a>
-                <!--button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button-->
-
+                <a class="navbar-brand" href="{{ url('/') }}">Varmetal</a>
+                <!--https://getbootstrap.com/docs/4.0/components/navbar/#how-it-works-->
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-auto"></ul>
-                    <ul class="navbar-nav ml-auto">
+                  <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
                         @guest
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>
                         @else
-                            <li>
-                                <a id="navbarDropdown" class="nsv-link dropdown-toggle" color="black" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                  @if(Auth::user()->type == 'Admin')
-                                    <a class="dropdown-item" href="{{url('/admin')}}">
-                                        Detalles Cuenta
-                                    </a>
-                                  @else
+                            <li class="nav-item dropdown">
+                              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Opciones
+                              </a>
+                              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ url('/') }}">Varmetal</a>
+                                <div class="dropdown-divider"></div>
+                                @if(Auth::user()->type == 'Admin')
+                                  <a class="dropdown-item" href="{{url('/admin')}}">
+                                      Detalles Cuenta
+                                  </a>
+                                @else
                                   <a class="dropdown-item" href="{{url('/homepage/Trabajador')}}">
                                       Detalles Cuenta
                                   </a>
-                                  @endif
-                                    <a class="dropdown-item" href="{{url('/contrasena')}}">
-                                        Cambiar Contraseña
-                                    </a>
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-                                </div>
-                              </li>
+                                @endif
+                                <a class="dropdown-item" href="{{url('/contrasena')}}">Cambiar Contraseña</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                   onclick="event.preventDefault();
+                                                 document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
+                                </a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
+                                <!--a id="navbarDropdown" class="nsv-link dropdown-toggle" color="black" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                </a-->
+                              </div>
+                            </li>
                         @endguest
                     </ul>
                 </div>

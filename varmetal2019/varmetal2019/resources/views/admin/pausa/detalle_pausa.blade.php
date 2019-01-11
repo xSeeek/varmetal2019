@@ -59,13 +59,18 @@
                     @if($pausa->fechaFin==NULL)
                         @if($usuarioActual->type == 'Admin')
                           <a class="btn btn-outline-success btn-md" id="finPausa" role="button" onclick="adminUpdateFechaFin({{$pausa->idPausa}})">Finalizar</a>
+                          <br><br>
+                          <a class="btn btn-outline-success btn-md" id="finPausa" role="button" onclick="adminDeletePausa({{$pausa->idPausa}})">Eliminar</a>
+
                         @else
                             <a class="btn btn-outline-success btn-md" id="finPausa" role="button" onclick="trabajadorUpdateFechaFin()">Finalizar</a>
+                            <br><br>
+                            <a class="btn btn-outline-success btn-md" id="finPausa" role="button" onclick="trabajadorDeletePausa({{$pausa->idPausa}})">Eliminar</a>
                         @endif
                     @else
-                        Pausa Finalizada
+                        <b>Pausa Finalizada</b>
                     @endif
-                    <br><br>
+                    <br><hr>
                     @if($usuarioActual->type == 'Admin')
                       <a class="btn btn-outline-success btn-md" id="detallesTrabajador" role="button" href="{{url('/trabajadorControl', [$trabajador->idTrabajador])}}">Trabajador</a>
                       <br><br>
@@ -89,6 +94,51 @@
     </div>
 </div>
 <script>
+  function trabajadorDeletePausa()
+  {
+    var datos, json_text;
+
+    datos = Array();
+    datos[0] = {{$pausa->idPausa}};
+    datos[1] = {{$producto->idProducto}};
+    json_text = JSON.stringify(datos);
+
+      $.ajax({
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          type: "POST",
+          data: {DATA:json_text},
+          url: "{{url('/trabajadorDeletePausa')}}",
+          success: function(response){
+              console.log(response);
+              window.location.href = "{{url('/addPausa', [$producto->idProducto])}}";
+          }
+      });
+  }
+  function adminDeletePausa(data)
+  {
+    var datos, json_text;
+
+    datos = Array();
+    datos[0] = {{$pausa->idPausa}};
+    datos[1] = {{$producto->idProducto}};
+    json_text = JSON.stringify(datos);
+
+      $.ajax({
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          type: "POST",
+          data: {DATA:json_text},
+          url: "{{url('/adminDeletePausa')}}",
+          success: function(response){
+              console.log(response);
+              window.location.href = "{{url('/adminPausasAlmacenadas', [$producto->idProducto])}}";
+          }
+      });
+  }
+
   function adminUpdateFechaFin(data)
   {
       $.ajax({
@@ -100,7 +150,7 @@
           url: "{{url('/adminUpdateFechaFinPost')}}",
           success: function(response){
               console.log(response);
-              window.location.href = "{{url('/adminDetallesPausaGet', [$pausa->idPausa])}}";
+              window.location.href = "{{url('/addPausa', [$pausa->idPausa])}}";
           }
       });
   }
