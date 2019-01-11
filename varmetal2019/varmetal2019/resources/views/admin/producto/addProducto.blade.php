@@ -45,7 +45,16 @@
                         <div class="form-group row">
                             <label class="col-md-4 col-form-label text-md-right">Obra:</label>
                             <div class="col-md-6">
-                                <input type="text" class="form-control" aria-describedby="obraProducto" placeholder="Obra asignada al Producto" name="obraProducto" required>
+                                <div class="input-group mb-3">
+                                    <select class="custom-select" id="inputObra" aria-describedby="obraProducto" name="obraProducto" required>
+                                        <option selected disabled>Seleccione una obra...</option>
+                                        @if(($obras != NULL) && (count($obras)>0))
+                                            @foreach($obras as $obra)
+                                                <option value="{{$obra->idObra}}">{{$obra->nombre}}</option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group row">

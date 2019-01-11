@@ -5,6 +5,7 @@ namespace Varmetal\Http\Controllers;
 use Illuminate\Http\Request;
 use Varmetal\Producto;
 use Varmetal\Trabajador;
+use Varmetal\Obra;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
@@ -53,7 +54,10 @@ class ProductoController extends Controller
 
     public function addProducto()
     {
-        return view('admin.producto.addProducto');
+        $obras = Obra::get();
+
+        return view('admin.producto.addProducto')
+                ->with('obras', $obras);
     }
 
     public function insertProducto(Request $request)

@@ -19,7 +19,6 @@ class ProductoTable extends Migration
             $table->string('codigo')->unique();
             $table->timestamp('fechaInicio')->timestamps();
             $table->timestamp('fechaFin')->nullable();
-            $table->string('obra')->default('No Especificada');
             $table->integer('pesoKg')->nullable();
             $table->integer('cantPausa')->default(0);
             $table->integer('cantProducto')->default(0);
@@ -27,6 +26,9 @@ class ProductoTable extends Migration
             $table->integer('prioridad')->default('3');
             $table->boolean('terminado')->default('false');
             $table->timestamps();
+
+            $table->integer('obras_id_obra')->unsigned()->nullable();
+            $table->foreign('obras_id_obra')->references('idObra')->on('obra')->onDelete('cascade');
         });
     }
 
