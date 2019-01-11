@@ -35,7 +35,7 @@
                                 <input type="text" readonly id="fechaFinProducto" class="form-control-plaintext" value="{{$producto->fechaFin}}">
                             @endif
                         </div>
-                        <b>Peso (en Kilogramos):</b>
+                        <b>Peso unitario(en Kilogramos):</b>
                         <div class="col-sm-10">
                             <input type="text" readonly id="pesoProducto" class="form-control-plaintext" value="{{$producto->pesoKg}} Kg">
                         </div>
@@ -208,21 +208,26 @@
     }
     function actualizarCantidad(idProducto)
     {
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            type: "POST",
-            data: {DATA:idProducto},
-            url: "{{url('producto/actualizarCantidad')}}",
-            success: function(response){
-                if(response == 1)
-                    window.location.href = "{{url('/detalleProducto', [$producto->idProducto])}}";
-                else {
-                        alert(response);
-                    }
-            }
-        });
+        if (confirm("Presione OK para actualizar la cantidad"))
+        {
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: "POST",
+                data: {DATA:idProducto},
+                url: "{{url('producto/actualizarCantidad')}}",
+                success: function(response){
+                    if(response == 1)
+                        window.location.href = "{{url('/detalleProducto', [$producto->idProducto])}}";
+                    else {
+                            alert(response);
+                        }
+                }
+            });
+        }
+        else
+            return;
     }
 </script>
 @endsection

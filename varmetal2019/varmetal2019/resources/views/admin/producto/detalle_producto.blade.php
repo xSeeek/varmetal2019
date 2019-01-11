@@ -35,7 +35,7 @@
                                 <input type="text" readonly id="fechaFinProducto" class="form-control-plaintext" value="{{$producto->fechaFin}}">
                             @endif
                         </div>
-                        <b>Peso (en Kilogramos):</b>
+                        <b>Peso unitario(en Kilogramos):</b>
                         <div class="col-sm-10">
                             <input type="text" readonly id="pesoProducto" class="form-control-plaintext" value="{{$producto->pesoKg}} Kg">
                         </div>
