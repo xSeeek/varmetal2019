@@ -16,5 +16,13 @@ class DatabaseSeeder extends Seeder
           'type' => 'Admin',
           'password' => bcrypt('abc123456'),
       ]);
+
+      factory(Asistencia\User::class, 100)->create();
+
+      DB::table('users')->insert([
+          'email' => 'xubylele@gmail.com',
+          'type' => 'Supervisor',
+          'password' => bcrypt('abc123456'),
+      ]);
   }
 }
