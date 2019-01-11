@@ -47,19 +47,28 @@
                 <div class="row justify-content-center">
                   @if(($pausas_almacenadas!=NULL) && (count($pausas_almacenadas)>0))
                       @if(($pausas_almacenadas->last()->producto_id_producto == $producto->idProducto) && ($pausas_almacenadas->last()->fechaFin == NULL))
-                        <a class="btn btn-outline-success my-1 my-sm-0" role="button" onclick="alert('Primero, Finaliza la pausa pendiente')"><b>Registrar Cambios</b></a>
+                        <a class="btn btn-outline-success my-1 my-sm-0" role="button" onclick=""><b>Posee una Pausa Pendiente</b></a>
                       @else
                         @if(($pausas_almacenadas->last()->producto_id_producto == $producto->idProducto) && ($pausas_almacenadas->last()->fechaFin != NULL))
-                          <a class="btn btn-outline-success my-1 my-sm-0" role="button" onclick="savePausa()"><b>Registrar Cambios</b></a>
+                          @if($producto->cantPausa<=14)
+                            <a class="btn btn-outline-success my-1 my-sm-0" role="button" onclick="savePausa()"><b>Registrar Cambios</b></a>
+                          @else
+                            <a class="btn btn-outline-success my-1 my-sm-0" role="button" onclick=""><b>Limite de Pausas alcanzado</b></a>
+                          @endif
                         @endif
                       @endif
+                  @else
+                    <a class="btn btn-outline-success my-1 my-sm-0" role="button" onclick="savePausa()"><b>Registrar Cambios</b></a>
                   @endif
-                  <a class="btn btn-primary btn-lg" role="button" href="{{url('/addPausa', [$producto->idProducto])}}"><b>volver</b></a>
                 </div>
               </div>
           </div>
         </div>
       </div>
+        <div class="text-center">
+          <br>
+          <a class="btn btn-primary btn-lg" role="button" href="{{url('/addPausa', [$producto->idProducto])}}"><b>volver</b></a>
+        </div>
     </div>
     <div class="card">
         <div class="card-header">Pausa Pendiente</div>
@@ -68,7 +77,7 @@
                 @if(($pausas_almacenadas!=NULL) && (count($pausas_almacenadas)>0))
                   @foreach($pausas_almacenadas as $key => $pausa)
                     @if(($pausa->producto_id_producto == $producto->idProducto) && ($pausa->fechaFin == NULL))
-                      <a class="btn btn-outline-success btn-md" id="finPausa" role="button" href="{{url('trabajadorDetallesPausaGet', [$pausa->idPausa])}}">Ver Pausa {{$pausa->idPausa}}</a>
+                      <a class="btn btn-outline-success btn-md" id="finPausa" role="button" href="{{url('trabajadorDetallesPausaGet', [$pausa->idPausa])}}">Ver Pausa {{$producto->cantPausa}}</a>
                       <br>
                       <br>
                     @endif
