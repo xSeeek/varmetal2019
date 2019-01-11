@@ -31,7 +31,7 @@ class ObraController extends Controller
   {
     $trabajador = Trabajador::where('rut', $request->encargado)->first();
 
-    if($tabajador->obra != null)
+    if($trabajador->obra == null)
     {
       $obra = new Obra();
       $obra->nombre = $request->name;
@@ -46,6 +46,15 @@ class ObraController extends Controller
   public function detallesObra($id)
   {
     $obra = Obra::find($id);
-    return view('obra.detallesObra')->with('obra', $obra);
+    $trabajadores = $obra->trabajadores;
+    foreach ($trabajadores as $trabajador) {
+      if($trabajador->user->isSupervisor()){
+        $encargado = $trabajador;
+        break; 
+      }
+    }
+    return view('obra.detallesObra')
+      ->with('obra', $obra)
+      ->with('encargado', $encargado);
   }
 }

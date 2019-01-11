@@ -17,6 +17,7 @@ class Trabajador extends Migration
           $table->increments('idTrabajador');
           $table->string('nombre');
           $table->string('rut')->unique();
+          $table->string('cargo');
           $table->boolean('estado')->default('true');
           $table->integer('users_id_user')->unsigned();
           $table->foreign('users_id_user')->references('id')->on('users')->onDelete('cascade');

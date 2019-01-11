@@ -13,7 +13,7 @@
         </div>
         <div class="form-group">
           <label for="encargado">Encargado de la obra</label>
-          <input type="text" name="encargado" class="form-control" value="{{$obra->encargado->nombre}}" disabled>
+          <input type="text" name="encargado" class="form-control" value="{{$encargado->nombre}}" disabled>
         </div>
       </div>
     </div>
