@@ -113,6 +113,9 @@ Route::get('/admin', 'AdminController@admin')
         Route::post('/producto/Anular', ['uses' => 'ProductoController@unmarkAsFinished'])
                     ->middleware('is_trabajador')
                     ->name('/producto/Anular');
+        Route::post('/producto/actualizarCantidad', ['uses' => 'ProductoController@updateCantidadProducto'])
+                    ->middleware('is_trabajador')
+                    ->name('/producto/actualizarCantidad');
 /* [** Pausa Controller **] */
     /* [** ADMINISTRACIÓN **] */
         /* [** GET **] */

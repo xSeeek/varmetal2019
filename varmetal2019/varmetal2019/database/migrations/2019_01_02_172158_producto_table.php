@@ -15,10 +15,11 @@ class ProductoTable extends Migration
     {
         Schema::create('producto', function (Blueprint $table) {
             $table->increments('idProducto');
-            $table->string('nombre');
+            $table->string('nombre')->default('No Especificado');
+            $table->string('codigo')->unique();
             $table->timestamp('fechaInicio')->timestamps();
             $table->timestamp('fechaFin')->nullable();
-            $table->string('obra')-defaul('No Especificada');
+            $table->string('obra')->default('No Especificada');
             $table->integer('pesoKg')->nullable();
             $table->integer('cantPausa')->default(0);
             $table->integer('cantProducto')->default(0);

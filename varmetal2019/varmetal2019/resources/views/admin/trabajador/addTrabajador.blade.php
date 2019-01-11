@@ -43,7 +43,7 @@
                         <div class="form-group row">
                             <label class="col-md-4 col-form-label text-md-right">RUT del Trabajador:</label>
                             <div class="col-md-6">
-                                <input type="text" class="form-control" aria-describedby="rutTrabajador" placeholder="RUT del Trabajador" name="rutTrabajador" required>
+                                <input type="text" class="form-control" id="rut" aria-describedby="rutTrabajador" placeholder="RUT del Trabajador" name="rutTrabajador" required>
                             </div>
                         </div>
                     </form>
@@ -58,6 +58,9 @@
     </div>
 </div>
 <script type="text/javascript">
+    $(document).ready(function() {
+        $("input#rut").rut({formatOn: 'keyup', ignoreControlKeys: false});
+    });
     function saveTrabajador()
     {
         $.ajax({

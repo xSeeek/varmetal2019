@@ -15,6 +15,10 @@
                 </div>
                 <div class="card-body">
                     <h5>
+                        <b>Código del Producto:</b>
+                        <div class="col-sm-10">
+                            <input type="text" readonly id="codigoProducto" class="form-control-plaintext" value="{{$producto->codigo}}">
+                        </div>
                         <b>Nombre del Producto:</b>
                         <div class="col-sm-10">
                             <input type="text" readonly id="nombreProducto" class="form-control-plaintext" value="{{$producto->nombre}}">
@@ -58,7 +62,7 @@
                         </div>
                         <b>Cantidad realizada:</b>
                         <div class="col-sm-10">
-                            <input type="text" readonly id="cantidadProducto" class="form-control-plaintext" value="0/{{$producto->cantProducto}}">
+                            <input type="text" readonly id="cantidadProducto" class="form-control-plaintext" value="{{$cantidadProducida}}/{{$producto->cantProducto}}">
                         </div>
                         <b>Prioridad:</b>
                         <div class="col-sm-10">
@@ -105,6 +109,7 @@
                             <th>RUT</th>
                             <th>Nombre</th>
                             <th>Cargo</th>
+                            <th>Kg realizados</th>
                             <th>Estado</th>
                             <th>Ficha</th>
                             <th>Eliminar</th>
@@ -116,6 +121,7 @@
                             <td scope="col">{{ $trabajador->rut }}</td>
                             <td scope="col">{{ $trabajador->nombre }}</td>
                             <td scope="col">{{ $trabajador->cargo }}</td>
+                            <td scope="col">{{ $trabajador->pivot->kilosTrabajados }}</td>
                             @if($trabajador->pivot->fechaComienzo == NULL)
                                 <td scope="col">Aún no inicia</td>
                             @else

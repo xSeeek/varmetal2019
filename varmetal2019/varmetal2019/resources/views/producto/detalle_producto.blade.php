@@ -15,6 +15,10 @@
                 </div>
                 <div class="card-body">
                     <h5>
+                        <b>Código del Producto:</b>
+                        <div class="col-sm-10">
+                            <input type="text" readonly id="codigoProducto" class="form-control-plaintext" value="{{$producto->codigo}}">
+                        </div>
                         <b>Nombre del Producto:</b>
                         <div class="col-sm-10">
                             <input type="text" readonly id="nombreProducto" class="form-control-plaintext" value="{{$producto->nombre}}">
@@ -58,7 +62,7 @@
                         </div>
                         <b>Cantidad realizada:</b>
                         <div class="col-sm-10">
-                            <input type="text" readonly id="cantidadProducto" class="form-control-plaintext" value="0/{{$producto->cantProducto}}">
+                            <input type="text" readonly id="cantidadProducto" class="form-control-plaintext" value="{{$cantidadProducida}}/{{$producto->cantProducto}}">
                         </div>
                         <b>Prioridad:</b>
                         <div class="col-sm-10">
@@ -85,6 +89,9 @@
                         </div>
                     </h5>
                 </div>
+                @if($cantidadProducida != $producto->cantProducto)
+                    <a class="btn btn-outline-primary btn-lg" role="button" onclick="actualizarCantidad({{$producto->idProducto}})"><b>Actualizar cantidad producida</b></a>
+                @endif
             </div>
             <br>
             <div class="card">
@@ -141,11 +148,13 @@
                 <br>
                 @if($producto->terminado == false)
                     @if($producto->estado == 2)
-                        <h5>
-                            Marcar como terminado:
-                        <br>
-                            <a class="btn btn-outline-warning btn-md" id="stopButton" role="button" onclick="markAsFinished({{$producto->idProducto}})">Terminar</a>
-                        </h5>
+                        @if($cantidadProducida == $producto->cantProducto)
+                            <h5>
+                                Marcar como terminado:
+                            <br>
+                                <a class="btn btn-outline-warning btn-md" id="stopButton" role="button" onclick="markAsFinished({{$producto->idProducto}})">Terminar</a>
+                            </h5>
+                        @endif
                     @else
                         <h5>
                             Anular termino:
@@ -186,6 +195,24 @@
             type: "POST",
             data: {DATA:data},
             url: "{{url('producto/Anular')}}",
+            success: function(response){
+                if(response == 1)
+                    window.location.href = "{{url('/detalleProducto', [$producto->idProducto])}}";
+                else {
+                        alert(response);
+                    }
+            }
+        });
+    }
+    function actualizarCantidad(idProducto)
+    {
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: "POST",
+            data: {DATA:idProducto},
+            url: "{{url('producto/actualizarCantidad')}}",
             success: function(response){
                 if(response == 1)
                     window.location.href = "{{url('/detalleProducto', [$producto->idProducto])}}";
