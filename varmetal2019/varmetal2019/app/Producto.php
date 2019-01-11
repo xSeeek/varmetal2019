@@ -21,4 +21,8 @@ class Producto extends Model
     {
         return $this->hasMany('Varmetal\Pausa','pausa_id_pausa');
     }
+    public function obra()
+    {
+        return $this->hasOne('Varmetal\Obra', 'obras_id_obra');
+    }
 }
