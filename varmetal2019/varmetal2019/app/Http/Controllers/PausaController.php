@@ -93,8 +93,6 @@ class PausaController extends Controller
 
       $producto = Producto::find($idProducto);
       $newPausa->producto()->associate($producto);
-      $producto->cantPausa++;
-      $producto->save();
       $usuarioActual = Auth::user();
       $trabajador = $usuarioActual->trabajador;
       if($usuarioActual->type == User::DEFAULT_TYPE){
@@ -103,8 +101,13 @@ class PausaController extends Controller
         }
       else
           return 'Usted no es un Trabajador';
+      $productos = $trabajador->productoWithAtributes()->where('producto_id_producto', '=', $producto->idProducto)->get()->first();
+      return 'Datos almacenados';
+      $productos->pivot->pausasRealizadas++;
+      $productos->pivot->save();
+      $producto->cantPausa++;
+      $producto->save();
       $newPausa->save();
-
       return 'Datos almacenados';
     }
 }

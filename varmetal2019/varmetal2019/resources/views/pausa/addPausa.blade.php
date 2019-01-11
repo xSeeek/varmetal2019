@@ -15,30 +15,30 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-              <div class="card-header">Pausa Del Producto
+              <div class="card-header"><b>Pausa Del Producto</b>
                 <div class="card-body">
                   <form method="POST" name="nuevaPausa" id="nuevaPausa">
                     <div class="form-group row">
-                      <label class="col-md-4 col-form-label text-md-right">Producto:</label>
+                      <label class="col-md-4 col-form-label text-md-right"><b>Nombre Producto:</b></label>
                       <div class="col-md-6">
                         <input id="nombreProducto" value="{{$producto->nombre}}" type="text" class="form-control" aria-describedby="nombreProducto" placeholder="Nombre del Producto" name="nombreProducto" readonly=”readonly”>
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label class="col-md-4 col-form-label text-md-right">ID del Producto:</label>
+                      <label class="col-md-4 col-form-label text-md-right"><b>Codigo del Producto:</b></label>
                         <div class="col-md-6">
-                          <input id="idProducto" value="{{$producto->idProducto}}" type="text" class="form-control" aria-describedby="idProducto" placeholder="Id del Producto" name="idProducto" readonly=”readonly”>
+                          <input id="idProducto" value="{{$producto->codigo}}" type="text" class="form-control" aria-describedby="idProducto" placeholder="Id del Producto" name="idProducto" readonly=”readonly”>
                         </div>
                     </div>
                     <div class="form-group row">
-                      <label class="col-md-4 col-form-label text-md-right">Inicio Pausa:</label>
+                      <label class="col-md-4 col-form-label text-md-right"><b>Hora Inicio Pausa:</b></label>
                         <div class="col-md-6">
                           <input id="fechaInicio" value="{{$fechaInicio}}" type="text" class="form-control" aria-describedby="fechaInicio" placeholder="Fecha de Inicio" name="fechaInicio" readonly=”readonly”>
                         </div>
                     </div>
                     <div class="text-center" aling="center">
                     <div class="text-center">
-                      <label class="col-form-label text-md-center">Descripción: (Mientras ocurre el suceso, detalle con esmeración)
+                      <label class="col-form-label text-md-center"><b>Descripción: (Mientras ocurre el suceso, detalle con esmeración)</b>
                         <div class="col-md-6">
                           <textarea class="texto" id="descripcion" type="text" aria-describedby="descripcion" placeholder="Descripcion" name="descripcion" cols="50" onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
                         </div>
@@ -71,6 +71,12 @@
         </div>
     </div>
     <div class="card">
+        <div class="card-header">Cantidad Pausas</div>
+        <div class="card-body" aling='center'>
+          <h6>
+            <b>{{$producto->cantPausa}}</b>
+          </h6>
+        </div>
         <div class="card-header">Pausa Pendiente</div>
         <div class="card-body" align='center'>
             <h6>
@@ -80,6 +86,7 @@
                       <a class="btn btn-outline-success btn-md" id="finPausa" role="button" href="{{url('trabajadorDetallesPausaGet', [$pausa->idPausa])}}">Ver Pausa {{$producto->cantPausa}}</a>
                       <br>
                       <br>
+                      @break
                     @endif
                   @endforeach
                 @endif
