@@ -46,7 +46,7 @@
                     console.log(response);
                 }
                 else
-                    window.location.href = "{{url('adminObra')}}";
+                    window.location.href = "{{url('adminObras')}}";
             }
         });
     }
