@@ -23,7 +23,7 @@ class ProductoController extends Controller
             return redirect()->route('adminProducto');
 
         $producto = Producto::find($id);
-        $trabajadores = $producto->trabajador;
+        $trabajadores = $producto->trabajadorWithAtributtes;
 
         return view('admin.producto.detalle_producto')
                 ->with('producto', $producto)
@@ -70,6 +70,7 @@ class ProductoController extends Controller
         $producto->fechaInicio = $request->fechaInicio;
         $producto->cantProducto = $request->cantidadProducto;
         $producto->fechaFin = NULL;
+        $producto->obra = $request->obraProducto;
 
         $producto->save();
         return 1;

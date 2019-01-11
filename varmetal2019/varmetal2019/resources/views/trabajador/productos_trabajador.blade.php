@@ -56,7 +56,11 @@
                                             <td scope="col">Sin prioridad</td>
                                             @break
                                     @endswitch
-                                    <td><a class="btn btn-outline-success my-2 my-sm-0" href="{{url('/detalleProducto', [$producto->idProducto])}}" role="button" style="cursor: pointer;">Ver Detalles</a></td>
+                                    @if($producto->pivot->fechaComienzo != NULL)
+                                        <td><a class="btn btn-outline-success my-2 my-sm-0" href="{{url('/detalleProducto', [$producto->idProducto])}}" role="button" style="cursor: pointer;">Ver Detalles</a></td>
+                                    @else
+                                        <td><a class="btn btn-outline-success my-2 my-sm-0" onclick="updateDate({{$producto->idProducto}}, '{{url('/detalleProducto', [$producto->idProducto])}}')" role="button" style="cursor: pointer;">Iniciar Producción</a></td>
+                                    @endif
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -70,4 +74,26 @@
             </div>
         </div>
     </div>
+<script type="text/javascript">
+    function updateDate(idProducto, ruta)
+    {
+        if (confirm("Presione OK para comenzar con el desarrollo del producto"))
+        {
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: "POST",
+            data: {DATA:idProducto},
+            url: "{{url('/trabajadorControl/setStartTime')}}",
+            success: function(response){
+                window.location.href = ruta;
+            }
+        });
+        }
+        else
+            return;
+    }
+</script>
+
 @endsection

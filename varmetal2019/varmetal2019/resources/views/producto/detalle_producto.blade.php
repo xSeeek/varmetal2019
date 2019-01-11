@@ -35,6 +35,10 @@
                         <div class="col-sm-10">
                             <input type="text" readonly id="pesoProducto" class="form-control-plaintext" value="{{$producto->pesoKg}} Kg">
                         </div>
+                        <b>Obra:</b>
+                        <div class="col-sm-10">
+                            <input type="text" readonly id="obraProducto" class="form-control-plaintext" value="{{$producto->obra}}">
+                        </div>
                         <b>Estado Actual:</b>
                         <div class="col-sm-10">
                             @switch($producto->estado)
@@ -51,6 +55,10 @@
                                     <input type="text" readonly id="estadoProducto" class="form-control-plaintext" value="Sin estado definido">
                                     @break
                             @endswitch
+                        </div>
+                        <b>Cantidad realizada:</b>
+                        <div class="col-sm-10">
+                            <input type="text" readonly id="cantidadProducto" class="form-control-plaintext" value="0/{{$producto->cantProducto}}">
                         </div>
                         <b>Prioridad:</b>
                         <div class="col-sm-10">

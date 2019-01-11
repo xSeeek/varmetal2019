@@ -8,6 +8,7 @@ use Varmetal\User;
 use Varmetal\Producto;
 use Freshwork\ChileanBundle\Rut;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class TrabajadorController extends Controller
 {
@@ -109,7 +110,7 @@ class TrabajadorController extends Controller
             return redirect()->route('/home');
 
         $datos_trabajador = $usuarioActual->trabajador;
-        $productos = $datos_trabajador->producto;
+        $productos = $datos_trabajador->productoWithAtributes;
 
         return view('trabajador.productos_trabajador')
                 ->with('productos', $productos);
@@ -141,5 +142,23 @@ class TrabajadorController extends Controller
         return view('admin.trabajador.productos_disponibles')
                 ->with('productos_almacenados', $productos_disponibles)
                 ->with('idTrabajador', $data);
+    }
+
+    public function setStartTime(Request $request)
+    {
+        $idProducto = $request->DATA;
+        $usuarioActual = Auth::user();
+
+        if($usuarioActual->trabajador == NULL)
+            return redirect()->route('/home');
+
+        $datos_trabajador = $usuarioActual->trabajador;
+        $productos = $datos_trabajador->productoWithAtributes()->where('producto_id_producto', '=', $idProducto)->get()->first();
+
+        $date = new Carbon();
+        $productos->pivot->fechaComienzo = $date->now();
+        $productos->pivot->save();
+
+        return 1;
     }
 }

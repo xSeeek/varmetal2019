@@ -35,6 +35,10 @@
                         <div class="col-sm-10">
                             <input type="text" readonly id="pesoProducto" class="form-control-plaintext" value="{{$producto->pesoKg}} Kg">
                         </div>
+                        <b>Obra:</b>
+                        <div class="col-sm-10">
+                            <input type="text" readonly id="obraProducto" class="form-control-plaintext" value="{{$producto->obra}}">
+                        </div>
                         <b>Estado Actual:</b>
                         <div class="col-sm-10">
                             @switch($producto->estado)
@@ -51,6 +55,10 @@
                                     <input type="text" readonly id="estadoProducto" class="form-control-plaintext" value="Sin estado definido">
                                     @break
                             @endswitch
+                        </div>
+                        <b>Cantidad realizada:</b>
+                        <div class="col-sm-10">
+                            <input type="text" readonly id="cantidadProducto" class="form-control-plaintext" value="0/{{$producto->cantProducto}}">
                         </div>
                         <b>Prioridad:</b>
                         <div class="col-sm-10">
@@ -97,6 +105,7 @@
                             <th>RUT</th>
                             <th>Nombre</th>
                             <th>Cargo</th>
+                            <th>Estado</th>
                             <th>Ficha</th>
                             <th>Eliminar</th>
                         </tr>
@@ -107,6 +116,11 @@
                             <td scope="col">{{ $trabajador->rut }}</td>
                             <td scope="col">{{ $trabajador->nombre }}</td>
                             <td scope="col">{{ $trabajador->cargo }}</td>
+                            @if($trabajador->pivot->fechaComienzo == NULL)
+                                <td scope="col">Aún no inicia</td>
+                            @else
+                                <td scope="col">Inició el desarrollo</td>
+                            @endif
                             <td scope="col"><a class="btn btn-outline-secondary btn-sm" href="{{url('trabajadorControl', [$trabajador->idTrabajador])}}" role="button"><b>Ficha Trabajador</b></a>
                             <td scope="col"><a class="btn btn-outline-secondary btn-sm" onclick="deleteWorker({{ $trabajador->idTrabajador }}, {{ $producto->idProducto }})" role="button"><b>Eliminar</b></a>
                         </tr>
