@@ -179,5 +179,11 @@ Route::get('/admin', 'AdminController@admin')
                     ->name('obra/addObra');
         /* [** POST **] */
         Route::post('/obraControl/addObra', ['uses' => 'ObraController@insertObra'])
-                ->middleware('is_admin')
-                ->name('/obraControl/addObra');
+                    ->middleware('is_admin')
+                    ->name('/obraControl/addObra');
+
+/* [** Email Controller **] */
+    /* [** ADMINISTRACIÓN **] */
+      /* [** POST **] */
+        Route::post('/enviarEmail', ['uses' => 'EmailController@sendEmailPausas'])
+                    ->name('enviarEmail');

@@ -19,6 +19,9 @@ class Kernel extends HttpKernel
         \Varmetal\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \Varmetal\Http\Middleware\TrustProxies::class,
+
+        //Redirección de ProtocoloHttps
+        'Varmetal\Http\Middleware\ProtocoloHttps'
     ];
 
     /**
