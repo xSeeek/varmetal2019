@@ -183,7 +183,11 @@ Route::get('/admin', 'AdminController@admin')
                     ->name('/obraControl/addObra');
 
 /* [** Email Controller **] */
-    /* [** ADMINISTRACIÓN **] */
+    /* [** GENERAL **] */
       /* [** POST **] */
         Route::post('/enviarEmail', ['uses' => 'EmailController@sendEmailPausas'])
-                    ->name('enviarEmail');
+                    ->name('enviarEmail'); //PAUSAS
+        Route::post('/enviarEmailProducto', ['uses' => 'EmailController@sendEmailProducto'])
+                    ->name('enviarEmailProducto');
+        Route::post('/enviarEmailTerminado', ['uses' => 'EmailController@sendEmailProductoTerminado'])
+                    ->name('enviarEmailTerminado');

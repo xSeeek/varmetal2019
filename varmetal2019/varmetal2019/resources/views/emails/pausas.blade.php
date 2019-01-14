@@ -9,6 +9,7 @@
     </h2>
     <div>
       <h5>
+        Cantidad de pausas: {!! $cantPausas !!}<br>
         Nombre: {!! $name !!}<br>
         Rut: {!! $rut !!}<br>
         Email: {!! $email !!}<br>

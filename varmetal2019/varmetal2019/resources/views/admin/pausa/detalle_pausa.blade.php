@@ -180,6 +180,7 @@
         datosPausa[0] = '{{$trabajador->nombre}}';
         datosPausa[1] = '{{$trabajador->rut}}';
         datosPausa[2] = '{{$usuarioActual->email}}';
+        datosPausa[3] = '{{$producto->cantPausa}}';
         json_text = JSON.stringify(datosPausa);
         $.ajax({
             headers: {

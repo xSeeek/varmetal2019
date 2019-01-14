@@ -41,6 +41,7 @@ class ProductoController extends Controller
 
     public function detalleProducto($id)
     {
+        $usuarioActual= Auth::user();
         $producto = Producto::find($id);
         $trabajadores = $producto->trabajadorWithAtributtes;
 
@@ -54,7 +55,8 @@ class ProductoController extends Controller
                 ->with('producto', $producto)
                 ->with('trabajadores', $trabajadores)
                 ->with('cantidadProducida', $cantidadProducida)
-                ->with('obra', $obra);
+                ->with('obra', $obra)
+                ->with('usuarioActual',$usuarioActual);
     }
 
     public function addProducto()
