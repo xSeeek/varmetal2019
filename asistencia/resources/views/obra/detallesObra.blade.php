@@ -1,10 +1,10 @@
 @extends('layouts.navbar')
 
 @section('main')
-  <div class="container mt-2">
+  <div class="container mt-2 mb-3">
     <div class="card">
       <div class="card-header">
-        <h3 class="card-tittle">Administrar Obras</h3>
+        <h3 class="card-tittle">Administrar Obras, Obra: {{$obra->nombre}}</h3>
       </div>
       <div class="card-body">
         <div class="form-group">
@@ -20,7 +20,7 @@
     <br>
     <div class="card">
       <div class="card-header">
-        <h3 class="card-tittle">Asistencia de la obra</h3>
+        <h3 class="card-tittle">Personal de la obra</h3>
       </div>
       <div class="card-body">
         @if (count($obra->trabajadores) == 1)
@@ -41,7 +41,7 @@
                 <td class="text-center">{{$trabajador->nombre}} @if ($trabajador->user->isSupervisor()) (Supervisor) @endif</td>
                 <td class="text-center">
                   <div class="btn-group" role="group">
-
+                    <a role="button" class="btn btn-info font-weight-bold" href="{!! route('supervisor.verAsistencia', ['rut'=>$trabajador->rut]) !!}">Ver Asistencia</a>
                   </div>
                 </td>
               </tr>
@@ -50,62 +50,65 @@
           </table>
         @endif
       </div>
-      <button class="btn btn-success btn-lg btn-block"
-       type="button" data-toggle="modal"
-       data-target="#registrarTrabajadores">
-        Registar trabajadores a esta obra
-      </button>
+      @if(Auth::user()->isAdmin())
+        <button class="btn btn-success btn-lg btn-block"
+         type="button" data-toggle="modal"
+         data-target="#registrarTrabajadores">
+          Registar trabajadores a esta obra
+        </button>
+      @endif
     </div>
   </div>
 
 
-
-  <div class="modal fade" id="registrarTrabajadores" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <form action="{!! route('administrador.registrarTrabajadorObra', ['idObra'=>$obra->idObra]) !!}" method="post">
-        @csrf
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Registrar Trabajadores</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <select placeholder="hola"
-           data-live-search-placeholder="Puede buscar por nombre o rut"
-           data-live-search="true" name="trabajador"
-           class="selectpicker form-control{{ $errors->has('trabajadores') ? ' is-invalid' : '' }}">
-           @foreach ($trabajadores as $trabajador)
-             <option
-             @if ($trabajador->user->isSupervisor())
-               style="background: #c82828; color: #fff;"
-             @endif
-             data-tokens="{{$trabajador->nombre}} {{$trabajador->rut}}" value="{{$trabajador->rut}}">
-               {{$trabajador->nombre}}
-               @if($trabajador->user->isSupervisor())
-                 (Supervisor)
-               @elseif ($trabajador->obra == $obra)
-                 (Trabajador registrado en la obra actual)
-               @endif
-             </option>
-           @endforeach
-          </select>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-          <button type="submit" class="btn btn-success">Agregar Trabajadores</button>
-        </div>
-      </form>
+  @if(Auth::user()->isAdmin())
+    <div class="modal fade" id="registrarTrabajadores" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <form action="{!! route('administrador.registrarTrabajadorObra', ['idObra'=>$obra->idObra]) !!}" method="post">
+            @csrf
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Registrar Trabajadores</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <select placeholder="hola"
+              data-live-search-placeholder="Puede buscar por nombre o rut"
+              data-live-search="true" name="trabajador"
+              class="selectpicker form-control{{ $errors->has('trabajadores') ? ' is-invalid' : '' }}">
+              @foreach ($trabajadores as $trabajador)
+                <option
+                @if ($trabajador->user->isSupervisor())
+                  style="background: #c82828; color: #fff;"
+                @endif
+                data-tokens="{{$trabajador->nombre}} {{$trabajador->rut}}" value="{{$trabajador->rut}}">
+                {{$trabajador->nombre}}
+                @if($trabajador->user->isSupervisor())
+                  (Supervisor)
+                @elseif ($trabajador->obra == $obra)
+                  (Trabajador registrado en la obra actual)
+                @endif
+              </option>
+            @endforeach
+            </select>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+            <button type="submit" class="btn btn-success">Agregar Trabajadores</button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
-</div>
+  @endif
 
 <script type="text/javascript">
   $(document).ready(function() {
     var table = $('#tabla_trabajadores').DataTable({
       "language":{
-        "url":"//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+        "url":"//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json",
       },
       "scrollX": true,
       "autoWidth": false,
