@@ -26,7 +26,6 @@ class AsistenciaController extends Controller
       $this->middleware('auth');
   }
 
-  }
 
   public function verAsistencia($rut)
   {
