@@ -32,8 +32,8 @@ class MarcarAsistencia extends FormRequest
   public function messages()
   {
     return [
-        'rut.required' => 'Se requiere el rut de la empresa.',
-        'rut.cl_rut' => 'El rut ingresado no es válido.',
+        'rut.required' => 'Se requiere el rut del usuario.',
+        //'rut.cl_rut' => 'El rut ingresado no es válido.',
       ];
   }
 }
