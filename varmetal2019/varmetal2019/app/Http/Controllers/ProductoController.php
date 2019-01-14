@@ -80,14 +80,9 @@ class ProductoController extends Controller
         if($request->codigoProducto == NULL)
             return 'El código del producto no puede estar en blanco.';
 
-        switch($request->obraProducto)
+        if($request->obraProducto == NULL)
         {
-            case(1):
-                break;
-            case(2):
-                break;
-            default:
-                return 'Se tiene que seleccionar una obra para el producto.';
+            return 'Se tiene que seleccionar una obra para el producto.';
         }
 
 
@@ -242,6 +237,7 @@ class ProductoController extends Controller
         $producto->estado = 2;
         $producto->fechaFin = NULL;
         $producto->terminado = false;
+        $producto->cantProducto = 0;
 
         $producto->save();
         return 1;

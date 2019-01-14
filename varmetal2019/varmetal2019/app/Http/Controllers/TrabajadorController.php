@@ -26,9 +26,9 @@ class TrabajadorController extends Controller
                   ->with('trabajador', $trabajadorActual);
     }
 
-    public function adminTrabajadores()
+    public function adminTrabajadores($type)
     {
-        $trabajadores_registrados = Trabajador::join('users', 'users_id_user', 'id')->where('type', 'like', User::DEFAULT_TYPE)->get();
+        $trabajadores_registrados = Trabajador::join('users', 'users_id_user', 'id')->where('type', 'like', $type)->get();
         return view('admin.administracion_trabajadores')->with('trabajadores_almacenados', $trabajadores_registrados);
     }
 

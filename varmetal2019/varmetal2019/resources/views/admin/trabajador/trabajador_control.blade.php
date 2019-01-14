@@ -97,7 +97,7 @@
                 </div>
             </div>
         </br>
-            <a class="btn btn-primary btn-lg" role="button" href="{{url('adminTrabajador')}}"><b>Volver</b></a>
+            <a class="btn btn-primary btn-lg" role="button" href="{{url('menuTrabajador')}}"><b>Volver</b></a>
         </div>
     </div>
 </div>
@@ -117,12 +117,14 @@
                     <a class="btn btn-outline-success btn-md" id="enableChangesButton" role="button" onclick="changeStatus()">Habilitar/Deshabilitar</a>
                 </h5>
                 <br>
-                <h5>
-                    Borrar Trabajador:
-                <br>
-                    <a class="btn btn-outline-success btn-md" role="button" onclick="deleteTrabajador({{$trabajador->idTrabajador}})">Borrar</a>
-                </h5>
-                <br>
+                @if(Auth::user()->isAdmin())
+                    <h5>
+                        Borrar Trabajador:
+                    <br>
+                        <a class="btn btn-outline-success btn-md" role="button" onclick="deleteTrabajador({{$trabajador->idTrabajador}})">Borrar</a>
+                    </h5>
+                    <br>
+                @endif
                 <h5>
                     Asignar nuevos productos:
                 <br>

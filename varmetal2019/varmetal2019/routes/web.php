@@ -37,11 +37,11 @@ Route::get('/admin', 'AdminController@admin')
         Route::get('/menuTrabajador', 'SupervisorController@menuTrabajador')
                     ->middleware('is_supervisor')
                     ->name('menuTrabajador');
-        Route::get('/adminTrabajador', 'TrabajadorController@adminTrabajadores')
-                    ->middleware('is_admin')
+        Route::get('/adminTrabajador/{tipo}', ['uses' => 'TrabajadorController@adminTrabajadores'])
+                    ->middleware('is_supervisor')
                     ->name('adminTrabajador');
         Route::get('/trabajadorControl/{id}', ['uses' => 'TrabajadorController@trabajadorControl'])
-                    ->middleware('is_admin')
+                    ->middleware('is_supervisor')
                     ->name('trabajadorControl');
         Route::get('/addTrabajador', 'TrabajadorController@addTrabajador')
                     ->middleware('is_admin')

@@ -10,16 +10,16 @@
                     <table id="tablaAdministracion" style="width:50%; margin:15px;">
                         <tr>
                             <th>Trabajadores</th>
-                            <td><a class="btn btn-outline-success my-2 my-sm-0" href="{{url('adminTrabajador')}}" role="button" style="cursor: pointer;">Ingresar</a></td>
+                            <td><a class="btn btn-outline-success my-2 my-sm-0" href="{{url('adminTrabajador', [Varmetal\User::DEFAULT_TYPE])}}" role="button" style="cursor: pointer;">Ingresar</a></td>
                         </tr>
                         @if(Auth::user()->isAdmin())
                             <tr>
                                 <th>Supervisores</th>
-                                <td><a class="btn btn-outline-success my-2 my-sm-0" href="{{url('adminTrabajador')}}" role="button" style="cursor: pointer;">Ingresar</a></td>
+                                <td><a class="btn btn-outline-success my-2 my-sm-0" href="{{url('adminTrabajador', [Varmetal\User::SUPERVISOR_TYPE])}}" role="button" style="cursor: pointer;">Ingresar</a></td>
                             </tr>
                             <tr>
                                 <th>Administradores</th>
-                                <td><a class="btn btn-outline-success my-2 my-sm-0" href="{{url('adminTrabajador')}}" role="button" style="cursor: pointer;">Ingresar</a></td>
+                                <td><a class="btn btn-outline-success my-2 my-sm-0" href="{{url('adminTrabajador', [Varmetal\User::ADMIN_TYPE])}}" role="button" style="cursor: pointer;">Ingresar</a></td>
                             </tr>
                         @endif
                     </table>
