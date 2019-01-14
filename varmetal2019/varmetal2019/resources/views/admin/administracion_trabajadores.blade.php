@@ -38,7 +38,6 @@
                         <br>
                         @endif
                     </div>
-                    </br>
                 @if(Auth::user()->isAdmin())
                     <a class="btn btn-outline-success btn-lg" align="right" role="button" href="{{url('/addTrabajador')}}"><b>Agregar Trabajador</b></a>
                 @endif
