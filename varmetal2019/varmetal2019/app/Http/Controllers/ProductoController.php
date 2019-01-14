@@ -244,7 +244,7 @@ class ProductoController extends Controller
             $trabajador->pivot->productosRealizados = 0;
         }
 
-        $trabajador->pivot->save();
+        $trabajadores->pivot->save();
         $producto->save();
         return 1;
     }
