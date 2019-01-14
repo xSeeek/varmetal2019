@@ -73,11 +73,7 @@
                           <a class="btn btn-outline-success btn-md" id="finPausa" role="button" onclick="adminDeletePausa({{$pausa->idPausa}})">Eliminar Pausa</a>
 
                         @else
-                          @if(($producto->cantPausa==5) || ($producto->cantPausa==10) || ($producto->cantPausa==15))
                             <a class="btn btn-outline-success btn-md" id="finPausa" role="button" onclick="sendEmail()">Finalizar Pausa</a>
-                          @else
-                            <a class="btn btn-outline-success btn-md" id="finPausa" role="button" onclick="trabajadorUpdateFechaFin()">Finalizar Pausa</a>
-                          @endif
                             <br><br>
                             <a class="btn btn-outline-success btn-md" id="finPausa" role="button" onclick="trabajadorDeletePausa({{$pausa->idPausa}})">Eliminar Pausa</a>
                         @endif
@@ -181,6 +177,7 @@
         datosPausa[1] = '{{$trabajador->rut}}';
         datosPausa[2] = '{{$usuarioActual->email}}';
         datosPausa[3] = '{{$producto->cantPausa}}';
+        datosPausa[4] = document.getElementById("descripcion").value;
         json_text = JSON.stringify(datosPausa);
         $.ajax({
             headers: {

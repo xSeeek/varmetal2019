@@ -9,12 +9,15 @@
     </h2>
     <div>
       <h5>
-        Cantidad de pausas: {!! $cantPausas !!}<br>
-        Nombre: {!! $name !!}<br>
-        Rut: {!! $rut !!}<br>
-        Email: {!! $email !!}<br>
+        Cantidad de pausas: {!! $cantPausas !!}.<br>
+        Nombre: {!! $name !!}.<br>
+        Rut: {!! $rut !!}.<br>
+        Email: {!! $email !!}.<br><br>
       </h5>
-      <h3>Descripcion: Aviso para realizar una supervision debido a la cantidad de pausas realizadas por el trabajador.</h3>
+      <h4>
+        Detalles: {!! $detalle !!}.<br><br>
+      </h4>
+      <h3>Descripcion: Aviso para realizar una supervision debido a la pausa realizadas por el trabajador.</h3>
     </div>
   </body>
 </html>
