@@ -131,7 +131,7 @@
     </div>
     </br>
     <div class="row justify-content-center">
-            <a class="btn btn-primary btn-lg" role="button" href="{{url('adminTrabajador')}}"><b>Volver</b></a>
+            <a class="btn btn-primary btn-lg" role="button" href="{{url('/productosTrabajador')}}"><b>Volver</b></a>
     </div>
 </div>
 <div class="modal fade" id="modalOpciones" tabindex="-1" role="dialog" aria-labelledby="Opciones disponibles" aria-hidden="true">

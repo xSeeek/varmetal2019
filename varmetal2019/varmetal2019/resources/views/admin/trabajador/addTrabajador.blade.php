@@ -63,7 +63,7 @@
                 </div>
             </div>
         </br>
-            <a class="btn btn-primary btn-lg" role="button" href="{{url('adminTrabajador')}}"><b>Volver</b></a>
+            <a class="btn btn-primary btn-lg" role="button" href="{{url('adminTrabajador', [Varmetal\User::DEFAULT_TYPE])}}"><b>Volver</b></a>
         </div>
     </div>
 </div>
@@ -87,7 +87,7 @@
                     console.log(response);
                 }
                 else
-                    window.location.href = "{{url('adminTrabajador')}}";
+                    window.location.href = "{{url('adminTrabajador', [Varmetal\User::DEFAULT_TYPE])}}";
             }
         });
     }

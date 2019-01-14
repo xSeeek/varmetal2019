@@ -38,8 +38,10 @@
                         <br>
                         @endif
                     </div>
-                </br>
-                <a class="btn btn-outline-success btn-lg" align="right" role="button" href="{{url('/addTrabajador')}}"><b>Agregar Trabajador</b></a>
+                    </br>
+                @if(Auth::user()->isAdmin())
+                    <a class="btn btn-outline-success btn-lg" align="right" role="button" href="{{url('/addTrabajador')}}"><b>Agregar Trabajador</b></a>
+                @endif
             </div>
         </br>
             <a class="btn btn-primary btn-lg" role="button" href="{{url('menuTrabajador')}}"><b>Volver</b></a>

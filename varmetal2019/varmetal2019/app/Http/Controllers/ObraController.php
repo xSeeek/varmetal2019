@@ -50,11 +50,20 @@ class ObraController extends Controller
                 $kilosTerminados += $trabajador->pivot->kilosTrabajados;
         }
 
+        if($cantidadFinalizada == count($productos_obra))
+            $terminado = true;
+        else
+            $terminado = false;
+
+        $obra->terminado = $terminado;
+        $obra->save();
+
         return view('admin.obra.detalle_obra')
                 ->with('obra', $obra)
                 ->with('productos_obra', $productos_obra)
                 ->with('cantidadFinalizada', $cantidadFinalizada)
                 ->with('kilosTerminados', $kilosTerminados)
-                ->with('kilosObra', $kilosObra);
+                ->with('kilosObra', $kilosObra)
+                ->with('terminado', $terminado);
     }
 }

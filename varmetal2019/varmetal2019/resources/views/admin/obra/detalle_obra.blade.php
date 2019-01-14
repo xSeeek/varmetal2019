@@ -20,6 +20,18 @@
                             <input type="text" readonly id="nombreObra" class="form-control-plaintext" value="{{$obra->nombre}}">
                         </div>
                     </h5>
+                    <h5>
+                        <b>Estado de la Obra:</b>
+                        <div class="col-sm-10">
+                            @if($terminado == true && ($cantidadFinalizada == count($productos_obra)))
+                                <input type="text" readonly id="estadoObra" class="form-control-plaintext" value="Terminada">
+                            @elseif($cantidadFinalizada == 0)
+                                <input type="text" readonly id="estadoObra" class="form-control-plaintext" value="Pendiente">
+                            @else
+                                <input type="text" readonly id="estadoObra" class="form-control-plaintext" value="En producción">
+                            @endif
+                        </div>
+                    </h5>
                     <br>
                     <h5>
                         <b>Productos finalizados:</b>
