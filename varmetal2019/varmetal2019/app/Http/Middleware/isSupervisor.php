@@ -17,8 +17,8 @@ class isSupervisor
     {
         if(auth()->user() == null)
             return redirect('/');
-        if(auth()->user()->isSupervisor())
+        if(auth()->user()->isSupervisor() || auth()->user()->isAdmin())
             return $next($request);
-        return redirect('home');
+        return redirect('/');
     }
 }

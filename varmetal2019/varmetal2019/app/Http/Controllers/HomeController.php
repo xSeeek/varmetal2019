@@ -25,7 +25,7 @@ class HomeController extends Controller
     public function index()
     {
         $user = Auth::user();
-        if($user->isAdmin())
+        if($user->isAdmin() || $user->isSupervisor())
             return redirect()->route('admin');
         return redirect()->route('/homepage/Trabajador');
     }
