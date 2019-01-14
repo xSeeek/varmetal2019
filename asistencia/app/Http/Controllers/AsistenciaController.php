@@ -6,8 +6,9 @@ use Freshwork\ChileanBundle\Rut;
 
 use Asistencia\Obra;
 use Asistencia\Asistencia;
+use Asistencia\Trabajador;
 use Illuminate\Http\Request;
-use Asistencia\Http\Requests\MarcarAsistencia;
+
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Auth;
@@ -25,36 +26,13 @@ class AsistenciaController extends Controller
       $this->middleware('auth');
   }
 
-  /**
-   * [registrarAsistencia registra una asistencia para un trabajador]
-   * @param  MarcarAsistencia $request [Form que hace validaciones del request]
-   * @return [type]                    [Retorna una redirección hacia la misma ruta
-   *                                   con un mensaje de éxito.]
-   */
-  public function registrarAsistencia(MarcarAsistencia $request)
-  {
-    if($request->hasFile('file'))
-    {
-      $file = $request->file('file');
-      $t = Trabajador::where('rut', $request->rut)->first();
-
-      $a = new Asistencia();
-      $a->trabajador_id_trabajador = $t->idTrabajador;
-
-      $dt = Carbon::now();
-
-      $file_name = $dt->format('d-m-Y') . '.' . $file->getClientOriginalExtension();
-
-      Storage::disk('asistencia')->put($request->rut.'/'. $file_name, File::get($file));
-
-      $a->image = $file_name;
-      $a->save();
-
-      return redirect()->route('home')->with('success', 'Asistencia a ' . $t->nombre . ' registrada con éxito');
-    }
   }
 
-
+  public function verAsistencia($rut)
+  {
+    $trabajador = Trabajador::where('rut', $rut)->first();
+    return view('asistencia.verAsistenciaTrabajador')->with('trabajador', $trabajador);
+  }
 
   public function menuAdministrador()
   {

@@ -15,7 +15,7 @@ class isSupervisor
      */
      public function handle($request, Closure $next)
      {
-         if(auth()->user()->isSupervisor()) {
+         if(auth()->user()->isSupervisor() || auth()->user()->isAdmin()) {
              return $next($request);
          }
          return redirect('home');
