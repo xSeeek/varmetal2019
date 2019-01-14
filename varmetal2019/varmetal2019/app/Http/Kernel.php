@@ -65,6 +65,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'is_admin' => \Varmetal\Http\Middleware\isAdmin::class,
         'is_trabajador' => \Varmetal\Http\Middleware\isTrabajador::class,
+        'is_supervisor' => \Varmetal\Http\Middleware\isSupervisor::class,
     ];
 
     /**

@@ -28,7 +28,7 @@ Route::get('/home', 'HomeController@index')
 /* [** Admin Controller **] */
 
 Route::get('/admin', 'AdminController@admin')
-    ->middleware('is_admin')
+    ->middleware('is_admin', 'is_supervisor')
     ->name('admin');
 
 /* [** Trabajador Controller **] */
