@@ -17,6 +17,7 @@ class EmailController extends Controller
           'rut' => $response[1],
           'email' => $response[2],
           'cantPausas' => $response[3],
+          'detalle' => $response[4],
       );
       Mail::send('emails.pausas', $data, function($message){
         $user = Auth::user();
@@ -43,7 +44,7 @@ class EmailController extends Controller
           'email' => $response[2],
           'nombreProducto' => $response[3],
           'codigoProducto' => $response[4],
-          'cantProductos' => $response[5],
+          'cantProductos' => $response[5]+1,
       );
       Mail::send('emails.productos', $data, function($message){
         $user = Auth::user();

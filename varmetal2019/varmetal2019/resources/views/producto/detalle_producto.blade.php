@@ -185,7 +185,7 @@ function sendEmailProductos()
       datosPausa[2] = '{{$usuarioActual->email}}';
       datosPausa[3] = '{{$producto->nombre}}';
       datosPausa[4] = '{{$producto->codigo}}';
-      datosPausa[5] = '{{$producto->cantProducto}}';
+      datosPausa[5] = '{{$cantidadProducida}}';
       json_text = JSON.stringify(datosPausa);
       if (confirm("Presione OK para actualizar la cantidad"))
       {
@@ -220,23 +220,23 @@ function sendEmail()
       datosPausa[3] = '{{$producto->nombre}}';
       datosPausa[4] = '{{$producto->codigo}}';
       json_text = JSON.stringify(datosPausa);
-      $.ajax({
-          headers: {
-              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          },
-          type: "POST",
-          data: {DATA:json_text},
-          url: "{{url('/enviarEmailTerminado')}}",
-          success: function(response){
-              if(response!='Email enviado producto Terminado')
-              {
-                  alert(response);
-                  console.log(response);
-              }
-              else
-                  markAsFinished({{$producto->idProducto}});
-        }
-      });
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: "POST",
+            data: {DATA:json_text},
+            url: "{{url('/enviarEmailTerminado')}}",
+            success: function(response){
+                if(response!='Email enviado producto Terminado')
+                {
+                    alert(response);
+                    console.log(response);
+                }
+                else
+                    markAsFinished({{$producto->idProducto}});
+          }
+        });
     }
 
     function markAsFinished(data)
@@ -277,7 +277,7 @@ function sendEmail()
     }
     function actualizarCantidad(idProducto)
     {
-      if({{$producto->cantProducto}}%'5'!=0)
+      if(({{$cantidadProducida}}+1)%5!=0)
       {
           if (confirm("Presione OK para actualizar la cantidad"))
           {
