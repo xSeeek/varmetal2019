@@ -14,7 +14,11 @@
                         </div>
                     @endif
 
-                    Bienvenido, </br>
+                    Bienvenido, @if(Auth::user()->isSupervisor())
+                                    Supervisor
+                                @elseif(Auth::user()->isAdmin())
+                                    Administrador
+                                @endif</br>
                     Correo actual: <?php echo Auth::user()->email?>
                 </div>
             </div>
@@ -25,7 +29,7 @@
                     <table id="tablaAdministracion" style="width:50%; margin:15px;">
                       @if(($obras != NULL) && (count($obras) > 0))
                         <tr>
-                            <th>Productos</th>
+                            <th>Administración de Productos</th>
                             <td><a class="btn btn-outline-success my-2 my-sm-0" href="{{url('adminProducto')}}" role="button" style="cursor: pointer;">Ingresar</a></td>
                         </tr>
                       @else
@@ -34,12 +38,12 @@
                         </tr>
                       @endif
                         <tr>
-                            <th>Trabajadores</th>
-                            <td><a class="btn btn-outline-success my-2 my-sm-0" href="{{url('adminTrabajador')}}" role="button" style="cursor: pointer;">Ingresar</a></td>
+                            <th>Menú Trabajadores</th>
+                            <td><a class="btn btn-outline-success my-2 my-sm-0" href="{{url('menuTrabajador')}}" role="button" style="cursor: pointer;">Ingresar</a></td>
                         </tr>
                       @if(($pausas != NULL) && (count($pausas) > 0))
                         <tr>
-                            <th>Pausas</th>
+                            <th>Administración de Pausas</th>
                             <td><a class="btn btn-outline-success my-2 my-sm-0" href="{{url('adminPausas')}}" role="button" style="cursor: pointer;">Ingresar</a></td>
                         </tr>
                       @else
@@ -48,7 +52,7 @@
                         </tr>
                       @endif
                         <tr>
-                            <th>Obras</th>
+                            <th>Administración de Obras</th>
                             <td><a class="btn btn-outline-success my-2 my-sm-0" href="{{url('adminObras')}}" role="button" style="cursor: pointer;">Ingresar</a></td>
                         </tr>
                     </table>

@@ -64,10 +64,14 @@ class TrabajadorController extends Controller
         $newUserTrabajador->email = $data->email;
         $newUserTrabajador->password = bcrypt($data->password);
 
-        if($data->type == 0)
+        if($data->type == 1)
+            $newUserTrabajador->type = User::ADMIN_TYPE;
+        elseif($data->type == 2)
+            $newUserTrabajador->type = User::SUPERVISOR_TYPE;
+        elseif($data->type == 0)
             $newUserTrabajador->type = User::DEFAULT_TYPE;
         else
-            $newUserTrabajador->type = User::ADMIN_TYPE;
+            return 'Debe seleccionar el tipo del empleado';
 
         $verify = User::where('email', '=', $data->email)
                                 ->get();

@@ -10,6 +10,7 @@ use Varmetal\Notifications\MyResetPassword;
 class User extends Authenticatable
 {
     const ADMIN_TYPE = 'Admin';
+    const SUPERVISOR_TYPE = 'Supervisor';
     const DEFAULT_TYPE = 'Trabajador';
 
     public function trabajador()
@@ -25,6 +26,11 @@ class User extends Authenticatable
     public function isTrabajador()
     {
         return $this->type === self::DEFAULT_TYPE;
+    }
+
+    public function isSupervisor()
+    {
+        return $this->type === self::SUPERVISOR_TYPE;
     }
 
     public static function createPassword($length)

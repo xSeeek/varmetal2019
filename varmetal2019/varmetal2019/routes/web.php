@@ -28,12 +28,15 @@ Route::get('/home', 'HomeController@index')
 /* [** Admin Controller **] */
 
 Route::get('/admin', 'AdminController@admin')
-    ->middleware('is_admin')
+    ->middleware('is_supervisor')
     ->name('admin');
 
 /* [** Trabajador Controller **] */
     /* [** ADMINISTRACIÓN **] */
         /* [** GET **] */
+        Route::get('/menuTrabajador', 'SupervisorController@menuTrabajador')
+                    ->middleware('is_supervisor')
+                    ->name('menuTrabajador');
         Route::get('/adminTrabajador', 'TrabajadorController@adminTrabajadores')
                     ->middleware('is_admin')
                     ->name('adminTrabajador');

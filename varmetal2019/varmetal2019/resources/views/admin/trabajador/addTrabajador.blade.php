@@ -50,8 +50,9 @@
                             <label class="col-md-4 col-form-label text-md-right">Tipo:</label>
                             <div class="col-md-6">
                                 <select class="custom-select" id="inputType" aria-describedby="inputType" name="type" required>
-                                        <option value="1">Supervisor</option>
+                                        <option value="1">Administrador</option>
                                         <option selected value="0">Trabajador</option>
+                                        <option value="2">Supervisor</option>
                                 </select>
                             </div>
                         </div>
