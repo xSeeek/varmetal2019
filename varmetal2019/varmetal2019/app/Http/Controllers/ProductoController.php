@@ -233,12 +233,18 @@ class ProductoController extends Controller
     public function resetProducto(Request $request)
     {
         $producto = Producto::findOrFail($request)->first();
+        $trabajadores = $producto->trabajadorWithAtributtes;
 
         $producto->estado = 2;
         $producto->fechaFin = NULL;
         $producto->terminado = false;
-        $producto->cantProducto = 0;
 
+        foreach($trabajadores as $trabajador)
+        {
+            $trabajador->pivot->productosRealizados = 0;
+        }
+
+        $trabajador->pivot->save();
         $producto->save();
         return 1;
     }
