@@ -22,8 +22,11 @@ class ObraController extends Controller
 
     public function insertObra(Request $request)
     {
-        if($request->nameObra == NULL)
-            return 'Tiene que ingresar un nombre para la obra';
+        if($request->nameListado == NULL)
+            return 'Tiene que ingresar un nombre para el listado';
+
+        if($request->nameProyecto == NULL)
+            return 'Tiene que ingresar un nombre para el proyecto';
 
         $obra = new Obra;
         $obra->nombre = $request->nameListado;
