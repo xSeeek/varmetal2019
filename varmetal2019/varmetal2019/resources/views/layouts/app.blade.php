@@ -81,6 +81,21 @@
                                   <a class="dropdown-item" href="{{url('/admin')}}">
                                       Detalles Cuenta
                                   </a>
+                                    <audio id="alarma"></audio> <!--autoplay loop-->
+                                  <script>
+                                    window.onload(sistema());
+                                    function sistema()
+                                    {
+                                      var alarma;
+                                        alarma=document.getElementById('alarma');
+                                        alarma.setAttribute("src","/music/bleep.mp3");
+                                        alarma.setAttribute("autoplay","");
+                                        alarma.setAttribute("loop","");
+                                        alarma.Play();
+                                        if
+                                        return 1;
+                                    }
+                                  </script>
                                 @else
                                   <a class="dropdown-item" href="{{url('/homepage/Trabajador')}}">
                                       Detalles Cuenta

@@ -23,6 +23,7 @@ class TrabajadorTable extends Migration
 
             $table->integer('users_id_user')->unsigned();
             $table->foreign('users_id_user')->references('id')->on('users')->onDelete('cascade');
+
         });
     }
 

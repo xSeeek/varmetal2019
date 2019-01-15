@@ -9,6 +9,14 @@ class Trabajador extends Model
     public $primaryKey = 'idTrabajador';
     protected $table = 'trabajador';
 
+    public function obra()
+    {
+      return $this->hasMany('Varmetal\Obra','obras_id_obra');
+    }
+    public function obra()
+    {
+      $this->belongsTo('Varmetal\Obra', 'obras_id_obra');
+    }
     public function user()
     {
         return $this->belongsTo('Varmetal\User', 'users_id_user');

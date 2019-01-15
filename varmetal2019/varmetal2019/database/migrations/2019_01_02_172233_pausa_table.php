@@ -19,6 +19,8 @@ class PausaTable extends Migration
             $table->string('descripcion');
             $table->timestamp('fechaInicio')->timestamps();
             $table->timestamp('fechaFin')->nullable();
+            $table->timestamp('fechaInicioSetUp')->nullable();
+            $table->timestamp('fechaFinSetUp')->nullable();
             $table->timestamps();
 
             $table->integer('producto_id_producto')->unsigned()->nullable();
