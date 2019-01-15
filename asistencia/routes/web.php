@@ -28,8 +28,6 @@
  * [Ruta home: página principal]
  */
   Route::get('/home', 'HomeController@index')->name('home');
-  Route::post('/registrarAsistencia', ['uses'=>'HomeController@registrarAsistencia'])
-  ->name('registrarAsistencia');
 
 /**
  * [[Rutas Controlador AsistenciaController]]
@@ -38,12 +36,14 @@
 
 Route::get('/menuAdministrador', 'AsistenciaController@menuAdministrador')
   ->name('administrador.menuAdministrador')
-  ->middleware('is_supervisor');
+  ->middleware('is_supervisor', 'auth');
 
 Route::get('/asistencias/{rut}', ['uses'=>'AsistenciaController@verAsistencia'])
   ->name('supervisor.verAsistencia')
-  ->middleware('is_supervisor');
+  ->middleware('is_supervisor', 'auth');
 
+  Route::post('/registrarAsistencia', ['uses'=>'AsistenciaController@registrarAsistencia'])
+  ->name('registrarAsistencia');
 
 /**
  * [[Controller Obra]]

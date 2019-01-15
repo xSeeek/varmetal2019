@@ -33,7 +33,7 @@ class MarcarAsistencia extends FormRequest
   {
     return [
         'rut.required' => 'Se requiere el rut del usuario.',
-        //'rut.cl_rut' => 'El rut ingresado no es válido.',
+        'rut.cl_rut' => 'El rut ingresado no es válido.',
       ];
   }
 }
