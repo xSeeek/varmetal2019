@@ -25,7 +25,7 @@
                 </div>
             </div>
         </br>
-            <a class="btn btn-primary btn-lg" role="button" href="{{url('adminObra')}}"><b>Volver</b></a>
+            <a class="btn btn-primary btn-lg" role="button" href="{{url('adminObras')}}"><b>Volver</b></a>
         </div>
     </div>
 </div>
