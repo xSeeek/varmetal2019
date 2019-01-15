@@ -11,10 +11,6 @@ class Trabajador extends Model
 
     public function obra()
     {
-      return $this->hasMany('Varmetal\Obra','obras_id_obra');
-    }
-    public function obra()
-    {
       $this->belongsTo('Varmetal\Obra', 'obras_id_obra');
     }
     public function user()
