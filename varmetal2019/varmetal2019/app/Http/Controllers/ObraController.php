@@ -4,6 +4,7 @@ namespace Varmetal\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Varmetal\Obra;
+use Carbon\Carbon;
 
 class ObraController extends Controller
 {
@@ -29,8 +30,10 @@ class ObraController extends Controller
             return 'Tiene que ingresar un nombre para el proyecto';
 
         $obra = new Obra;
+        $date = new Carbon
         $obra->nombre = $request->nameListado;
         $obra->proyecto = $request->nameProyecto;
+        $obra->fechaInicio = $date->now();
         $obra->save();
 
         return 1;
