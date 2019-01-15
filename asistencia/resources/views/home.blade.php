@@ -11,7 +11,7 @@
         <form enctype="multipart/form-data" method="post" id="form_registrar_asistencia" action="{{route('registrarAsistencia')}}">
           <div class="form-group">
             @csrf
-            <input capture='camera' class="form-control{{ $errors->has('rut') ? ' is-invalid' : '' }}" id="rut" type="text" name="rut" placeholder="Ingrese un rut" value="{{ old('rut') }}" required autofocus>
+            <input class="form-control{{ $errors->has('rut') ? ' is-invalid' : '' }}" id="rut" type="text" name="rut" placeholder="Ingrese un rut" value="{{ old('rut') }}" required autofocus>
             @if ($errors->has('rut'))
               <span class="invalid-feedback" role="alert">
                 <strong>{{ $errors->first('rut') }}</strong>
@@ -19,7 +19,7 @@
             @endif
           </div>
           <div class="form-group">
-            <input name="file" type="file" class="form-control-file{{ $errors->has('file') ? ' is-invalid' : '' }}" accept="image/*" id="img_select" required autofocus/>
+            <input capture='camera' name="file" type="file" class="form-control-file{{ $errors->has('file') ? ' is-invalid' : '' }}" accept="image/*" id="img_select" required autofocus/>
             @if ($errors->has('file'))
               <span class="invalid-feedback" role="alert">
                 <strong>{{ $errors->first('file') }}</strong>
