@@ -39,6 +39,7 @@
                                 <input type="text" readonly id="fechaInicio" class="form-control-plaintext" value="Aún no se finaliza.">
                             @else
                                 <input type="text" readonly id="fechaInicio" class="form-control-plaintext" value="{{$obra->fechaFin}}">
+                            @endif
                         </div>
                     </h5>
                     <h5>
