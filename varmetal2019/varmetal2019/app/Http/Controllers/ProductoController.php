@@ -51,12 +51,15 @@ class ProductoController extends Controller
 
         $obra = $producto->obra;
 
+        $trabajador = $usuarioActual->trabajador;
+
         return view('producto.detalle_producto')
                 ->with('producto', $producto)
                 ->with('trabajadores', $trabajadores)
                 ->with('cantidadProducida', $cantidadProducida)
                 ->with('obra', $obra)
-                ->with('usuarioActual',$usuarioActual);
+                ->with('usuarioActual',$usuarioActual)
+                ->with('trabajador', $trabajador);
     }
 
     public function addProducto()
