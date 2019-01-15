@@ -15,9 +15,30 @@
                 </div>
                 <div class="card-body">
                     <h5>
-                        <b>Nombre de la Obra:</b>
+                        <b>Nombre del listado de productos:</b>
                         <div class="col-sm-10">
-                            <input type="text" readonly id="nombreObra" class="form-control-plaintext" value="{{$obra->nombre}}">
+                            <input type="text" readonly id="nombreListado" class="form-control-plaintext" value="{{$obra->nombre}}">
+                        </div>
+                    </h5>
+                    <h5>
+                        <b>Nombre del proyecto:</b>
+                        <div class="col-sm-10">
+                            <input type="text" readonly id="nombreProyecto" class="form-control-plaintext" value="{{$obra->proyecto}}">
+                        </div>
+                    </h5>
+                    <h5>
+                        <b>Fecha de creación:</b>
+                        <div class="col-sm-10">
+                            <input type="text" readonly id="fechaInicio" class="form-control-plaintext" value="{{$obra->fechaInicio}}">
+                        </div>
+                    </h5>
+                    <h5>
+                        <b>Fecha de finalización:</b>
+                        <div class="col-sm-10">
+                            @if($obra->fechaFin == null)
+                                <input type="text" readonly id="fechaInicio" class="form-control-plaintext" value="Aún no se finaliza.">
+                            @else
+                                <input type="text" readonly id="fechaInicio" class="form-control-plaintext" value="{{$obra->fechaFin}}">
                         </div>
                     </h5>
                     <h5>
