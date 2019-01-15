@@ -26,7 +26,8 @@ class ObraController extends Controller
             return 'Tiene que ingresar un nombre para la obra';
 
         $obra = new Obra;
-        $obra->nombre = $request->nameObra;
+        $obra->nombre = $request->nameListado;
+        $obra->proyecto = $request->nameProyecto;
         $obra->save();
 
         return 1;
