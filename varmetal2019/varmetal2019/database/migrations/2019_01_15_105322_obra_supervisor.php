@@ -21,7 +21,7 @@ class ObraSupervisor extends Migration
 
         $table->foreign('obras_id_obra')->references('idObra')->on('obra')->onDelete('cascade');
         $table->foreign('trabajador_id_trabajador')->references('idTrabajador')->on('trabajador')->onDelete('cascade');
-      }
+      });
     }
 
     /**
