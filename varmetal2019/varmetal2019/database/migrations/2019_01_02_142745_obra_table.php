@@ -17,6 +17,9 @@ class ObraTable extends Migration
             $table->increments('idObra');
             $table->string('nombre');
             $table->boolean('terminado')->default('false');
+            $table->string('proyecto')->default('No determinada');
+            $table->timestamp('fechaInicio')->now();
+            $table->timestamp('fechaFin')->nullable();
             $table->timestamps();
         });
     }
