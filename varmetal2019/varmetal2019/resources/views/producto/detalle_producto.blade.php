@@ -41,13 +41,17 @@
                                     @break
                             @endswitch
                         </div>
-                        <b>Solicitar Pausa:</b>
+                        <br>
+                        @if($producto->fechaFin == NULL)
                         <div class="col-sm-10">
-                          @if($producto->fechaFin == NULL)
-                            <br>
-                            <a class="btn btn-outline-success btn-lg" id="pauseButton" role="button" href="{{url('addPausa', [$producto->idProducto])}}">Pausar</a>
-                          @endif
+                            <h5>
+                                <br>
+                                Ver Pausas:
+                                <br>
+                                    <a class="btn btn-outline-success btn-lg" id="pauseButton" role="button" href="{{url('addPausa', [$producto->idProducto])}}">Pausar</a>
+                            </h5>
                         </div>
+                        @endif
                         <div class="col-sm-10">
                           @if($producto->terminado == false)
                               @if($producto->estado == 2)
@@ -55,8 +59,7 @@
                                       <h5>
                                       <br>
                                           Marcar como terminado:
-                                      <br>
-                                      <br>
+                                          <br>
                                           <a class="btn btn-warning btn-lg" id="stopButton" role="button" onclick="sendEmail()">Terminar</a>
                                       </h5>
                                   @endif

@@ -6,6 +6,8 @@
 
         <title>Varmetal</title>
 
+        <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}" />
+
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
 
@@ -61,31 +63,64 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
+
+            #content_page{
+                position: fixed;
+                left: 0;
+                right: 0;
+                z-index: 9999;
+                margin-left: 20px;
+                margin-right: 20px;
+            }
+
+            #bg_image {
+                position: fixed;
+                left: 0;
+                right: 0;
+                z-index: 1;
+
+                display: block;
+                background-image:url({{url('img/background.jpg')}});
+                width: 100%;
+                height: 100%;
+
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+
+                -webkit-filter: blur(12px);
+                -moz-filter: blur(12px);
+                -o-filter: blur(12px);
+                -ms-filter: blur(12px);
+                filter: blur(12px);
+
+            }
         </style>
     </head>
     <body>
-        <div class="flex-center position-ref full-height">
+        <div id = "bg_image"></div>
+        <div class="flex-center position-ref full-height" id="content_page">
             @if (Route::has('login'))
                 <div class="top-right links">
                     @auth
-                        <a href="{{ url('/home') }}">Home</a>
+                        <a href="{{ url('/home') }}" style="color:white"><b>Home</b></a>
                         <a class="dropdown-item" href="{{ route('logout') }}"
                            onclick="event.preventDefault();
-                                         document.getElementById('logout-form').submit();">
-                            {{ __('Logout') }}
+                                         document.getElementById('logout-form').submit();" style="color:white">
+                            <b>{{ __('Logout') }}</b>
                         </a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf
                         </form>
                     @else
-                        <a href="{{ route('login') }}">Login</a>
+                        <a href="{{ route('login') }}" style="color:white"><b>Login</b></a>
                     @endauth
                 </div>
             @endif
 
             <div class="content">
                 <div class="title m-b-md">
-                    Varmetal
+                    <img src={{ asset('img/logo.png') }} class="rounded mx-auto d-block">
                 </div>
             </div>
         </div>

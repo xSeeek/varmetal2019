@@ -11,7 +11,7 @@ class Obra extends Model
 
     public function supervisorWithAtributes()
     {
-        return $this->belongsToMany('Varmetal\Trabajador', 'obra_supervisor', 'obras_id_obra', 'trabajador_id_trabajador', )->withPivot('tiempoPerdido', 'tiempoSetUp');
+        return $this->belongsToMany('Varmetal\Trabajador', 'obra_supervisor', 'obras_id_obra', 'trabajador_id_trabajador')->withPivot('tiempoPerdido', 'tiempoSetUp');
     }
     public function producto()
     {
@@ -19,6 +19,6 @@ class Obra extends Model
     }
     public function supervisor()
     {
-        return $this->belongsToMany('Varmetal\Trabajador', 'obra_supervisor','obras_id_obra', 'trabajador_id_trabajador', );
+        return $this->belongsToMany('Varmetal\Trabajador', 'obra_supervisor','obras_id_obra', 'trabajador_id_trabajador');
     }
 }
