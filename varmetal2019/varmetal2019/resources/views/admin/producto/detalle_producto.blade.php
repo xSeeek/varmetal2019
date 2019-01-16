@@ -41,7 +41,11 @@
                         </div>
                         <b>OT a la que pertenece:</b>
                         <div class="col-sm-10">
-                            <input type="text" readonly id="obraProducto" class="form-control-plaintext" value="{{$obra->nombre}}">
+                            @if($obra != null)
+                                <input type="text" readonly id="obraProducto" class="form-control-plaintext" value="{{$obra->nombre}}">
+                            @else
+                                <input type="text" readonly id="obraProducto" class="form-control-plaintext" value="No asignada">
+                            @endif
                         </div>
                         <b>Estado Actual:</b>
                         <div class="col-sm-10">
@@ -169,10 +173,22 @@
                     <a class="btn btn-outline-success btn-md" id="deleteButton" role="button" onclick="deleteProducto({{$producto->idProducto}})">Eliminar</a>
                 </h5>
                 <br>
+                @if($obra == NULL)
+                <h5>
+                    Asignar OT:
+                </br>
+                    <a class="btn btn-outline-danger btn-md" id="asignarButton" role="button" href="{{url('producto/asignarObra', [$producto->idProducto])}}">Asignar</a>
+                </h5>
+                <br>
+                @endif
                 <h5>
                     Asignar más Operadores:
                 </br>
-                    <a class="btn btn-outline-success btn-md" id="insertButton" role="button" href="{{url('producto/asignarTrabajo', [$producto->idProducto])}}">Asignar</a>
+                    @if($obra != NULL)
+                        <a class="btn btn-outline-success btn-md" id="insertButton" role="button" href="{{url('producto/asignarTrabajo', [$producto->idProducto])}}">Asignar</a>
+                    @else
+                        <a class="btn btn-outline-success btn-md" id="insertButton" role="button" disabled>Debe asignar el producto a un OT primero</a>
+                    @endif
                 </h5>
                 @if($producto->terminado == false)
                     @if($producto->estado == 1)

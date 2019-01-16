@@ -29,12 +29,12 @@
                     <table id="tablaAdministracion" style="width:50%; margin:15px;">
                       @if(($obras != NULL) && (count($obras) > 0))
                         <tr>
-                            <th>Administración de Productos</th>
+                            <th>Administración de Piezas</th>
                             <td><a class="btn btn-outline-success my-2 my-sm-0" href="{{url('adminProducto')}}" role="button" style="cursor: pointer;">Ingresar</a></td>
                         </tr>
                       @else
                         <tr>
-                            <th>Para agregar Productos, debe agregar primero una Obra</th>
+                            <th>Para agregar piezas, debe agregar primero una Obra</th>
                         </tr>
                       @endif
                         <tr>
@@ -48,11 +48,11 @@
                         </tr>
                       @else
                         <tr>
-                            <th>No se han agregado Pausas a los Productos</th>
+                            <th>No hay pausas registradas</th>
                         </tr>
                       @endif
                         <tr>
-                            <th>Administración de Obras</th>
+                            <th>Administración de OT</th>
                             <td><a class="btn btn-outline-success my-2 my-sm-0" href="{{url('adminObras')}}" role="button" style="cursor: pointer;">Ingresar</a></td>
                         </tr>
                     </table>

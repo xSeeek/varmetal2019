@@ -5,6 +5,7 @@ namespace Varmetal\Http\Controllers;
 use Illuminate\Http\Request;
 use Varmetal\Obra;
 use Carbon\Carbon;
+use Varmetal\Producto;
 
 class ObraController extends Controller
 {
@@ -72,5 +73,36 @@ class ObraController extends Controller
                 ->with('kilosTerminados', $kilosTerminados)
                 ->with('kilosObra', $kilosObra)
                 ->with('terminado', $terminado);
+    }
+
+    public function productosDisponibles($data)
+    {
+        $productos_almacenados = Producto::where('terminado', 'false')->where('obras_id_obra')->get();
+
+        return view('admin.obra.productos_disponibles')
+                ->with('idObra', $data)
+                ->with('productos_almacenados', $productos_almacenados);
+    }
+
+    public function addProducto(Request $request)
+    {
+        $response = json_decode($request->DATA);
+
+        $producto = Producto::find($response[1]);
+        $producto->obras_id_obra = $response[0];
+        $producto->save();
+
+        return 1;
+    }
+
+    public function deleteProducto(Request $request)
+    {
+        $idProducto = $request->DATA;
+
+        $producto = Producto::find($idProducto);
+        $producto->obras_id_obra = NULL;
+        $producto->save();
+
+        return 1;
     }
 }

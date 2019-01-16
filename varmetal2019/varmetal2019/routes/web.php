@@ -44,10 +44,10 @@ Route::get('/admin', 'AdminController@admin')
                     ->middleware('is_supervisor')
                     ->name('trabajadorControl');
         Route::get('/addTrabajador', 'TrabajadorController@addTrabajador')
-                    ->middleware('is_admin')
+                    ->middleware('is_supervisor')
                     ->name('trabajador/addTrabajador');
         Route::get('/trabajador/asignarProducto/{id}', ['uses' => 'TrabajadorController@asignarTrabajo'])
-                    ->middleware('is_admin')
+                    ->middleware('is_supervisor')
                     ->name('/trabajador/asignarProducto');
         /* [** POST **] */
         Route::post('/createPassword', 'TrabajadorController@createPassword')
@@ -76,39 +76,45 @@ Route::get('/admin', 'AdminController@admin')
     /* [** ADMINISTRACIÓN **] */
         /* [** GET **] */
         Route::get('/adminProducto', 'ProductoController@adminProducto')
-                    ->middleware('is_admin')
+                    ->middleware('is_supervisor')
                     ->name('adminProducto');
         Route::get('/productoControl/{id}', ['uses' => 'ProductoController@productoControl'])
-                    ->middleware('is_admin')
+                    ->middleware('is_supervisor')
                     ->name('/productoControl');
         Route::get('/addProducto', 'ProductoController@addProducto')
-                    ->middleware('is_admin')
+                    ->middleware('is_supervisor')
                     ->name('producto/addProducto');
         Route::get('/producto/asignarTrabajo/{id}', ['uses' => 'ProductoController@asignarTrabajo'])
-                    ->middleware('is_admin')
+                    ->middleware('is_supervisor')
                     ->name('/producto/asignarTrabajo');
+        Route::get('/producto/asignarObra/{id}', ['uses' => 'ProductoController@asignarObra'])
+                    ->middleware('is_supervisor')
+                    ->name('/producto/asignarObra');
         /* [** POST **] */
         Route::post('/productoControl/addProducto', ['uses' => 'ProductoController@insertProducto'])
-                    ->middleware('is_admin')
+                    ->middleware('is_supervisor')
                     ->name('productoControl/addProducto');
         Route::post('/productoControl/deleteProducto', ['uses' => 'ProductoController@deleteProducto'])
-                    ->middleware('is_admin')
+                    ->middleware('is_supervisor')
                     ->name('productoControl/deleteProducto');
         Route::post('/productoControl/addWorker', ['uses' => 'ProductoController@addWorker'])
-                    ->middleware('is_admin')
+                    ->middleware('is_supervisor')
                     ->name('/productoControl/addWorker');
         Route::post('/productoControl/removeWorker', ['uses' => 'ProductoController@removeWorker'])
-                    ->middleware('is_admin')
+                    ->middleware('is_supervisor')
                     ->name('/productoControl/removeWorker');
         Route::post('/productoControl/resetProduccion', ['uses' => 'ProductoController@unmarkAsFinished'])
-                    ->middleware('is_admin')
+                    ->middleware('is_supervisor')
                     ->name('/productoControl/resetProduccion');
         Route::post('/productoControl/finishProduccion', ['uses' => 'ProductoController@finishProducto'])
-                    ->middleware('is_admin')
+                    ->middleware('is_supervisor')
                     ->name('/productoControl/finishProduccion');
         Route::post('/productoControl/resetProducto', ['uses' => 'ProductoController@resetProducto'])
-                    ->middleware('is_admin')
+                    ->middleware('is_supervisor')
                     ->name('/productoControl/resetProducto');
+        Route::post('/obraControl/addProducto', ['uses' => 'ObraController@addProducto'])
+                    ->middleware('is_supervisor')
+                    ->name('/obraControl/addProducto');
     /* [** VISTA GENERAL **] */
         /* [** GET **] */
         Route::get('/detalleProducto/{id}', ['uses' => 'ProductoController@detalleProducto'])
@@ -180,7 +186,13 @@ Route::get('/admin', 'AdminController@admin')
         Route::get('/addObra', 'ObraController@addObra')
                     ->middleware('is_supervisor')
                     ->name('obra/addObra');
+            Route::get('obra/productosDisponibles/{id}', ['uses' => 'ObraController@productosDisponibles'])
+                        ->middleware('is_supervisor')
+                        ->name('obra/productosDisponibles');
         /* [** POST **] */
+        Route::post('/obraControl/deleteProducto', ['uses' => 'ObraController@deleteProducto'])
+                    ->middleware('is_supervisor')
+                    ->name('/obraControl/deleteProducto');
         Route::post('/obraControl/addObra', ['uses' => 'ObraController@insertObra'])
                     ->middleware('is_admin')
                     ->name('/obraControl/addObra');
