@@ -88,7 +88,7 @@
                     </thead>
                     <tbody>
                         @foreach($productos_obra as $key => $productos)
-                            <tr id="id_productoTrabajador{{ $productos->idProductos }}">
+                            <tr id="id_productoTrabajador{{ $productos->idProducto }}">
                                 <td scope="col">{{ $productos->nombre }}</td>
                                 <td scope="col">{{ $productos->fechaInicio }}</td>
                                 @if($productos->fechaFin != NULL)
@@ -111,7 +111,7 @@
                                         @break
                                 @endswitch
                                 <td scope="col">{{ $productos->pesoKg }}</td>
-                                    <td scope="col"><a class="btn btn-outline-secondary btn-sm" onclick="" role="button"><b>Eliminar</b></a>
+                                    <td scope="col"><a class="btn btn-outline-secondary btn-sm" onclick="eliminarProducto({{$productos->idProducto}})" role="button"><b>Eliminar</b></a>
                             </tr>
                         @endforeach
                     </tbody>
@@ -151,7 +151,7 @@
                 <h5>
                     Asignar piezas:
                 </br>
-                    <a class="btn btn-outline-warning btn-md" id="asignarButton" role="button" onclick="asignarProducto({{$obra->idObra}})">Asignar</a>
+                    <a class="btn btn-outline-primary btn-md" id="asignarButton" role="button" href="{{url('obra/productosDisponibles', [$obra->idObra])}}">Asignar</a>
                 </h5>
             </div>
         </div>
@@ -169,6 +169,20 @@
             url: "{{url('/productoControl/deleteProducto')}}",
             success: function(response){
                 window.location.href = response.redirect;
+            }
+        });
+    }
+    function eliminarProducto(data)
+    {
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: "POST",
+            data: {DATA:data},
+            url: "{{url('/obraControl/deleteProducto')}}",
+            success: function(response){
+                window.location.reload();
             }
         });
     }

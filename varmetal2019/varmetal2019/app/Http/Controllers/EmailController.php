@@ -78,7 +78,7 @@ class EmailController extends Controller
         $nombre = $user->trabajador->nombre;
         $message->from($user->email, $nombre);
         foreach ($users as $key => $supervisor) {
-          if($supervisor->type == 'Admin')
+          if($supervisor->type != User::DEFAULT_TYPE)
           {
             $message->to($supervisor->email)->subject('Aviso Producto Terminado');
           }

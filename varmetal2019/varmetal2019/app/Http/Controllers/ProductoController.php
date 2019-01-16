@@ -83,12 +83,6 @@ class ProductoController extends Controller
         if($request->codigoProducto == NULL)
             return 'El código del producto no puede estar en blanco.';
 
-        if($request->obraProducto == NULL)
-        {
-            return 'Se tiene que seleccionar una obra para el producto.';
-        }
-
-
         $carbon = new Carbon();
         if($request->fechaInicio < $carbon->now())
             return 'La fecha seleccionada no es válida';
@@ -267,6 +261,26 @@ class ProductoController extends Controller
         $dataProducto->pivot->kilosTrabajados = ($dataProducto->pivot->productosRealizados) * $producto->pesoKg;
         $dataProducto->pivot->save();
         $dataProducto->save();
+
+        return 1;
+    }
+
+    public function asignarObra($data)
+    {
+        $obras_disponibles = Obra::get();
+
+        return view('admin.producto.obras_disponibles')
+            ->with('obras_disponibles', $obras_disponibles)
+            ->with('idProducto', $data);
+    }
+
+    public function addObra(Request $request)
+    {
+        $response = json_decode($request->DATA);
+
+        $producto = Producto::findOrFail($response[0]);
+        $producto->obras_id_obra = $response[1];
+        $producto->save();
 
         return 1;
     }
