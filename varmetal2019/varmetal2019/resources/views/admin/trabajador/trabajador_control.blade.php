@@ -158,7 +158,7 @@
             url: "{{url('/trabajadorControl/deleteTrabajador')}}",
             success: function(response){
                 console.log(response);
-                window.location.href = response.redirect;
+                window.location.href = "{{url('adminTrabajador')}}";
             }
         });
     }
