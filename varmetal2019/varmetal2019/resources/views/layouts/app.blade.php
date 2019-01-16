@@ -53,7 +53,7 @@
 
     <script src={{asset("js/datatables.js")}}></script>
 </head>
-<body style="background-image:url({{url('img/background.jpg')}}); background-repeat: no-repeat; background-size: cover;">
+<body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">

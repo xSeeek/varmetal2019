@@ -61,24 +61,57 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
+
+            #content_page{
+                position: fixed;
+                left: 0;
+                right: 0;
+                z-index: 9999;
+                margin-left: 20px;
+                margin-right: 20px;
+            }
+
+            #bg_image {
+                position: fixed;
+                left: 0;
+                right: 0;
+                z-index: 1;
+
+                display: block;
+                background-image:url({{url('img/background.jpg')}});
+                width: 100%;
+                height: 100%;
+
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+
+                -webkit-filter: blur(8px);
+                -moz-filter: blur(8px);
+                -o-filter: blur(8px);
+                -ms-filter: blur(8px);
+                filter: blur(8px);
+
+            }
         </style>
     </head>
-    <body style="background-image:url({{url('img/background.jpg')}}); background-repeat: no-repeat; background-size: cover;">
-        <div class="flex-center position-ref full-height">
+    <body>
+        <div id = "bg_image"></div>
+        <div class="flex-center position-ref full-height" id="content_page">
             @if (Route::has('login'))
                 <div class="top-right links">
                     @auth
-                        <a href="{{ url('/home') }}">Home</a>
+                        <a href="{{ url('/home') }}" style="color:white"><b>Home</b></a>
                         <a class="dropdown-item" href="{{ route('logout') }}"
                            onclick="event.preventDefault();
-                                         document.getElementById('logout-form').submit();">
-                            {{ __('Logout') }}
+                                         document.getElementById('logout-form').submit();" style="color:white">
+                            <b>{{ __('Logout') }}</b>
                         </a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf
                         </form>
                     @else
-                        <a href="{{ route('login') }}">Login</a>
+                        <a href="{{ route('login') }}" style="color:white"><b>Login</b></a>
                     @endauth
                 </div>
             @endif
