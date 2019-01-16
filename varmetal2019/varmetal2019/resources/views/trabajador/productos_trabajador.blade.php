@@ -92,17 +92,17 @@
     {
         if (confirm("Presione OK para comenzar con el desarrollo del producto"))
         {
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            type: "POST",
-            data: {DATA:idProducto},
-            url: "{{url('/trabajadorControl/setStartTime')}}",
-            success: function(response){
-                window.location.href = ruta;
-            }
-        });
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: "POST",
+                data: {DATA:idProducto},
+                url: "{{url('/trabajadorControl/setStartTime')}}",
+                success: function(response){
+                    window.location.href = ruta;
+                }
+            });
         }
         else
             return;
