@@ -85,7 +85,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Varmetal
+                    <img src={{ asset('img/logo.png') }} class="rounded mx-auto d-block">
                 </div>
             </div>
         </div>
