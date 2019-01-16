@@ -8,7 +8,7 @@
       <div class="col-sm-5">
         <h1 class="display-4">Bienvenido</h1>
         <p class="lead">Si desea marcar asistencia ingrese un rut</p>
-        <form enctype="multipart/form-data" method="post" id="form_registrar_asistencia" action="{{route('registrarAsistencia')}}">
+        <form enctype="multipart/form-data" accept-charset="utf-8" method="post" id="form_registrar_asistencia" action="{{route('registrarAsistencia')}}">
           <div class="form-group">
             @csrf
             <input class="form-control{{ $errors->has('rut') ? ' is-invalid' : '' }}" id="rut" type="text" name="rut" placeholder="Ingrese un rut" value="{{ old('rut') }}" required autofocus>

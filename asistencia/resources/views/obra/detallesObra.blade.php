@@ -41,7 +41,7 @@
                 <td class="text-center">{{$trabajador->nombre}} @if ($trabajador->user->isSupervisor()) (Supervisor) @endif</td>
                 <td class="text-center">
                   <div class="btn-group" role="group">
-                    <a role="button" class="btn btn-info font-weight-bold" href="{!! route('supervisor.verAsistencia', ['rut'=>$trabajador->rut]) !!}">Ver Asistencia</a>
+                    <a role="button" class="btn btn-primary font-weight-bold text-light" href="{!! route('supervisor.verAsistencia', ['rut'=>$trabajador->rut]) !!}">Ver Asistencia</a>
                   </div>
                 </td>
               </tr>
