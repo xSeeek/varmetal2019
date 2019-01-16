@@ -16,6 +16,5 @@ class UserSeeder extends Seeder
             'type' => 'Admin',
             'password' => bcrypt('abc123456'),
         ]);
-        factory(Varmetal\User::class, 100)->create();
     }
 }
