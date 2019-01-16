@@ -111,7 +111,7 @@
                                         @break
                                 @endswitch
                                 <td scope="col">{{ $productos->pesoKg }}</td>
-                                <td scope="col"><a class="btn btn-outline-secondary btn-sm" onclick="" role="button"><b>Eliminar</b></a>
+                                    <td scope="col"><a class="btn btn-outline-secondary btn-sm" onclick="" role="button"><b>Eliminar</b></a>
                             </tr>
                         @endforeach
                     </tbody>
@@ -141,9 +141,17 @@
             </div>
             <div class="modal-body" align="center">
                 <h5>
+                    @if(count($productos_obra) == 0)
                     Eliminar Obra:
                 </br>
                     <a class="btn btn-outline-success btn-md" id="deleteButton" role="button" onclick="deleteObra({{$obra->idObra}})">Eliminar</a>
+                    @endif
+                </h5>
+                <br>
+                <h5>
+                    Asignar piezas:
+                </br>
+                    <a class="btn btn-outline-warning btn-md" id="asignarButton" role="button" onclick="asignarProducto({{$obra->idObra}})">Asignar</a>
                 </h5>
             </div>
         </div>

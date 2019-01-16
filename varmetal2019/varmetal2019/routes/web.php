@@ -172,13 +172,13 @@ Route::get('/admin', 'AdminController@admin')
     /* [** ADMINISTRACIÓN **] */
         /* [** GET **] */
         Route::get('/adminObras', 'ObraController@adminObra')
-                    ->middleware('is_admin')
+                    ->middleware('is_supervisor')
                     ->name('adminObras');
         Route::get('/obraControl/{id}', ['uses' => 'ObraController@obraControl'])
-                    ->middleware('is_admin')
+                    ->middleware('is_supervisor')
                     ->name('/obraControl');
         Route::get('/addObra', 'ObraController@addObra')
-                    ->middleware('is_admin')
+                    ->middleware('is_supervisor')
                     ->name('obra/addObra');
         /* [** POST **] */
         Route::post('/obraControl/addObra', ['uses' => 'ObraController@insertObra'])
