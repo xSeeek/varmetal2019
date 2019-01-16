@@ -12,8 +12,23 @@
         @else
           <table class="table display" id="tabla_asistencias" style="width:100%">
             <thead class="thead-dark">
-
+              <th class="text-center">Fecha</th>
+              <th class="text-center" data-toggle="tooltip" title="Opciones"><i class="fas fa-cogs"></i></th>
             </thead>
+            <tbody>
+              @foreach ($trabajador->asistencias as $asistencia)
+                <tr>
+                  <td class="text-center">{{$asistencia->created_at}}</td>
+                  <td class="text-center"><a href="{!! route('supervisor.detallesAsistencia', ['rut'=>$trabajador->rut, 'id'=>$asistencia->idAsistencia]) !!}"
+                     class="btn btn-primary text-light"
+                     role="button" data-toggle="tooltip" data-placement="top"
+                     title="Ver detalles asistencia">
+                     Ver Detalles
+                   </a>
+                 </td>
+                </tr>
+              @endforeach
+            </tbody>
           </table>
         @endif
       </div>
@@ -22,7 +37,7 @@
 
   <script type="text/javascript">
     $(document).ready(function() {
-      var table = $('#tabla_obras').DataTable({
+      var table = $('#tabla_asistencias').DataTable({
         "language":{
           "url":"//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
         },

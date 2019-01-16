@@ -42,6 +42,10 @@ Route::get('/asistencias/{rut}', ['uses'=>'AsistenciaController@verAsistencia'])
   ->name('supervisor.verAsistencia')
   ->middleware('is_supervisor', 'auth');
 
+  Route::get('/asistencias/{rut}/detalles/{id}', ['uses'=>'AsistenciaController@detallesAsistencia'])
+    ->name('supervisor.detallesAsistencia')
+    ->middleware('is_supervisor', 'auth');
+
   Route::post('/registrarAsistencia', ['uses'=>'AsistenciaController@registrarAsistencia'])
   ->name('registrarAsistencia');
 

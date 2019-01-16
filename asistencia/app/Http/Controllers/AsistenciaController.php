@@ -32,15 +32,23 @@ class AsistenciaController extends Controller
   public function registrarAsistencia(MarcarAsistencia $request)
   {
     if($request->hasFile('file'))
+    {
+      $trabajador = Trabajador::where('rut', $request->rut)->first();
+      if($trabajador->obra != null)
       {
-        $file = $request->file('file');
-
-        $trabajador = Trabajador::where('rut', $request->rut)->first();
-
+        $asistencias = Asistencia::where('trabajador_id_trabajador', $trabajador->idTrabajador)
+        ->whereDate('created_at', Carbon::today())->get();
+        if(count($asistencias) > 0)
+        {
+          return redirect()->back()
+            ->withInput()
+            ->with('error', 'El trabajador ya tiene una asistencia marcada hoy');
+        }
         $asistencia = new Asistencia();
 
         $dt = Carbon::now();
 
+        $file = $request->file('file');
         $file_name = $dt->format('d-m-Y') . '.' . $file->getClientOriginalExtension();
         Storage::disk('asistencia')->put($request->rut.'/'. $file_name, File::get($file));
 
@@ -49,5 +57,19 @@ class AsistenciaController extends Controller
 
         return redirect()->route('home')->with('success', 'Asistencia a ' . $trabajador->nombre . ' registrada con éxito');
       }
+      return redirect()->back()
+        ->withInput()
+        ->with('error', 'El trabajador ingresado no posee una obra asignada');
+    }
   }
+
+  public function detallesAsistencia($rut, $id)
+  {
+    $trabajador = Trabajador::where('rut', $rut)->first();
+    $asistencia = Asistencia::find($id);
+    return view('asistencia.detallesAsistencia')
+      ->with('trabajador', $trabajador)
+      ->with('asistencia', $asistencia);
+  }
+
 }
