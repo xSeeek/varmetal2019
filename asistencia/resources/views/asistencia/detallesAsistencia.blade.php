@@ -3,13 +3,8 @@
 @section('main')
   <div class="container mt-2">
     <div class="card">
-      <div class="card-header row">
-        <div class="col">
-          <h3 class="card-tittle">Detalles de la asistencia de {{$trabajador->nombre}}</h3>
-        </div>
-        <div class="col">
-          <a href="javascript:history.back()" class="btn btn-secondary float-right text-light"><b>Volver</b></a>
-        </div>
+      <div class="card-header">
+        <h3 class="card-tittle">Detalles de la asistencia de {{$trabajador->nombre}}</h3>
       </div>
       <div class="card-body">
         <div class="row">
