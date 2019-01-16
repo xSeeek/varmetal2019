@@ -10,16 +10,16 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    Detalle del producto
+                    Detalle de la Pieza
                     <button type="button" class="btn btn-primary float-sm-right" data-toggle="modal" data-target="#modalOpciones"><i class="fas fa-cogs"></i></button>
                 </div>
                 <div class="card-body">
                     <h5>
-                        <b>Código del Producto:</b>
+                        <b>Marca de la Pieza:</b>
                         <div class="col-sm-10">
                             <input type="text" readonly id="codigoProducto" class="form-control-plaintext" value="{{$producto->codigo}}">
                         </div>
-                        <b>Nombre del Producto:</b>
+                        <b>Nombre del Pieza:</b>
                         <div class="col-sm-10">
                             <input type="text" readonly id="nombreProducto" class="form-control-plaintext" value="{{$producto->nombre}}">
                         </div>
@@ -39,7 +39,7 @@
                         <div class="col-sm-10">
                             <input type="text" readonly id="pesoProducto" class="form-control-plaintext" value="{{$producto->pesoKg}} Kg">
                         </div>
-                        <b>Obra:</b>
+                        <b>OT a la que pertenece:</b>
                         <div class="col-sm-10">
                             <input type="text" readonly id="obraProducto" class="form-control-plaintext" value="{{$obra->nombre}}">
                         </div>
@@ -99,7 +99,7 @@
             </div>
             <br>
             <div class="card">
-                <div class="card-header">Trabajadores activos</div>
+                <div class="card-header">Operadores activos</div>
                 <div class="card-body">
 
                 @if(($trabajadores != NULL) && (count($trabajadores)>0))
@@ -135,7 +135,7 @@
                 </table>
                 @else
                 </br>
-                    <h4 align="center">No hay trabajadores asignados.</h4>
+                    <h4 align="center">No hay Operadores asignados.</h4>
                 </br>
                 @endif
                 </div>
@@ -164,13 +164,13 @@
                 </h5>
                 <br>
                 <h5>
-                    Eliminar Producto:
+                    Eliminar Pieza:
                 </br>
                     <a class="btn btn-outline-success btn-md" id="deleteButton" role="button" onclick="deleteProducto({{$producto->idProducto}})">Eliminar</a>
                 </h5>
                 <br>
                 <h5>
-                    Asignar más trabajadores:
+                    Asignar más Operadores:
                 </br>
                     <a class="btn btn-outline-success btn-md" id="insertButton" role="button" href="{{url('producto/asignarTrabajo', [$producto->idProducto])}}">Asignar</a>
                 </h5>
@@ -184,7 +184,7 @@
                         </h5>
                         <br>
                         <h5>
-                            Terminar Producto:
+                            Terminar Pieza:
                         </br>
                             <a class="btn btn-outline-danger btn-md" id="finishButton" role="button" onclick="finishProduccion({{$producto->idProducto}})">Terminar</a>
                         </h5>
@@ -192,7 +192,7 @@
                 @else
                     <br>
                     <h5>
-                        Reiniciar Producto:
+                        Reiniciar Pieza:
                     </br>
                         <a class="btn btn-warning btn-md" id="resetButton" role="button" onclick="resetProducto({{$producto->idProducto}})">Reiniciar</a>
                     </h5>

@@ -43,10 +43,29 @@ class PausaController extends Controller
       $response = json_decode($data->DATA, true);
       $idPausa = $response[0];
       $descripcion = $response[1];
+      $motivo = $response[2];
+      $idObra = $response[3];
       $pausa = Pausa::find($idPausa);
       $pausa->fechaFin=now();
       $pausa->descripcion=$descripcion;
       $pausa->save();
+      $supervisor = Auth::user();
+      $obras = $supervisor->obraWithAtributes()->where('obras_id_obra', '=', $idObra)->get()->first();
+      $diferenciaTiempo = $pausa->fechaFin-$pausa->fechaInicio;
+      if($motivo!=3)
+      {
+        if($obras->pivot->tiempoPerdido==NULL)
+        {
+          $obras->pivot->tiempoPerdido=$diferenciaTiempo;
+        }else
+          $obras->pivot->tiempoPerdido+=$diferenciaTiempo;
+      }else {
+        if($obras->pivot->tiempoSetUp==NULL)
+        {
+          $obras->pivot->tiempoSetUp=$diferenciaTiempo;
+        }else
+          $obras->pivot->tiempoSetUp+=$diferenciaTiempo;
+      }
       return 1;
     }
 
@@ -84,6 +103,7 @@ class PausaController extends Controller
       $idProducto = $response[0];
       $descripcion = $response[1];
       $fechaInicio = $response[2];
+      $motivo = $response[3];
       if($descripcion==NULL)
         return 'Añada una descripción';
 
@@ -91,7 +111,26 @@ class PausaController extends Controller
       $newPausa->fechaInicio = $fechaInicio;
       $newPausa->fechaFin = NULL;
       $newPausa->descripcion = $descripcion;
-
+      if($response[3]=='0')
+      {
+        $newPausa->motivo='Falta materiales';
+      }
+      if($response[3]=='1')
+      {
+        $newPausa->motivo='Falla en el equipo';
+      }
+      if($response[3]=='2')
+      {
+        $newPausa->motivo='Falla en el plano';
+      }
+      if($response[3]=='3')
+      {
+        $newPausa->motivo='Cambio de pieza';
+      }
+      if($response[3]=='No se pudo especificar el motivo (Leer la descripción)')
+      {
+        $newPausa->motivo='No se pudo especificar el motivo (Leer la descripción)';
+      }
       $producto = Producto::find($idProducto);
       $newPausa->producto()->associate($producto);
       $usuarioActual = Auth::user();
@@ -99,7 +138,7 @@ class PausaController extends Controller
       if($usuarioActual->type == User::DEFAULT_TYPE){
           $trabajador = $usuarioActual->trabajador;
           $newPausa->trabajador()->associate($trabajador);
-        }
+      }
       else
           return 'Usted no es un Trabajador';
       $productos = $trabajador->productoWithAtributes()->where('producto_id_producto', '=', $producto->idProducto)->get()->first();

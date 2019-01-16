@@ -41,27 +41,27 @@
                                     @break
                             @endswitch
                         </div>
-                        <br>
-                        <br>
+                        <b>Solicitar Pausa:</b>
                         <div class="col-sm-10">
-                        @if($producto->fechaFin == NULL)
-                          <h5>
-                              Solicitar Pausa:
-                          <br>
-                                <a class="btn btn-outline-success btn-lg" id="pauseButton" role="button" href="{{url('addPausa', [$producto->idProducto])}}">Pausar</a>
-                          </h5>
-                        @endif
-                          <br>
+                          @if($producto->fechaFin == NULL)
+                            <br>
+                            <a class="btn btn-outline-success btn-lg" id="pauseButton" role="button" href="{{url('addPausa', [$producto->idProducto])}}">Pausar</a>
+                          @endif
+                        </div>
+                        <div class="col-sm-10">
                           @if($producto->terminado == false)
                               @if($producto->estado == 2)
                                   @if($cantidadProducida == $producto->cantProducto)
                                       <h5>
+                                      <br>
                                           Marcar como terminado:
+                                      <br>
                                       <br>
                                           <a class="btn btn-warning btn-lg" id="stopButton" role="button" onclick="sendEmail()">Terminar</a>
                                       </h5>
                                   @endif
                               @else
+                                  <br>
                                   <h5>
                                       Anular termino:
                                   <br>

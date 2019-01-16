@@ -11,7 +11,9 @@
             <div class="card">
                 <div class="card-header">
                   Detalle de la Pausa
+                  @if(Auth::user()->type!='Trabajador')
                   <button type="button" class="btn btn-primary float-sm-right" data-toggle="modal" data-target="#modalOpciones"><i class="fas fa-cogs"></i></button>
+                  @endif
                 </div>
                 <div class="card-body">
                     <h5>
@@ -27,17 +29,28 @@
                                 <input type="text" readonly id="fechaFinPausa" class="form-control-plaintext" value="{{$pausa->fechaFin}}" readonly="readonly">
                             @endif
                         </div>
-                        <b>Nombre del Producto:</b>
+                        @if(Auth::user()->type!='Trabajador')
+                          <b>Nombre de la Pieza:</b>
+                          <div class="col-sm-10">
+                              <input type="text" readonly id="nombreProducto" class="form-control-plaintext" value="{{$producto->nombre}}" readonly="readonly">
+                          </div>
+
+                          <b>ID de la Pieza:</b>
+                          <div class="col-sm-10">
+                              <input type="text" readonly id="codigo" class="form-control-plaintext" value="{{$producto->codigo}}" readonly="readonly">
+                          </div>
+                          <b>Nombre del Operador:</b>
+                          <div class="col-sm-10">
+                              <input type="text" readonly id="nombreTrabajador" class="form-control-plaintext" value="{{$trabajador->nombre}}">
+                          </div>
+                        @endif
+                        <b>Motivo de la Pausa:</b>
                         <div class="col-sm-10">
-                            <input type="text" readonly id="nombreProducto" class="form-control-plaintext" value="{{$producto->nombre}}" readonly="readonly">
-                        </div>
-                        <b>ID del Producto:</b>
-                        <div class="col-sm-10">
-                            <input type="text" readonly id="codigo" class="form-control-plaintext" value="{{$producto->codigo}}" readonly="readonly">
-                        </div>
-                        <b>Nombre del Trabajador:</b>
-                        <div class="col-sm-10">
-                            <input type="text" readonly id="nombreTrabajador" class="form-control-plaintext" value="{{$trabajador->nombre}}">
+                          @if($pausa->motivo!=NULL)
+                            <input type="text" readonly id="motivo" class="form-control-plaintext" value="{{$pausa->motivo}}">
+                          @else
+                            <input type="text" readonly id="motivo" class="form-control-plaintext" value="No se pudo especificar el motivo (Leer la descripción)">
+                          @endif
                         </div>
                         @if($pausa->fechaFin == NULL)
                           <b>Descripcion: (Editable)</b>
@@ -67,28 +80,23 @@
               <div class="modal-body" align="center">
                 <h5>
                     @if($pausa->fechaFin==NULL)
-                        @if($usuarioActual->type == 'Admin')
+                        @if($usuarioActual->type != 'Trabajador')
                           <a class="btn btn-outline-success btn-md" id="finPausa" role="button" onclick="sendEmail()" onclick="adminUpdateFechaFin({{$pausa->idPausa}})">Finalizar Pausa</a>
                           <br><br>
                           <a class="btn btn-outline-success btn-md" id="finPausa" role="button" onclick="adminDeletePausa({{$pausa->idPausa}})">Eliminar Pausa</a>
-
-                        @else
-                            <a class="btn btn-outline-success btn-md" id="finPausa" role="button" onclick="sendEmail()">Finalizar Pausa</a>
-                            <br><br>
-                            <a class="btn btn-outline-success btn-md" id="finPausa" role="button" onclick="trabajadorDeletePausa({{$pausa->idPausa}})">Eliminar Pausa</a>
                         @endif
                     @else
                         <b>Pausa Finalizada</b>
                     @endif
                     <br><hr>
-                    @if($usuarioActual->type == 'Admin')
+                    @if($usuarioActual->type != 'Trabajador')
                       <a class="btn btn-outline-success btn-md" id="detallesTrabajador" role="button" href="{{url('/trabajadorControl', [$trabajador->idTrabajador])}}">Ver Trabajador</a>
                       <br><br>
                       <a class="btn btn-outline-success btn-md" id="detallesProducto" role="button" href="{{url('/productoControl', [$producto->idProducto])}}">Ver Producto</a>
                       <br><br>
-                    @else
+                    <!--@else
                       <a class="btn btn-outline-success btn-md" id="detallesProducto" role="button" href="{{url('/detalleProducto', [$producto->idProducto])}}">Ver Producto</a>
-                      <br><br>
+                      <br><br-->
                     @endif
                 </h5>
             </div>
@@ -96,10 +104,14 @@
     </div>
   </div>
 </div>
+  </br>
+  <div class="row justify-content-center">
+    <a class="btn btn-outline-success btn-md" id="finPausa" role="button" onclick="trabajadorDeletePausa({{$pausa->idPausa}})">Eliminar Pausa</a>
+  </div>
 </div>
     </br>
     <div class="row justify-content-center">
-            @if($usuarioActual->type=='Admin')
+            @if($usuarioActual->type!='Trabajador')
               <a class="btn btn-primary btn-lg" role="button" href="{{url('/adminPausas')}}"><b>Volver</b></a>
             @else
               <a class="btn btn-primary btn-lg" role="button" href="{{url('addPausa', [$producto->idProducto])}}"><b>Volver</b></a>
@@ -178,6 +190,8 @@
         datosPausa[2] = '{{$usuarioActual->email}}';
         datosPausa[3] = '{{$producto->cantPausa}}';
         datosPausa[4] = document.getElementById("descripcion").value;
+        datosPausa[5] = document.getElementById("motivo").value;
+
         json_text = JSON.stringify(datosPausa);
         $.ajax({
             headers: {
@@ -207,6 +221,8 @@
         datosPausa = Array();
         datosPausa[0] = {{$pausa->idPausa}};
         datosPausa[1] = document.getElementById("descripcion").value;
+        datosPausa[2] = document.getElementById("motivo").value;
+        datosPausa[3] = {{$producto->obras_id_obra}};
         json_text = JSON.stringify(datosPausa);
           $.ajax({
               headers: {

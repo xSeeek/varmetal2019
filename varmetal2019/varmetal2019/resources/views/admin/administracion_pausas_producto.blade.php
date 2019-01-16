@@ -17,8 +17,8 @@
                         <table id="tablaAdministracion" style="width:90%; margin:20px;" align="center">
                             <tr>
                                 <th>ID Pausa</th>
-                                <th>ID Producto</th>
-                                <th>Nombre Producto</th>
+                                <th>ID Pieza</th>
+                                <th>Nombre Pieza</th>
                                 <th>Fecha Inicio</th>
                                 <th>Fecha Fin</th>
                             </tr>
@@ -34,7 +34,7 @@
                                         <td><a class="btn btn-outline-success my-2 my-sm-0" href="{{url('adminDetallesPausaGet', [$pausa->idPausa])}}" role="button" style="cursor: pointer;">Ver Detalles</a></td>
                                       @else
                                         <td scope="col">Pendiente</d>
-                                        <td><a class="btn btn-outline-success my-2 my-sm-0" onclick="" role="button" style="cursor: pointer;">No Disponible</a></td>
+                                        <td><a class="btn btn-outline-success my-2 my-sm-0" href="{{url('adminDetallesPausaGet', [$pausa->idPausa])}}" role="button" style="cursor: pointer;">ver Detalles</a></td>
                                       @endif
                                   </tr>
                                 @endif
@@ -42,13 +42,13 @@
                         </table>
                         @else
                         <br>
-                            <h4 align="center">No hay pausas registradas en este Producto</h4>
+                            <h4 align="center">No hay Pausas registradas en esta Pieza</h4>
                         <br>
                         @endif
                     </div>
             </div>
         </br>
-            <a class="btn btn-primary btn-lg" role="button" href="{{url('admin')}}"><b>Volver</b></a>
+            <a class="btn btn-primary btn-lg" role="button" href="{{url('/productoControl',[$producto->idProducto])}}"><b>Volver</b></a>
         </div>
     </div>
 </div>

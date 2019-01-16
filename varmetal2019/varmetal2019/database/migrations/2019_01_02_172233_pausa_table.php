@@ -16,7 +16,8 @@ class PausaTable extends Migration
     {
         Schema::create('pausa', function (Blueprint $table) {
             $table->increments('idPausa');
-            $table->string('descripcion');
+            $table->string('descripcion')->nullable();
+            $table->string('motivo')->nullable();
             $table->timestamp('fechaInicio')->timestamps();
             $table->timestamp('fechaFin')->nullable();
             $table->timestamp('fechaInicioSetUp')->nullable();

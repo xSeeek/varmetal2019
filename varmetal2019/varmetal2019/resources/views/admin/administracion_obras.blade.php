@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Listado de Productos</div>
+                <div class="card-header">Listado de Piezas</div>
                     <div class="card=body container mt-3">
                         @if(($obras != NULL) && (count($obras) > 0))
                         <table id="tablaAdministracion" style="width:100%" align="center">
@@ -28,14 +28,18 @@
                         </table>
                         @else
                         <br>
-                            <h4 align="center">No existen obras registrados en el sistema</h4>
+                            <h4 align="center">No existen OT's registradas en el sistema</h4>
                         <br>
                         @endif
                     </div>
                 <br>
+<<<<<<< HEAD
                 @if(Auth::user()->isAdmin())
                     <a class="btn btn-outline-success btn-lg" align="right" role="button" href="{{url('/addObra')}}"><b>Agregar Obra</b></a>
                 @endif
+=======
+                <a class="btn btn-outline-success btn-lg" align="right" role="button" href="{{url('/addObra')}}"><b>Agregar OT</b></a>
+>>>>>>> 832c289fe065522f67e109bc370f7e79265054d5
             </div>
         </br>
             <a class="btn btn-primary btn-lg" role="button" href="{{url('admin')}}"><b>Volver</b></a>
