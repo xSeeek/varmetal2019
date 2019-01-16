@@ -27,6 +27,6 @@ class Obra extends Migration
    */
   public function down()
   {
-      Schema::dropIfExists('users');
+      Schema::dropIfExists('obra');
   }
 }
