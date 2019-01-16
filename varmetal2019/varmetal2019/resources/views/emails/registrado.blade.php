@@ -4,8 +4,18 @@
     <meta charset="utf-8">
 </head>
   <body>
+      @php
+        $tipoUsuario = null;
+        if($tipo == 0)
+            $tipoUsuario = "Operador";
+        elseif($tipo == 1)
+            $tipoUsuario = "Administrador";
+        else
+            $tipoUsuario = "Supervisor";
+        @endphp
+      <img src={{ asset('img/logo.png') }} class="rounded mx-auto d-block">
     <h2>
-      Felicidades {!! $nombre !!} tu cuenta fue registrada con exito.
+      {!! $nombre !!}, Bienvenido a Varmetal.
     </h2>
     <div>
       <h5>
@@ -17,7 +27,7 @@
         <br><br>
       </h5>
       <h4>
-        Usted es <h3>{!! $tipo !!}<h3>
+        Se le ha creado una cuenta de tipo: <h3>{!! $tipoUsuario !!}<h3>
       </h4>
       <h3>Si desea cambiar su contraseña, presione aquí: http://gestion.varmetal.cl/password/reset</h3>
     </div>
