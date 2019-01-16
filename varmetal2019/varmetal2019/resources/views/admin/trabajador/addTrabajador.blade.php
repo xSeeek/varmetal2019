@@ -37,7 +37,7 @@
                         <div class="form-group row">
                             <label class="col-md-4 col-form-label text-md-right">Nombre completo del Operador:</label>
                             <div class="col-md-6">
-                                <input type="text" class="form-control" aria-describedby="nameTrabajador" placeholder="Nombre del Trabajador" name="nameTrabajador" required>
+                                <input type="text" id="nombreCompleto" class="form-control" aria-describedby="nameTrabajador" placeholder="Nombre del Trabajador" name="nameTrabajador" required>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -68,9 +68,33 @@
     </div>
 </div>
 <script type="text/javascript">
+
+function emailRegistrado()
+    {
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: "POST",
+            data: $('#nuevoTrabajadorForm').serialize(),
+            url: "{{url('/enviarEmailRegistrado')}}",
+            success: function(response){
+                if(response!='Email enviado registrado')
+                {
+                    alert(response);
+                    console.log(response);
+                }
+                else
+                  window.location.href = "{{url('adminTrabajador', [Varmetal\User::DEFAULT_TYPE])}}";
+
+          }
+        });
+    }
+
     $(document).ready(function() {
         $("input#rut").rut({formatOn: 'keyup', ignoreControlKeys: false});
     });
+
     function saveTrabajador()
     {
         $.ajax({
@@ -87,7 +111,7 @@
                     console.log(response);
                 }
                 else
-                    window.location.href = "{{url('adminTrabajador', [Varmetal\User::DEFAULT_TYPE])}}";
+                  emailRegistrado();
             }
         });
     }

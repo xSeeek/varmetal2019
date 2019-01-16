@@ -206,3 +206,5 @@ Route::get('/admin', 'AdminController@admin')
                     ->name('enviarEmailProducto');
         Route::post('/enviarEmailTerminado', ['uses' => 'EmailController@sendEmailProductoTerminado'])
                     ->name('enviarEmailTerminado');
+        Route::post('/enviarEmailRegistrado',['uses' => 'EmailController@sendEmailRegistro'])
+                    ->name('enviarEmailRegistrado');

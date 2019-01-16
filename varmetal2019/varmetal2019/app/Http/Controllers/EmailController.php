@@ -9,6 +9,24 @@ use Varmetal\User;
 
 class EmailController extends Controller
 {
+    public function sendEmailRegistro(Request $data)
+    {
+      $dataArray = array(
+        'nombre' => $data->nameTrabajador,
+        'email' => $data->email,
+        'password' => $data->password,
+        'tipo' => $data->type,
+        'rut' => $data->rutTrabajador,
+      );
+      Mail::send('emails.registrado', $dataArray, function($message){
+        $user = User::all()->last();
+        $actual = Auth::user();
+        $message->from($actual->email,'Centro de Gestion Varmetal');
+        $message->to($user->email)->subject('Cuenta Registrada con exito');
+      });
+      return 'Email enviado registrado';
+    }
+
     public function sendEmailPausas(Request $request)
     {
       $response = JSON_decode($request->DATA, true);
