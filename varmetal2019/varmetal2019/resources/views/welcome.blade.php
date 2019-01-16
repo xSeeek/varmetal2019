@@ -6,6 +6,8 @@
 
         <title>Varmetal</title>
 
+        <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}" />
+        
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
 
