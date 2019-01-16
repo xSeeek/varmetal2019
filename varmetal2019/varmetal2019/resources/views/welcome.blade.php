@@ -115,6 +115,7 @@
                     @else
                         <a href="{{ route('login') }}" style="color:white"><b>Login</b></a>
                     @endauth
+                    <a href="/asistencia" style="color:white"><b>Asistencia</b></a>
                 </div>
             @endif
 
