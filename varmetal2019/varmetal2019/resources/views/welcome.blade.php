@@ -88,11 +88,11 @@
                 background-position: center;
                 background-repeat: no-repeat;
 
-                -webkit-filter: blur(8px);
-                -moz-filter: blur(8px);
-                -o-filter: blur(8px);
-                -ms-filter: blur(8px);
-                filter: blur(8px);
+                -webkit-filter: blur(12px);
+                -moz-filter: blur(12px);
+                -o-filter: blur(12px);
+                -ms-filter: blur(12px);
+                filter: blur(12px);
 
             }
         </style>
