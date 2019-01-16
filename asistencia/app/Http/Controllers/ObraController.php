@@ -39,7 +39,7 @@ class ObraController extends Controller
       $obra->save();
 
       $obra->trabajadores()->save($trabajador);
-      return redirect()->back()->with('success', 'Obra ' . $obra->nombre . ' registrada con éxito');
+      return redirect()->route('administrador.menuAdministrador')->with('success', 'Obra ' . $obra->nombre . ' registrada con éxito');
     }
     return redirect()->back()
       ->withInput()
@@ -72,17 +72,29 @@ class ObraController extends Controller
     $trabajador = Trabajador::where('rut', $request->trabajador)->first();
     if($trabajador->obra == null)
     {
-      if(!$trabajador->user->isSupervisor()){
-        $obra->trabajadores()->save($trabajador);
-        return redirect()->back()->with('success', 'Trabajador ' . $trabajador->nombre . ' registrado con éxito en la obra');
-      }else{
+      if($trabajador->user->isSupervisor()){
         return redirect()->back()
-          ->withInput()
-          ->with('error', 'No puede agregar un supervisor como trabajador a una obra');
+        ->withInput()
+        ->with('error', 'No puede agregar un supervisor como trabajador a una obra');
       }
+      if ($trabajador->user->isAdmin()) {
+        return redirect()->back()
+        ->withInput()
+        ->with('error', 'No puede agregar un administrador como trabajador a una obra');
+      }
+
+        $obra->trabajadores()->save($trabajador);
+        return redirect()
+        ->back()
+        ->with('success', 'Trabajador ' . $trabajador->nombre . ' registrado con éxito en la obra');
     }
     return redirect()->back()
       ->withInput()
       ->with('error', 'El trabajador seleccionado ya posee una obra asignada');
+  }
+
+  public function quitarTrabajador()
+  {
+    // code...
   }
 }

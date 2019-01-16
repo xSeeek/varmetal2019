@@ -24,8 +24,8 @@ function showMensajeSwall(type, msg) {
         showCancelButton: true,
         showConfirmButton: false,
         cancelButtonText:
-          '<i class="far fa-frown"></i>',
-        cancelButtonAriaLabel: 'Sad face',
+          'Ok <i class="fas fa-times"></i>',
+        cancelButtonAriaLabel: 'Cerrar',
         cancelButtonColor: '#661414',
       });
       break;
