@@ -6,7 +6,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    Productos Disponibles
+                    Piezas Disponibles
                 </div>
                 <div class="card=body">
                     <div class="container mt-3">
@@ -69,7 +69,7 @@
                         </table>
                         @else
                         <br>
-                            <h4 align="center">No hay productos disponibles</h4>
+                            <h4 align="center">No hay Piezas disponibles</h4>
                         <br>
                         @endif
                         <br>

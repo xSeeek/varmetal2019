@@ -13,12 +13,12 @@ class Obra extends Model
     {
         return $this->hasMany('Varmetal\Producto', 'obras_id_obra');
     }
+    public function supervisorWithAtributes()
+    {
+        return $this->belongsToMany('Varmetal\Trabajador', 'obra_supervisor', 'trabajador_id_trabajador', 'obras_id_obra')->withPivot('tiempoPerdido', 'tiempoSetUp');
+    }
     public function supervisor()
     {
-      return $this->belongsToMany('Varmetal\Trabajador', 'obra_supervisor', 'trabajador_id_trabajador', 'obras_id_obra');
-    }
-    public function trabajador()
-    {
-      $this->hasMany('Varmetal\Trabajador','trabajador_id_trabajador');
+        return $this->belongsToMany('Varmetal\Trabajador', 'obra_supervisor', 'trabajador_id_trabajador', 'obras_id_obra');
     }
 }

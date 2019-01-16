@@ -17,8 +17,8 @@
                         <table id="tablaAdministracion" style="width:90%; margin:20px;" align="center">
                             <tr>
                                 <th>ID Pausa</th>
-                                <th>ID Producto</th>
-                                <th>Nombre Producto</th>
+                                <th>ID Pieza</th>
+                                <th>Nombre Pieza</th>
                                 <th>Fecha Inicio</th>
                                 <th>Fecha Fin</th>
                             </tr>
@@ -44,7 +44,7 @@
                         </table>
                         @else
                         <br>
-                            <h4 align="center">No hay pausas registrados en el sistema</h4>
+                            <h4 align="center">No hay Pausas registrados en el sistema</h4>
                         <br>
                         @endif
                     </div>

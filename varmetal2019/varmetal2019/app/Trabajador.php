@@ -9,9 +9,13 @@ class Trabajador extends Model
     public $primaryKey = 'idTrabajador';
     protected $table = 'trabajador';
 
+    public function obraWithAtributes()
+    {
+        return $this->belongsToMany('Varmetal\Obra', 'obra_supervisor', 'trabajador_id_trabajador', 'obras_id_obra')->withPivot('tiempoPerdido', 'tiempoSetUp');
+    }
     public function obra()
     {
-      $this->belongsTo('Varmetal\Obra', 'obras_id_obra');
+        return $this->belongsToMany('Varmetal\Obra', 'obra_supervisor', 'trabajador_id_trabajador', 'obras_id_obra');
     }
     public function user()
     {

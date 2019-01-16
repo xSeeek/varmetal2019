@@ -18,6 +18,7 @@ class EmailController extends Controller
           'email' => $response[2],
           'cantPausas' => $response[3],
           'detalle' => $response[4],
+          'motivo' => $response[5],
       );
       Mail::send('emails.pausas', $data, function($message){
         $user = Auth::user();

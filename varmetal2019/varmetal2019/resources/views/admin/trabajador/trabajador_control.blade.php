@@ -10,7 +10,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    Información del Trabajador
+                    Información del Operador
                     <button type="button" class="btn btn-primary float-sm-right" data-toggle="modal" data-target="#modalOpciones"><i class="fas fa-cogs"></i></button>
                 </div>
                 <div class="card-body">
@@ -44,7 +44,7 @@
             </div>
         </br>
             <div class="card">
-                <div class="card-header">Productos a Realizar</div>
+                <div class="card-header">Piezas a Realizar</div>
                 <div class="card-body">
 
                 @if(($productos_trabajador != NULL) && (count($productos_trabajador)>0))
@@ -91,7 +91,7 @@
                 </table>
                 @else
                 </br>
-                    <h4 align="center">El trabajador tiene ningún trabajo en desarrollo.</h4>
+                    <h4 align="center">El Operador no tiene ningún trabajo en desarrollo.</h4>
                 </br>
                 @endif
                 </div>
@@ -119,14 +119,14 @@
                 <br>
                 @if(Auth::user()->isAdmin())
                     <h5>
-                        Borrar Trabajador:
+                        Borrar Operador:
                     <br>
                         <a class="btn btn-outline-success btn-md" role="button" onclick="deleteTrabajador({{$trabajador->idTrabajador}})">Borrar</a>
                     </h5>
                     <br>
                 @endif
                 <h5>
-                    Asignar nuevos productos:
+                    Asignar nuevas Piezas:
                 <br>
                     <a class="btn btn-outline-success btn-md" id="deleteButton" role="button" href="{{url('trabajador/asignarProducto', [$trabajador->idTrabajador])}}">Asignar</a>
                 </h5>

@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Trabajadores</div>
+                <div class="card-header">Operadores</div>
                     <div class="card=body container mt-3">
                         @if(($trabajadores_almacenados != NULL) && (count($trabajadores_almacenados) > 0))
                         <table id="tablaAdministracion" style="width:100%" align="center">
@@ -34,12 +34,12 @@
                         </table>
                         @else
                         <br>
-                            <h4 align="center">No hay trabajadores registrados en el sistema</h4>
+                            <h4 align="center">No hay Operadores registrados en el sistema</h4>
                         <br>
                         @endif
                     </div>
                 @if(Auth::user()->isAdmin())
-                    <a class="btn btn-outline-success btn-lg" align="right" role="button" href="{{url('/addTrabajador')}}"><b>Agregar Trabajador</b></a>
+                    <a class="btn btn-outline-success btn-lg" align="right" role="button" href="{{url('/addTrabajador')}}"><b>Agregar Operadores</b></a>
                 @endif
             </div>
         </br>

@@ -9,7 +9,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Agregar nuevo trabajador</div>
+                <div class="card-header">Agregar nuevo Operador</div>
                 <div class="card-body">
                     <form method="POST" name="nuevoTrabajadorForm" id="nuevoTrabajadorForm">
                         <div class="form-group row">
@@ -35,13 +35,13 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-4 col-form-label text-md-right">Nombre completo del Trabajador:</label>
+                            <label class="col-md-4 col-form-label text-md-right">Nombre completo del Operador:</label>
                             <div class="col-md-6">
                                 <input type="text" class="form-control" aria-describedby="nameTrabajador" placeholder="Nombre del Trabajador" name="nameTrabajador" required>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-4 col-form-label text-md-right">RUT del Trabajador:</label>
+                            <label class="col-md-4 col-form-label text-md-right">RUT del Operador:</label>
                             <div class="col-md-6">
                                 <input type="text" class="form-control" id="rut" aria-describedby="rutTrabajador" placeholder="RUT del Trabajador" name="rutTrabajador" required>
                             </div>
@@ -51,7 +51,7 @@
                             <div class="col-md-6">
                                 <select class="custom-select" id="inputType" aria-describedby="inputType" name="type" required>
                                         <option value="1">Administrador</option>
-                                        <option selected value="0">Trabajador</option>
+                                        <option selected value="0">Operador</option>
                                         <option value="2">Supervisor</option>
                                 </select>
                             </div>

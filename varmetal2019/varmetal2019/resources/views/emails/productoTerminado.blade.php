@@ -9,7 +9,7 @@
     </h2>
     <div>
       <h4>
-        Codigo del producto: {!! $codigoProducto !!}.
+        Codigo de la Pieza: {!! $codigoProducto !!}.
       </h4>
       <h5>
         Email solicitado por el trabajador: {!! $email !!}.<br>

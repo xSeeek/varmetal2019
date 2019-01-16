@@ -77,7 +77,7 @@
                               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="{{ url('/') }}">Varmetal</a>
                                 <div class="dropdown-divider"></div>
-                                @if(Auth::user()->type == 'Admin')
+                                @if(Auth::user()->type == 'Supervisor')
                                   <a class="dropdown-item" href="{{url('/admin')}}">
                                       Detalles Cuenta
                                   </a>
@@ -91,8 +91,8 @@
                                         alarma.setAttribute("src","/music/bleep.mp3");
                                         alarma.setAttribute("autoplay","");
                                         alarma.setAttribute("loop","");
-                                        alarma.Play();
-                                        if
+                                        //alarma.Play();
+                                        //if
                                         return 1;
                                     }
                                   </script>

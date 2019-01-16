@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Trabajadores</div>
+                <div class="card-header">Operadores</div>
                     <div class="card=body">
                         <div class="container mt-3">
                             @if(($trabajadores_almacenados != NULL) && (count($trabajadores_almacenados) > 0))

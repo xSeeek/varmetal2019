@@ -15,6 +15,7 @@
         Email: {!! $email !!}.<br><br>
       </h5>
       <h4>
+        Motivo: {!! $motivo !!}<br><br>
         Detalles: {!! $detalle !!}.<br><br>
       </h4>
       <h3>Descripcion: Aviso para realizar una supervision debido a la pausa realizadas por el trabajador.</h3>

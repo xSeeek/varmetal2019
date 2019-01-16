@@ -10,18 +10,18 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    Detalle de la Obra
+                    Detalle de la OT
                     <button type="button" class="btn btn-primary float-sm-right" data-toggle="modal" data-target="#modalOpciones"><i class="fas fa-cogs"></i></button>
                 </div>
                 <div class="card-body">
                     <h5>
-                        <b>Nombre del listado de productos:</b>
+                        <b>Codigo OT:</b>
                         <div class="col-sm-10">
                             <input type="text" readonly id="nombreListado" class="form-control-plaintext" value="{{$obra->nombre}}">
                         </div>
                     </h5>
                     <h5>
-                        <b>Nombre del proyecto:</b>
+                        <b>Nombre del Proyecto:</b>
                         <div class="col-sm-10">
                             <input type="text" readonly id="nombreProyecto" class="form-control-plaintext" value="{{$obra->proyecto}}">
                         </div>
@@ -71,7 +71,7 @@
             </div>
             <br>
             <div class="card">
-                <div class="card-header">Productos a Realizar</div>
+                <div class="card-header">Piezas a Realizar</div>
                 <div class="card-body">
 
                 @if(($productos_obra != NULL) && (count($productos_obra)>0))
@@ -118,7 +118,7 @@
                 </table>
                 @else
                 </br>
-                    <h4 align="center">La obra poseee ningún producto.</h4>
+                    <h4 align="center">La OT no posee ningún producto.</h4>
                 </br>
                 @endif
                 </div>
@@ -139,13 +139,17 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body" align="center">
-                <h5>
-                    Eliminar Obra:
-                </br>
+              <div class="modal-body" align="center">
+                  <h5>
+                      Eliminar OT:
+                  </br>
+                  @if($productos_obra != NULL)
                     <a class="btn btn-outline-success btn-md" id="deleteButton" role="button" onclick="deleteObra({{$obra->idObra}})">Eliminar</a>
-                </h5>
-            </div>
+                  @else
+                    Para eliminar la OT, primero elimine sus productos.
+                  @endif
+                  </h5>
+              </div>
         </div>
     </div>
 </div>

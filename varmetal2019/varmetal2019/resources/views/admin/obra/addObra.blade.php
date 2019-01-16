@@ -13,13 +13,13 @@
                 <div class="card-body">
                     <form method="POST" name="nuevaObraForm" id="nuevaObraForm">
                         <div class="form-group row">
-                            <label class="col-md-4 col-form-label text-md-right">Nombre del listado de partes:</label>
+                            <label class="col-md-4 col-form-label text-md-right">Codigo OT:</label>
                             <div class="col-md-6">
                                 <input type="text" class="form-control" aria-describedby="nameListado" placeholder="Nombre del listado" name="nameListado" required>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-4 col-form-label text-md-right">Nombre del proyecto:</label>
+                            <label class="col-md-4 col-form-label text-md-right">Nombre del Proyecto:</label>
                             <div class="col-md-6">
                                 <input type="text" class="form-control" aria-describedby="nameProyecto" placeholder="Nombre del proyecto" name="nameProyecto" required>
                             </div>

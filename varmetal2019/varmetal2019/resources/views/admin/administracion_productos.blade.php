@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Productos</div>
+                <div class="card-header">Piezas</div>
                     <div class="card=body container mt-3">
                         @if(($productos != NULL) && (count($productos) > 0))
                         <table id="tablaAdministracion" style="width:100%" align="center">
@@ -66,12 +66,12 @@
                         </table>
                         @else
                         <br>
-                            <h4 align="center">No existen productos registrados en el sistema</h4>
+                            <h4 align="center">No existen Piezas registrados en el sistema</h4>
                         <br>
                         @endif
                     </div>
                 <br>
-                <a class="btn btn-outline-success btn-lg" align="right" role="button" href="{{url('/addProducto')}}"><b>Agregar Producto</b></a>
+                <a class="btn btn-outline-success btn-lg" align="right" role="button" href="{{url('/addProducto')}}"><b>Agregar Piezas</b></a>
             </div>
         </br>
             <a class="btn btn-primary btn-lg" role="button" href="{{url('admin')}}"><b>Volver</b></a>

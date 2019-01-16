@@ -9,17 +9,17 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Agregar nuevo producto</div>
+                <div class="card-header">Agregar nueva Pieza</div>
                 <div class="card-body">
                     <form method="POST" name="nuevoProductoForm" id="nuevoProductoForm">
                         <div class="form-group row">
-                            <label class="col-md-4 col-form-label text-md-right">Código del Producto:</label>
+                            <label class="col-md-4 col-form-label text-md-right">Código de la Pieza:</label>
                             <div class="col-md-6">
                                 <input type="text" class="form-control" aria-describedby="codigoProducto" placeholder="Código del Producto" name="codigoProducto" required>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-4 col-form-label text-md-right">Nombre del Producto:</label>
+                            <label class="col-md-4 col-form-label text-md-right">Descripcion:</label>
                             <div class="col-md-6">
                                 <input type="text" class="form-control" aria-describedby="nombreProducto" placeholder="Nombre del Producto" name="nombreProducto" required>
                             </div>
@@ -31,7 +31,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-4 col-form-label text-md-right">Peso unitario del producto (en Kilogramos):</label>
+                            <label class="col-md-4 col-form-label text-md-right">Peso unitario de la Pieza (en Kilogramos):</label>
                             <div class="col-md-6">
                                 <input type="text" class="form-control" aria-describedby="pesoProducto" placeholder="Peso del Producto" name="pesoProducto" required>
                             </div>
@@ -43,7 +43,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-4 col-form-label text-md-right">Obra:</label>
+                            <label class="col-md-4 col-form-label text-md-right">OT a la cual pertenece:</label>
                             <div class="col-md-6">
                                 <div class="input-group mb-3">
                                     <select class="custom-select" id="inputObra" aria-describedby="obraProducto" name="obraProducto" required>
