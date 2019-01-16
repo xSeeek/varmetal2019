@@ -16,7 +16,7 @@ $factory->define(Asistencia\Trabajador::class, function (Faker $faker) {
 
         return Rut::set($number)->fix()->format();
       },
-      'nombre' => $faker->firstName,
+      'nombre' => $faker->firstName . ' ' . $faker->lastName,
       'cargo' => 'M1',
       'estado' => true,
     ];
