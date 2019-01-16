@@ -5,8 +5,13 @@
     <div class="row">
       <div class="col">
         <div class="card">
-          <div class="card-header">
-            <h3 class="card-tittle">Administrar Obras</h3>
+          <div class="card-header row">
+            <div class="col">
+              <h3 class="card-tittle">Administrar Obras</h3>
+            </div>
+            <div class="col">
+              <a href="javascript:history.back()" class="btn btn-secondary float-right text-light"><b>Volver</b></a>
+            </div>
           </div>
           <div class="card-body">
             <div class="row">
@@ -60,6 +65,7 @@
           "url":"//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
         },
         "scrollX": true,
+        'fixedColumns': true,
         "autoWidth": false,
       });
     });

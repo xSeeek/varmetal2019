@@ -3,8 +3,13 @@
 @section('main')
   <div class="container mt-2">
     <div class="card">
-      <div class="card-header">
-        <h3 class="card-tittle">Agregar nueva obra</h3>
+      <div class="card-header row">
+        <div class="col">
+          <h3 class="card-tittle">Agregar nueva obra</h3>
+        </div>
+        <div class="col">
+          <a href="javascript:history.back()" class="btn btn-secondary float-right text-light"><b>Volver</b></a>
+        </div>
       </div>
       <div class="card-body">
         <form action="{!! route('administrador.insertObra') !!}" method="post">

@@ -3,8 +3,13 @@
 @section('main')
   <div class="container mt-2 mb-3">
     <div class="card">
-      <div class="card-header">
-        <h3 class="card-tittle">Administrar Obras, Obra: {{$obra->nombre}}</h3>
+      <div class="card-header row">
+        <div class="col">
+          <h3 class="card-tittle">Administrar Obras, Obra: {{$obra->nombre}}</h3>
+        </div>
+        <div class="col">
+          <a href="javascript:history.back()" class="btn btn-secondary float-right text-light"><b>Volver</b></a>
+        </div>
       </div>
       <div class="card-body">
         <div class="form-group">
