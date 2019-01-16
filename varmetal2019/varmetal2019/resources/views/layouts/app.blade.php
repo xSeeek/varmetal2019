@@ -82,7 +82,7 @@
                                       Detalles Cuenta
                                   </a>
                                     <audio id="alarma"></audio> <!--autoplay loop-->
-                                  <script>
+                                  <!--<script>
                                     window.onload(sistema());
                                     function sistema()
                                     {
@@ -95,7 +95,7 @@
                                         //if
                                         return 1;
                                     }
-                                  </script>
+                                </script><--->
                                 @else
                                   <a class="dropdown-item" href="{{url('/homepage/Trabajador')}}">
                                       Detalles Cuenta

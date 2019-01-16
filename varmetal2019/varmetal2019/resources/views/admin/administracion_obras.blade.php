@@ -33,13 +33,9 @@
                         @endif
                     </div>
                 <br>
-<<<<<<< HEAD
                 @if(Auth::user()->isAdmin())
                     <a class="btn btn-outline-success btn-lg" align="right" role="button" href="{{url('/addObra')}}"><b>Agregar Obra</b></a>
                 @endif
-=======
-                <a class="btn btn-outline-success btn-lg" align="right" role="button" href="{{url('/addObra')}}"><b>Agregar OT</b></a>
->>>>>>> 832c289fe065522f67e109bc370f7e79265054d5
             </div>
         </br>
             <a class="btn btn-primary btn-lg" role="button" href="{{url('admin')}}"><b>Volver</b></a>

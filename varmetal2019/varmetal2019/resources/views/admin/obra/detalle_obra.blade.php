@@ -139,11 +139,10 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-<<<<<<< HEAD
             <div class="modal-body" align="center">
                 <h5>
                     @if(count($productos_obra) == 0)
-                    Eliminar Obra:
+                    Eliminar OT:
                 </br>
                     <a class="btn btn-outline-success btn-md" id="deleteButton" role="button" onclick="deleteObra({{$obra->idObra}})">Eliminar</a>
                     @endif
@@ -155,19 +154,6 @@
                     <a class="btn btn-outline-warning btn-md" id="asignarButton" role="button" onclick="asignarProducto({{$obra->idObra}})">Asignar</a>
                 </h5>
             </div>
-=======
-              <div class="modal-body" align="center">
-                  <h5>
-                      Eliminar OT:
-                  </br>
-                  @if($productos_obra != NULL)
-                    <a class="btn btn-outline-success btn-md" id="deleteButton" role="button" onclick="deleteObra({{$obra->idObra}})">Eliminar</a>
-                  @else
-                    Para eliminar la OT, primero elimine sus productos.
-                  @endif
-                  </h5>
-              </div>
->>>>>>> 832c289fe065522f67e109bc370f7e79265054d5
         </div>
     </div>
 </div>
