@@ -48,8 +48,8 @@ class PausaController extends Controller
       $pausa = Pausa::find($idPausa);
       $pausa->fechaFin=now();
       $pausa->descripcion=$descripcion;
-      $pausa->save();
-      $supervisor = Auth::user();
+      $usuarioActual = Auth::user();
+      $supervisor = $usuarioActual->trabajador;
       $obras = $supervisor->obraWithAtributes()->where('obras_id_obra', '=', $idObra)->get()->first();
       $diferenciaTiempo = $pausa->fechaFin-$pausa->fechaInicio;
       if($motivo!=3)
@@ -66,6 +66,8 @@ class PausaController extends Controller
         }else
           $obras->pivot->tiempoSetUp+=$diferenciaTiempo;
       }
+      $obras->pivot->save();
+      $pausa->save();
       return 1;
     }
 

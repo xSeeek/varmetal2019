@@ -81,7 +81,7 @@
                 <h5>
                     @if($pausa->fechaFin==NULL)
                         @if($usuarioActual->type != 'Trabajador')
-                          <a class="btn btn-outline-success btn-md" id="finPausa" role="button" onclick="sendEmail()" onclick="adminUpdateFechaFin({{$pausa->idPausa}})">Finalizar Pausa</a>
+                          <a class="btn btn-outline-success btn-md" id="finPausa" role="button" onclick="adminUpdateFechaFin()">Finalizar Pausa</a>
                           <br><br>
                           <a class="btn btn-outline-success btn-md" id="finPausa" role="button" onclick="adminDeletePausa({{$pausa->idPausa}})">Eliminar Pausa</a>
                         @endif
@@ -94,9 +94,6 @@
                       <br><br>
                       <a class="btn btn-outline-success btn-md" id="detallesProducto" role="button" href="{{url('/productoControl', [$producto->idProducto])}}">Ver Producto</a>
                       <br><br>
-                    <!--@else
-                      <a class="btn btn-outline-success btn-md" id="detallesProducto" role="button" href="{{url('/detalleProducto', [$producto->idProducto])}}">Ver Producto</a>
-                      <br><br-->
                     @endif
                 </h5>
             </div>
@@ -213,16 +210,15 @@
         });
       }
 
-    function trabajadorUpdateFechaFin()
+    /*function trabajadorUpdateFechaFin()
       {
-
         var datosPausa, json_text;
 
         datosPausa = Array();
-        datosPausa[0] = {{$pausa->idPausa}};
+        datosPausa[0] = '{{$pausa->idPausa}}';
         datosPausa[1] = document.getElementById("descripcion").value;
         datosPausa[2] = document.getElementById("motivo").value;
-        datosPausa[3] = {{$producto->obras_id_obra}};
+        datosPausa[3] = '{{$producto->obras_id_obra}}';
         json_text = JSON.stringify(datosPausa);
           $.ajax({
               headers: {
@@ -236,6 +232,29 @@
                   window.location.href = "{{url('/trabajadorDetallesPausaGet', [$pausa->idPausa])}}";
               }
           });
-      }
+      }*/
+      function adminUpdateFechaFin()
+        {
+          var datosPausa, json_text;
+
+          datosPausa = Array();
+          datosPausa[0] = '{{$pausa->idPausa}}';
+          datosPausa[1] = document.getElementById("descripcion").value;
+          datosPausa[2] = document.getElementById("motivo").value;
+          datosPausa[3] = '{{$producto->obras_id_obra}}';
+          json_text = JSON.stringify(datosPausa);
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: "POST",
+                data: {DATA:json_text},
+                url: "{{url('adminUpdateFechaFinPost')}}",
+                success: function(response){
+                    console.log(response);
+                    window.location.href = "{{url('/adminDetallesPausaGet', [$pausa->idPausa])}}";
+                }
+            });
+        }
 </script>
 @endsection

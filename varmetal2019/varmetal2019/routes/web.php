@@ -155,7 +155,7 @@ Route::get('/admin', 'AdminController@admin')
         Route::post('/SuperPausaControl', ['uses' =>'PausaController@insertPausa'])
                     ->middleware('is_trabajador')
                     ->name('pausaControlPost');
-        Route::post('/adminUpdateFechaFinPost', ['uses' =>'PausaController@updateFechaFin'])
+        Route::post('/adminUpdateFechaFinPost', ['uses' =>'PausaController@trabajadorUpdateFechaFin'])
                     ->middleware('is_admin')
                     ->name('adminUpdateFechaFinPost');
         Route::post('/trabajadorUpdateFechaFinPost', ['uses' =>'PausaController@trabajadorUpdateFechaFin'])

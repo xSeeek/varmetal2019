@@ -35,7 +35,7 @@
                                         <td><a class="btn btn-outline-success my-2 my-sm-0" href="{{url('adminDetallesPausaGet', [$pausa->idPausa])}}" role="button" style="cursor: pointer;">Ver Detalles</a></td>
                                       @else
                                         <td scope="col">Pendiente</td>
-                                        <td><a class="btn btn-outline-success my-2 my-sm-0" onclick="" role="button" style="cursor: pointer;">No Disponible</a></td>
+                                        <td><a class="btn btn-outline-success my-2 my-sm-0" href="{{url('adminDetallesPausaGet', [$pausa->idPausa])}}" role="button" style="cursor: pointer;">Ver Detalles</a></td>
                                       @endif
                                   </tr>
                                 @endif
