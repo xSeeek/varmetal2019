@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 </head>
   <body>
-    <img src={{ asset('/img/logo.png') }} class="rounded mx-auto d-block">
+    <img src={{ asset('img/logo.png') }} class="rounded mx-auto d-block">
     <h2>
       Aviso: {!! $nombreProducto !!} fué marcado como terminado/a.
     </h2>
