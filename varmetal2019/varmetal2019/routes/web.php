@@ -230,7 +230,11 @@ Route::get('/admin', 'AdminController@admin')
 /* [** Cambiar Email **] */
     /*[** GENERAL **] */
   /* [** GET/POST **] */
-        Route::get('/cambiarEmail', ['uses', 'EmailController@cambiarEmail'])
+        Route::get('/cambiarContraseña', ['uses' => 'UserController@getProfilePassword'])
+                    ->name('cambiarContraseña');
+        Route::post('/nuevaContraseña', ['uses' => 'UserController@postProfilePassword'])
+                    ->name('nuevaContraseña');
+        Route::get('/cambiarEmail', ['uses' => 'UserController@getProfileEmail'])
                     ->name('cambiarEmail');
-        Route::post('/nuevoEmail', ['uses', 'EmailController@nuevoEmail'])
+        Route::post('/nuevoEmail', ['uses' => 'UserController@postProfileEmail'])
                     ->name('nuevoEmail');

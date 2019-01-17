@@ -9,16 +9,6 @@ use Varmetal\User;
 
 class EmailController extends Controller
 {
-    public function cambiarEmail()
-    {
-      return;
-    }
-
-    public function nuevoEmail()
-    {
-      return;
-    }
-
     public function sendEmailRegistro(Request $data)
     {
       $dataArray = array(
