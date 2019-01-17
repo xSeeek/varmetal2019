@@ -92,10 +92,7 @@
             url: "{{url('productoControl/addProducto')}}",
             success: function(response){
                 if(response != 1)
-                {
-                    alert(response);
-                    console.log(response);
-                }
+                    showMensajeBanner(MSG_ERROR, response);
                 else
                     window.location.href = "{{url('adminProducto')}}";
             }

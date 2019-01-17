@@ -95,7 +95,7 @@
                         <b>Tiempo en Set-Up:</b>
                         <div class="col-sm-10">
                             @if($tiempoSetUp != 0)
-                                @if($tiempoSetUp/60 < 0)
+                                @if($tiempoSetUp/60 < 1)
                                     <input type="text" readonly id="nombreObra" class="form-control-plaintext" value="{{$tiempoSetUp}} Minutos">
                                 @else
                                     <input type="text" readonly id="nombreObra" class="form-control-plaintext" value="{{$tiempoSetUp/60}} Horas">
@@ -215,21 +215,36 @@
                 if(response == 1)
                     window.location.href = "{{url('adminObras')}}";
                 else
-                    alert(response)
+                    showMensajeSwall(MSG_ERROR, response)
             }
         });
     }
     function eliminarProducto(data)
     {
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            type: "POST",
-            data: {DATA:data},
-            url: "{{url('/obraControl/deleteProducto')}}",
-            success: function(response){
-                window.location.reload();
+        swal({
+        title: "Confirmación",
+        text: "Presione Si para eliminar la pieza:",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#6A9944",
+        confirmButtonText: "Si",
+        cancelButtonText: "No",
+        cancelButtonColor: "#d71e1e",
+        }).then((result) =>
+        {
+            if (result.value)
+            {
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    type: "POST",
+                    data: {DATA:data},
+                    url: "{{url('/obraControl/deleteProducto')}}",
+                    success: function(response){
+                        window.location.reload();
+                    }
+                });
             }
         });
     }

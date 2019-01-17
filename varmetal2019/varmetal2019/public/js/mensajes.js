@@ -1,44 +1,41 @@
-const MSG_ERROR = "E";
-const MSG_SUCCESS = "S";
-const MSG_WARNING = "W";
+const MSG_ERROR = "error";
+const MSG_SUCCESS = "success";
+const MSG_WARNING = "warning";
+const MSG_INFO = "info";
+const MSG_QUESTION = "question";
 
-function showMensajeBanner(type, msg) {
-  switch (type) {
-    case MSG_ERROR:
-      $.notify(msg, "error");
-      break;
-    case MSG_SUCCESS:
-      $.notify(msg, "success")
-      break;
-    default:
-
-  }
+function showMensajeBanner(type, msg){
+  $.notify(msg, type);
 }
 
-function showMensajeSwall(type, msg) {
-  switch (type) {
-    case MSG_ERROR:
-      swal({
-        type: 'error',
-        title: msg,
-        showCancelButton: true,
-        showConfirmButton: false,
-        cancelButtonText:
-          '<i class="far fa-frown"></i>',
-        cancelButtonAriaLabel: 'Sad face',
-        cancelButtonColor: '#661414',
-      });
-      break;
-    case MSG_SUCCESS:
-      swal({
-        position: 'top-end',
-        type: 'success',
-        title: msg,
-        showConfirmButton: false,
-        timer: 1500
-      });
-      break;
-    default:
+function confirmMensajeSwal(type, msg, metodo) {
+  swal({
+    title: "Confirmación",
+    text: msg,
+    type: type,
+    showCancelButton: true,
+    confirmButtonColor: "#6A9944",
+    confirmButtonText: "Si",
+    cancelButtonText: "No",
+    cancelButtonColor: "#d71e1e",
+  }).then((result) => {
+    if (result.value) {
+      metodo();
+    }
+  });
+}
 
-  }
+function showMensajeSwall(type, msg)
+{
+  swal({
+    type: type,
+    title: msg,
+    showCancelButton: true,
+    showConfirmButton: false,
+    cancelButtonText:
+      'Ok <i class="fas fa-times"></i>',
+    cancelButtonAriaLabel: 'Cerrar',
+    cancelButtonColor: '#661414',
+  });
+
 }

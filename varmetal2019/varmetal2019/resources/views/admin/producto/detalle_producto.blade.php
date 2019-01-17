@@ -281,7 +281,7 @@
                 if(response == 1)
                     window.location.href = "{{url('productoControl', [$producto->idProducto])}}";
                 else
-                    alert(response);
+                    showMensajeSwall(MSG_ERROR, response);
             }
         });
     }

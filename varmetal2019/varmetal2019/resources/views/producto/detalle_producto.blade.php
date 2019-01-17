@@ -113,10 +113,7 @@ function sendEmailProductos()
             url: "{{url('/enviarEmailProducto')}}",
             success: function(response){
                 if(response!='Email enviado producto')
-                {
-                    alert(response);
-                    console.log(response);
-                }
+                    showMensajeSwall(MSG_ERROR, response);
                 else
                     actualizarCantidad({{$producto->idProducto}});
           }
@@ -143,10 +140,7 @@ function sendEmail()
             url: "{{url('/enviarEmailTerminado')}}",
             success: function(response){
                 if(response!='Email enviado producto Terminado')
-                {
-                    alert(response);
-                    console.log(response);
-                }
+                    showMensajeSwall(MSG_ERROR, response);
                 else
                     markAsFinished({{$producto->idProducto}});
           }
@@ -166,7 +160,7 @@ function sendEmail()
                 if(response == 1)
                     window.location.href = "{{url('/detalleProducto', [$producto->idProducto])}}";
                 else {
-                    alert(response);
+                    showMensajeSwall(MSG_ERROR, response);
                 }
             }
         });
@@ -183,9 +177,8 @@ function sendEmail()
             success: function(response){
                 if(response == 1)
                     window.location.href = "{{url('/detalleProducto', [$producto->idProducto])}}";
-                else {
-                        alert(response);
-                    }
+                else
+                    showMensajeSwall(MSG_ERROR, response);
             }
         });
     }
