@@ -7,7 +7,7 @@
         <h3 class="card-tittle">Agregar nueva obra</h3>
       </div>
       <div class="card-body">
-        <form action="{!! route('administrador.insertObra') !!}" method="post">
+        <form id="form_id" action="{!! route('administrador.insertObra') !!}" method="post">
           @csrf
           <div class="form-group">
             <input type="text" name="name" value="{{ old('name') }}" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="Nombre de la obra">
@@ -37,7 +37,7 @@
             @endif
           </div>
           <div class="form-group">
-            <button type="submit" class="btn btn-success btn-lg btn-block">Agregar nueva obra</button>
+            <button type="submit" id="btn_submit" class="btn btn-success btn-lg btn-block">Agregar nueva obra</button>
           </div>
         </form>
       </div>
@@ -48,6 +48,27 @@
     $(document).ready(function() {
       $(".selectpicker").each(function () {
         $(this).selectpicker();
+      });
+    });
+
+    $('#form_id').submit(function (e, params) {
+      var localParams = params || {};
+      if (!localParams.send) {
+        e.preventDefault();
+      }
+      swal({
+        title: "Confirmación",
+        text: "Seguro que deseas agregar esta obra?",
+        type: "question",
+        showCancelButton: true,
+        confirmButtonColor: "#6A9944",
+        confirmButtonText: "Si",
+        cancelButtonText: "No",
+        cancelButtonColor: "#d71e1e",
+      }).then((result) => {
+        if (result.value) {
+          $(e.currentTarget).trigger(e.type, { 'send': true });
+        }
       });
     });
   </script>

@@ -35,7 +35,7 @@ class DatabaseSeeder extends Seeder
         'rut' => '19.619.104-6',
         'cargo' => 'M3',
         'estado' => true,
-        'users_id_user' => 2,
+        'users_id_user' => 3,
     ]);
 
     DB::table('trabajador')->insert([
@@ -43,7 +43,15 @@ class DatabaseSeeder extends Seeder
         'rut' => '19.617.161-4',
         'cargo' => 'M3',
         'estado' => true,
-        'users_id_user' => 2,
+        'users_id_user' => 4,
+    ]);
+
+    DB::table('trabajador')->insert([
+        'nombre' => 'Supervisor Pruebas',
+        'rut' => '11.111.112-K',
+        'cargo' => 'M2',
+        'estado' => true,
+        'users_id_user' => 5,
     ]);
 
     //factory(Asistencia\Trabajador::class, 100)->create();

@@ -65,7 +65,7 @@
     <div class="modal fade" id="registrarTrabajadores" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
-          <form action="{!! route('administrador.registrarTrabajadorObra', ['idObra'=>$obra->idObra]) !!}" method="post">
+          <form id="form_id" action="{!! route('administrador.registrarTrabajadorObra', ['idObra'=>$obra->idObra]) !!}" method="post">
             @csrf
             <div class="modal-header">
               <h5 class="modal-title" id="exampleModalLabel">Registrar Trabajadores</h5>
@@ -87,8 +87,6 @@
                 {{$trabajador->nombre}}
                 @if($trabajador->user->isSupervisor())
                   (Supervisor)
-                @elseif ($trabajador->obra == $obra)
-                  (Trabajador registrado en la obra actual)
                 @endif
               </option>
             @endforeach
@@ -96,7 +94,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-            <button type="submit" class="btn btn-success">Agregar Trabajadores</button>
+            <button type="submit" id="btn_submit" class="btn btn-success">Agregar Trabajadores</button>
           </div>
         </form>
       </div>
@@ -114,6 +112,28 @@
       "autoWidth": false,
     });
   });
+
+  $('#form_id').submit(function (e, params) {
+    var localParams = params || {};
+    if (!localParams.send) {
+      e.preventDefault();
+    }
+    swal({
+      title: "Confirmación",
+      text: "Seguro que deseas agregar esta obra?",
+      type: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#6A9944",
+      confirmButtonText: "Si",
+      cancelButtonText: "No",
+      cancelButtonColor: "#d71e1e",
+    }).then((result) => {
+      if (result.value) {
+        $(e.currentTarget).trigger(e.type, { 'send': true });
+      }
+    });
+  });
+
 
 </script>
 @endsection

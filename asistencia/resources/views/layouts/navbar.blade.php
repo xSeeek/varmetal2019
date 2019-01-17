@@ -5,9 +5,7 @@
     <nav class="navbar sticky-top navbar-expand-md navbar-light navbar-laravel">
       <div class="container">
 
-        <a class="navbar-brand" href="{{ route('home') }}">
-            {{ config('app.name', 'Laravel') }}
-        </a>
+        <a class="navbar-brand" href="{{ url('/') }}"><img src={{ asset('img/logo.png') }} class="rounded mx-auto d-block" style="width:161px;height:42px;"></a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
             <span class="navbar-toggler-icon"></span>
@@ -34,7 +32,7 @@
             @else
               <li class="nav-item dropdown">
                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                    Menu <span class="caret"></span>
+                    Opciones <span class="caret"></span>
                 </a>
 
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
