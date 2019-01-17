@@ -47,8 +47,8 @@
         var datosWorker, json_data;
 
         datosWorker = Array();
-        datosWorker[0] = idObra;
-        datosWorker[1] = idProducto;
+        datosWorker[0] = idProducto;
+        datosWorker[1] = idObra;
 
         json_data = JSON.stringify(datosWorker);
 
@@ -63,7 +63,7 @@
                 if(response == 1)
                     window.location.href = "{{url('productoControl', [$idProducto])}}";
                 else
-                    alert('Error al asignar el OT');
+                    showMensajeSwall(MSG_ERROR, 'Error al asignar el OT');
             }
         });
     }

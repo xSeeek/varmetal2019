@@ -63,7 +63,7 @@
                 </div>
             </div>
         </br>
-            <a class="btn btn-primary btn-lg" role="button" href="{{url('adminTrabajador', [Varmetal\User::DEFAULT_TYPE])}}"><b>Volver</b></a>
+            <a class="btn btn-primary btn-lg" role="button" href="{{url('menuTrabajador')}}"><b>Volver</b></a>
         </div>
     </div>
 </div>
@@ -80,12 +80,9 @@ function emailRegistrado()
             url: "{{url('/enviarEmailRegistrado')}}",
             success: function(response){
                 if(response!='Email enviado registrado')
-                {
-                    alert(response);
-                    console.log(response);
-                }
+                    showMensajeSwall(MSG_ERROR, response);
                 else
-                  window.location.href = "{{url('adminTrabajador', [Varmetal\User::DEFAULT_TYPE])}}";
+                  window.location.href = "{{url('menuTrabajador')}}";
 
           }
         });
@@ -106,10 +103,7 @@ function emailRegistrado()
             url: "{{url('trabajadorControl/addTrabajador')}}",
             success: function(response){
                 if(response != 1)
-                {
-                    alert(response);
-                    console.log(response);
-                }
+                    showMensajeBanner(MSG_ERROR, response);
                 else
                   emailRegistrado();
             }
@@ -141,7 +135,7 @@ function emailRegistrado()
                 $('#password').attr('value', response);
             },
             error: function (response) {
-                alert('Ocurrio un error inesperado, contacte con el soporte técnico')
+                showMensajeBanner(MSG_ERROR, 'Ocurrio un error inesperado, contacte con el soporte técnico');
             }
         });
     }

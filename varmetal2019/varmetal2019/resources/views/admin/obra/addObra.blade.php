@@ -9,7 +9,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Agregar nuevo obra</div>
+                <div class="card-header">Agregar nuevo OT</div>
                 <div class="card-body">
                     <form method="POST" name="nuevaObraForm" id="nuevaObraForm">
                         <div class="form-group row">
@@ -47,10 +47,7 @@
             url: "{{url('obraControl/addObra')}}",
             success: function(response){
                 if(response != 1)
-                {
-                    alert(response);
-                    console.log(response);
-                }
+                    showMensajeSwall(MSG_ERROR, response);
                 else
                     window.location.href = "{{url('adminObras')}}";
             }

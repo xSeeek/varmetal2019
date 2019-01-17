@@ -48,7 +48,11 @@
                                             <td scope="col">Por realizar</th>
                                             @break
                                         @case(1)
-                                            <td scope="col">Finalizado</th>
+                                            @if($producto->terminado == true)
+                                                <td scope="col">Finalizado</td>
+                                            @else
+                                                <td scope="col">Pendiente de revisión</td>
+                                            @endif
                                             @break
                                         @case(2)
                                             <td scope="col">En realización</th>

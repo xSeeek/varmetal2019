@@ -4,6 +4,7 @@
     <meta charset="utf-8">
 </head>
   <body>
+    <img src={{ asset('/img/logo.png') }} class="rounded mx-auto d-block">
     <h2>
       Aviso con respecto a las Pausas solicitadas por: {!! $name !!}.
     </h2>

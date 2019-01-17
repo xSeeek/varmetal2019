@@ -5,6 +5,7 @@ namespace Varmetal\Http\Controllers;
 use Illuminate\Http\Request;
 use Varmetal\Producto;
 use Varmetal\Trabajador;
+use Varmetal\User;
 use Varmetal\Obra;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -83,6 +84,11 @@ class ProductoController extends Controller
         if($request->codigoProducto == NULL)
             return 'El código del producto no puede estar en blanco.';
 
+        $busqueda = Producto::where('codigo', $request->codigoProducto)->get();
+
+        if(count($busqueda) > 0)
+            return 'Ya existe una pieza con el código ingresado';
+
         $carbon = new Carbon();
         if($request->fechaInicio < $carbon->now())
             return 'La fecha seleccionada no es válida';
@@ -112,7 +118,7 @@ class ProductoController extends Controller
     public function asignarTrabajo($data)
     {
         $producto = Producto::find($data);
-        $trabajadores_almacenados = Trabajador::get();
+        $trabajadores_almacenados = Trabajador::join('users', 'users_id_user', 'id')->where('type', 'like', User::DEFAULT_TYPE)->get();
         $trabajadores = $producto->trabajador;
 
         $trabajador_disponibles = null;
@@ -272,16 +278,5 @@ class ProductoController extends Controller
         return view('admin.producto.obras_disponibles')
             ->with('obras_disponibles', $obras_disponibles)
             ->with('idProducto', $data);
-    }
-
-    public function addObra(Request $request)
-    {
-        $response = json_decode($request->DATA);
-
-        $producto = Producto::findOrFail($response[0]);
-        $producto->obras_id_obra = $response[1];
-        $producto->save();
-
-        return 1;
     }
 }

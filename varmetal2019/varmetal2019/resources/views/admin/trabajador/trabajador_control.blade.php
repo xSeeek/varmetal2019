@@ -159,7 +159,6 @@
             data: {DATA:data},
             url: "{{url('/trabajadorControl/deleteTrabajador')}}",
             success: function(response){
-                console.log(response);
                 window.location.href = "{{url('menuTrabajador')}}";
             }
         });
@@ -182,7 +181,6 @@
             data: {DATA:json_data},
             url: "{{url('/productoControl/removeWorker')}}",
             success: function(response){
-                console.log('asd');
                 window.location.href = "{{url('trabajadorControl', [$trabajador->idTrabajador])}}";
             }
         });

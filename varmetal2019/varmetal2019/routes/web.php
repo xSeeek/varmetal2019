@@ -211,6 +211,9 @@ Route::get('/admin', 'AdminController@admin')
         Route::post('/obraControl/addObra', ['uses' => 'ObraController@insertObra'])
                     ->middleware('is_admin')
                     ->name('/obraControl/addObra');
+        Route::post('/obraControl/deleteObra', ['uses' => 'ObraController@deleteObra'])
+                    ->middleware('is_admin')
+                    ->name('/obraControl/deleteObra');
 
 /* [** Email Controller **] */
     /* [** GENERAL **] */

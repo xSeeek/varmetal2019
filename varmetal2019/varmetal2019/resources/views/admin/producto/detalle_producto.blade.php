@@ -15,7 +15,7 @@
                 </div>
                 <div class="card-body">
                     <h5>
-                        <b>Marca de la Pieza:</b>
+                        <b>Código de la Pieza:</b>
                         <div class="col-sm-10">
                             <input type="text" readonly id="codigoProducto" class="form-control-plaintext" value="{{$producto->codigo}}">
                         </div>
@@ -305,7 +305,7 @@
                 if(response == 1)
                     window.location.href = "{{url('productoControl', [$producto->idProducto])}}";
                 else
-                    alert(response);
+                    showMensajeSwall(MSG_ERROR, response);
             }
         });
     }

@@ -34,7 +34,7 @@
                     </div>
                 <br>
                 @if(Auth::user()->isAdmin())
-                    <a class="btn btn-outline-success btn-lg" align="right" role="button" href="{{url('/addObra')}}"><b>Agregar Obra</b></a>
+                    <a class="btn btn-outline-success btn-lg" align="right" role="button" href="{{url('/addObra')}}"><b>Agregar OT</b></a>
                 @endif
             </div>
         </br>

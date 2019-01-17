@@ -47,13 +47,13 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <!-- JS Mensajes -->
-    <script src="/js/mensajes.js"></script>
-    <script src="/js/notify.js"></script>
+    <script src={{ asset("/js/mensajes.js")}}></script>
+    <script src={{ asset("/js/notify.js")}}></script>
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
-    <script src={{asset("js/datatables.js")}}></script>
+    <script src={{ asset("js/datatables.js")}}></script>
 </head>
 <body>
     <div id="app">
