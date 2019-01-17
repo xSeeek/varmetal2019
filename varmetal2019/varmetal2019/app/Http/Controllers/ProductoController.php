@@ -84,6 +84,11 @@ class ProductoController extends Controller
         if($request->codigoProducto == NULL)
             return 'El código del producto no puede estar en blanco.';
 
+        $busqueda = Producto::where('codigo', $request->codigoProducto)->get();
+
+        if(count($busqueda) > 0)
+            return 'Ya existe una pieza con el código ingresado';
+
         $carbon = new Carbon();
         if($request->fechaInicio < $carbon->now())
             return 'La fecha seleccionada no es válida';
