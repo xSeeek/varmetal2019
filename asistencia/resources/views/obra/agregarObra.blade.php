@@ -56,20 +56,7 @@
       if (!localParams.send) {
         e.preventDefault();
       }
-      swal({
-        title: "Confirmación",
-        text: "Seguro que deseas agregar esta obra?",
-        type: "question",
-        showCancelButton: true,
-        confirmButtonColor: "#6A9944",
-        confirmButtonText: "Si",
-        cancelButtonText: "No",
-        cancelButtonColor: "#d71e1e",
-      }).then((result) => {
-        if (result.value) {
-          $(e.currentTarget).trigger(e.type, { 'send': true });
-        }
-      });
+      confirmMensajeSwal(MSG_INFO, 'Seguro que desea agregar esta obra?', $(e.currentTarget).trigger(e.type, { 'send': true }););    
     });
   </script>
 @endsection
