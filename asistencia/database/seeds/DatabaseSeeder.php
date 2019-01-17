@@ -25,11 +25,27 @@ class DatabaseSeeder extends Seeder
     DB::table('trabajador')->insert([
         'nombre' => 'Xavier Esteban Díaz Espíndola',
         'rut' => '19.774.094-9',
-        'cargo' => 'M2',
+        'cargo' => 'M3',
         'estado' => true,
         'users_id_user' => 2,
     ]);
 
-    factory(Asistencia\Trabajador::class, 100)->create();
+    DB::table('trabajador')->insert([
+        'nombre' => 'Francisco Andres Riquelme Cavagnola',
+        'rut' => '19.619.104-6',
+        'cargo' => 'M3',
+        'estado' => true,
+        'users_id_user' => 2,
+    ]);
+
+    DB::table('trabajador')->insert([
+        'nombre' => 'Patricio Ignacio Torres Rojas',
+        'rut' => '19.617.161-4',
+        'cargo' => 'M3',
+        'estado' => true,
+        'users_id_user' => 2,
+    ]);
+
+    //factory(Asistencia\Trabajador::class, 100)->create();
   }
 }
