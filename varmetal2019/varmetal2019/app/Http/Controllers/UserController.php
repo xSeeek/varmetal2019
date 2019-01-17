@@ -48,7 +48,6 @@ class UserController extends Controller
           $user->email = $request->email;
           $user->save();
         }
-        echo 'Email cambiado';
         return view('welcome');
       }
 }
