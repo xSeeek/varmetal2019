@@ -28,8 +28,8 @@ function confirmMensajeSwal(type, msg, metodo) {
 function showMensajeSwall(type, msg)
 {
   swal({
-    type: 'error',
-    title: type,
+    type: type,
+    title: msg,
     showCancelButton: true,
     showConfirmButton: false,
     cancelButtonText:
