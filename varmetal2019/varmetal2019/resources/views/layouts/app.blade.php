@@ -81,7 +81,7 @@
                                 <div class="dropdown-divider"></div>
                                 @if(Auth::user()->type == 'Supervisor')
                                   <a class="dropdown-item" href="{{url('/admin')}}">
-                                      Detalles Cuenta
+                                      Volver al Inicio
                                   </a>
                                     <audio id="alarma"></audio> <!--autoplay loop-->
                                   <!--<script>
