@@ -274,15 +274,4 @@ class ProductoController extends Controller
             ->with('obras_disponibles', $obras_disponibles)
             ->with('idProducto', $data);
     }
-
-    public function addObra(Request $request)
-    {
-        $response = json_decode($request->DATA);
-
-        $producto = Producto::findOrFail($response[0]);
-        $producto->obras_id_obra = $response[1];
-        $producto->save();
-
-        return 1;
-    }
 }

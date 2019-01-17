@@ -47,8 +47,8 @@
         var datosWorker, json_data;
 
         datosWorker = Array();
-        datosWorker[0] = idObra;
-        datosWorker[1] = idProducto;
+        datosWorker[0] = idProducto;
+        datosWorker[1] = idObra;
 
         json_data = JSON.stringify(datosWorker);
 
