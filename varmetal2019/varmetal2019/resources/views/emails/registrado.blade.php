@@ -13,6 +13,7 @@
         else
             $tipoUsuario = "Supervisor";
         @endphp
+      <img src={{ asset('img/logo.png') }} class="rounded mx-auto d-block">
     <h2>
       {!! $nombre !!}, Bienvenido a Varmetal.
     </h2>
