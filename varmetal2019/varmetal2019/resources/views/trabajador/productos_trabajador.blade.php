@@ -90,22 +90,31 @@
 <script type="text/javascript">
     function updateDate(idProducto, ruta)
     {
-        if (confirm("Presione OK para comenzar con el desarrollo del producto"))
+        swal({
+        title: "Confirmación",
+        text: "Presione Si para iniciar la producción de la pieza:",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#6A9944",
+        confirmButtonText: "Si",
+        cancelButtonText: "No",
+        cancelButtonColor: "#d71e1e",
+        }).then((result) =>
         {
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                type: "POST",
-                data: {DATA:idProducto},
-                url: "{{url('/trabajadorControl/setStartTime')}}",
-                success: function(response){
-                    window.location.href = ruta;
-                }
-            });
-        }
-        else
-            return;
+            if (result.value) {
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    type: "POST",
+                    data: {DATA:idProducto},
+                    url: "{{url('/trabajadorControl/setStartTime')}}",
+                    success: function(response){
+                        window.location.href = ruta;
+                    }
+                });
+            }
+        });
     }
 </script>
 
