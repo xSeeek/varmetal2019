@@ -9,6 +9,16 @@ use Varmetal\User;
 
 class EmailController extends Controller
 {
+    public function cambiarEmail()
+    {
+      return;
+    }
+
+    public function nuevoEmail()
+    {
+      return;
+    }
+
     public function sendEmailRegistro(Request $data)
     {
       $dataArray = array(
@@ -21,7 +31,7 @@ class EmailController extends Controller
       Mail::send('emails.registrado', $dataArray, function($message){
         $user = User::all()->last();
         $actual = Auth::user();
-        $message->from($actual->email,'Centro de Gestion Varmetal');
+        $message->from($actual->email,'Departamento de Informática Varmetal');
         $message->to($user->email)->subject('Cuenta Registrada con exito');
       });
       return 'Email enviado registrado';

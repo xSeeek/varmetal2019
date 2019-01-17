@@ -211,3 +211,11 @@ Route::get('/admin', 'AdminController@admin')
                     ->name('enviarEmailTerminado');
         Route::post('/enviarEmailRegistrado',['uses' => 'EmailController@sendEmailRegistro'])
                     ->name('enviarEmailRegistrado');
+
+/* [** Cambiar Email **] */
+    /*[** GENERAL **] */
+  /* [** GET/POST **] */
+        Route::get('/cambiarEmail', ['uses', 'EmailController@cambiarEmail'])
+                    ->name('cambiarEmail');
+        Route::post('/nuevoEmail', ['uses', 'EmailController@nuevoEmail'])
+                    ->name('nuevoEmail');
