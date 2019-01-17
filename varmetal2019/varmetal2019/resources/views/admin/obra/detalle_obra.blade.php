@@ -67,6 +67,44 @@
                             <input type="text" readonly id="nombreObra" class="form-control-plaintext" value="{{$kilosTerminados}} Kg / {{$kilosObra}} Kg">
                         </div>
                     </h5>
+                    <h5>
+                        <b>Tiempo para su realización (Solo piezas terminadas):</b>
+                        <div class="col-sm-10">
+                            @if($tiempoFinalizado != 0)
+                                @if($tiempoFinalizado/60 < 1)
+                                    <input type="text" readonly id="nombreObra" class="form-control-plaintext" value="{{$tiempoFinalizado}} Minutos">
+                                @else
+                                    <input type="text" readonly id="nombreObra" class="form-control-plaintext" value="{{$tiempoFinalizado/60}} Horas">
+                                @endif
+                            @else
+                                <input type="text" readonly id="nombreObra" class="form-control-plaintext" value="No se ha finalizado ninguna pieza.">
+                            @endif
+                        </div>
+                        <b>Tiempo en pausa:</b>
+                        <div class="col-sm-10">
+                            @if($tiempoPausa != 0)
+                                @if($tiempoPausa/60 < 1)
+                                    <input type="text" readonly id="nombreObra" class="form-control-plaintext" value="{{$tiempoPausa}} Minutos">
+                                @else
+                                    <input type="text" readonly id="nombreObra" class="form-control-plaintext" value="{{$tiempoPausa/60}} Horas">
+                                @endif
+                            @else
+                                <input type="text" readonly id="nombreObra" class="form-control-plaintext" value="No se ha registrado ninguna pausa.">
+                            @endif
+                        </div>
+                        <b>Tiempo en Set-Up:</b>
+                        <div class="col-sm-10">
+                            @if($tiempoSetUp != 0)
+                                @if($tiempoSetUp/60 < 0)
+                                    <input type="text" readonly id="nombreObra" class="form-control-plaintext" value="{{$tiempoSetUp}} Minutos">
+                                @else
+                                    <input type="text" readonly id="nombreObra" class="form-control-plaintext" value="{{$tiempoSetUp/60}} Horas">
+                                @endif
+                            @else
+                                <input type="text" readonly id="nombreObra" class="form-control-plaintext" value="No se registran pausas por cambio de pieza.">
+                            @endif
+                        </div>
+                    </h5>
                 </div>
             </div>
             <br>
@@ -78,30 +116,35 @@
                 <table id="tablaAdministracion" style="width:100%" align="center">
                     <thead>
                         <tr>
-                            <th>Nombre</th>
+                            <th>Código</th>
                             <th>Fecha Inicio</th>
                             <th>Fecha Fin</th>
                             <th>Estado</th>
                             <th>Peso (kg)</th>
-                            <th>Opciones</th>
+                            <th>Ficha</th>
+                            <th>Eliminar</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($productos_obra as $key => $productos)
                             <tr id="id_productoTrabajador{{ $productos->idProducto }}">
-                                <td scope="col">{{ $productos->nombre }}</td>
+                                <td scope="col">{{ $productos->codigo }}</td>
                                 <td scope="col">{{ $productos->fechaInicio }}</td>
                                 @if($productos->fechaFin != NULL)
                                     <td scope="col">{{ $productos->fechaFin }}</td>
                                 @else
-                                    <td scope="col">No determinada</td>
+                                    <td scope="col">No determinado</td>
                                 @endif
                                 @switch($productos->estado)
                                     @case(0)
                                         <td scope="col">Por realizar</td>
                                         @break
                                     @case(1)
-                                        <td scope="col">Finalizado</td>
+                                        @if($productos->terminado == true)
+                                            <td scope="col">Finalizado</td>
+                                        @else
+                                            <td scope="col">Pendiente de revisión</td>
+                                        @endif
                                         @break
                                     @case(2)
                                         <td scope="col">En realización</td>
@@ -110,8 +153,9 @@
                                         <td scope="col">Sin estado definido</td>
                                         @break
                                 @endswitch
-                                <td scope="col">{{ $productos->pesoKg }}</td>
-                                    <td scope="col"><a class="btn btn-outline-secondary btn-sm" onclick="eliminarProducto({{$productos->idProducto}})" role="button"><b>Eliminar</b></a>
+                                <td scope="col">{{ $productos->pesoKg }} Kg</td>
+                                <td scope="col"><a class="btn btn-outline-success btn-sm" href="{{url('productoControl', [$productos->idProducto])}}" role="button"><b>Ficha</b></a>
+                                <td scope="col"><a class="btn btn-outline-secondary btn-sm" onclick="eliminarProducto({{$productos->idProducto}})" role="button"><b>Eliminar</b></a>
                             </tr>
                         @endforeach
                     </tbody>
