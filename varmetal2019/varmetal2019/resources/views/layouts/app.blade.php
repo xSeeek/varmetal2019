@@ -103,7 +103,7 @@
                                       Detalles Cuenta
                                   </a>
                                 @endif
-                                <a class="dropdown-item" href="{{url('/contrasena')}}">Cambiar Contraseña</a>
+                                <a class="dropdown-item" href="{{url('/cambiarContraseña')}}">Cambiar Contraseña</a>
                                 <a class="dropdown-item" href="{{url('/cambiarEmail')}}">Cambiar Email</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="{{ route('logout') }}"
