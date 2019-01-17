@@ -22,7 +22,7 @@ class EmailController extends Controller
         $user = User::all()->last();
         $actual = Auth::user();
         $message->from($actual->email,'Departamento de Informática Varmetal');
-        $message->to($dataArray->email)->subject('Cuenta Registrada con exito');
+        $message->to($dataArray[1])->subject('Cuenta Registrada con exito');
       });
       return 'Email enviado registrado';
     }
