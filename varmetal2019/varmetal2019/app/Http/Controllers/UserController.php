@@ -27,7 +27,7 @@ class UserController extends Controller
         $user->save();
       }
       echo 'Contraseña cambiada';
-      return view('trabajador');
+      return view('welcome');
     }
 /*Email*/
     public function getProfileEmail(Request $request) {
