@@ -166,9 +166,12 @@
             },
             type: "POST",
             data: {DATA:data},
-            url: "{{url('/productoControl/deleteProducto')}}",
+            url: "{{url('/obraControl/deleteObra')}}",
             success: function(response){
-                window.location.href = response.redirect;
+                if(response == 1)
+                    window.location.href = "{{url('adminObras')}}";
+                else
+                    alert(response)
             }
         });
     }

@@ -105,4 +105,16 @@ class ObraController extends Controller
 
         return 1;
     }
+
+    public function deleteObra(Request $request)
+    {
+        $obra = Obra::find($request->DATA);
+
+        if(count($obra->producto) > 0)
+            return 'Debe eliminar las piezas antes de borrar la OT';
+
+        $obra->delete();
+
+        return 1;
+    }
 }

@@ -15,7 +15,7 @@ class ObraTable extends Migration
     {
         Schema::create('obra', function (Blueprint $table) {
             $table->increments('idObra');
-            $table->string('nombre');
+            $table->string('codigo');
             $table->boolean('terminado')->default('false');
             $table->string('proyecto')->default('No determinada');
             $table->timestamp('fechaInicio')->now();

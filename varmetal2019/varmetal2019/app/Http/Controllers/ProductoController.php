@@ -125,10 +125,11 @@ class ProductoController extends Controller
                 if($t_saved->idTrabajador == $t_asig->idTrabajador)
                     $cont++;
             if($cont == 0)
-            {
-                $trabajador_disponibles[$i] = $t_saved;
-                $i++;
-            }
+                if($t_saved->user == User::DEFAULT_TYPE)
+                {
+                    $trabajador_disponibles[$i] = $t_saved;
+                    $i++;
+                }
             $cont = 0;
         }
 
