@@ -128,6 +128,12 @@
         <main class="py-4">
             @yield('content')
         </main>
+
+        <footer class="footer mt-5">
+          <div class="container">
+            <span class="text-muted float-right"><i class="fas fa-copyright"></i> Derechos reservados <a class="font-bold"><p>Departamento Informatica Varmetal 2019</p></a>
+          </div>
+        </footer>
     </div>
 </body>
 </html>
