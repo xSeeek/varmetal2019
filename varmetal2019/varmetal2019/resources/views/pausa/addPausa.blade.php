@@ -51,17 +51,18 @@
                       @foreach($pausas_almacenadas as $key => $pausa)
                         @if(($pausa->producto_id_producto == $producto->idProducto) && ($pausa->fechaFin == NULL))
                           <a class="btn btn-outline-success my-1 my-sm-0" role="button" href="{{url('trabajadorDetallesPausaGet', [$pausa->idPausa])}}"><b>Posee una Pausa Pendiente</b></a>
+                          @break
                         @endif
-                        @if(($pausas_almacenadas->last()->producto_id_producto == $producto->idProducto) && ($pausas_almacenadas->last()->fechaFin != NULL))
+                      @endforeach
+                        <!--@if(($pausa->producto_id_producto == $producto->idProducto) && ($pausa->fechaFin != NULL))-->
                               @if($producto->cantPausa<=14)
-                                <a class="btn btn-outline-success my-1 my-sm-0" role="button" onclick="savePausa({{$producto->cantPausa}})"><b>Registrar Cambios</b></a>
+                                <a class="btn btn-outline-success my-1 my-sm-0" role="button" onclick="sendEmail()"><b>Registrar Cambios</b></a>
                               @else
                                 <a class="btn btn-outline-success my-1 my-sm-0" role="button" onclick=""><b>Limite de Pausas alcanzado</b></a>
                               @endif
-                        @endif
-                      @endforeach
+                        <!--@endif-->
                     @else
-                      <a class="btn btn-outline-success my-1 my-sm-0" role="button" onclick="savePausa()"><b>Registrar Cambios</b></a>
+                      <a class="btn btn-outline-success my-1 my-sm-0" role="button" onclick="sendEmail()"><b>Registrar Cambios</b></a>
                     @endif
               </div>
           </div>
@@ -81,6 +82,39 @@ function textAreaAdjust(o)
         o.style.height = "1px";
         o.style.height = (25+o.scrollHeight)+"px";
     }
+
+    function sendEmail()
+        {
+          var datosPausa, json_text;
+
+          datosPausa = Array();
+          datosPausa[0] = '{{$usuarioActual->trabajador->nombre}}';
+          datosPausa[1] = '{{$usuarioActual->trabajador->rut}}';
+          datosPausa[2] = '{{$usuarioActual->email}}';
+          datosPausa[3] = '{{$producto->cantPausa}}';
+          datosPausa[4] = document.getElementById("descripcion").value;
+          datosPausa[5] = document.getElementById("motivo").value;
+
+          json_text = JSON.stringify(datosPausa);
+          $.ajax({
+              headers: {
+                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              },
+              type: "POST",
+              data: {DATA:json_text},
+              url: "{{url('/enviarEmail')}}",
+              success: function(response){
+                  if(response!='Email enviado')
+                  {
+                      alert(response);
+                      console.log(response);
+                  }
+                  else
+                      //window.location.href="{{url('/trabajadorDetallesPausaGet', [$pausa->idPausa])}}";
+                      savePausa();
+            }
+          });
+        }
 
 function savePausa()
     {

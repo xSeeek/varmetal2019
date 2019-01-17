@@ -32,41 +32,47 @@ class PausaController extends Controller
       $pausas_registradas = Pausa::get();
       $date = Carbon::now()->toDateTimeString();
       $producto=Producto::find($idProducto);
+      $usuarioActual = Auth::user();
       return view('pausa.addPausa')
               ->with('producto', $producto)
               ->with('fechaInicio', $date)
-              ->with('pausas_almacenadas', $pausas_registradas);
+              ->with('pausas_almacenadas', $pausas_registradas)
+              ->with('usuarioActual', $usuarioActual);
     }
 
     public function trabajadorUpdateFechaFin(Request $data)
     {
       $response = json_decode($data->DATA, true);
+
       $idPausa = $response[0];
-      $descripcion = $response[1];
       $motivo = $response[2];
       $idObra = $response[3];
+
       $pausa = Pausa::find($idPausa);
+      $producto = Producto::find($pausa->producto_id_producto);
       $pausa->fechaFin=now();
-      $pausa->descripcion=$descripcion;
       $usuarioActual = Auth::user();
       $supervisor = $usuarioActual->trabajador;
-      $obras = $supervisor->obraWithAtributes()->where('obras_id_obra', '=', $idObra)->get()->first();
-      $diferenciaTiempo = $pausa->fechaFin-$pausa->fechaInicio;
-      if($motivo!=3)
+      $diferenciaTiempo = $pausa->fechaFin->diffInSeconds($pausa->fechaInicio); //tiempo en segundos
+      if($motivo=='Cambio de pieza')
       {
-        if($obras->pivot->tiempoPerdido==NULL)
+        if($producto->tiempoEnSetUp == NULL)
         {
-          $obras->pivot->tiempoPerdido=$diferenciaTiempo;
-        }else
-          $obras->pivot->tiempoPerdido+=$diferenciaTiempo;
-      }else {
-        if($obras->pivot->tiempoSetUp==NULL)
-        {
-          $obras->pivot->tiempoSetUp=$diferenciaTiempo;
-        }else
-          $obras->pivot->tiempoSetUp+=$diferenciaTiempo;
+          $producto->tiempoEnSetUp = $diferenciaTiempo/(60);
+        }else {
+          $producto->tiempoEnSetUp += $diferenciaTiempo/(60);
+        }
       }
-      $obras->pivot->save();
+      if($motivo != 'No se pudo especificar el motivo (Leer la descripción)' && $motivo != 'Cambio de pieza')
+      {
+        if($producto->tiempoEnPausa == NULL)
+        {
+          $producto->tiempoEnPausa = $diferenciaTiempo/(60);
+        }else {
+          $producto->tiempoEnPausa += $diferenciaTiempo/(60);
+        }
+      }
+      $producto->save();
       $pausa->save();
       return 1;
     }
@@ -164,8 +170,8 @@ class PausaController extends Controller
       if($usuarioActual->trabajador == NULL)
           return redirect()->route('/home');
 
-      $datos_trabajador = $usuarioActual->trabajador;
-      $productos = $datos_trabajador->productoWithAtributes()->where('producto_id_producto', '=', $idProducto)->get()->first();
+      $trabajador = $usuarioActual->trabajador;
+      $productos = $trabajador->productoWithAtributes()->where('producto_id_producto', '=', $producto->idProducto)->get()->first();
       $productos->pivot->pausasRealizadas--;
       $productos->pivot->save();
       $producto->cantPausa--;

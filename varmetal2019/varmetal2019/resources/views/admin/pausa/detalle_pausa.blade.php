@@ -53,13 +53,13 @@
                           @endif
                         </div>
                         @if($pausa->fechaFin == NULL)
-                          <b>Descripcion: (Editable)</b>
+                          <b>Descripcion:</b>
                         @else
                           <b>Descripcion:</b>
                         @endif
                         <div class="col-sm-10">
                           @if($pausa->fechaFin == NULL)
-                            <input type="text" id="descripcion" class="form-control-plaintext" value="{{$pausa->descripcion}}">
+                            <input type="text" readonly id="descripcion" class="form-control-plaintext" value="{{$pausa->descripcion}}">
                           @else
                             <input type="text" readonly id="descripcion" class="form-control-plaintext" value="{{$pausa->descripcion}}">
                           @endif
@@ -82,13 +82,11 @@
                     @if($pausa->fechaFin==NULL)
                         @if($usuarioActual->type != 'Trabajador')
                           <a class="btn btn-outline-success btn-md" id="finPausa" role="button" onclick="adminUpdateFechaFin()">Finalizar Pausa</a>
-                          <br><br>
-                          <a class="btn btn-outline-success btn-md" id="finPausa" role="button" onclick="adminDeletePausa({{$pausa->idPausa}})">Eliminar Pausa</a>
                         @endif
                     @else
                         <b>Pausa Finalizada</b>
                     @endif
-                    <br><hr>
+                    <hr>
                     @if($usuarioActual->type != 'Trabajador')
                       <a class="btn btn-outline-success btn-md" id="detallesTrabajador" role="button" href="{{url('/trabajadorControl', [$trabajador->idTrabajador])}}">Ver Trabajador</a>
                       <br><br>
@@ -103,7 +101,9 @@
 </div>
   </br>
   <div class="row justify-content-center">
-    <a class="btn btn-outline-success btn-md" id="finPausa" role="button" onclick="trabajadorDeletePausa({{$pausa->idPausa}})">Eliminar Pausa</a>
+    @if(Auth::user()->type == 'Trabajador' && $pausa->fechaFin == NULL)
+      <a class="btn btn-outline-success btn-md" id="finPausa" role="button" onclick="trabajadorDeletePausa({{$pausa->idPausa}})">Eliminar Pausa</a>
+    @endif
   </div>
 </div>
     </br>
@@ -161,7 +161,7 @@
       });
   }
 
-  function adminUpdateFechaFin(data)
+  /*function adminUpdateFechaFin(data)
   {
       $.ajax({
           headers: {
@@ -175,40 +175,9 @@
               window.location.href = "{{url('/adminDetallesPausaGet', [$pausa->idPausa])}}";
           }
       });
-  }
+  }*/
 
-  function sendEmail()
-      {
-        var datosPausa, json_text;
 
-        datosPausa = Array();
-        datosPausa[0] = '{{$trabajador->nombre}}';
-        datosPausa[1] = '{{$trabajador->rut}}';
-        datosPausa[2] = '{{$usuarioActual->email}}';
-        datosPausa[3] = '{{$producto->cantPausa}}';
-        datosPausa[4] = document.getElementById("descripcion").value;
-        datosPausa[5] = document.getElementById("motivo").value;
-
-        json_text = JSON.stringify(datosPausa);
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            type: "POST",
-            data: {DATA:json_text},
-            url: "{{url('/enviarEmail')}}",
-            success: function(response){
-                if(response!='Email enviado')
-                {
-                    alert(response);
-                    console.log(response);
-                }
-                else
-                    //window.location.href="{{url('/trabajadorDetallesPausaGet', [$pausa->idPausa])}}";
-                    trabajadorUpdateFechaFin();
-          }
-        });
-      }
 
     /*function trabajadorUpdateFechaFin()
       {
@@ -239,7 +208,6 @@
 
           datosPausa = Array();
           datosPausa[0] = '{{$pausa->idPausa}}';
-          datosPausa[1] = document.getElementById("descripcion").value;
           datosPausa[2] = document.getElementById("motivo").value;
           datosPausa[3] = '{{$producto->obras_id_obra}}';
           json_text = JSON.stringify(datosPausa);
