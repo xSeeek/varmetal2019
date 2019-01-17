@@ -127,11 +127,13 @@
                     </h5>
                     <br>
                 @endif
-                <h5>
-                    Asignar nuevas Piezas:
-                <br>
-                    <a class="btn btn-outline-success btn-md" id="deleteButton" role="button" href="{{url('trabajador/asignarProducto', [$trabajador->idTrabajador])}}">Asignar</a>
-                </h5>
+                @if($usuario_trabajador->type == Varmetal\User::DEFAULT_TYPE)
+                    <h5>
+                        Asignar nuevas Piezas:
+                    <br>
+                        <a class="btn btn-outline-success btn-md" id="deleteButton" role="button" href="{{url('trabajador/asignarProducto', [$trabajador->idTrabajador])}}">Asignar</a>
+                    </h5>
+                @endif
             </div>
         </div>
     </div>
