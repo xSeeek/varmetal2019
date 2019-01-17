@@ -5,6 +5,7 @@ namespace Varmetal\Http\Controllers;
 use Illuminate\Http\Request;
 use Varmetal\Producto;
 use Varmetal\Trabajador;
+use Varmetal\User;
 use Varmetal\Obra;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -125,11 +126,13 @@ class ProductoController extends Controller
                 if($t_saved->idTrabajador == $t_asig->idTrabajador)
                     $cont++;
             if($cont == 0)
+            {
                 if($t_saved->user == User::DEFAULT_TYPE)
                 {
                     $trabajador_disponibles[$i] = $t_saved;
                     $i++;
                 }
+            }
             $cont = 0;
         }
 
