@@ -43,17 +43,31 @@ class ObraController extends Controller
     public function obraControl($data)
     {
         $obra = Obra::find($data);
+        $carbon = new Carbon();
         $productos_obra = $obra->producto;
         $cantidadFinalizada = 0;
         $kilosTerminados = 0;
         $kilosObra = 0;
+        $tiempoFinalizado = 0;
+        $tiempoPausa = 0;
+        $tiempoSetUp = 0;
+        $fechaFin = 0;
+        $fechaInicio = 0;
 
         foreach($productos_obra as $producto)
         {
             if($producto->terminado == true)
+            {
                 $cantidadFinalizada++;
+                $fechaFin = Carbon::parse($producto->fechaFin);
+                $fechaInicio = Carbon::parse($producto->fechaInicio);
+                $tiempoFinalizado += ($fechaFin->diffInMinutes($fechaInicio, true));
+            }
             $kilosObra += ($producto->pesoKg * $producto->cantProducto);
             $trabajadores = $producto->trabajadorWithAtributtes;
+            $tiempoPausa += $producto->tiempoEnPausa;
+            $tiempoSetUp += $producto->tiempoEnSetUp;
+
             foreach($trabajadores as $trabajador)
                 $kilosTerminados += $trabajador->pivot->kilosTrabajados;
         }
@@ -72,7 +86,10 @@ class ObraController extends Controller
                 ->with('cantidadFinalizada', $cantidadFinalizada)
                 ->with('kilosTerminados', $kilosTerminados)
                 ->with('kilosObra', $kilosObra)
-                ->with('terminado', $terminado);
+                ->with('terminado', $terminado)
+                ->with('tiempoFinalizado', $tiempoFinalizado)
+                ->with('tiempoPausa', $tiempoPausa)
+                ->with('tiempoSetUp', $tiempoSetUp);
     }
 
     public function productosDisponibles($data)

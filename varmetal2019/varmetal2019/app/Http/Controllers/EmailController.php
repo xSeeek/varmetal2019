@@ -9,16 +9,6 @@ use Varmetal\User;
 
 class EmailController extends Controller
 {
-    public function cambiarEmail()
-    {
-      return;
-    }
-
-    public function nuevoEmail()
-    {
-      return;
-    }
-
     public function sendEmailRegistro(Request $data)
     {
       $dataArray = array(
@@ -29,7 +19,7 @@ class EmailController extends Controller
         'rut' => $data->rutTrabajador,
       );
       Mail::send('emails.registrado', $dataArray, function($message){
-        $user = User::all()->last();
+        $user = User::orderBy('id', 'DESC')->first();
         $actual = Auth::user();
         $message->from($actual->email,'Departamento de Informática Varmetal');
         $message->to($user->email)->subject('Cuenta Registrada con exito');
@@ -54,7 +44,7 @@ class EmailController extends Controller
         $nombre = $user->trabajador->nombre;
         $message->from($user->email, $nombre);
         foreach ($users as $key => $supervisor) {
-          if($supervisor->type == 'Admin')
+          if($supervisor->type == 'Supervisor')
           {
             $message->to($supervisor->email)->subject('Aviso Numero de Pausas');
           }
@@ -81,7 +71,7 @@ class EmailController extends Controller
         $nombre = $user->trabajador->nombre;
         $message->from($user->email, $nombre);
         foreach ($users as $key => $supervisor) {
-          if($supervisor->type == 'Admin')
+          if($supervisor->type == 'Supervisor')
           {
             $message->to($supervisor->email)->subject('Aviso 5 Productos Terminados');
           }
@@ -106,7 +96,7 @@ class EmailController extends Controller
         $nombre = $user->trabajador->nombre;
         $message->from($user->email, $nombre);
         foreach ($users as $key => $supervisor) {
-          if($supervisor->type != User::DEFAULT_TYPE)
+          if($supervisor->type == 'Supervisor')
           {
             $message->to($supervisor->email)->subject('Aviso Producto Terminado');
           }

@@ -63,7 +63,7 @@
                 if(response == 1)
                     window.location.href = "{{url('productoControl', [$idProducto])}}";
                 else
-                    alert('Error al asignar el OT');
+                    showMensajeSwall(MSG_ERROR, 'Error al asignar el OT');
             }
         });
     }

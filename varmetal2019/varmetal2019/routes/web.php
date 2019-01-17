@@ -136,14 +136,23 @@ Route::get('/admin', 'AdminController@admin')
         Route::get('/adminPausas', 'PausaController@adminPausas')
                     ->middleware('is_admin')
                     ->name('adminPausas');
+        Route::get('/adminPausas', 'PausaController@adminPausas')
+                    ->middleware('is_supervisor')
+                    ->name('adminPausas');
         Route::get('/adminPausasAlmacenadas/{id_producto}', ['uses' => 'PausaController@adminPausasDeProducto'])
                     ->middleware('is_admin')
+                    ->name('adminPausasAlmacenadas');
+        Route::get('/adminPausasAlmacenadas/{id_producto}', ['uses' => 'PausaController@adminPausasDeProducto'])
+                    ->middleware('is_supervisor')
                     ->name('adminPausasAlmacenadas');
         /*Route::get('/detallesPausaGet/{id}', ['uses' => 'PausaController@pausaControl'])
                     ->middleware('is_trabajador')
                     ->name('pausaControlGet');*/
         Route::get('/adminDetallesPausaGet/{id}', ['uses' => 'PausaController@pausaControl'])
                     ->middleware('is_admin')
+                    ->name('adminPausaControlGet');
+        Route::get('/adminDetallesPausaGet/{id}', ['uses' => 'PausaController@pausaControl'])
+                    ->middleware('is_supervisor')
                     ->name('adminPausaControlGet');
         Route::get('/trabajadorDetallesPausaGet/{id}', ['uses' => 'PausaController@pausaControl'])
                     ->middleware('is_trabajador')
@@ -156,7 +165,10 @@ Route::get('/admin', 'AdminController@admin')
                     ->middleware('is_trabajador')
                     ->name('pausaControlPost');
         Route::post('/adminUpdateFechaFinPost', ['uses' =>'PausaController@trabajadorUpdateFechaFin'])
-                    ->middleware('is_admin')
+                    ->middleware('is_admin', 'is_supervisor')
+                    ->name('adminUpdateFechaFinPost');
+        Route::post('/adminUpdateFechaFinPost', ['uses' =>'PausaController@trabajadorUpdateFechaFin'])
+                    ->middleware('is_supervisor')
                     ->name('adminUpdateFechaFinPost');
         Route::post('/trabajadorUpdateFechaFinPost', ['uses' =>'PausaController@trabajadorUpdateFechaFin'])
                     ->middleware('is_trabajador')
@@ -172,6 +184,9 @@ Route::get('/admin', 'AdminController@admin')
                     ->name('trabajadorDeletePausa');
         Route::post('/adminDeletePausa', ['uses' => 'PausaController@deletePausa'])
                     ->middleware('is_admin')
+                    ->name('adminDeletePausa');
+        Route::post('/adminDeletePausa', ['uses' => 'PausaController@deletePausa'])
+                    ->middleware('is_supervisor')
                     ->name('adminDeletePausa');
 
 /* [** Obra Controller **] */
@@ -215,7 +230,11 @@ Route::get('/admin', 'AdminController@admin')
 /* [** Cambiar Email **] */
     /*[** GENERAL **] */
   /* [** GET/POST **] */
-        Route::get('/cambiarEmail', ['uses', 'EmailController@cambiarEmail'])
+        Route::get('/cambiarContraseña', ['uses' => 'UserController@getProfilePassword'])
+                    ->name('cambiarContraseña');
+        Route::post('/nuevaContraseña', ['uses' => 'UserController@postProfilePassword'])
+                    ->name('nuevaContraseña');
+        Route::get('/cambiarEmail', ['uses' => 'UserController@getProfileEmail'])
                     ->name('cambiarEmail');
-        Route::post('/nuevoEmail', ['uses', 'EmailController@nuevoEmail'])
+        Route::post('/nuevoEmail', ['uses' => 'UserController@postProfileEmail'])
                     ->name('nuevoEmail');

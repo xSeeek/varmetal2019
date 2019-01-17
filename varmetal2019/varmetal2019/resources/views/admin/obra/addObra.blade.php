@@ -47,10 +47,7 @@
             url: "{{url('obraControl/addObra')}}",
             success: function(response){
                 if(response != 1)
-                {
-                    alert(response);
-                    console.log(response);
-                }
+                    showMensajeSwall(MSG_ERROR, response);
                 else
                     window.location.href = "{{url('adminObras')}}";
             }

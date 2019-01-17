@@ -113,10 +113,7 @@ function sendEmailProductos()
             url: "{{url('/enviarEmailProducto')}}",
             success: function(response){
                 if(response!='Email enviado producto')
-                {
-                    alert(response);
-                    console.log(response);
-                }
+                    showMensajeSwall(MSG_ERROR, response);
                 else
                     actualizarCantidad({{$producto->idProducto}});
           }
@@ -143,10 +140,7 @@ function sendEmail()
             url: "{{url('/enviarEmailTerminado')}}",
             success: function(response){
                 if(response!='Email enviado producto Terminado')
-                {
-                    alert(response);
-                    console.log(response);
-                }
+                    showMensajeSwall(MSG_ERROR, response);
                 else
                     markAsFinished({{$producto->idProducto}});
           }
@@ -166,7 +160,7 @@ function sendEmail()
                 if(response == 1)
                     window.location.href = "{{url('/detalleProducto', [$producto->idProducto])}}";
                 else {
-                    alert(response);
+                    showMensajeSwall(MSG_ERROR, response);
                 }
             }
         });
@@ -183,34 +177,43 @@ function sendEmail()
             success: function(response){
                 if(response == 1)
                     window.location.href = "{{url('/detalleProducto', [$producto->idProducto])}}";
-                else {
-                        alert(response);
-                    }
+                else
+                    showMensajeSwall(MSG_ERROR, response);
             }
         });
     }
     function actualizarCantidad(idProducto)
     {
-        if (confirm("Presione OK para actualizar la cantidad"))
+        swal({
+        title: "Confirmación",
+        text: "Presione Si para confirmar la actualización:",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#6A9944",
+        confirmButtonText: "Si",
+        cancelButtonText: "No",
+        cancelButtonColor: "#d71e1e",
+        }).then((result) =>
         {
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                type: "POST",
-                data: {DATA:idProducto},
-                url: "{{url('producto/actualizarCantidad')}}",
-                success: function(response){
-                    if(response == 1)
-                        window.location.href = "{{url('/detalleProducto', [$producto->idProducto])}}";
-                    else {
-                            alert(response);
+            if (result.value)
+            {
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    type: "POST",
+                    data: {DATA:idProducto},
+                    url: "{{url('producto/actualizarCantidad')}}",
+                    success: function(response){
+                        if(response == 1)
+                            window.location.href = "{{url('/detalleProducto', [$producto->idProducto])}}";
+                        else {
+                                alert(response);
+                            }
                         }
-                    }
-                });
+                    });
             }
-        else
-            return;
+        });
     }
 </script>
 @endsection
