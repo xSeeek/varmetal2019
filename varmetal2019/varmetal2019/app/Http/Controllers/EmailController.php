@@ -19,10 +19,10 @@ class EmailController extends Controller
         'rut' => $data->rutTrabajador,
       );
       Mail::send('emails.registrado', $dataArray, function($message){
-        $user = User::all()->last();
+        $user = User::orderBy('id', 'DESC')->first();
         $actual = Auth::user();
         $message->from($actual->email,'Departamento de Informática Varmetal');
-        $message->to($dataArray[1])->subject('Cuenta Registrada con exito');
+        $message->to($user->email)->subject('Cuenta Registrada con exito');
       });
       return 'Email enviado registrado';
     }
