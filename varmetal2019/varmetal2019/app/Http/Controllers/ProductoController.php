@@ -113,7 +113,7 @@ class ProductoController extends Controller
     public function asignarTrabajo($data)
     {
         $producto = Producto::find($data);
-        $trabajadores_almacenados = Trabajador::get();
+        $trabajadores_almacenados = Trabajador::join('users', 'users_id_user', 'id')->where('type', 'like', User::DEFAULT_TYPE)->get();
         $trabajadores = $producto->trabajador;
 
         $trabajador_disponibles = null;
@@ -127,11 +127,8 @@ class ProductoController extends Controller
                     $cont++;
             if($cont == 0)
             {
-                if($t_saved->user == User::DEFAULT_TYPE)
-                {
-                    $trabajador_disponibles[$i] = $t_saved;
-                    $i++;
-                }
+                $trabajador_disponibles[$i] = $t_saved;
+                $i++;
             }
             $cont = 0;
         }
