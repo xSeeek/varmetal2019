@@ -52,9 +52,19 @@
                 <td class="text-center">{{$trabajador->rut}}</td>
                 <td class="text-center">{{$trabajador->nombre}} @if ($trabajador->user->isSupervisor()) (Supervisor) @endif</td>
                 <td class="text-center">
-                  <div class="btn-group" role="group">
-                    <a role="button" class="btn btn-primary font-weight-bold text-light" href="{!! route('supervisor.verAsistencia', ['rut'=>$trabajador->rut]) !!}">Ver Asistencia</a>
-                  </div>
+                  <form action="{!! route('administrador.desvincular' ,['rut'=>$trabajador->rut, 'idObra'=>$obra->idObra]) !!}" method="post" id="form_desvincular">
+                    <div class="btn-group-vertical" role="group">
+                      <a role="button" class="btn btn-primary font-weight-bold text-light" href="{!! route('supervisor.verAsistencia', ['rut'=>$trabajador->rut]) !!}">Ver Asistencia</a>
+                      @if (Auth::user()->isAdmin())
+                        @csrf
+                        <button type="submit" class="btn btn-danger"
+                          data-toggle="tooltip" data-placement="top"
+                          title="Desvincular de la obra">
+                          <i class="fas fa-user-slash"></i>
+                        </button>
+                      @endif
+                    </div>
+                </form>
                 </td>
               </tr>
             @endforeach
@@ -71,7 +81,6 @@
       @endif
     </div>
   </div>
-
 
   @if(Auth::user()->isAdmin())
     <div class="modal fade" id="registrarTrabajadores" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -139,6 +148,14 @@
       e.preventDefault();
     }
     confirmMensajeSwal(MSG_INFO, 'Seguro que desea agregar este trabajador?', e);
+  });
+
+  $('#form_desvincular').submit(function (e, params) {
+    var localParams = params || {};
+    if (!localParams.send) {
+      e.preventDefault();
+    }
+    confirmMensajeSwal(MSG_INFO, 'Seguro que desea desvincular este trabajador?', e);
   });
 
   function habilitarEdicion()

@@ -79,3 +79,7 @@ Route::post('menuAdministrador/detallesObra/{idObra}/registrarTrabajador', ['use
 Route::post('menuAdministrador/detallesObra/{idObra}/editarObra', ['uses' => 'ObraController@editarObra'])
   ->name('administrador.editarObra')
   ->middleware('is_admin');
+
+Route::post('menuAdministrador/detallesObra/{idObra}/desvincular/{rut}', ['uses' => 'ObraController@desvincular'])
+  ->name('administrador.desvincular')
+  ->middleware('is_admin');

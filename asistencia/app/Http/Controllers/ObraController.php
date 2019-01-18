@@ -126,7 +126,7 @@ class ObraController extends Controller
       ->with('error', 'No se registran cambios');
   }
 
-  public function quitarTrabajador()
+  public function desvincular($idObra, $rut)
   {
     // code...
   }
