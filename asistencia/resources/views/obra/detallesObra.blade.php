@@ -16,12 +16,12 @@
           <input type="text" name="encargado" class="form-control" value="{{$encargado->nombre}}" disabled>
         </div>
         <div class="form-group">
-          <div class="row">
-            <div class="col">
-                <button type="button" class="btn btn-outline-info">Habilitar Edición</button>
-                <button class="btn btn-primary" type="button">Cambiar Supervisor</button>
-                <button class="btn btn-success float-right" type="button">Editar</button>
-            </div>
+          <div class="form-group">
+              <button type="button" class="btn btn-outline-info">Habilitar Edición</button>
+              <button class="btn btn-primary" type="button">Cambiar Supervisor</button>
+          </div>
+          <div class="form-group">
+            <button class="btn btn-success" type="button">Editar</button>
           </div>
         </div>
       </div>
