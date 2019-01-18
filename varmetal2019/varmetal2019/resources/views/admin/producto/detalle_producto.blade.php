@@ -42,7 +42,7 @@
                         <b>OT a la que pertenece:</b>
                         <div class="col-sm-10">
                             @if($obra != null)
-                                <input type="text" readonly id="obraProducto" class="form-control-plaintext" value="{{$obra->nombre}}">
+                                <input type="text" readonly id="obraProducto" class="form-control-plaintext" value="{{$obra->codigo}}">
                             @else
                                 <input type="text" readonly id="obraProducto" class="form-control-plaintext" value="No asignada">
                             @endif
