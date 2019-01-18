@@ -15,6 +15,17 @@
           <label for="encargado">Encargado de la obra</label>
           <input type="text" name="encargado" class="form-control" value="{{$encargado->nombre}}" disabled>
         </div>
+        <div class="form-group">
+          <div class="row">
+            <div class="col">
+              <div class="btn-group" role="group">
+                <button type="button" class="btn btn-outline-info">Habilitar Edición</button>
+                <button class="btn btn-primary" type="button">Cambiar Supervisor</button>
+                <button class="btn btn-success float-right" type="button">Editar</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <br>
