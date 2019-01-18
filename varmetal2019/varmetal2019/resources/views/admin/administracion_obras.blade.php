@@ -11,7 +11,7 @@
                         <table id="tablaAdministracion" style="width:100%" align="center">
                             <thead>
                                 <tr>
-                                    <th>Nombre</th>
+                                    <th>Código</th>
                                     <th>Proyecto</th>
                                     <th>Opciones</th>
                                 </tr>
@@ -19,7 +19,7 @@
                             <tbody>
                                 @foreach($obras as $key => $obra)
                                 <tr id="id_obra{{ $obra->idObra }}">
-                                    <td scope="col">{{ $obra->nombre }}</td>
+                                    <td scope="col">{{ $obra->codigo }}</td>
                                     <td scope="col">{{ $obra->proyecto }}</td>
                                     <td><a class="btn btn-outline-success my-2 my-sm-0" href="{{url('obraControl', [$obra->idObra])}}" role="button" style="cursor: pointer;">Ver Detalles</a></td>
                                 </tr>

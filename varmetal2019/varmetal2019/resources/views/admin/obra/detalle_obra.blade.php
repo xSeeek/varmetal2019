@@ -17,7 +17,7 @@
                     <h5>
                         <b>Codigo OT:</b>
                         <div class="col-sm-10">
-                            <input type="text" readonly id="nombreListado" class="form-control-plaintext" value="{{$obra->nombre}}">
+                            <input type="text" readonly id="nombreListado" class="form-control-plaintext" value="{{$obra->codigo}}">
                         </div>
                     </h5>
                     <h5>
