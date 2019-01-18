@@ -18,6 +18,10 @@
                                 <td><a class="btn btn-outline-success my-2 my-sm-0" href="{{url('adminTrabajador', [Varmetal\User::SUPERVISOR_TYPE])}}" role="button" style="cursor: pointer;">Ingresar</a></td>
                             </tr>
                             <tr>
+                                <th>Gerentes</th>
+                                <td><a class="btn btn-outline-success my-2 my-sm-0" href="{{url('adminTrabajador', [Varmetal\User::GERENCIA_TYPE])}}" role="button" style="cursor: pointer;">Ingresar</a></td>
+                            </tr>
+                            <tr>
                                 <th>Administradores</th>
                                 <td><a class="btn btn-outline-success my-2 my-sm-0" href="{{url('adminTrabajador', [Varmetal\User::ADMIN_TYPE])}}" role="button" style="cursor: pointer;">Ingresar</a></td>
                             </tr>

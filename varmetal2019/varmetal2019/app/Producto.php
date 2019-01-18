@@ -25,4 +25,8 @@ class Producto extends Model
     {
         return $this->belongsTo('Varmetal\Obra', 'obras_id_obra');
     }
+    public function tipo()
+    {
+        return $this->belongsTo('Varmetal\Tipo', 'tipo_id_tipo');
+    }
 }

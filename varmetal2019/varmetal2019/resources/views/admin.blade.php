@@ -55,6 +55,12 @@
                             <th>Administración de OT</th>
                             <td><a class="btn btn-outline-success my-2 my-sm-0" href="{{url('adminObras')}}" role="button" style="cursor: pointer;">Ingresar</a></td>
                         </tr>
+                        @if(Auth::user()->isAdmin())
+                        <tr>
+                            <th>Gerencia</th>
+                            <td><a class="btn btn-outline-success my-2 my-sm-0" href="{{url('gerencia')}}" role="button" style="cursor: pointer;">Ingresar</a></td>
+                        </tr>
+                        @endif
                     </table>
                 </div>
             </div>

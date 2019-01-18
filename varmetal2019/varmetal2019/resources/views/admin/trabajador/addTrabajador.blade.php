@@ -53,6 +53,7 @@
                                         <option value="1">Administrador</option>
                                         <option selected value="0">Operador</option>
                                         <option value="2">Supervisor</option>
+                                        <option value="3">Gerente</option>
                                 </select>
                             </div>
                         </div>
