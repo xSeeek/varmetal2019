@@ -21,7 +21,7 @@ class MyResetPassword extends Notification
     public function toMail($notifiable)
     {
       return (new MailMessage)
-            ->subject('Cambiao de Contraseña')
+            ->subject('Cambio de Contraseña')
             ->greeting('Hola', $this->token)
             ->line('Estás recibiendo este email, porque nosotros revibimos una solicitud de cambio de contraseña para tu cuenta.')
             //->action('Reestablecer contraseña', url(config('app.url').route('password.reset',$this->token,false)))
