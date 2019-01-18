@@ -43,7 +43,7 @@
                         </div>
                     </h5>
                     <h5>
-                        <b>Estado de la Obra:</b>
+                        <b>Estado de la OT:</b>
                         <div class="col-sm-10">
                             @if($terminado == true && ($cantidadFinalizada == count($productos_obra)) && count($productos_obra) != 0)
                                 <input type="text" readonly id="estadoObra" class="form-control-plaintext" value="Terminada">
