@@ -66,6 +66,22 @@ class ObraController extends Controller
 
   }
 
+  public function eliminarObra(Request $request, $idObra)
+  {
+    $obra = Obra::find($idObra);
+    $trabajadores = Trabajador::where('obra_id_obra', $idObra)->get();
+
+    foreach ($trabajadores as $trabajador) {
+      $trabajador->obra()->dissociate();
+      $trabajador->save();
+    }
+
+    $obra->delete();
+    return redirect()
+    ->back()
+    ->with('success', 'Obra eliminada con éxito');
+  }
+
   public function registrarTrabajadores(InsertTrabajadorRequest $request, $idObra)
   {
     $obra = Obra::find($idObra);

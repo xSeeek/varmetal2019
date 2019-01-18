@@ -60,6 +60,9 @@ Route::get('/menuAdministrador/detallesObra/{id}', ['uses'=>'ObraController@deta
   ->name('administrador.detallesObra')
   ->middleware('is_supervisor');
 
+Route::post('/menuAdministrador/eliminarObra/{id}', ['uses'=>'ObraController@eliminarObra'])
+  ->name('administrador.eliminarObra')
+  ->middleware('is_admin');
 
 Route::get('/menuAdministrador/agregarObra', 'ObraController@agregarObra')
   ->name('administrador.agregarObra')

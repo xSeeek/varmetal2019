@@ -70,9 +70,9 @@
   <script type="text/javascript">
     $(document).ready(function() {
       @if (session()->has('success'))
-        showMensajeSwall(MSG_SUCCESS, "{{session()->get('success')}}");
+        showMensajeSwall(MSG_SUCCESS, BTN_SUCCESS, COLOR_SUCCESS, "{{session()->get('success')}}");
        @elseif (session()->has('error'))
-        showMensajeSwall(MSG_ERROR, "{{session()->get('error')}}");
+        showMensajeSwall(MSG_ERROR, BTN_ERROR, COLOR_ERROR, "{{session()->get('error')}}");
        @endif
      });
      $(function () {

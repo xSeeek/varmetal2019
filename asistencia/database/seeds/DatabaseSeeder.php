@@ -48,10 +48,18 @@ class DatabaseSeeder extends Seeder
 
     DB::table('trabajador')->insert([
         'nombre' => 'Supervisor Pruebas',
-        'rut' => '11.111.112-K',
+        'rut' => '11.111.113-8',
         'cargo' => 'M2',
         'estado' => true,
         'users_id_user' => 5,
+    ]);
+
+    DB::table('trabajador')->insert([
+        'nombre' => 'Supervisor Pruebas 2',
+        'rut' => '11.111.112-K',
+        'cargo' => 'M2',
+        'estado' => true,
+        'users_id_user' => 6,
     ]);
 
     //factory(Asistencia\Trabajador::class, 100)->create();

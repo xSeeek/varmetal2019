@@ -118,7 +118,7 @@
     if (!localParams.send) {
       e.preventDefault();
     }
-    confirmMensajeSwal(MSG_INFO, 'Desea agregar esta obra?', $(e.currentTarget).trigger(e.type, { 'send': true });)
+    confirmMensajeSwal(MSG_INFO, 'Desea agregar esta obra?', e)
   });
 
 
