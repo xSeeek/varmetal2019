@@ -10,7 +10,7 @@
         <form id="form_id" action="{!! route('administrador.insertObra') !!}" method="post">
           @csrf
           <div class="form-group">
-            <input type="text" name="name" value="{{ old('name') }}" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="Nombre de la obra">
+            <input type="text" name="name" value="{{ old('name') }}" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="Nombre de la obra" autofocus required>
             @if ($errors->has('name'))
               <span class="invalid-feedback" role="alert">
                 <strong>{{ $errors->first('name') }}</strong>
