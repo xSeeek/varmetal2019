@@ -12,6 +12,7 @@ class User extends Authenticatable
     const ADMIN_TYPE = 'Admin';
     const SUPERVISOR_TYPE = 'Supervisor';
     const DEFAULT_TYPE = 'Trabajador';
+    const GERENCIA_TYPE = 'Gerente';
 
     public function trabajador()
     {
@@ -31,6 +32,11 @@ class User extends Authenticatable
     public function isSupervisor()
     {
         return $this->type === self::SUPERVISOR_TYPE;
+    }
+
+    public function isGerente()
+    {
+        return $this->type === self::GERENCIA_TYPE;
     }
 
     public static function createPassword($length)

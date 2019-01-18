@@ -238,3 +238,9 @@ Route::get('/admin', 'AdminController@admin')
                     ->name('cambiarEmail');
         Route::post('/nuevoEmail', ['uses' => 'UserController@postProfileEmail'])
                     ->name('nuevoEmail');
+
+/* [** Gerencia Controller **] */
+    /* [** ADMINISTRACIÓN **] */
+        /* [** GET **] */
+        Route::get('/gerencia', 'GerenciaController@showObras')
+                    ->name('gerencia');

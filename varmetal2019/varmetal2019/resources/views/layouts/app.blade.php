@@ -100,7 +100,7 @@
                                 </script><--->
                                 @else
                                   <a class="dropdown-item" href="{{url('/homepage/Trabajador')}}">
-                                      Detalles Cuenta
+                                      Volver al Inicio
                                   </a>
                                 @endif
                                 <a class="dropdown-item" href="{{url('/cambiarContraseña')}}">Cambiar Contraseña</a>
