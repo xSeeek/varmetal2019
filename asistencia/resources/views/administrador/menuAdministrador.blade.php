@@ -28,14 +28,16 @@
                             <td class="text-center">
                               <div class="btn-group" role="group">
                                 <form action="{!! route('administrador.eliminarObra', ['id'=>$obra->idObra]) !!}" id="form_id_{{$obra->idObra}}" method="post">
-                                  <a href="{!! route('administrador.detallesObra', ['id'=>$obra->idObra]) !!}"
-                                    class="btn btn-primary text-light"
-                                    role="button" data-toggle="tooltip" data-placement="top"
-                                    title="Ver Detalles">
-                                    Ver Detalles
-                                  </a>
-                                   @csrf
-                                   <button type="submit" data-toggle="tooltip" title="Eliminar Obra" class="btn btn-danger text-light"><i class="fas fa-trash-alt"></i></button>
+                                  <div class="btn-group-vertical">
+                                    <a href="{!! route('administrador.detallesObra', ['id'=>$obra->idObra]) !!}"
+                                      class="btn btn-primary text-light"
+                                      role="button" data-toggle="tooltip" data-placement="top"
+                                      title="Ver Detalles">
+                                      Ver Detalles
+                                    </a>
+                                     @csrf
+                                     <button type="submit" data-toggle="tooltip" title="Eliminar Obra" class="btn btn-danger text-light"><i class="fas fa-trash-alt"></i></button>
+                                    </div>
                                 </form>
                               </div>
                             </td>
