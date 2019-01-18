@@ -11,7 +11,7 @@
                         <table id="tablaAdministracion" style="width:100%" align="center">
                             <thead>
                                 <tr>
-                                    <th>Nombre</th>
+                                    <th>Código</th>
                                     <th>Prioridad</th>
                                     <th>Estado</th>
                                     <th>Cantidad</th>
@@ -22,7 +22,7 @@
                             <tbody>
                                 @foreach($productos as $key => $producto)
                                 <tr id="id_producto{{ $producto->idProducto }}">
-                                    <td scope="col">{{ $producto->nombre }}</td>
+                                    <td scope="col">{{ $producto->codigo }}</td>
                                     @switch($producto->prioridad)
                                         @case(1)
                                             <td scope="col">Baja</td>
