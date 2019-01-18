@@ -32,7 +32,7 @@ class ObraController extends Controller
 
         $obra = new Obra;
         $date = new Carbon();
-        $obra->nombre = $request->nameListado;
+        $obra->codigo = $request->nameListado;
         $obra->proyecto = $request->nameProyecto;
         $obra->fechaInicio = $date->now();
         $obra->save();
