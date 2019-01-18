@@ -7,23 +7,26 @@
         <h3 class="card-tittle">Administrar Obras, Obra: {{$obra->nombre}}</h3>
       </div>
       <div class="card-body">
-        <div class="form-group">
-          <label for="nombre">Nombre de la obra</label>
-          <input type="text" id='nombre' class="form-control" value="{{$obra->nombre}}" disabled>
-        </div>
-        <div class="form-group">
-          <label for="encargado">Encargado de la obra</label>
-          <input type="text" name="encargado" class="form-control" value="{{$encargado->nombre}}" disabled>
-        </div>
-        <div class="form-group">
+        <form method="post" id="form_id_editar" action="{!! route('administrador.editarObra', ['id'=>$obra->idObra]) !!}" id="form_editar">
+          @csrf
           <div class="form-group">
-              <button type="button" class="btn btn-outline-info">Habilitar Edición</button>
-              <button class="btn btn-primary" type="button">Cambiar Supervisor</button>
+            <label for="nombre">Nombre de la obra</label>
+            <input type="text" id='nombre' class="form-control" value="{{$obra->nombre}}" readonly name="nombre">
           </div>
           <div class="form-group">
-            <button class="btn btn-success" type="button">Editar</button>
+            <label for="encargado">Encargado de la obra</label>
+            <input type="text" name="encargado" class="form-control" value="{{$encargado->nombre}}" disabled>
           </div>
-        </div>
+          <div class="form-group">
+            <div class="form-group">
+                <button type="button" class="btn btn-outline-info" onclick="habilitarEdicion()">Habilitar Edición</button>
+                <button class="btn btn-primary" type="button">Cambiar Supervisor</button>
+            </div>
+            <div class="form-group">
+              <button class="btn btn-success" type="submit" id="btn_editar" hidden>Editar</button>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
     <br>
@@ -74,7 +77,7 @@
     <div class="modal fade" id="registrarTrabajadores" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
-          <form id="form_id" action="{!! route('administrador.registrarTrabajadorObra', ['idObra'=>$obra->idObra]) !!}" method="post">
+          <form id="form_id_registrarTrabajador" action="{!! route('administrador.registrarTrabajadorObra', ['idObra'=>$obra->idObra]) !!}" method="post">
             @csrf
             <div class="modal-header">
               <h5 class="modal-title" id="exampleModalLabel">Registrar Trabajadores</h5>
@@ -122,14 +125,41 @@
     });
   });
 
-  $('#form_id').submit(function (e, params) {
+  $('#form_id_editar').submit(function (e, params) {
     var localParams = params || {};
     if (!localParams.send) {
       e.preventDefault();
     }
-    confirmMensajeSwal(MSG_INFO, 'Desea agregar esta obra?', e)
+    confirmMensajeSwal(MSG_INFO, 'Seguro que desea editar esta obra?', e);
   });
 
+  $('#form_id_registrarTrabajador').submit(function (e, params) {
+    var localParams = params || {};
+    if (!localParams.send) {
+      e.preventDefault();
+    }
+    confirmMensajeSwal(MSG_INFO, 'Seguro que desea agregar este trabajador?', e);
+  });
+
+  function habilitarEdicion()
+  {
+    $('#form_id_editar input').each( function() {
+      if($(this).attr("name")!='email')
+      {
+        if(verificarEstado($(this))){
+          $(this).attr('readonly', false);
+          $('#btn_editar').attr('hidden', true);
+          return;
+        }
+        $(this).attr('readonly', true);
+        $('#btn_editar').attr('hidden', false);
+       }
+     });
+  }
+
+  function verificarEstado(object) {
+    return object.attr('readonly') == 'readonly';
+  }
 
 </script>
 @endsection

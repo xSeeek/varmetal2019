@@ -75,3 +75,7 @@ Route::post('menuAdministrador/agregarObra/insert', 'ObraController@insertObra')
 Route::post('menuAdministrador/detallesObra/{idObra}/registrarTrabajador', ['uses'=>'ObraController@registrarTrabajadores'])
   ->name('administrador.registrarTrabajadorObra')
   ->middleware('is_admin');
+
+Route::post('menuAdministrador/detallesObra/{idObra}/editarObra', ['uses' => 'ObraController@editarObra'])
+  ->name('administrador.editarObra')
+  ->middleware('is_admin');

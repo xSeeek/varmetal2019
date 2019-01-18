@@ -99,14 +99,31 @@ class ObraController extends Controller
         ->with('error', 'No puede agregar un administrador como trabajador a una obra');
       }
 
-        $obra->trabajadores()->save($trabajador);
-        return redirect()
-        ->back()
-        ->with('success', 'Trabajador ' . $trabajador->nombre . ' registrado con éxito en la obra');
+      $obra->trabajadores()->save($trabajador);
+      return redirect()
+      ->back()
+      ->with('success', 'Trabajador ' . $trabajador->nombre . ' registrado con éxito en la obra');
     }
     return redirect()->back()
       ->withInput()
       ->with('error', 'El trabajador seleccionado ya posee una obra asignada');
+  }
+
+  public function editarObra(Request $request, $idObra)
+  {
+    $obra = Obra::find($idObra);
+    $obra->nombre = $request->nombre;
+    if(count($obra->getDirty()))
+    {
+      $obra->update();
+
+      return redirect()
+      ->back()
+      ->with('success', 'Obra editada con éxito');
+    }
+    return redirect()->back()
+      ->withInput()
+      ->with('error', 'No se registran cambios');
   }
 
   public function quitarTrabajador()
