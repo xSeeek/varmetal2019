@@ -25,7 +25,7 @@
                         </div>
                         <b>Tipo de pieza:</b>
                         <div class="col-sm-10">
-                            <input type="text" readonly id="nombreProducto" class="form-control-plaintext" value="{{$producto->tipo}}">
+                            <input type="text" readonly id="nombreProducto" class="form-control-plaintext" value="{{$tipo->nombreTipo}}">
                         </div>
                         <b>Fecha de Inicio de Desarrollo:</b>
                         <div class="col-sm-10">

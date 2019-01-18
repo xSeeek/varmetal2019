@@ -16,7 +16,7 @@
                             @if($cont == count($productos))
                                 <h4 align="center">No tiene productos activos en desarrollo</h4>
                             @else
-                                <table id="tablaAdministracion" style="width:100%" align="center">
+                                <table id="tablaProductos" style="width:100%" align="center">
                                     <thead>
                                         <tr>
                                             <th>Código</th>
@@ -88,6 +88,20 @@
         </div>
     </div>
 <script type="text/javascript">
+    window.onload = function formatTable()
+    {
+        var table = $('#tablaProductos').DataTable({
+            "order": [[ 3, "desc" ]],
+            "language":{
+                "url":"//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+            },
+            "scrollX": true,
+       });
+       $(function () {
+           $('[data-toggle="tooltip"]').tooltip();
+       });
+    }
+
     function updateDate(idProducto, ruta)
     {
         swal({

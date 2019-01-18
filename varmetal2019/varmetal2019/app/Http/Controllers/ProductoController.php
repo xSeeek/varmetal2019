@@ -7,6 +7,7 @@ use Varmetal\Producto;
 use Varmetal\Trabajador;
 use Varmetal\User;
 use Varmetal\Obra;
+use Varmetal\Tipo;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
@@ -49,6 +50,7 @@ class ProductoController extends Controller
         $producto = Producto::find($id);
         $trabajadores = $producto->trabajadorWithAtributtes;
         $obra = $producto->obra;
+        $tipo = $producto->tipo;
 
         $cantidadProducida = 0;
         foreach($trabajadores as $trabajador)
@@ -58,7 +60,8 @@ class ProductoController extends Controller
                 ->with('producto', $producto)
                 ->with('trabajadores', $trabajadores)
                 ->with('cantidadProducida', $cantidadProducida)
-                ->with('obra', $obra);
+                ->with('obra', $obra)
+                ->with('tipo', $tipo);
     }
 
     public function detalleProducto($id)
@@ -87,9 +90,11 @@ class ProductoController extends Controller
     public function addProducto()
     {
         $obras = Obra::get();
+        $tipos = Tipo::get();
 
         return view('admin.producto.addProducto')
-                ->with('obras', $obras);
+                ->with('obras', $obras)
+                ->with('tipos', $tipos);
     }
 
     public function insertProducto(Request $request)

@@ -58,6 +58,21 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label class="col-md-4 col-form-label text-md-right">Tipo:</label>
+                            <div class="col-md-6">
+                                <div class="input-group mb-3">
+                                    <select class="custom-select" id="inputObra" aria-describedby="obraProducto" name="obraProducto" required>
+                                        <option selected disabled>Seleccione un tipo...</option>
+                                        @if(($tipos != NULL) && (count($tipos)>0))
+                                            @foreach($tipos as $tipo)
+                                                <option value="{{$tipo->idTipo}}">{{$tipo->nombreTipo}}</option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label class="col-md-4 col-form-label text-md-right">Prioridad:</label>
                             <div class="col-md-6">
                                 <select class="custom-select" id="inputPrioridad" aria-describedby="inputPrioridad" name="inputPrioridad" required>
