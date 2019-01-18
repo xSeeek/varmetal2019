@@ -110,7 +110,6 @@ function textAreaAdjust(o)
                       console.log(response);
                   }
                   else
-                      //window.location.href="{{url('/trabajadorDetallesPausaGet', [$pausa->idPausa])}}";
                       savePausa();
             }
           });
