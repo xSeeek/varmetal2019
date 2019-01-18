@@ -9,6 +9,19 @@ use Varmetal\Producto;
 
 class ObraController extends Controller
 {
+
+    public function editar(Request $data)
+    {
+      $response = json_decode($data->DATA, true);
+
+      $nombre = $response[0];
+      $idObra = $response[1];
+
+      $obra = Obra::find($idObra);
+
+      $obra->proyecto = $nombre;
+    }
+
     public function adminObra()
     {
         $obras = Obra::get();
