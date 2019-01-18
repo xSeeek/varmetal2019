@@ -50,7 +50,7 @@
                                         <option selected disabled>Seleccione una obra...</option>
                                         @if(($obras != NULL) && (count($obras)>0))
                                             @foreach($obras as $obra)
-                                                <option value="{{$obra->idObra}}">{{$obra->nombre}}</option>
+                                                <option value="{{$obra->idObra}}">{{$obra->codigo}}</option>
                                             @endforeach
                                         @endif
                                     </select>
