@@ -19,9 +19,13 @@
                         <div class="col-sm-10">
                             <input type="text" readonly id="codigoProducto" class="form-control-plaintext" value="{{$producto->codigo}}">
                         </div>
-                        <b>Nombre del Pieza:</b>
+                        <b>Nombre del Pieza: (Editable)</b>
                         <div class="col-sm-10">
                             <input type="text" readonly id="nombreProducto" class="form-control-plaintext" value="{{$producto->nombre}}">
+                        </div>
+                        <b>Tipo de pieza:</b>
+                        <div class="col-sm-10">
+                            <input type="text" readonly id="nombreProducto" class="form-control-plaintext" value="{{$producto->tipo}}">
                         </div>
                         <b>Fecha de Inicio de Desarrollo:</b>
                         <div class="col-sm-10">
@@ -35,9 +39,9 @@
                                 <input type="text" readonly id="fechaFinProducto" class="form-control-plaintext" value="{{$producto->fechaFin}}">
                             @endif
                         </div>
-                        <b>Peso unitario(en Kilogramos):</b>
+                        <b>Peso unitario en Kilogramos: (Editable)</b>
                         <div class="col-sm-10">
-                            <input type="text" readonly id="pesoProducto" class="form-control-plaintext" value="{{$producto->pesoKg}} Kg">
+                            <input type="text" readonly id="pesoProducto" class="form-control-plaintext" value="{{$producto->pesoKg}}">
                         </div>
                         <b>OT a la que pertenece:</b>
                         <div class="col-sm-10">
@@ -68,8 +72,12 @@
                         <div class="col-sm-10">
                             <input type="text" readonly id="cantidadProducto" class="form-control-plaintext" value="{{$cantidadProducida}}/{{$producto->cantProducto}}">
                         </div>
+                        <div id="nuevaCantidad" class="col-sm-10" style="display:none;">
+                          <b>Nueva Cantidad: (Editable)</b>
+                            <input type="text" id="cantidadProductoNuevo" class="form-control-plaintext" value="{{$producto->cantProducto}}">
+                        </div>
                         <b>Prioridad:</b>
-                        <div class="col-sm-10">
+                        <div id="prioridad" class="col-sm-10">
                             @switch($producto->prioridad)
                                 @case(1)
                                     <input type="text" readonly id="prioridadProducto" class="form-control-plaintext" value="Baja">
@@ -90,6 +98,39 @@
                                     <input type="text" readonly id="prioridadProducto" class="form-control-plaintext" value="Sin prioridad">
                                     @break
                             @endswitch
+                        </div>
+                        <div id="prioridadEdit" style="display:none;" class="col-md-6">
+                          <br>
+                          <select class="custom-select" id="inputPrioridad" aria-describedby="inputPrioridad" name="inputPrioridad" required>
+                                  <option selected value="{{$producto->prioridad}}">
+                                    @switch($producto->prioridad)
+                                        @case(1)
+                                            Baja
+                                            @break
+                                        @case(2)
+                                            Media Baja
+                                            @break
+                                        @case(3)
+                                            Media
+                                            @break
+                                        @case(4)
+                                            Media Alta
+                                            @break
+                                        @case(5)
+                                            Alta
+                                            @break
+                                        @default
+                                            Sin prioridad
+                                            @break
+                                    @endswitch
+                                  </option>
+                                  <option value="1">Baja</option>
+                                  <option value="2">Media Baja</option>
+                                  <option value="3">Media</option>
+                                  <option value="4">Media Alta</option>
+                                  <option value="5">Alta</option>
+                          </select>
+                          <br><br>
                         </div>
                         @if($producto->estado == 1 && $producto->terminado == false)
                             <br>
@@ -186,6 +227,12 @@
             </div>
             <div class="modal-body" align="center">
                 <h5>
+                    Edicion de datos:
+                </br>
+                    <a class="btn btn-outline-success btn-md" id="enableChangesButton" role="button" onclick="changeStatus()">Habilitar/Deshabilitar</a>
+                </h5>
+                <br>
+                <h5>
                     Ver Pausas:
                 </br>
                     <a class="btn btn-outline-success btn-md" id="pauseButton" role="button" href="{{url('adminPausasAlmacenadas', [$producto->idProducto])}}">Pausas</a>
@@ -242,6 +289,69 @@
     </div>
 </div>
 <script type="text/javascript">
+
+  function changeStatus()
+  {
+    var nombreProducto,nuevaCantidad, enableChangesButton, prioridad, prioridadEdit;
+
+    nombreProducto = document.getElementById('nombreProducto');
+    pesoProducto = document.getElementById('pesoProducto');
+    prioridad = document.getElementById('prioridad');
+    prioridadEdit= document.getElementById('prioridadEdit');
+    nuevaCantidad= document.getElementById('nuevaCantidad');
+    nombreProducto.removeAttribute("readonly");
+    pesoProducto.removeAttribute("readonly");
+    prioridad.setAttribute("style","display:none;")
+    prioridadEdit.removeAttribute("style");
+    nuevaCantidad.removeAttribute("style");
+
+    enableChangesButton = document.getElementById('enableChangesButton');
+    enableChangesButton.innerText="Guardar Cambios";
+    enableChangesButton.setAttribute("onclick","postChangeData()");
+    return 'boton cambiado';
+  }
+
+  function postChangeData()
+  {
+    var datos, json_text,nuevaCantidad, cantidadProductoNuevo,select, nombreProducto, pesoProducto, prioridad, prioridadEdit;
+
+    nombreProducto = document.getElementById('nombreProducto');
+    pesoProducto = document.getElementById('pesoProducto');
+    prioridadEdit = document.getElementById('prioridadEdit');
+    prioridad = document.getElementById('prioridad');
+    select = document.getElementById('inputPrioridad');
+    nuevaCantidad = document.getElementById('nuevaCantidad');
+    cantidadProductoNuevo = document.getElementById('cantidadProductoNuevo');
+
+    enableChangesButton = document.getElementById('enableChangesButton');
+
+    datos = Array();
+    datos[0]= nombreProducto.value;
+    datos[1]= pesoProducto.value;
+    datos[2]= select.value;
+    datos[3]= cantidadProductoNuevo.value;
+    datos[4]='{{$producto->idProducto}}';
+
+    json_text = JSON.stringify(datos)
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        type: "POST",
+        data: {DATA:json_text},
+        url: "{{url('/productoControlEditar')}}",
+        success: function(response){
+            window.location.href = "{{url('productoControl',[$producto->idProducto])}}";
+        }
+    });
+          prioridadEdit.setAttribute("style","display:none;");
+          prioridad.removeAttribute("style");
+          nuevaCantidad.setAttribute("style","display:none;");
+          enableChangesButton.innerText="Habilitar/Deshabilitar";
+          enableChangesButton.setAttribute("onclick","changeStatus()");
+          enableChangesButton.setAttribute("readonly","");
+  }
+
     function deleteProducto(data)
     {
         $.ajax({

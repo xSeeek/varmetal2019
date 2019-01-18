@@ -13,6 +13,27 @@ use Illuminate\Support\Facades\Auth;
 
 class ProductoController extends Controller
 {
+
+    public function editar(Request $data)
+    {
+      $response = json_decode($data->DATA, true);
+
+      $nombre = $response[0];
+      $peso = $response[1];
+      $prioridad = $response[2];
+      $cantidad = $response[3];
+      $idProducto = $response[4];
+
+      $producto = Producto::find($idProducto);
+
+      $producto->nombre = $nombre;
+      $producto->pesoKg = $peso;
+      $producto->prioridad = $prioridad;
+      if($cantidad!=NULL)
+        $producto->cantProducto = $cantidad;
+      $producto->save();
+    }
+
     public function adminProducto()
     {
         $productos = Producto::orderBy('prioridad', 'DESC')->get();

@@ -17,6 +17,19 @@ class TrabajadorController extends Controller
         $this->middleware('auth');
     }
 
+    public function editar(Request $data)
+    {
+      $response = json_decode($data->DATA, true);
+
+      $nuevoNombre = $response[0];
+      $idTrabajador= $response[1];
+
+      $trabajador = Trabajador::find($idTrabajador);
+
+      $trabajador->nombre = $nuevoNombre;
+      $trabajador->save();
+    }
+
     public function detallesCuentaTrabajador()
     {
       $usuarioActual = Auth::user();
