@@ -50,6 +50,7 @@ class ProductoController extends Controller
         $producto = Producto::find($id);
         $trabajadores = $producto->trabajadorWithAtributtes;
         $obra = $producto->obra;
+        $tipo = $producto->tipo;
 
         $cantidadProducida = 0;
         foreach($trabajadores as $trabajador)
@@ -59,7 +60,8 @@ class ProductoController extends Controller
                 ->with('producto', $producto)
                 ->with('trabajadores', $trabajadores)
                 ->with('cantidadProducida', $cantidadProducida)
-                ->with('obra', $obra);
+                ->with('obra', $obra)
+                ->with('tipo', $tipo);
     }
 
     public function detalleProducto($id)

@@ -76,8 +76,6 @@ class GerenciaController extends Controller
             $kilosObra = 0;
         }
 
-        var_dump($obras_reporte);
-
         return view('gerencia')
                 ->with('obras', $obras_reporte);
     }
