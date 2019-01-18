@@ -21,7 +21,7 @@
                                     @foreach($obras_disponibles as $key => $obra)
                                     <tr id="id_trabajador{{ $obra->idObra }}">
                                         <td scope="col"><button class="btn btn-success" onclick="asignarObra({{$idProducto}}, {{$obra->idObra}})"><i class="far fa-check-square success"></i></button></td>
-                                        <td scope="col">{{ $obra->nombre }}</td>
+                                        <td scope="col">{{ $obra->codigo }}</td>
                                         <td scope="col">{{ $obra->proyecto }}</td>
                                     </tr>
                                     @endforeach
