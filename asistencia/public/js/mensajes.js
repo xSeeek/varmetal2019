@@ -38,5 +38,4 @@ function showMensajeSwall(type, msg)
     cancelButtonColor: '#661414',
   });
 
-  }
 }

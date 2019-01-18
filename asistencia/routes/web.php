@@ -36,6 +36,10 @@
 
 Route::get('/menuAdministrador', 'AsistenciaController@menuAdministrador')
   ->name('administrador.menuAdministrador')
+  ->middleware('is_admin', 'auth');
+
+Route::get('/menuSupervisor', 'AsistenciaController@menuSupervisor')
+  ->name('supervisor.menuSupervisor')
   ->middleware('is_supervisor', 'auth');
 
 Route::get('/asistencias/{rut}', ['uses'=>'AsistenciaController@verAsistencia'])

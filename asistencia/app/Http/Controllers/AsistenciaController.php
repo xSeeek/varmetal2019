@@ -29,6 +29,12 @@ class AsistenciaController extends Controller
     return view('administrador.menuAdministrador')->with('obras', Obra::all());
   }
 
+  public function menuSupervisor()
+  {
+    $user = Auth::user();
+    return view('supervisor.menuSupervisor')->with('obra', $user->trabajador->obra);
+  }
+
   public function registrarAsistencia(MarcarAsistencia $request)
   {
     if($request->hasFile('file'))
