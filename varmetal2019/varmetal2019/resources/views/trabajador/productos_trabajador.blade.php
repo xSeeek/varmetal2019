@@ -19,7 +19,7 @@
                                 <table id="tablaAdministracion" style="width:100%" align="center">
                                     <thead>
                                         <tr>
-                                            <th>Nombre</th>
+                                            <th>Código</th>
                                             <th>Peso (Kg)</th>
                                             <th>Estado</th>
                                             <th>Prioridad</th>
@@ -31,7 +31,7 @@
                                         @if($producto->terminado == false)
                                             @php $cont++ @endphp
                                             <tr id="id_producto{{ $producto->idProducto }}">
-                                                <td scope="col">{{ $producto->nombre }}</td>
+                                                <td scope="col">{{ $producto->codigo }}</td>
                                                 <td scope="col">{{ $producto->pesoKg }}</td>
                                                 @switch($producto->estado)
                                                     @case(0)
