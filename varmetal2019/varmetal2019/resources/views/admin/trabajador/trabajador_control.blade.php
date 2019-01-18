@@ -15,7 +15,7 @@
                 </div>
                 <div class="card-body">
                     <h5>
-                        <b>Nombre Completo:</b>
+                        <b>Nombre Completo: (Editable)</b>
                         <div class="col-sm-10">
                             <input type="text" readonly id="nombreTrabajador" class="form-control-plaintext" value="{{$trabajador->nombre}}">
                         </div>
@@ -52,7 +52,7 @@
                 <table id="tablaAdministracion" style="width:100%" align="center">
                     <thead>
                         <tr>
-                            <th>Código</th>
+                            <th>Nombre</th>
                             <th>Fecha Inicio</th>
                             <th>Fecha Fin</th>
                             <th>Estado</th>
@@ -63,7 +63,7 @@
                     <tbody>
                         @foreach($productos_trabajador as $key => $productos)
                             <tr id="id_productoTrabajador{{ $productos->idProductos }}">
-                                <td scope="col">{{ $productos->codigo }}</td>
+                                <td scope="col">{{ $productos->nombre }}</td>
                                 <td scope="col">{{ $productos->fechaInicio }}</td>
                                 @if($productos->fechaFin != NULL)
                                     <td scope="col">{{ $productos->fechaFin }}</td>
@@ -139,6 +139,48 @@
     </div>
 </div>
 <script type="text/javascript">
+
+    function changeStatus()
+    {
+      var nombreTrabajador, enableChangesButton;
+
+      nombreTrabajador = document.getElementById('nombreTrabajador');
+      nombreTrabajador.removeAttribute("readonly");
+      enableChangesButton = document.getElementById('enableChangesButton');
+      enableChangesButton.innerText="Guardar Cambios";
+      enableChangesButton.setAttribute("onclick","postChangeData()");
+      return 'boton cambiado';
+    }
+
+    function postChangeData()
+    {
+      var datos, json_text, enableChangesButton, nombreTrabajador;
+
+      enableChangesButton = document.getElementById('enableChangesButton');
+      nombreTrabajador = document.getElementById('nombreTrabajador');
+
+      datos = Array();
+      datos[0]= nombreTrabajador.value;
+      datos[1]='{{$trabajador->idTrabajador}}';
+
+      json_text = JSON.stringify(datos)
+      $.ajax({
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          type: "POST",
+          data: {DATA:json_text},
+          url: "{{url('/trabajadorControlEditar')}}",
+          success: function(response){
+              alert('Datos Cambiados');
+              window.location.href = "{{url('trabajadorControl',[$trabajador->idTrabajador])}}";
+          }
+      });
+            enableChangesButton.innerText="Habilitar/Deshabilitar";
+            enableChangesButton.setAttribute("onclick","changeStatus()");
+            enableChangesButton.setAttribute("readonly","");
+    }
+
     window.onload = function formatTable()
     {
         var table = $('#tablaAdministracion').DataTable({
