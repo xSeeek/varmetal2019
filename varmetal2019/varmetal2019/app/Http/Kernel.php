@@ -66,6 +66,7 @@ class Kernel extends HttpKernel
         'is_admin' => \Varmetal\Http\Middleware\isAdmin::class,
         'is_trabajador' => \Varmetal\Http\Middleware\isTrabajador::class,
         'is_supervisor' => \Varmetal\Http\Middleware\isSupervisor::class,
+        'is_gerente' => \Varmetal\Http\Middleware\isGerente::class,
     ];
 
     /**

@@ -243,6 +243,7 @@ Route::get('/admin', 'AdminController@admin')
     /* [** ADMINISTRACIÓN **] */
         /* [** GET **] */
         Route::get('/gerencia', 'GerenciaController@showObras')
+<<<<<<< HEAD
                     ->name('gerencia')
                     ->middleware('is_gerente');
     /* [** Editar **] */
@@ -253,3 +254,7 @@ Route::get('/admin', 'AdminController@admin')
 
         Route::post('/productoControlEditar', ['uses' => 'ProductoController@editar'])
                     ->name('editarProducto');
+=======
+                ->middleware('is_gerente')
+                ->name('gerencia');
+>>>>>>> 29393b77e4c12a8471b6a9bf7f2b88f7ccbed52a

@@ -83,6 +83,8 @@ class TrabajadorController extends Controller
             $newUserTrabajador->type = User::SUPERVISOR_TYPE;
         elseif($data->type == 0)
             $newUserTrabajador->type = User::DEFAULT_TYPE;
+        elseif($data->type == 3)
+            $newUserTrabajador->type = User::GERENCIA_TYPE;
         else
             return 'Debe seleccionar el tipo del empleado';
 

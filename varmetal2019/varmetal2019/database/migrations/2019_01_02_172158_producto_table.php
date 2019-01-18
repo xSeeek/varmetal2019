@@ -31,6 +31,9 @@ class ProductoTable extends Migration
 
             $table->integer('obras_id_obra')->unsigned()->nullable();
             $table->foreign('obras_id_obra')->references('idObra')->on('obra')->onDelete('cascade');
+
+            $table->integer('tipo_id_tipo')->unsigned()->default('1');
+            $table->foreign('tipo_id_tipo')->references('idTipo')->on('tipo')->onDelete('cascade');
         });
     }
 
