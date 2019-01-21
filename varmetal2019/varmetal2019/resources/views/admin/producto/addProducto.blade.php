@@ -61,7 +61,7 @@
                             <label class="col-md-4 col-form-label text-md-right">Tipo:</label>
                             <div class="col-md-6">
                                 <div class="input-group mb-3">
-                                    <select class="custom-select" id="inputObra" aria-describedby="obraProducto" name="obraProducto" required>
+                                    <select class="custom-select" id="tipoObra" aria-describedby="tipoProducto" name="tipoProducto" required>
                                         <option selected disabled>Seleccione un tipo...</option>
                                         @if(($tipos != NULL) && (count($tipos)>0))
                                             @foreach($tipos as $tipo)
