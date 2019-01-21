@@ -30,6 +30,16 @@ function confirmMensajeSwal(type, msg, e) {
     cancelButtonColor: "#ff0000",
   }).then((result) => {
     if (result.value) {
+      swal({
+          title: 'Espera un momento!',
+          text: 'Trabajando tu solicitud..',
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+          allowEnterKey: false,
+          onOpen: () => {
+              swal.showLoading()
+          }
+        });
       $(e.currentTarget).trigger(e.type, { 'send': true });
     }
   });
