@@ -11,7 +11,12 @@
           @csrf
           <div class="form-group">
             <label for="nombre">Nombre de la obra</label>
-            <input type="text" id='nombre' class="form-control" value="{{$obra->nombre}}" readonly name="nombre">
+            <input type="text" id='nombre' class="form-control{{ $errors->has('nombre') ? ' is-invalid' : '' }}" value="{{$obra->nombre}}" readonly name="nombre">
+            @if ($errors->has('nombre'))
+              <span class="invalid-feedback" role="alert">
+                <strong>{{ $errors->first('nombre') }}</strong>
+              </span>
+            @endif
           </div>
           <div class="form-group">
             <label for="encargado">Encargado de la obra</label>

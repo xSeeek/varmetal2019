@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Asistencia\User;
 use Asistencia\Http\Requests\InsertObraRequest;
 use Asistencia\Http\Requests\InsertTrabajadorObraRequest;
+use Asistencia\Http\Requests\EditarObraRequest;
 use Asistencia\Trabajador;
 use Asistencia\Obra;
 
@@ -109,7 +110,7 @@ class ObraController extends Controller
       ->with('error', 'El trabajador seleccionado ya posee una obra asignada');
   }
 
-  public function editarObra(Request $request, $idObra)
+  public function editarObra(EditarObraRequest $request, $idObra)
   {
     $obra = Obra::find($idObra);
     $obra->nombre = $request->nombre;

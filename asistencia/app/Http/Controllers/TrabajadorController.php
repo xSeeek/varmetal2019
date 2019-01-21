@@ -5,6 +5,7 @@ namespace Asistencia\Http\Controllers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Asistencia\Http\Requests\InsertTrabajadorRequest;
+use Asistencia\Http\Requests\EditarTrabajadorRequest;
 use Asistencia\User;
 use Asistencia\Trabajador;
 
@@ -26,9 +27,9 @@ class TrabajadorController extends Controller
       ->with('trabajador', Trabajador::where('rut', $rut)->first());
   }
 
-  public function editar(Request $request, $rut)
+  public function editar(EditarTrabajadorRequest $request)
   {
-    $trabajador = Trabajador::where('rut', $rut)->first();
+    $trabajador = Trabajador::where('rut', $request->$request->rut)->first();
     $trabajador->nombre = $request->nombre_completo;
     $trabajador->rut = $request->rut;
     $trabajador->cargo = $request->cargo;

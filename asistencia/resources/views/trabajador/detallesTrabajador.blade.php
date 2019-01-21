@@ -7,19 +7,34 @@
         <h3 class="card-tittle">Datos personales trabajador</h3>
       </div>
       <div class="card-body">
-        <form id="form_id_editar" method="post" action="{!! route('administrador.editarTrabajador', ['rut'=>$trabajador->rut]) !!}">
+        <form id="form_id_editar" method="post" action="{!! route('administrador.editarTrabajador') !!}">
           @csrf
           <div class="form-group">
             <label for="nombre">Nombre del trabajador</label>
-            <input type="text" id='nombre' class="form-control" value="{{$trabajador->nombre}}" readonly name="nombre_completo">
+            <input type="text" id='nombre' class="form-control{{ $errors->has('nombre_completo') ? ' is-invalid' : '' }}" value="{{$trabajador->nombre}}" readonly name="nombre_completo" required>
+            @if ($errors->has('nombre_completo'))
+              <span class="invalid-feedback" role="alert">
+                <strong>{{ $errors->first('nombre_completo') }}</strong>
+              </span>
+            @endif
           </div>
           <div class="form-group">
             <label for="rut">Rut del trabajador</label>
-            <input type="text" class="form-control" id="rut" value="{{$trabajador->rut}}" readonly name="rut">
+            <input type="text" class="form-control{{ $errors->has('rut') ? ' is-invalid' : '' }}" id="rut" value="{{$trabajador->rut}}" readonly name="rut" required>
+            @if ($errors->has('rut'))
+              <span class="invalid-feedback" role="alert">
+                <strong>{{ $errors->first('rut') }}</strong>
+              </span>
+            @endif
           </div>
           <div class="form-group">
             <label for="cargo">Cargo</label>
-            <input type="text" class="form-control" value="{{$trabajador->cargo}}" readonly name="cargo">
+            <input type="text" class="form-control{{ $errors->has('cargo') ? ' is-invalid' : '' }}" value="{{$trabajador->cargo}}" readonly name="cargo" required>
+            @if ($errors->has('cargo'))
+              <span class="invalid-feedback" role="alert">
+                <strong>{{ $errors->first('cargo') }}</strong>
+              </span>
+            @endif
           </div>
           <div class="form-group">
             <div class="form-group">
