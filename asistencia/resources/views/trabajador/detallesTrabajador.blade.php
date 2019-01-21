@@ -7,7 +7,8 @@
         <h3 class="card-tittle">Datos personales trabajador</h3>
       </div>
       <div class="card-body">
-        <form id="form_id_editar" action="">
+        <form id="form_id_editar" method="post" action="{!! route('administrador.editarTrabajador', ['rut'=>$trabajador->rut]) !!}">
+          @csrf
           <div class="form-group">
             <label for="nombre">Nombre del trabajador</label>
             <input type="text" id='nombre' class="form-control" value="{{$trabajador->nombre}}" readonly name="nombre_completo">

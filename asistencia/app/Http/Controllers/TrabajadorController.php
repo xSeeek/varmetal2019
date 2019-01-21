@@ -26,6 +26,26 @@ class TrabajadorController extends Controller
       ->with('trabajador', Trabajador::where('rut', $rut)->first());
   }
 
+  public function editar(Request $request, $rut)
+  {
+    $trabajador = Trabajador::where('rut', $rut)->first();
+    $trabajador->nombre = $request->nombre_completo;
+    $trabajador->rut = $request->rut;
+    $trabajador->cargo = $request->cargo;
+
+    if(count($trabajador->getDirty()))
+    {
+      $trabajador->update();
+
+      return redirect()
+      ->back()
+      ->with('success', 'Trabajador editado con éxito');
+    }
+    return redirect()->back()
+      ->withInput()
+      ->with('error', 'No se registran cambios');
+  }
+
   public function insert(InsertTrabajadorRequest $request)
   {
     $user = User::create([

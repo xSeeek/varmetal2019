@@ -44,6 +44,10 @@
     ->middleware('is_admin')
     ->name('administrador.detallesTrabajador');
 
+  Route::post('/menuAdministrador/detallesTrabajador/{rut}/editar', ['uses'=>'TrabajadorController@editar'])
+    ->middleware('is_admin')
+    ->name('administrador.editarTrabajador');
+
 /**
  * [[Rutas Controlador AsistenciaController]]
  */
