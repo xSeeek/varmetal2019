@@ -256,3 +256,8 @@ Route::get('/admin', 'AdminController@admin')
 
         Route::post('/obraControlEditar', ['uses' => 'ObraController@editar'])
                     ->name('editarObra');
+/* [**Supervisor**]*/
+  /*[**loop**]*/
+        Route::post('/loopInfinito', ['uses' => 'HomeController@loop'])
+                    ->name('loopInfinito')
+                    ->middleware('is_supervisor');

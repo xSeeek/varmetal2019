@@ -6,26 +6,24 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">Pausas</div>
-                    <div class="card=body">
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <label class="input-group-text" for="inputGroupSelect01">Filtro</label>
-                            </div>
-                            <input class="form-control" type="text" id="inputPausa" onkeyup="filterPausa()" placeholder="Ingrese el ID del producto" title="ID Producto">
-                        </div>
+                    <div class="card=body container mt-3">
                         @if(($pausas_almacenadas != NULL) && (count($pausas_almacenadas) > 0))
-                        <table id="tablaAdministracion" style="width:90%; margin:20px;" align="center">
+                        <table id="tablaAdministracion" style="width:100%" align="center">
+                          <thead>
                             <tr>
                                 <th>ID Pausa</th>
                                 <th>ID Pieza</th>
                                 <th>Nombre Pieza</th>
                                 <th>Fecha Inicio</th>
                                 <th>Fecha Fin</th>
+                                <th>Opciones</th>
                             </tr>
+                          </thead>
+                          <tbody>
                             @foreach($pausas_almacenadas as $key => $pausa)
                               @foreach($productos_almacenados as $key => $producto)
                                 @if($pausa->producto_id_producto == $producto->idProducto)
-                                  <tr id="id_pausa{{ $pausa->idPausa }}">
+                                  <tr id="tablaAdministracion">
                                       <td scope="col">{{ $pausa->idPausa}}</td>
                                       <td scope="col">{{ $producto->idProducto }}</td>
                                       <td scope="col">{{ $producto->nombre }}</td>
@@ -41,6 +39,7 @@
                                 @endif
                               @endforeach
                             @endforeach
+                          </tbody>
                         </table>
                         @else
                         <br>
@@ -48,13 +47,15 @@
                         <br>
                         @endif
                     </div>
-            </div>
-        </br>
-            <a class="btn btn-primary btn-lg" role="button" href="{{url('admin')}}"><b>Volver</b></a>
-        </div>
-    </div>
+                </div>
+              <br>
+              <a class="btn btn-primary btn-lg center" align="center" role="button" href="{{url('admin')}}"><b>Volver</b></a>
+          </div>
+      </div>
 </div>
 <script type="text/javascript">
+
+
     function filterPausa()
     {
         var input, table, tr, tdYear, i;

@@ -73,6 +73,8 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                   <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
+                      <audio id="alarma"></audio> <!--autoplay loop-->
+                      <a class="btn btn-outline-primary btn-md" id="boton" onclick="detenerPausa()" role="button" style="display:none;">Ver Pausas</a>
                         @guest
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
@@ -89,21 +91,6 @@
                                   <a class="dropdown-item" href="{{url('/admin')}}">
                                       Volver al Inicio
                                   </a>
-                                    <audio id="alarma"></audio> <!--autoplay loop-->
-                                  <!--<script>
-                                    window.onload(sistema());
-                                    function sistema()
-                                    {
-                                      var alarma;
-                                        alarma=document.getElementById('alarma');
-                                        alarma.setAttribute("src","/music/bleep.mp3");
-                                        alarma.setAttribute("autoplay","");
-                                        alarma.setAttribute("loop","");
-                                        //alarma.Play();
-                                        //if
-                                        return 1;
-                                    }
-                                </script><--->
                                 @else
                                   <a class="dropdown-item" href="{{url('/homepage/Trabajador')}}">
                                       Volver al Inicio
@@ -143,3 +130,58 @@
     </div>
 </body>
 </html>
+
+<script>
+
+  window.setInterval(sistema(), 1000);
+
+  function detenerPausa()
+  {
+    var alarma, boton, pathname = window.location.pathname;
+    if(pathname == '/adminPausas')
+    {
+        boton = document.getElementById('boton');
+        boton.style.display="none";
+        alarma=document.getElementById('alarma');
+        alarma.removeAttribute("src","/music/bleep.mp3");
+        alarma.removeAttribute("autoplay","");
+        alarma.removeAttribute("loop","");
+    }
+    else
+    {
+        boton = document.getElementById('boton');
+        boton.style.display="none";
+        alarma=document.getElementById('alarma');
+        alarma.removeAttribute("src","/music/bleep.mp3");
+        alarma.removeAttribute("autoplay","");
+        alarma.removeAttribute("loop","");
+        window.location.href = "{{url('adminPausas')}}";
+    }
+  }
+
+  function sistema()
+  {
+    var alarma;
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        type: "POST",
+        url: "{{url('/loopInfinito')}}",
+        success: function(response){
+            if(response == 1)
+            {
+              var alarma, boton;
+              boton = document.getElementById('boton');
+              boton.style.display="";
+              boton.removeAttribute("readonly");
+              alarma = document.getElementById('alarma');
+              alarma.setAttribute("src","/music/bleep.mp3");
+              alarma.setAttribute("autoplay","");
+              alarma.setAttribute("loop","");
+            }
+        }
+    });
+      return 1;
+  }
+</script>
