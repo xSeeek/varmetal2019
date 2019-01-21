@@ -208,6 +208,7 @@
 
           datosPausa = Array();
           datosPausa[0] = '{{$pausa->idPausa}}';
+          datosPausa[1] = '{{$trabajador->idTrabajador}}';
           datosPausa[2] = document.getElementById("motivo").value;
           datosPausa[3] = '{{$producto->obras_id_obra}}';
           json_text = JSON.stringify(datosPausa);

@@ -6,22 +6,20 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">Pausas</div>
-                    <div class="card=body">
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <label class="input-group-text" for="inputGroupSelect01">Filtro</label>
-                            </div>
-                            <input class="form-control" type="text" id="inputPausa" onkeyup="filterPausa()" placeholder="Ingrese el ID de la Pausa" title="ID Pausa">
-                        </div>
+                    <div class="card=body container mt-3">
                         @if(($pausas_almacenadas != NULL) && (count($pausas_almacenadas) > 0))
-                        <table id="tablaAdministracion" style="width:90%; margin:20px;" align="center">
+                        <table id="tablaAdministracion" name="table" style="width:100%" align="center">
+                          <thead>
                             <tr>
                                 <th>ID Pausa</th>
                                 <th>ID Pieza</th>
                                 <th>Nombre Pieza</th>
                                 <th>Fecha Inicio</th>
                                 <th>Fecha Fin</th>
+                                <th>Opciones</th>
                             </tr>
+                          </thead>
+                          <tbody>
                             @foreach($pausas_almacenadas as $key => $pausa)
                                 @if($pausa->producto_id_producto == $producto->idProducto)
                                   <tr id="id_pausa{{ $pausa->idPausa }}">
@@ -39,6 +37,7 @@
                                   </tr>
                                 @endif
                             @endforeach
+                          </tbody>
                         </table>
                         @else
                         <br>
@@ -53,6 +52,9 @@
     </div>
 </div>
 <script type="text/javascript">
+
+
+
     function filterPausa()
     {
         var input, table, tr, tdYear, i;

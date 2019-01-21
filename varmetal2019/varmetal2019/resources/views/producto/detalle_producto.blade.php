@@ -127,7 +127,7 @@ function sendEmail()
       datosPausa = Array();
       datosPausa[0] = '{{$trabajador->nombre}}';
       datosPausa[1] = '{{$trabajador->rut}}';
-      datosPausa[2] = '{{$usuarioActual->email}}';
+      datosPausa[2] = '{{$trabajador->user->email}}';
       datosPausa[3] = '{{$producto->nombre}}';
       datosPausa[4] = '{{$producto->codigo}}';
       json_text = JSON.stringify(datosPausa);

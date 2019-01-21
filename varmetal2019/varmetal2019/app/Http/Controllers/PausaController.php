@@ -45,34 +45,45 @@ class PausaController extends Controller
       $response = json_decode($data->DATA, true);
 
       $idPausa = $response[0];
+      $idTrabajador = $response[1];
       $motivo = $response[2];
       $idObra = $response[3];
 
+      $trabajador = Trabajador::find($idTrabajador);
       $pausa = Pausa::find($idPausa);
       $producto = Producto::find($pausa->producto_id_producto);
+
+      $productos = $trabajador->productoWithAtributes()->where('producto_id_producto', '=', $producto->idProducto)->get()->first();
+
       $pausa->fechaFin=now();
       $usuarioActual = Auth::user();
       $supervisor = $usuarioActual->trabajador;
       $diferenciaTiempo = $pausa->fechaFin->diffInSeconds($pausa->fechaInicio); //tiempo en segundos
       if($motivo=='Cambio de pieza')
       {
-        if($producto->tiempoEnSetUp == NULL)
+        if($producto->tiempoEnSetUp == 'null')
         {
           $producto->tiempoEnSetUp = $diferenciaTiempo/(60);
+          $productos->pivot->tiempoEnSetUp = $diferenciaTiempo/(60);
+
         }else {
           $producto->tiempoEnSetUp += $diferenciaTiempo/(60);
+          $productos->pivot->tiempoEnSetUp += $diferenciaTiempo/(60);
         }
       }
       if($motivo != 'No se pudo especificar el motivo (Leer la descripción)' && $motivo != 'Cambio de pieza')
       {
-        if($producto->tiempoEnPausa == NULL)
+        if($producto->tiempoEnPausa == 'null')
         {
           $producto->tiempoEnPausa = $diferenciaTiempo/(60);
+          $productos->pivot->tiempoEnPausa = $diferenciaTiempo/(60);
         }else {
           $producto->tiempoEnPausa += $diferenciaTiempo/(60);
+          $productos->pivot->tiempoEnPausa += $diferenciaTiempo/(60);
         }
       }
       $producto->save();
+      $productos->pivot->save();
       $pausa->save();
       return 1;
     }
@@ -112,6 +123,11 @@ class PausaController extends Controller
       $descripcion = $response[1];
       $fechaInicio = $response[2];
       $motivo = $response[3];
+
+      if($descripcion==NULL)
+      {
+        $descripcion = 'No posee descripcion';
+      }
 
       $newPausa=new Pausa;
       $newPausa->fechaInicio = $fechaInicio;
