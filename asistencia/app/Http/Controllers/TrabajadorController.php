@@ -15,4 +15,9 @@ class TrabajadorController extends Controller
   {
     return view('trabajador.agregarTrabajadores');
   }
+
+  public function insert()
+  {
+
+  }
 }
