@@ -129,6 +129,7 @@ class ProductoController extends Controller
         $producto->cantProducto = $request->cantidadProducto;
         $producto->fechaFin = NULL;
         $producto->obras_id_obra = $request->obraProducto;
+        $producto->tipo_id_tipo = $request->tipoProducto;
 
         $producto->save();
         return 1;
