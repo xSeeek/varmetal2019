@@ -21,7 +21,7 @@
                 <tbody>
                   @foreach ($trabajadores as $trabajador)
                   <tr>
-                    <td class="text-center"><a href="">{{$trabajador->rut}}</a></td>
+                    <td class="text-center"><a href="{!! route('administrador.detallesTrabajador', ['rut'=>$trabajador->rut]) !!}">{{$trabajador->rut}}</a></td>
                     <td class="text-left">{{$trabajador->nombre}}</td>
                     @if($trabajador->obra != null)
                       <td class="text-center"><a href="{!! route('administrador.detallesObra', ['id'=>$trabajador->obra->idObra]) !!}">{{$trabajador->obra->nombre}}</a></td>
@@ -41,6 +41,7 @@
       </div>
     </div>
     <br>
+    <!--Obras-->
     <div class="card">
       <div class="card-header">
         <h3 class="card-tittle">Administrar Obras</h3>

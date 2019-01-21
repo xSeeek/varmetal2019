@@ -20,6 +20,12 @@ class TrabajadorController extends Controller
     return view('trabajador.agregarTrabajadores');
   }
 
+  public function detallesTrabajador($rut)
+  {
+    return view('trabajador.detallesTrabajador')
+      ->with('trabajador', Trabajador::where('rut', $rut)->first());
+  }
+
   public function insert(InsertTrabajadorRequest $request)
   {
     $user = User::create([

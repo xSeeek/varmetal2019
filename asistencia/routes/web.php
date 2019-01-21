@@ -40,6 +40,10 @@
     ->middleware('is_admin')
     ->name('administrador.insertTrabajador');
 
+  Route::get('/menuAdministrador/detallesTrabajador/{rut}', ['uses'=>'TrabajadorController@detallesTrabajador'])
+    ->middleware('is_admin')
+    ->name('administrador.detallesTrabajador');
+
 /**
  * [[Rutas Controlador AsistenciaController]]
  */
@@ -57,7 +61,7 @@ Route::get('/asistencias/{rut}', ['uses'=>'AsistenciaController@verAsistencia'])
   ->name('supervisor.verAsistencia')
   ->middleware('is_supervisor', 'auth');
 
-  Route::get('/asistencias/{rut}/detalles/{id}', ['uses'=>'AsistenciaController@detallesAsistencia'])
+  Route::get('/asistencias/{rut}/detallesAsistencia/{id}', ['uses'=>'AsistenciaController@detallesAsistencia'])
     ->name('supervisor.detallesAsistencia')
     ->middleware('is_supervisor', 'auth');
 
