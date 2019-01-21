@@ -7,7 +7,8 @@
         <h3 class="card-tittle">Agregar nuevo trabajador</h3>
       </div>
       <div class="card-body">
-        <form action="" id="form_agregar">
+        <form method="post" action="{!! route('administrador.insertTrabajador') !!}" id="form_agregar">
+          @csrf
           <div class="form-group">
             <input type="email" name="email" value="{{ old('email') }}"
              placeholder="Email Trabajador" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" required autofocus>
@@ -18,13 +19,12 @@
              @endif
           </div>
           <div class="form-group">
-            <input type="text" name="password" id="password" value="{{ old('password') }}"
-             placeholder="Contraseña trabajador(por defecto será su rut)" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}">
-             @if ($errors->has('password'))
-               <span class="invalid-feedback" role="alert">
-                 <strong>{{ $errors->first('password') }}</strong>
-               </span>
-             @endif
+            <select name="type" class="form-control" name="type">
+              <option value="Administrador">Administrador</option>
+              <option value="Supervisor">Supervisor</option>
+              <option value="Encargado">Encargado</option>
+              <option value="Trabajador">Trabajador</option>
+            </select>
           </div>
           <div class="form-group">
             <input type="text" name="nombre_completo" value="{{ old('nombre_completo') }}"

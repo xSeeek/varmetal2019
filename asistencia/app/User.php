@@ -11,6 +11,7 @@ class User extends Authenticatable
   const ADMIN_TYPE = 'Admin';
   const DEFAULT_TYPE = 'Trabajador';
   const SUPERVISOR_TYPE = 'Supervisor';
+  const ENCARGADO_TYPE = 'Encargado';
 
   public function trabajador()
   {

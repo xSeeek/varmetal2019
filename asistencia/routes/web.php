@@ -36,6 +36,10 @@
     ->middleware('is_admin')
     ->name('administrador.agregarTrabajadores');
 
+  Route::post('/menuAdministrador/insertTrabajador', 'TrabajadorController@insert')
+    ->middleware('is_admin')
+    ->name('administrador.insertTrabajador');
+
 /**
  * [[Rutas Controlador AsistenciaController]]
  */

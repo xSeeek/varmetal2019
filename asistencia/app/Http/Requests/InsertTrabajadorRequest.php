@@ -3,6 +3,7 @@
 namespace Asistencia\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use ValidateRequests;
 
 class InsertTrabajadorRequest extends FormRequest
 {
@@ -15,21 +16,20 @@ class InsertTrabajadorRequest extends FormRequest
   {
     return
     [
-      'trabajador'=>'required',
+      'email'=>'required|min:11|max:255|unique:users,email',
+      'nombre_completo'=>'required|max:255|min:3',
+      'rut'=>'required|unique:trabajador,rut|cl_rut',
+      'cargo'=>'required|min:3|max:5',
     ];
   }
 
   public function attributes()
   {
       return [
-          'trabajador' => 'Trabajador',
-      ];
-  }
-
-  public function messages()
-  {
-    return [
-        'trabajador.required' => 'Requiere seleccionar un trabajador.',
+          'email' => 'Email',
+          'nombre_completo' => 'Nombre completo',
+          'rut' => 'Rut',
+          'cargo' => 'Cargo'
       ];
   }
 }

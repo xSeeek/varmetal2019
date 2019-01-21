@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use Asistencia\User;
 use Asistencia\Http\Requests\InsertObraRequest;
-use Asistencia\Http\Requests\InsertTrabajadorRequest;
+use Asistencia\Http\Requests\InsertTrabajadorObraRequest;
 use Asistencia\Trabajador;
 use Asistencia\Obra;
 
@@ -82,7 +82,7 @@ class ObraController extends Controller
     ->with('success', 'Obra eliminada con éxito');
   }
 
-  public function registrarTrabajadores(InsertTrabajadorRequest $request, $idObra)
+  public function registrarTrabajadores(InsertTrabajadorObraRequest $request, $idObra)
   {
     $obra = Obra::find($idObra);
     $trabajador = Trabajador::where('rut', $request->trabajador)->first();

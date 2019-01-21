@@ -4,7 +4,7 @@ namespace Asistencia\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class InsertTrabajadorRequest extends FormRequest
+class InsertTrabajadorObraRequest extends FormRequest
 {
   public function authorize()
   {

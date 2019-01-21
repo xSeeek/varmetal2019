@@ -13,23 +13,21 @@
               <table id="tabla_trabajadores" class="table display" style="width:100%">
                 <thead class="thead-dark">
                   <tr>
-                    <th class="text-center">Nombre</th>
                     <th class="text-center">Rut</th>
+                    <th class="text-center">Nombre</th>
                     <th class="text-center">Obra</th>
-                    <th class="text-center" data-toggle="tooltip" title="Configuraciones"><i class="fas fa-cogs"></i></th>
                   </tr>
                 </thead>
                 <tbody>
                   @foreach ($trabajadores as $trabajador)
                   <tr>
+                    <td class="text-center"><a href="">{{$trabajador->rut}}</a></td>
                     <td class="text-left">{{$trabajador->nombre}}</td>
-                    <td class="text-center">{{$trabajador->rut}}</td>
                     @if($trabajador->obra != null)
                       <td class="text-center"><a href="{!! route('administrador.detallesObra', ['id'=>$trabajador->obra->idObra]) !!}">{{$trabajador->obra->nombre}}</a></td>
                     @else
                       <td class="text-center">No Asignado</td>
                     @endif
-                    <td class="text-center">Botones</td>
                   </tr>
                 @endforeach
                 </tbody>
