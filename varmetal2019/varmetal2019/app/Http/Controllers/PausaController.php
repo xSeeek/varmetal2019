@@ -112,8 +112,6 @@ class PausaController extends Controller
       $descripcion = $response[1];
       $fechaInicio = $response[2];
       $motivo = $response[3];
-      if($descripcion==NULL)
-        return 'Añada una descripción';
 
       $newPausa=new Pausa;
       $newPausa->fechaInicio = $fechaInicio;

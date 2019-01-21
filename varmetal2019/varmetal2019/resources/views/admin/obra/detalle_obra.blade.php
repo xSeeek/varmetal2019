@@ -208,8 +208,6 @@
 </div>
 <script type="text/javascript">
 
-    nombreProyectoverKilos
-
     function changeStatus()
     {
       var nombreProyecto, enableChangesButton;

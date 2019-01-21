@@ -30,6 +30,15 @@ class EmailController extends Controller
     public function sendEmailPausas(Request $request)
     {
       $response = JSON_decode($request->DATA, true);
+
+      if($response[4]=='0')
+        $response[4] == 'Falta materiales';
+      if($response[4]=='1')
+        $response[4] == 'Falla en el equipo';
+      if($response[4]=='2')
+        $response[4] == 'Falla en el plano';
+      if($response[4]=='3')
+        $response[4] == 'Cambio de pieza';
       $data = array(
           'name' => $response[0],
           'rut' => $response[1],
@@ -42,7 +51,7 @@ class EmailController extends Controller
         $user = Auth::user();
         $users = User::all();
         $nombre = $user->trabajador->nombre;
-        $message->from($user->email, $nombre);
+        $message->from($user->email,'Departamento de Informática Varmetal');
         foreach ($users as $key => $supervisor) {
           if($supervisor->type == 'Supervisor')
           {
@@ -69,7 +78,7 @@ class EmailController extends Controller
         $user = Auth::user();
         $users = User::all();
         $nombre = $user->trabajador->nombre;
-        $message->from($user->email, $nombre);
+        $message->from($user->email, 'Departamento de Informática Varmetal');
         foreach ($users as $key => $supervisor) {
           if($supervisor->type == 'Supervisor')
           {
@@ -94,7 +103,7 @@ class EmailController extends Controller
         $user = Auth::user();
         $users = User::all();
         $nombre = $user->trabajador->nombre;
-        $message->from($user->email, $nombre);
+        $message->from($user->email, 'Departamento de Informática Varmetal');
         foreach ($users as $key => $supervisor) {
           if($supervisor->type == 'Supervisor')
           {
