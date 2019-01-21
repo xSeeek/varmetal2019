@@ -30,6 +30,13 @@
   Route::get('/home', 'HomeController@index')->name('home');
 
 /**
+ * [[Controller Trabajadores]]
+ */
+  Route::get('/menuAdministrador/agregarTrabajadores', 'TrabajadorController@agregarTrabajadores')
+    ->middleware('is_admin')
+    ->name('administrador.agregarTrabajadores');
+
+/**
  * [[Rutas Controlador AsistenciaController]]
  */
  //Ruta para registrar una asistencia
