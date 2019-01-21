@@ -116,6 +116,37 @@
     </div>
 </div>
 <script>
+
+  function sendEmail()
+  {
+
+    var datos,json_text;
+
+    datos = Array();
+    datos[0] = '{{$trabajador->nombre}}';
+    datos[1] = '{{$trabajador->rut}}';
+    datos[2] = '{{$trabajador->user->email}}';
+    datos[3] = '{{$producto->codigo}}';
+
+    json_text = JSON.stringify(datos);
+
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        type: "POST",
+        data: {DATA:json_text},
+        url: "{{url('/emailPausaEliminada')}}",
+        success: function(response){
+            if(response!='Email enviado registrado')
+                showMensajeSwall(MSG_ERROR, response);
+            else
+              window.location.href = "{{url('/addPausa', [$producto->idProducto])}}";
+
+      }
+    });
+  }
+
   function trabajadorDeletePausa()
   {
     var datos, json_text;
@@ -134,7 +165,7 @@
           url: "{{url('/trabajadorDeletePausa')}}",
           success: function(response){
               console.log(response);
-              window.location.href = "{{url('/addPausa', [$producto->idProducto])}}";
+              sendEmail();
           }
       });
   }

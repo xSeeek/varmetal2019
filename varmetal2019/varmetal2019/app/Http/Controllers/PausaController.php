@@ -183,14 +183,21 @@ class PausaController extends Controller
       $usuarioActual = Auth::user();
       if($usuarioActual->trabajador == NULL)
           return redirect()->route('/home');
+      if($pausa->fechaFin!=NULL)
+          return redirect()->route('/home');
 
-      $trabajador = $usuarioActual->trabajador;
-      $productos = $trabajador->productoWithAtributes()->where('producto_id_producto', '=', $producto->idProducto)->get()->first();
-      $productos->pivot->pausasRealizadas--;
-      $productos->pivot->save();
-      $producto->cantPausa--;
-      $producto->save();
-      $pausa->delete();
+      if($pausa->fechaFin==NULL)
+      {
+        $trabajador = $usuarioActual->trabajador;
+        $productos = $trabajador->productoWithAtributes()->where('producto_id_producto', '=', $producto->idProducto)->get()->first();
+        $productos->pivot->pausasRealizadas--;
+        $productos->pivot->save();
+        $producto->cantPausa--;
+        $producto->save();
+        $pausa->delete();
+      }else {
+        return 'La pausa ya fue finalizada';
+      }
 
       return 'Pausa eliminada';
     }

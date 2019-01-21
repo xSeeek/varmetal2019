@@ -279,6 +279,30 @@ class ProductoController extends Controller
         return 1;
     }
 
+    public function updateCantidadProductoX(Request $request)
+    {
+
+        $response = json_decode($request->DATA,true);
+
+
+
+        $usuarioActual = Auth::user();
+
+        if($usuarioActual->trabajador == NULL)
+            return redirect()->route('/home');
+
+        $datos_trabajador = $usuarioActual->trabajador;
+        $producto = Producto::find($response[1]);
+
+        $dataProducto = $producto->trabajadorWithAtributtes()->where('trabajador_id_trabajador', '=', $datos_trabajador->idTrabajador)->get()->first();
+        $dataProducto->pivot->productosRealizados = ($dataProducto->pivot->productosRealizados) + $response[0];
+        $dataProducto->pivot->kilosTrabajados = ($dataProducto->pivot->productosRealizados) * $producto->pesoKg;
+        $dataProducto->pivot->save();
+        $dataProducto->save();
+
+        return 1;
+    }
+
     public function updateCantidadProducto(Request $request)
     {
         $usuarioActual = Auth::user();

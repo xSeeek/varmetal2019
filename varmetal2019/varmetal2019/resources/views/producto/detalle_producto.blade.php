@@ -45,7 +45,6 @@
                         @if($producto->fechaFin == NULL)
                         <div class="col-sm-10">
                             <h5>
-                                <br>
                                 Ver Pausas:
                                 <br>
                                     <a class="btn btn-outline-success btn-lg" id="pauseButton" role="button" href="{{url('addPausa', [$producto->idProducto])}}">Pausar</a>
@@ -80,6 +79,9 @@
                     <a class="btn btn-outline-primary btn-lg" role="button" onclick="sendEmailProductos()"><b>Actualizar cantidad producida</b></a>
                     @else
                     <a class="btn btn-outline-primary btn-lg" role="button" onclick="actualizarCantidad({{$producto->idProducto}})"><b>Actualizar cantidad producida</b></a>
+                    <br><b>Ingrese la Cantidad de Productos:</b>
+                    <input type="text" id="cantidadX" name="fname" size="10" style="font-family: Arial; font-size: 14pt; border: 2px solid #39c;">
+                    <br><a class="btn btn-outline-primary btn-lg" role="button" onclick="nuevaCantidad()"><b>Añadir "x" cantidad</b></a>
                     @endif
                 @endif
             </div>
@@ -92,7 +94,83 @@
 </div>
 <script type="text/javascript">
 
-function sendEmailProductos()
+  function nuevaCantidad()
+  {
+      var datos, json_text;
+
+      datos = Array();
+      datos[0] = document.getElementById('cantidadX').value;
+      datos[1] = '{{$producto->idProducto}}';
+      json_text = JSON.stringify(datos);
+      if(datos[0]>{{$producto->cantProducto}})
+      {
+        alert("La cantidad no puede ser mayor que el total");
+        return 2;
+      }
+
+      if((datos[0]+{{$cantidadProducida}})>5 && (datos[0]+{{$cantidadProducida}})<={{$producto->cantProducto}})
+      {
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: "POST",
+            data: {DATA:json_text},
+            url: "{{url('/producto/actualizarCantidadX')}}",
+            success: function(response){
+                if(response == 1)
+                  sendEmailProductosX(datos[0]);
+              }
+            });
+            return 1;
+      }
+      if((datos[0]+{{$cantidadProducida}})<5 && (datos[0]+{{$cantidadProducida}})<={{$producto->cantProducto}}){
+          $.ajax({
+              headers: {
+                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              },
+              type: "POST",
+              data: {DATA:json_text},
+              url: "{{url('/producto/actualizarCantidadX')}}",
+              success: function(response){
+                  if(response == 1)
+                    sendEmailProductosX(datos[0]);
+                }
+              });
+              return;
+      }
+      alert("hola");
+  }
+
+  function sendEmailProductosX(datos)
+    {
+      var datosPausa, json_text;
+
+      datosPausa = Array();
+      datosPausa[0] = '{{$trabajador->nombre}}';
+      datosPausa[1] = '{{$trabajador->rut}}';
+      datosPausa[2] = '{{$usuarioActual->email}}';
+      datosPausa[3] = '{{$producto->nombre}}';
+      datosPausa[4] = '{{$producto->codigo}}';
+      datosPausa[5] = datos;
+      json_text = JSON.stringify(datosPausa);
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: "POST",
+            data: {DATA:json_text},
+            url: "{{url('/enviarEmailProducto')}}",
+            success: function(response){
+                if(response!='Email enviado producto')
+                    showMensajeSwall(MSG_ERROR, response);
+                else
+                window.location.href = "{{url('/detalleProducto', [$producto->idProducto])}}";
+              }
+        });
+    }
+
+  function sendEmailProductos()
     {
       var datosPausa, json_text;
 

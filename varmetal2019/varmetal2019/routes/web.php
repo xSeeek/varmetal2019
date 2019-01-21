@@ -130,6 +130,10 @@ Route::get('/admin', 'AdminController@admin')
         Route::post('/producto/actualizarCantidad', ['uses' => 'ProductoController@updateCantidadProducto'])
                     ->middleware('is_trabajador')
                     ->name('/producto/actualizarCantidad');
+//actualizar
+        Route::post('/producto/actualizarCantidadX', ['uses' => 'ProductoController@updateCantidadProductoX'])
+                    ->middleware('is_trabajador')
+                    ->name('/producto/actualizarCantidad');
 /* [** Pausa Controller **] */
     /* [** ADMINISTRACIÓN **] */
         /* [** GET **] */
@@ -221,11 +225,16 @@ Route::get('/admin', 'AdminController@admin')
         Route::post('/enviarEmail', ['uses' => 'EmailController@sendEmailPausas'])
                     ->name('enviarEmail'); //PAUSAS
         Route::post('/enviarEmailProducto', ['uses' => 'EmailController@sendEmailProducto'])
-                    ->name('enviarEmailProducto');
+                    ->name('enviarEmailProducto'); //cada 5 productos
         Route::post('/enviarEmailTerminado', ['uses' => 'EmailController@sendEmailProductoTerminado'])
-                    ->name('enviarEmailTerminado');
+                    ->name('enviarEmailTerminado'); //producto terminado
         Route::post('/enviarEmailRegistrado',['uses' => 'EmailController@sendEmailRegistro'])
-                    ->name('enviarEmailRegistrado');
+                    ->name('enviarEmailRegistrado'); //nuevo registro
+        Route::post('/emailPausaEliminada',['uses' => 'EmailController@emailPausaEliminada'])
+                    ->name('emailPausaEliminada'); //pausa pendiente eliminada
+//Productos X
+        Route::post('/enviarEmailProductoX', ['uses' => 'EmailController@sendEmailProducto'])
+                    ->name('enviarEmailProductoX'); //cada 5 productos
 
 /* [** Cambiar Email **] */
     /*[** GENERAL **] */
