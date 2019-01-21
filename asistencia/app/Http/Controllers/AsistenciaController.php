@@ -26,13 +26,16 @@ class AsistenciaController extends Controller
 
   public function menuAdministrador()
   {
-    return view('administrador.menuAdministrador')->with('obras', Obra::all());
+    return view('administrador.menuAdministrador')
+      ->with('obras', Obra::all())
+      ->with('trabajadores', Trabajador::all());
   }
 
   public function menuSupervisor()
   {
     $user = Auth::user();
-    return view('supervisor.menuSupervisor')->with('obra', $user->trabajador->obra);
+    return view('supervisor.menuSupervisor')
+      ->with('obra', $user->trabajador->obra);
   }
 
   public function registrarAsistencia(MarcarAsistencia $request)

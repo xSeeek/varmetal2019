@@ -2,58 +2,91 @@
 
 @section('main')
   <div class="container mt-2">
-    <div class="row">
-      <div class="col">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-tittle">Administrar Personal</h3>
+      </div>
+      <div class="card-body">
         <div class="card">
-          <div class="card-header">
-            <h3 class="card-tittle">Administrar Obras</h3>
-          </div>
-          <div class="card-body">
-            <div class="row">
-              <div class="col">
-                <div class="card">
-                  <div class="card-body container">
-                    @if(count($obras) > 0)
-                      <table id="tabla_obras" class="table display" style="width:100%">
-                        <thead class="thead-dark">
-                          <tr>
-                            <th class="text-center">Nombre</th>
-                            <th class="text-center" data-toggle="tooltip" title="Configuraciones"><i class="fas fa-cogs"></i></th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          @foreach ($obras as $obra)
-                          <tr>
-                            <td class="text-center">{{$obra->nombre}}</td>
-                            <td class="text-center">
-                              <div class="btn-group" role="group">
-                                <form action="{!! route('administrador.eliminarObra', ['id'=>$obra->idObra]) !!}" id="form_id_{{$obra->idObra}}" method="post">
-                                  <div class="btn-group-vertical">
-                                    <a href="{!! route('administrador.detallesObra', ['id'=>$obra->idObra]) !!}"
-                                      class="btn btn-primary text-light"
-                                      role="button" data-toggle="tooltip" data-placement="top"
-                                      title="Ver Detalles">
-                                      Ver Detalles
-                                    </a>
-                                     @csrf
-                                     <button type="submit" data-toggle="tooltip" title="Eliminar Obra" class="btn btn-danger text-light"><i class="fas fa-trash-alt"></i></button>
-                                    </div>
-                                </form>
-                              </div>
-                            </td>
-                          </tr>
-                        @endforeach
-                        </tbody>
-                      </table>
+          <div class="card-body container">
+            @if(count($trabajadores) > 0)
+              <table id="tabla_trabajadores" class="table display" style="width:100%">
+                <thead class="thead-dark">
+                  <tr>
+                    <th class="text-center">Nombre</th>
+                    <th class="text-center">Rut</th>
+                    <th class="text-center">Obra</th>
+                    <th class="text-center" data-toggle="tooltip" title="Configuraciones"><i class="fas fa-cogs"></i></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @foreach ($trabajadores as $trabajador)
+                  <tr>
+                    <td class="text-left">{{$trabajador->nombre}}</td>
+                    <td class="text-center">{{$trabajador->rut}}</td>
+                    @if($trabajador->obra != null)
+                      <td class="text-center"><a href="{!! route('administrador.detallesObra', ['id'=>$trabajador->obra->idObra]) !!}">{{$trabajador->obra->nombre}}</a></td>
                     @else
-                      <h2>No registra ninguna obra</h2>
+                      <td class="text-center">No Asignado</td>
                     @endif
-                  </div>
-                  <a href="{!! route('administrador.agregarObra') !!}" class="btn btn-success btn-lg btn-block text-light">Agregar nuevas obras</a>
-                </div>
-              </div>
-            </div>
+                    <td class="text-center">Botones</td>
+                  </tr>
+                @endforeach
+                </tbody>
+              </table>
+            @else
+              <h2>No registra ninguna obra</h2>
+            @endif
           </div>
+          <a href="{!! route('administrador.agregarTrabajadores') !!}" class="btn btn-success btn-lg btn-block text-light">Agregar nuevo personal</a>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-tittle">Administrar Obras</h3>
+      </div>
+      <div class="card-body">
+        <div class="card">
+          <div class="card-body container">
+            @if(count($obras) > 0)
+              <table id="tabla_obras" class="table display" style="width:100%">
+                <thead class="thead-dark">
+                  <tr>
+                    <th class="text-center">Nombre</th>
+                    <th class="text-center" data-toggle="tooltip" title="Configuraciones"><i class="fas fa-cogs"></i></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @foreach ($obras as $obra)
+                  <tr>
+                    <td class="text-center">{{$obra->nombre}}</td>
+                    <td class="text-center">
+                      <div class="btn-group" role="group">
+                        <form action="{!! route('administrador.eliminarObra', ['id'=>$obra->idObra]) !!}" id="form_id_{{$obra->idObra}}" method="post">
+                          <div class="btn-group-vertical">
+                            <a href="{!! route('administrador.detallesObra', ['id'=>$obra->idObra]) !!}"
+                              class="btn btn-primary text-light"
+                              role="button" data-toggle="tooltip" data-placement="top"
+                              title="Ver Detalles">
+                              Ver Detalles
+                            </a>
+                             @csrf
+                             <button type="submit" data-toggle="tooltip" title="Eliminar Obra" class="btn btn-danger text-light"><i class="fas fa-trash-alt"></i></button>
+                            </div>
+                        </form>
+                      </div>
+                    </td>
+                  </tr>
+                @endforeach
+                </tbody>
+              </table>
+            @else
+              <h2>No registra ninguna obra</h2>
+            @endif
+          </div>
+          <a href="{!! route('administrador.agregarObra') !!}" class="btn btn-success btn-lg btn-block text-light">Agregar nuevas obras</a>
         </div>
       </div>
     </div>
@@ -61,7 +94,16 @@
 
   <script type="text/javascript">
     $(document).ready(function() {
-      var table = $('#tabla_obras').DataTable({
+      $('#tabla_obras').DataTable({
+        "language":{
+          "url":"//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+        },
+        "scrollX": true,
+        'fixedColumns': true,
+        "autoWidth": false,
+      });
+
+      $('#tabla_trabajadores').DataTable({
         "language":{
           "url":"//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
         },
