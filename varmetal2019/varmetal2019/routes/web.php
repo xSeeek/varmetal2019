@@ -253,3 +253,6 @@ Route::get('/admin', 'AdminController@admin')
 
         Route::post('/productoControlEditar', ['uses' => 'ProductoController@editar'])
                     ->name('editarProducto');
+
+        Route::post('/obraControlEditar', ['uses' => 'ObraController@editar'])
+                    ->name('editarObra');

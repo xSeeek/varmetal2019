@@ -10,7 +10,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    Detalle de la OT
+                    <b>Detalle de la OT</b>
                     <button type="button" class="btn btn-primary float-sm-right" data-toggle="modal" data-target="#modalOpciones"><i class="fas fa-cogs"></i></button>
                 </div>
                 <div class="card-body">
@@ -21,7 +21,7 @@
                         </div>
                     </h5>
                     <h5>
-                        <b>Nombre del Proyecto:</b>
+                        <b>Nombre del Proyecto: (Editebla)</b>
                         <div class="col-sm-10">
                             <input type="text" readonly id="nombreProyecto" class="form-control-plaintext" value="{{$obra->proyecto}}">
                         </div>
@@ -185,6 +185,11 @@
             </div>
             <div class="modal-body" align="center">
                 <h5>
+                    Edicion de datos:
+                </br>
+                    <a class="btn btn-outline-success btn-md" id="enableChangesButton" role="button" onclick="changeStatus()">Habilitar/Deshabilitar</a>
+                </h5>
+                <h5>
                     @if(count($productos_obra) == 0)
                     Eliminar OT:
                 </br>
@@ -202,6 +207,48 @@
     </div>
 </div>
 <script type="text/javascript">
+
+    nombreProyectoverKilos
+
+    function changeStatus()
+    {
+      var nombreProyecto, enableChangesButton;
+
+      nombreProyecto = document.getElementById('nombreProyecto');
+      nombreProyecto.removeAttribute('readonly');
+
+      enableChangesButton = document.getElementById('enableChangesButton');
+      enableChangesButton.innerText="Guardar Cambios";
+      enableChangesButton.setAttribute("onclick","postChangeData()");
+      return 'boton cambiado';
+    }
+
+    function postChangeData()
+    {
+      var nombreProyecto, enableChangesButton;
+
+      nombreProyecto = document.getElementById('nombreProyecto');
+
+      enableChangesButton = document.getElementById('enableChangesButton');
+
+      datos = Array();
+      datos[0] = nombreProyecto.value;
+      datos[1] = '{{$obra->idObra}}';
+
+      json_text = JSON.stringify(datos);
+      $.ajax({
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          type: "POST",
+          data: {DATA:json_text},
+          url: "{{url('/obraControlEditar')}}",
+          success: function(response){
+              window.location.reload();
+          }
+      });
+    }
+
     function deleteObra(data)
     {
         $.ajax({
