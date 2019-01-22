@@ -28,7 +28,8 @@
                     </div>
                     <div class="form-group row">
                       <label class="col-md-4 col-form-label text-md-right"><b>Motivo:</b></label>
-                        <select class="custom-select" id="motivo" aria-describedby="inputType" name="type" required>
+                        <select class="custom-select" id="motivo" aria-describedby="inputType" name="type" onchange="mostrarDescripcion()" required>
+                                <option select value="4">Otro</option>
                                 <option value="0">Falta materiales</option>
                                 <option value="1">Falla en el equipo</option>
                                 <option value="2">Falla en el plano</option>
@@ -37,10 +38,10 @@
                     </div>
                     <div class="form-group row">
                     <div class="text-center" aling="center">
-                    <div class="text-center">
+                    <div class="text-center" id="mostrarDes">
                       <label class="col-form-label text-md-center"><b>Descripción: (Mientras ocurre el suceso, detalle con esmeración)</b>
                         <div class="col-md-6">
-                          <textarea class="col-md-10" id="descripcion" type="text" aria-describedby="descripcion" placeholder="Descripcion" name="descripcion" cols="50" onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
+                          <textarea class="col-md-10" id="descripcion" type="text" aria-describedby="descripcion" placeholder="Descripcion" name="descripcion" cols="50" onkeyup="textAreaAdjust(this)" style="overflow:hidden" value""></textarea>
                         </div>
                     </div>
                   </div>
@@ -56,7 +57,7 @@
                       @endforeach
                     @endif
                     @if($producto->cantPausas<=14)
-                      <a class="btn btn-outline-success my-1 my-sm-0" role="button" onclick="sendEmail()"><b>Registrar Cambios</b></a>
+                      <a class="btn btn-outline-success my-1 my-sm-0" role="button" onclick="savePausa()"><b>Registrar Cambios</b></a>
                     @else
                       <a class="btn btn-outline-success my-1 my-sm-0" role="button"><b>Limite de pausas alcanzado</b></a>
                     @endif
@@ -72,6 +73,25 @@
 </div>
 
 <script type="text/javascript">
+
+function mostrarDescripcion()
+{
+  var etiqueta, valor;
+  etiqueta = document.getElementById('mostrarDes');
+  valor = document.getElementById('motivo').value;
+  descripcion = document.getElementById('descripcion');
+  if(valor==4)
+  {
+    etiqueta.removeAttribute("style");
+    descripcion.setAttribute("required","");
+  }
+  if(valor!=4){
+    etiqueta.setAttribute("style","display:none;");
+    etiqueta.setAttribute("style","display:none;");
+    descripcion.removeAttribute("required");
+  }
+  return 1;
+}
 
 function textAreaAdjust(o)
     {
@@ -106,7 +126,7 @@ function textAreaAdjust(o)
                       console.log(response);
                   }
                   else
-                      savePausa();
+                  window.location.href="{{url('/addPausa', [$producto->idProducto])}}";
             }
           });
         }
@@ -135,7 +155,7 @@ function savePausa()
                   console.log(response);
               }
               else
-                  window.location.href="{{url('/addPausa', [$producto->idProducto])}}";
+              sendEmail();
           }
       });
     }

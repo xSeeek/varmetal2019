@@ -61,6 +61,9 @@ class EmailController extends Controller
         $response[5] == 'Falla en el plano';
       if($response[5]=='3')
         $response[5] == 'Cambio de pieza';
+      if($response[4] == NULL)
+        $response[4] = 'No posee Descripción';
+        
       $data = array(
           'name' => $response[0],
           'rut' => $response[1],

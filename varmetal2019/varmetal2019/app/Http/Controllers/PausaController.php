@@ -124,9 +124,11 @@ class PausaController extends Controller
       $fechaInicio = $response[2];
       $motivo = $response[3];
 
-      if($descripcion==NULL)
+      if($descripcion==NULL && $motivo!=4)
       {
         $descripcion = 'No posee descripcion';
+      }else {
+        return "Si el motivo es 'Otro', debes ingresar una descripcion";
       }
 
       $newPausa=new Pausa;

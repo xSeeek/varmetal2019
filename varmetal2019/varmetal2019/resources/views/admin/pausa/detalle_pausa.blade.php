@@ -145,7 +145,7 @@
         data: {DATA:json_text},
         url: "{{url('/emailPausaEliminada')}}",
         success: function(response){
-            if(response!='Email enviado registrado')
+            if(response!='Email Eliminado')
                 showMensajeSwall(MSG_ERROR, response);
             else
               window.location.href = "{{url('/addPausa', [$producto->idProducto])}}";
