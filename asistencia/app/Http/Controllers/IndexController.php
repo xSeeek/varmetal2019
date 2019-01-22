@@ -9,6 +9,6 @@ class IndexController extends Controller
 {
     public function index()
     {
-      return redirect()->route('home');
+      return redirect()->route('login');
     }
 }
