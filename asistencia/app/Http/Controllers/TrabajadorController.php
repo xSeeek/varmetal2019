@@ -50,7 +50,12 @@ class TrabajadorController extends Controller
 
   public function insert(InsertTrabajadorRequest $request)
   {
-    if(!($request->type == User::DEFAULT_TYPE)){
+    if(!($request->type == User::DEFAULT_TYPE))
+    {
+      if($request->email == null)
+      return redirect()->back()
+        ->withInput()
+        ->with('error', 'Debe incluir email para registrar un administrador o supervisor');
       $rut_array = Rut::parse($request->rut)->toArray();
       $ps = $rut_array[0];
       $user = User::create([

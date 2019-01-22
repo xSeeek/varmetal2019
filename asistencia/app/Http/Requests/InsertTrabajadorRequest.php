@@ -16,10 +16,10 @@ class InsertTrabajadorRequest extends FormRequest
   {
     return
     [
-      'email'=>'required|min:11|max:255|unique:users,email',
+      'email'=>'max:255|unique:users,email',
       'nombre_completo'=>'required|max:255|min:3',
       'rut'=>'required|unique:trabajador,rut|cl_rut',
-      'cargo'=>'required|min:3|max:5',
+      'cargo'=>'required|min:2|max:5',
     ];
   }
 
