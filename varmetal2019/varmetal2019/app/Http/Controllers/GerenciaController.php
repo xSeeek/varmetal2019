@@ -117,7 +117,7 @@ class GerenciaController extends Controller
         return -1;
     }
 
-    private function calcularHorasHombre($fechaInicio, $fechaFin)
+    public function calcularHorasHombre($fechaInicio, $fechaFin)
     {
         $period = CarbonPeriod::create($fechaInicio->format('Y-m-d'), $fechaFin->format('Y-m-d'));
         $period->toggleOptions(CarbonPeriod::EXCLUDE_START_DATE, true);
