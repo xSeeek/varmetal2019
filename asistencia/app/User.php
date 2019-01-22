@@ -5,6 +5,7 @@ namespace Asistencia;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Asistencia\Notifications\MyResetPassword;
 
 class User extends Authenticatable
 {
@@ -53,7 +54,7 @@ class User extends Authenticatable
 
   public function sendPasswordResetNotification($token)
   {
-    $this->notify(new MyResetPassword($token));
+    $this->notify(new MyResetPassword($token, $this));
   }
 
   use Notifiable;
