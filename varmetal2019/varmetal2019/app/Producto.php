@@ -15,7 +15,7 @@ class Producto extends Model
     }
     public function trabajadorWithAtributtes()
     {
-        return $this->belongsToMany('Varmetal\Trabajador', 'trabajadores_producto', 'producto_id_producto', 'trabajador_id_trabajador')->withPivot('fechaComienzo', 'kilosTrabajados', 'pausasRealizadas', 'productosRealizados', 'tiempoEnPausa', 'tiempoEnSetUp');
+        return $this->belongsToMany('Varmetal\Trabajador', 'trabajadores_producto', 'producto_id_producto', 'trabajador_id_trabajador')->withPivot('fechaComienzo', 'kilosTrabajados', 'pausasRealizadas', 'productosRealizados');
     }
     public function pausa()
     {

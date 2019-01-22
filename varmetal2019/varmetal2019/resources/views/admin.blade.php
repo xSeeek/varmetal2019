@@ -14,12 +14,12 @@
                         </div>
                     @endif
 
-                    Bienvenido, @if(Auth::user()->isSupervisor())
-                                    Supervisor
-                                @elseif(Auth::user()->isAdmin())
+                    Bienvenido, @if(Auth::user()->trabajador != NULL)
+                                    {{Auth::user()->trabajador->nombre}}
+                                @else
                                     Administrador
-                                @endif</br>
-                    Correo actual: <?php echo Auth::user()->email?>
+                                @endif
+                    <br>Correo actual: <?php echo Auth::user()->email?>
                 </div>
             </div>
             </br>
