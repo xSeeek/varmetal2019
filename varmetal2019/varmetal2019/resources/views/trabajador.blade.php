@@ -16,10 +16,14 @@
                         </div>
                     @endif
 
-                    Bienvenido, {{$trabajador->nombre}}. <br><br>
-                    Correo actual: {{$user->email}} <br><br>
-                    Rut: {{$trabajador->rut}} <br><br>
-                    Cargo: {{$trabajador->cargo}} <br><br>
+                    Bienvenido, <b>{{$trabajador->nombre}}</b>.
+                    <br>Correo actual: {{$user->email}}
+                    <br>RUT: {{$trabajador->rut}}
+                    <br>Cargo: {{$trabajador->cargo}}<br>
+
+                    <br>Mes: <b>@php setlocale(LC_TIME, ''); echo strtoupper(strftime("%B")); @endphp</b>
+                    <br>Kilos Realizados: <b>{{$kilosTrabajados}} Kg.</b>
+
                 </div>
             </div>
             </br>

@@ -34,9 +34,22 @@ class TrabajadorController extends Controller
     {
       $usuarioActual = Auth::user();
       $trabajadorActual = $usuarioActual->trabajador;
+      $kilosTrabajados = 0;
+      $date = new Carbon();
+
+      $productos_trabajador = $trabajadorActual->productoWithAtributes;
+
+      foreach($productos_trabajador as $producto)
+      {
+          if($producto->fechaFin != NULL)
+            if((Carbon::parse($producto->fechaFin)->format('m')) == $date->now()->format('m'))
+                $kilosTrabajados += $producto->pivot->kilosTrabajados;
+      }
+
       return view('trabajador')
                   ->with('user', $usuarioActual)
-                  ->with('trabajador', $trabajadorActual);
+                  ->with('trabajador', $trabajadorActual)
+                  ->with('kilosTrabajados', $kilosTrabajados);
     }
 
     public function adminTrabajadores($type)
