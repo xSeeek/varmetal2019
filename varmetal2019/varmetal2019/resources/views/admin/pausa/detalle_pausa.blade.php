@@ -103,6 +103,8 @@
   <div class="row justify-content-center">
     @if(Auth::user()->type == 'Trabajador' && $pausa->fechaFin == NULL)
       <a class="btn btn-outline-success btn-md" id="finPausa" role="button" onclick="trabajadorDeletePausa({{$pausa->idPausa}})">Eliminar Pausa</a>
+    @else
+      <a class="btn btn-outline-success btn-md" id="finPausa" role="button" onclick="adminDeletePausa({{$pausa->idPausa}})">Eliminar Pausa</a>
     @endif
   </div>
 </div>

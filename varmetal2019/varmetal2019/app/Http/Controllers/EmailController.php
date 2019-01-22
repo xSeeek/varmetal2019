@@ -18,8 +18,8 @@ class EmailController extends Controller
         'nombre' => $response[0],
         'rut' => $response[1],
         'email' => $response[2],
-        'codigo' => $response[4],
-        'nombreProducto' => $response[5],
+        'codigo' => $response[3],
+        'nombreProducto' => $response[4],
       );
       Mail::send('emails.eliminado', $dataArray, function($message){
         $user = User::orderBy('id', 'DESC')->first();

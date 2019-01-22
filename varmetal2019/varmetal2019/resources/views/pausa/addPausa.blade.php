@@ -50,16 +50,15 @@
                     @if(($pausas_almacenadas!=NULL) && (count($pausas_almacenadas)>0))
                       @foreach($pausas_almacenadas as $key => $pausa)
                         @if(($pausa->producto_id_producto == $producto->idProducto) && ($pausa->fechaFin == NULL))
-                          <a class="btn btn-outline-success my-1 my-sm-0" role="button" href="{{url('trabajadorDetallesPausaGet', [$pausa->idPausa])}}"><b>Posee una Pausa Pendiente</b></a>
+                          <a class="btn btn-outline-success my-1 my-sm-0" role="button" href="{{url('trabajadorDetallesPausaGet', [$pausa->idPausa])}}"><b>Posee {{$producto->cantPausa}} Pausa/s Pendiente (Ver última)</b></a><br><br>
                           @break
                         @endif
                       @endforeach
+                    @endif
+                    @if($producto->cantPausas<=14)
+                      <a class="btn btn-outline-success my-1 my-sm-0" role="button" onclick="sendEmail()"><b>Registrar Cambios</b></a>
                     @else
-                      @if($producto->cantPausa<=14)
-                        <a class="btn btn-outline-success my-1 my-sm-0" role="button" onclick="sendEmail()"><b>Registrar Cambios</b></a>
-                      @else
-                        <a class="btn btn-outline-success my-1 my-sm-0" role="button" onclick=""><b>Limite de Pausas alcanzado</b></a>
-                      @endif
+                      <a class="btn btn-outline-success my-1 my-sm-0" role="button"><b>Limite de pausas alcanzado</b></a>
                     @endif
               </div>
           </div>
