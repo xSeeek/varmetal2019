@@ -69,7 +69,9 @@ class TrabajadorController extends Controller
 
     $user->trabajador()->save($trabajador);
 
-    $user->sendCreateNotification($ps);
+    if(!$user->isTrabajador())
+      $user->sendCreateNotification($ps);
+
     return redirect()->route('administrador.agregarTrabajadores')->with('success', '' . $trabajador->nombre . ' registrada con éxito');
   }
 }

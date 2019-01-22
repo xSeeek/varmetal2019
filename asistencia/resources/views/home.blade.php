@@ -3,7 +3,7 @@
 @section('main')
 
   <div class="jumbotron">
-    @if (Auth::user()->isSupervisor())    
+    @if (!Auth::user()->isTrabajador())    
       <div class="row">
         <div class="col-sm-5">
           <h1 class="display-4">Bienvenido</h1>
