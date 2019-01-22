@@ -62,7 +62,6 @@ class PausaController extends Controller
       $usuarioActual = Auth::user();
       $supervisor = $usuarioActual->trabajador;
       $fechaInicio = Carbon::parse($pausa->fechaInicio);
-      //$diferenciaTiempo = $pausa->fechaFin->diffInSeconds($pausa->fechaInicio); //tiempo en segundos
       $diferenciaTiempo = $this->calcularHorasHombre($fechaInicio,$pausa->fechaFin);
       if($motivo=='Cambio de pieza')
       {
@@ -80,11 +79,11 @@ class PausaController extends Controller
       {
         if($producto->tiempoEnPausa == 'null')
         {
-          $producto->tiempoEnPausa = $diferenciaTiempo/(60);
-          $productos->pivot->tiempoEnPausa = $diferenciaTiempo/(60);
+          $producto->tiempoEnPausa = $diferenciaTiempo;
+          $productos->pivot->tiempoEnPausa = $diferenciaTiempo;
         }else {
-          $producto->tiempoEnPausa += $diferenciaTiempo/(60);
-          $productos->pivot->tiempoEnPausa += $diferenciaTiempo/(60);
+          $producto->tiempoEnPausa += $diferenciaTiempo;
+          $productos->pivot->tiempoEnPausa += $diferenciaTiempo;
         }
       }
       $producto->save();
