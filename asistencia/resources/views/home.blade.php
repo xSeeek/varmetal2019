@@ -19,6 +19,12 @@
             @endif
           </div>
           <div class="form-group">
+            <select class="form-control" name="tipo">
+              <option value="Entrada">Entrada</option>
+              <option value="Salida">Salida</option>
+            </select>
+          </div>
+          <div class="form-group">
             <input capture='camera' name="file" type="file" class="form-control-file{{ $errors->has('file') ? ' is-invalid' : '' }}" accept="image/*" id="img_select" required autofocus/>
             @if ($errors->has('file'))
               <span class="invalid-feedback" role="alert">
@@ -46,21 +52,26 @@
       });
     });
 
-  </script>
-
-  <script type="text/javascript">
-      function readURL(input) {
-          if (input.files && input.files[0]) {
-              var reader = new FileReader();
-
-              reader.onload = function (e) {
-                  $('#img_show').attr('src', e.target.result);
-              }
-              reader.readAsDataURL(input.files[0]);
-          }
+    $('#form_registrar_asistencia').submit(function (e, params) {
+      var localParams = params || {};
+      if (!localParams.send) {
+        e.preventDefault();
       }
-      $("#img_select").change(function(){
-          readURL(this);
-      });
+      confirmMensajeSwal(MSG_INFO, 'Seguro de marcar asistencia?', e);
+    });
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#img_show').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    $("#img_select").change(function(){
+        readURL(this);
+    });
   </script>
 @endsection

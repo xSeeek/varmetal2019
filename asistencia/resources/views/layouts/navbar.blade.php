@@ -36,6 +36,7 @@
                 </a>
 
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                  <a href="{!! route('home') !!}" class="dropdown-item">Inicio</a>
                   @if (Auth::user()->isAdmin())
                     <a href="{!! route('administrador.menuAdministrador') !!}" class="dropdown-item">Menu Administrador</a>
                   @elseif (Auth::user()->isSupervisor())

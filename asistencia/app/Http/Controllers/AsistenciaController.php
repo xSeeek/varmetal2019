@@ -46,7 +46,7 @@ class AsistenciaController extends Controller
       if($trabajador->obra != null)
       {
         $asistencias = Asistencia::where('trabajador_id_trabajador', $trabajador->idTrabajador)
-        ->whereDate('created_at', Carbon::today())->get();
+        ->whereDate('created_at', Carbon::today())->where('tipo', $request->tipo)->get();
         if(count($asistencias) > 0)
         {
           return redirect()->back()
@@ -54,6 +54,7 @@ class AsistenciaController extends Controller
             ->with('error', 'El trabajador ya tiene una asistencia marcada hoy');
         }
         $asistencia = new Asistencia();
+        $asistencia->tipo = $request->tipo;
 
         $dt = Carbon::now();
 

@@ -129,6 +129,14 @@ class ObraController extends Controller
 
   public function desvincular($idObra, $rut)
   {
-    // code...
+    $trabajador = Trabajador::where('rut', $rut)->first();
+
+    $trabajador->obra()->dissociate();
+
+    $trabajador->save();
+
+    return redirect()
+    ->back()
+    ->with('success', 'Trabajador ' . $trabajador->nombre . ' fue desvinculado con éxito de la obra');
   }
 }

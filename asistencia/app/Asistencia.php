@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Asistencia extends Model
 {
+  const ENTRADA_TYPE = 'Entrada';
+  const SALIDA_TYPE = 'Salida';
+  
   protected $fillable = [
       'image',
   ];

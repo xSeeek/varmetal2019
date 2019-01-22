@@ -57,7 +57,7 @@
                 <td class="text-center">{{$trabajador->rut}}</td>
                 <td class="text-center">{{$trabajador->nombre}} @if ($trabajador->user->isSupervisor()) (Supervisor) @endif</td>
                 <td class="text-center">
-                  <form action="{!! route('administrador.desvincular' ,['rut'=>$trabajador->rut, 'idObra'=>$obra->idObra]) !!}" method="post" id="form_desvincular">
+                  <form action="{!! route('administrador.desvincular' ,['rut'=>$trabajador->rut, 'idObra'=>$obra->idObra]) !!}" method="post" id="form_desvincular_{{$trabajador->idTrabajador}}">
                     <div class="btn-group-vertical" role="group">
                       <a role="button" class="btn btn-primary font-weight-bold text-light" href="{!! route('supervisor.verAsistencia', ['rut'=>$trabajador->rut]) !!}">Ver Asistencia</a>
                       @if (Auth::user()->isAdmin())
@@ -155,7 +155,7 @@
     confirmMensajeSwal(MSG_INFO, 'Seguro que desea agregar este trabajador?', e);
   });
 
-  $('#form_desvincular').submit(function (e, params) {
+  $("form[id^='form_desvincular_']").submit(function (e, params) {
     var localParams = params || {};
     if (!localParams.send) {
       e.preventDefault();

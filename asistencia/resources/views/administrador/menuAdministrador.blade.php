@@ -64,7 +64,11 @@
                     <td class="text-center">
                       <div class="btn-group" role="group">
                         <form action="{!! route('administrador.eliminarObra', ['id'=>$obra->idObra]) !!}" id="form_id_{{$obra->idObra}}" method="post">
+<<<<<<< HEAD
 			  @csrf
+=======
+                          @csrf
+>>>>>>> 5217bbb59c30c511edc5f7aad7094212f988f4d5
                           <div class="btn-group-vertical">
                             <a href="{!! route('administrador.detallesObra', ['id'=>$obra->idObra]) !!}"
                               class="btn btn-primary text-light"
