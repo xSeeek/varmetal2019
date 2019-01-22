@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Varmetal\Obra;
 use Carbon\Carbon;
 use Varmetal\Producto;
+use Varmetal\Http\Controllers\GerenciaController;
 
 class ObraController extends Controller
 {
@@ -74,7 +75,6 @@ class ObraController extends Controller
                 $cantidadFinalizada++;
                 $fechaFin = Carbon::parse($producto->fechaFin);
                 $fechaInicio = Carbon::parse($producto->fechaInicio);
-                $tiempoFinalizado += ($fechaFin->diffInMinutes($fechaInicio, true));
             }
             $kilosObra += ($producto->pesoKg * $producto->cantProducto);
             $trabajadores = $producto->trabajadorWithAtributtes;
@@ -84,6 +84,8 @@ class ObraController extends Controller
             foreach($trabajadores as $trabajador)
                 $kilosTerminados += $trabajador->pivot->kilosTrabajados;
         }
+
+        $tiempoFinalizado = (new GerenciaController)->calcularHorasHombre(Carbon::parse($obra->fechaInicio), (new Carbon())->now());
 
         if($cantidadFinalizada == count($productos_obra))
             $terminado = true;

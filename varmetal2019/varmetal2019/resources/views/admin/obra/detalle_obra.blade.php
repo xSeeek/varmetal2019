@@ -68,16 +68,16 @@
                         </div>
                     </h5>
                     <h5>
-                        <b>Tiempo para su realización (Solo piezas terminadas):</b>
+                        @if($terminado == true && ($cantidadFinalizada == count($productos_obra)) && count($productos_obra) != 0)
+                            <b>Tiempo requerido para completarse:</b>
+                        @else
+                            <b>Tiempo requerido para completarse (hasta hoy):</b>
+                        @endif
                         <div class="col-sm-10">
-                            @if($tiempoFinalizado != 0)
-                                @if($tiempoFinalizado/60 < 1)
-                                    <input type="text" readonly id="nombreObra" class="form-control-plaintext" value="{{$tiempoFinalizado}} Minutos">
-                                @else
-                                    <input type="text" readonly id="nombreObra" class="form-control-plaintext" value="{{$tiempoFinalizado/60}} Horas">
-                                @endif
+                            @if($tiempoFinalizado < 1)
+                                <input type="text" readonly id="nombreObra" class="form-control-plaintext" value="{{$tiempoFinalizado * 60}} Minutos">
                             @else
-                                <input type="text" readonly id="nombreObra" class="form-control-plaintext" value="No se ha finalizado ninguna pieza.">
+                                <input type="text" readonly id="nombreObra" class="form-control-plaintext" value="{{$tiempoFinalizado}} Horas">
                             @endif
                         </div>
                         <b>Tiempo en pausa:</b>

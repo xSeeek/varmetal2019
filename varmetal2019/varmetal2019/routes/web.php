@@ -130,10 +130,6 @@ Route::get('/admin', 'AdminController@admin')
         Route::post('/producto/actualizarCantidad', ['uses' => 'ProductoController@updateCantidadProducto'])
                     ->middleware('is_trabajador')
                     ->name('/producto/actualizarCantidad');
-//actualizar
-        Route::post('/producto/actualizarCantidadX', ['uses' => 'ProductoController@updateCantidadProductoX'])
-                    ->middleware('is_trabajador')
-                    ->name('/producto/actualizarCantidad');
 /* [** Pausa Controller **] */
     /* [** ADMINISTRACIÓN **] */
         /* [** GET **] */
