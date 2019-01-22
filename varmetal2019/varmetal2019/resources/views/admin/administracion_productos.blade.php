@@ -12,6 +12,7 @@
                             <thead>
                                 <tr>
                                     <th>Código</th>
+                                    <th>OT</th>
                                     <th>Prioridad</th>
                                     <th>Estado</th>
                                     <th>Cantidad</th>
@@ -23,6 +24,7 @@
                                 @foreach($productos as $key => $producto)
                                 <tr id="id_producto{{ $producto->idProducto }}">
                                     <td scope="col">{{ $producto->codigo }}</td>
+                                    <td scope="col">{{ $producto->obra->codigo }}</td>
                                     @switch($producto->prioridad)
                                         @case(1)
                                             <td scope="col">Baja</td>
