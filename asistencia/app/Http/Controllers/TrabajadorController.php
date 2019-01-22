@@ -2,6 +2,7 @@
 
 namespace Asistencia\Http\Controllers;
 
+use Freshwork\ChileanBundle\Rut;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Asistencia\Http\Requests\InsertTrabajadorRequest;
@@ -49,10 +50,13 @@ class TrabajadorController extends Controller
 
   public function insert(InsertTrabajadorRequest $request)
   {
+    $rut_array = Rut::parse($request->rut)->toArray();
+    $ps = $rut_array[0];
     $user = User::create([
         'email' => $request->email,
-        'password' => Hash::make($request->password),
+        'password' => Hash::make($ps),
     ]);
+
 
     $user->type = $request->type;
     $user->save();
@@ -65,6 +69,7 @@ class TrabajadorController extends Controller
 
     $user->trabajador()->save($trabajador);
 
+    $user->sendCreateNotification();
     return redirect()->route('administrador.agregarTrabajadores')->with('success', '' . $trabajador->nombre . ' registrada con éxito');
   }
 }
