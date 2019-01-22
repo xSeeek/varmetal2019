@@ -10,6 +10,9 @@ use Auth;
 use Varmetal\User;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
+use Varmetal\Http\Controllers\GerenciaController;
+
+
 class PausaController extends Controller
 {
 
@@ -48,6 +51,7 @@ class PausaController extends Controller
       $idTrabajador = $response[1];
       $motivo = $response[2];
       $idObra = $response[3];
+      $diferenciaTiempo = 0;
 
       $trabajador = Trabajador::find($idTrabajador);
       $pausa = Pausa::find($idPausa);
@@ -58,33 +62,33 @@ class PausaController extends Controller
 
       $productos = $trabajador->productoWithAtributes()->where('producto_id_producto', '=', $producto->idProducto)->get()->first();
 
-      $pausa->fechaFin=now();
       $usuarioActual = Auth::user();
       $supervisor = $usuarioActual->trabajador;
-      $fechaInicio = Carbon::parse($pausa->fechaInicio);
-      //$diferenciaTiempo = $pausa->fechaFin->diffInSeconds($pausa->fechaInicio); //tiempo en segundos
-      $diferenciaTiempo = $this->calcularHorasHombre($fechaInicio,$pausa->fechaFin);
+
+      $pausa->fechaFin = now();
+      $diferenciaTiempo = $this->calcularHorasHombre(Carbon::parse($pausa->fechaInicio), ($pausa->fechaFin));
+
       if($motivo=='Cambio de pieza')
       {
-        if($producto->tiempoEnSetUp == 'null')
+        if($producto->tiempoEnSetUp == NULL)
         {
-          $producto->tiempoEnSetUp = $diferenciaTiempo;
-          $productos->pivot->tiempoEnSetUp = $diferenciaTiempo;
+          $producto->tiempoEnSetUp = $diferenciaTiempo/60;
+          $productos->pivot->tiempoEnSetUp = $diferenciaTiempo/60;
 
-        }else {
+        }else{
           $producto->tiempoEnSetUp += $diferenciaTiempo;
-          $productos->pivot->tiempoEnSetUp += $diferenciaTiempo;
+          $productos->pivot->tiempoEnSetUp += $diferenciaTiempo/60;
         }
       }
-      if($motivo != 'No se pudo especificar el motivo (Leer la descripción)' && $motivo != 'Cambio de pieza')
+      if($motivo != 'Cambio de pieza')
       {
-        if($producto->tiempoEnPausa == 'null')
+        if($producto->tiempoEnPausa == NULL)
         {
-          $producto->tiempoEnPausa = $diferenciaTiempo/(60);
-          $productos->pivot->tiempoEnPausa = $diferenciaTiempo/(60);
+          $producto->tiempoEnPausa = $diferenciaTiempo/60;
+          $productos->pivot->tiempoEnPausa = $diferenciaTiempo/60;
         }else {
-          $producto->tiempoEnPausa += $diferenciaTiempo/(60);
-          $productos->pivot->tiempoEnPausa += $diferenciaTiempo/(60);
+          $producto->tiempoEnPausa += $diferenciaTiempo/60;
+          $productos->pivot->tiempoEnPausa += $diferenciaTiempo/60;
         }
       }
       $producto->save();
@@ -214,51 +218,52 @@ class PausaController extends Controller
 
       return 'Pausa eliminada';
     }
-    private function calcularHorasHombre($fechaInicio, $fechaFin)
+
+    public function calcularHorasHombre($fechaInicio, $fechaFin)
     {
-        $period = CarbonPeriod::create($fechaInicio->format('Y-m-d'), $fechaFin->format('Y-m-d'));
+        $period = CarbonPeriod::create($fechaInicio->format('Y-m-d h:m:s'), $fechaFin->format('Y-m-d h:m:s'));
         $period->toggleOptions(CarbonPeriod::EXCLUDE_START_DATE, true);
         $period->toggleOptions(CarbonPeriod::EXCLUDE_END_DATE, true);
-        $horasHombre = 0;
+        $horasHombre = 0*60;
 
-        $inDayStart = Carbon::parse($fechaInicio->format('Y-m-d'));
-        $inDayEnd = Carbon::parse($fechaFin->format('Y-m-d'));
+        $inDayStart = Carbon::parse($fechaInicio->format('Y-m-d h:m:s'));
+        $inDayEnd = Carbon::parse($fechaFin->format('Y-m-d h:m:s'));
 
-        if($inDayEnd->diffInHours($inDayStart) < 24)
-            return $fechaFin->diffInHours($fechaInicio);
+        if($inDayEnd->diffInMinutes($inDayStart) < 24*60*60)
+            return $fechaFin->diffInMinutes($fechaInicio);
         else
             $startHour = $this->getTimeStart($fechaInicio);
 
-        $finHour = ($fechaFin->format('G') - 8);
+        $finHour = ($fechaFin->format('m') - 8*60);
 
         foreach($period as $date)
         {
             $actualDate = $date->format('l');
-            $actualHour = $date->format('G');
-            $actualMinutes = $date->format('m');
+            $actualHour = $date->format('m');
+            $actualMinutes = $date->format('s');
 
-            if($actualHour < 8)
-                $actualHour = 8;
+            if($actualHour < 8*60)
+                $actualHour = 8*60;
 
             switch($actualDate)
             {
                 case('Monday'):
-                    $horasHombre += 9;
+                    $horasHombre += 9*60;
                     break;
                 case('Tuesday'):
-                    $horasHombre += 10;
+                    $horasHombre += 10*60;
                     break;
                 case('Wednesday'):
-                    $horasHombre += 10;
+                    $horasHombre += 10*60;
                     break;
                 case('Thursday'):
-                    $horasHombre += 10;
+                    $horasHombre += 10*60;
                     break;
                 case('Friday'):
-                    $horasHombre += 9;
+                    $horasHombre += 9*60;
                     break;
                 case('Saturday'):
-                    $horasHombre += 5;
+                    $horasHombre += 5*60;
                 default:
                     break;
             }
@@ -271,41 +276,41 @@ class PausaController extends Controller
     private function getTimeStart($date)
     {
         $actualDate = $date->format('l');
-        $resultDate = 0;
-        $diff = 0;
-        $hourDate = $date->format('G');
+        $resultDate = 0.0;
+        $diff = 0.0;
+        $hourDate = $date->format('m');
 
         switch($actualDate)
         {
             case('Monday'):
-                if($hourDate > 8)
-                    $diff = $hourDate - 8;
-                $resultDate += (9 - $diff);
+                if($hourDate > 8*60)
+                    $diff = $hourDate - 8*60;
+                $resultDate += (9*60 - $diff);
                 break;
             case('Tuesday'):
-                if($hourDate > 8)
-                    $diff = $hourDate - 8;
-                $resultDate += (10 - $diff);
+                if($hourDate > 8*60)
+                    $diff = $hourDate - 8*60;
+                $resultDate += (10*60 - $diff);
                 break;
             case('Wednesday'):
-                if($hourDate > 8)
-                    $diff = $hourDate - 8;
-                $resultDate += (10 - $diff);
+                if($hourDate > 8*60)
+                    $diff = $hourDate - 8*60;
+                $resultDate += (10*60 - $diff);
                 break;
             case('Thursday'):
-                if($hourDate > 8)
-                    $diff = $hourDate - 8;
-                $resultDate += (10 - $diff);
+                if($hourDate > 8*60)
+                    $diff = $hourDate - 8*60;
+                $resultDate += (10*60 - $diff);
                 break;
             case('Friday'):
-                if($hourDate > 8)
-                    $diff = $hourDate - 8;
-                $resultDate += (9 - $diff);
+                if($hourDate > 8*60)
+                    $diff = $hourDate - 8*60;
+                $resultDate += (9*60 - $diff);
                 break;
             case('Saturday'):
-                if($hourDate > 8)
-                    $diff = $hourDate - 8;
-                $resultDate += (5 - $diff);
+                if($hourDate > 8*60)
+                    $diff = $hourDate - 8*60;
+                $resultDate += (5*60 - $diff);
             default:
                 break;
         }

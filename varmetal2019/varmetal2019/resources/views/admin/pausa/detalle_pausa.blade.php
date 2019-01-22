@@ -260,6 +260,7 @@
                 data: {DATA:json_text},
                 url: "{{url('adminUpdateFechaFinPost')}}",
                 success: function(response){
+                    alert(response);
                     console.log(response);
                     window.location.href = "{{url('/adminDetallesPausaGet', [$pausa->idPausa])}}";
                 }
