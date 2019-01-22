@@ -63,7 +63,7 @@ class GerenciaController extends Controller
                     {
                         $index_trabajador = $this->isOnArray($array_trabajadores, $trabajador->idTrabajador);
                         if(($trabajador->pivot->fechaComienzo != NULL) && ($array_trabajadores[$index_trabajador][1] > $trabajador->pivot->fechaComienzo))
-                            $data_trabajador[$index_trabajador][1] = $trabajador->pivot->fechaComienzo;
+                            $array_trabajadores[$index_trabajador][1] = $trabajador->pivot->fechaComienzo;
                     }
                 }
 
