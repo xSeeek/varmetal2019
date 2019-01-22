@@ -49,7 +49,7 @@ class GerenciaController extends Controller
                 foreach($trabajadores as $trabajador)
                 {
                     $kilosTerminados += $trabajador->pivot->kilosTrabajados;
-                    if($this->isOnArray($array_trabajadores, $trabajador->idTrabajador) == -1)
+                    if(($this->isOnArray($array_trabajadores, $trabajador->idTrabajador) == -1))
                     {
                         $array_trabajadores[$j] = array();
                         $data_trabajador = array();
@@ -62,7 +62,7 @@ class GerenciaController extends Controller
                     else
                     {
                         $index_trabajador = $this->isOnArray($array_trabajadores, $trabajador->idTrabajador);
-                        if($array_trabajadores[$index_trabajador][1] > $trabajador->pivot->fechaComienzo)
+                        if($trabajador->pivot->fechaComienzo != NULL && $array_trabajadores[$index_trabajador][1] > $trabajador->pivot->fechaComienzo)
                             $data_trabajador[$index_trabajador][1] = $trabajador->pivot->fechaComienzo;
                     }
                 }
@@ -124,7 +124,10 @@ class GerenciaController extends Controller
         $period->toggleOptions(CarbonPeriod::EXCLUDE_END_DATE, true);
         $horasHombre = 0;
 
-        if($fechaFin->diffInDays($fechaInicio) == 0)
+        $inDayStart = Carbon::parse($fechaInicio->format('Y-m-d'));
+        $inDayEnd = Carbon::parse($fechaFin->format('Y-m-d'));
+        
+        if($inDayEnd->diffInHours($inDayStart) < 24)
             return $fechaFin->diffInHours($fechaInicio);
         else
             $startHour = $this->getTimeStart($fechaInicio);
