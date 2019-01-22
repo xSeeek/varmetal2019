@@ -76,12 +76,9 @@
                 </div>
                 @if($cantidadProducida != $producto->cantProducto)
                     @if(($cantidadProducida+'1')%'5'==0)
-                    <a class="btn btn-outline-primary btn-lg" role="button" onclick="sendEmailProductos()"><b>Actualizar cantidad producida</b></a>
+                        <a class="btn btn-outline-primary btn-lg" role="button" onclick="sendEmailProductos()"><b>Actualizar cantidad producida</b></a>
                     @else
-                    <a class="btn btn-outline-primary btn-lg" role="button" onclick="actualizarCantidad({{$producto->idProducto}})"><b>Actualizar cantidad producida</b></a>
-                    <br><b>Ingrese la Cantidad de Productos:</b>
-                    <input type="text" id="cantidadX" name="fname" size="10" style="font-family: Arial; font-size: 14pt; border: 2px solid #39c;">
-                    <br><a class="btn btn-outline-primary btn-lg" role="button" onclick="nuevaCantidad()"><b>Añadir "x" cantidad</b></a>
+                        <a class="btn btn-outline-primary btn-lg" role="button" onclick="actualizarCantidad({{$producto->idProducto}})"><b>Actualizar cantidad producida</b></a>
                     @endif
                 @endif
             </div>
@@ -93,53 +90,6 @@
     </div>
 </div>
 <script type="text/javascript">
-
-  function nuevaCantidad()
-  {
-      var datos, json_text;
-
-      datos = Array();
-      datos[0] = document.getElementById('cantidadX').value;
-      datos[1] = '{{$producto->idProducto}}';
-      json_text = JSON.stringify(datos);
-      if(datos[0]>{{$producto->cantProducto}})
-      {
-        alert("La cantidad no puede ser mayor que el total");
-        return 2;
-      }
-      if((datos[0]+{{$cantidadProducida}})>5 && (datos[0]+{{$cantidadProducida}})<={{$producto->cantProducto}})
-      {
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            type: "POST",
-            data: {DATA:json_text},
-            url: "{{url('/producto/actualizarCantidadX')}}",
-            success: function(response){
-                if(response == 1)
-                  sendEmailProductosX(datos[0]);
-              }
-            });
-            return 1;
-      }
-      if((datos[0]+{{$cantidadProducida}})<5 && (datos[0]+{{$cantidadProducida}})<={{$producto->cantProducto}}){
-          $.ajax({
-              headers: {
-                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-              },
-              type: "POST",
-              data: {DATA:json_text},
-              url: "{{url('/producto/actualizarCantidadX')}}",
-              success: function(response){
-                  if(response == 1)
-                    sendEmailProductosX(datos[0]);
-                }
-              });
-              return;
-      }
-      alert("hola");
-  }
 
   function sendEmailProductosX(datos)
     {
@@ -263,29 +213,40 @@ function sendEmail()
     {
         swal({
         title: "Confirmación",
-        text: "Presione Si para confirmar la actualización:",
+        input: 'text',
+        inputAttributes: {
+            autocapitalize: 'off'
+        },
+        text: "Ingrese la cantidad de piezas realizadas:",
         type: "warning",
         showCancelButton: true,
         confirmButtonColor: "#6A9944",
-        confirmButtonText: "Si",
-        cancelButtonText: "No",
+        confirmButtonText: "Continuar",
+        cancelButtonText: "Salir",
         cancelButtonColor: "#d71e1e",
         }).then((result) =>
         {
-            if (result.value)
+            if (result.value > 0)
             {
+                var datos;
+
+                datos = Array();
+                datos[0]= {{$producto->idProducto}};
+                datos[1]=result.value;
+                json_text = JSON.stringify(datos);
+
                 $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     type: "POST",
-                    data: {DATA:idProducto},
+                    data: {DATA:json_text},
                     url: "{{url('producto/actualizarCantidad')}}",
                     success: function(response){
                         if(response == 1)
                             window.location.href = "{{url('/detalleProducto', [$producto->idProducto])}}";
                         else {
-                                alert(response);
+                                showMensajeSwall(MSG_ERROR, response);
                             }
                         }
                     });

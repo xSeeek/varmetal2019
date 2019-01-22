@@ -163,7 +163,7 @@
       datos[0]= nombreTrabajador.value;
       datos[1]='{{$trabajador->idTrabajador}}';
 
-      json_text = JSON.stringify(datos)
+      json_text = JSON.stringify(datos);
       $.ajax({
           headers: {
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

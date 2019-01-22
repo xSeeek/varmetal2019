@@ -305,16 +305,20 @@ class ProductoController extends Controller
 
     public function updateCantidadProducto(Request $request)
     {
+        $response = json_decode($request->DATA);
+
         $usuarioActual = Auth::user();
 
         if($usuarioActual->trabajador == NULL)
             return redirect()->route('/home');
 
         $datos_trabajador = $usuarioActual->trabajador;
-        $producto = Producto::find($request->DATA);
+        $producto = Producto::find($response[0]);
 
         $dataProducto = $producto->trabajadorWithAtributtes()->where('trabajador_id_trabajador', '=', $datos_trabajador->idTrabajador)->get()->first();
-        $dataProducto->pivot->productosRealizados = ($dataProducto->pivot->productosRealizados) + 1;
+        $dataProducto->pivot->productosRealizados = ($dataProducto->pivot->productosRealizados) + $response[1];
+        if(($dataProducto->pivot->productosRealizados + $response[1]) > ($producto->cantProducto))
+            return 'La cantidad ingresada supera a la cantidad requerida del producto';
         $dataProducto->pivot->kilosTrabajados = ($dataProducto->pivot->productosRealizados) * $producto->pesoKg;
         $dataProducto->pivot->save();
         $dataProducto->save();
