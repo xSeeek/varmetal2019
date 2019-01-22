@@ -55,7 +55,13 @@
               @foreach ($obra->trabajadores as $trabajador)
               <tr>
                 <td class="text-center">{{$trabajador->rut}}</td>
-                <td class="text-center">{{$trabajador->nombre}} @if ($trabajador->user->isSupervisor()) (Supervisor) @endif</td>
+                <td class="text-center">{{$trabajador->nombre}}
+                  @if($trabajador->user != null)
+                    @if ($trabajador->user->isSupervisor())
+                      (Supervisor)
+                    @endif
+                  @endif
+                  </td>
                 <td class="text-center">
                   <form action="{!! route('administrador.desvincular' ,['rut'=>$trabajador->rut, 'idObra'=>$obra->idObra]) !!}" method="post" id="form_desvincular_{{$trabajador->idTrabajador}}">
                     <div class="btn-group-vertical" role="group">
@@ -106,13 +112,17 @@
               class="selectpicker form-control{{ $errors->has('trabajadores') ? ' is-invalid' : '' }}">
               @foreach ($trabajadores as $trabajador)
                 <option
-                @if ($trabajador->user->isSupervisor())
-                  style="background: #c82828; color: #fff;"
+                @if ($trabajador->user != null)
+                  @if ($trabajador->user->isSupervisor())
+                    style="background: #c82828; color: #fff;"
+                  @endif
                 @endif
                 data-tokens="{{$trabajador->nombre}} {{$trabajador->rut}}" value="{{$trabajador->rut}}">
                 {{$trabajador->nombre}}
-                @if($trabajador->user->isSupervisor())
-                  (Supervisor)
+                @if ($trabajador->user != null)
+                  @if($trabajador->user->isSupervisor())
+                    (Supervisor)
+                  @endif
                 @endif
               </option>
             @endforeach

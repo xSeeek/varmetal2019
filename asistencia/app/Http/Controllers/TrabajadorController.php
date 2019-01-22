@@ -50,16 +50,18 @@ class TrabajadorController extends Controller
 
   public function insert(InsertTrabajadorRequest $request)
   {
-    $rut_array = Rut::parse($request->rut)->toArray();
-    $ps = $rut_array[0];
-    $user = User::create([
-        'email' => $request->email,
-        'password' => Hash::make($ps),
-    ]);
+    if(!($request->type == User::DEFAULT_TYPE)){
+      $rut_array = Rut::parse($request->rut)->toArray();
+      $ps = $rut_array[0];
+      $user = User::create([
+          'email' => $request->email,
+          'password' => Hash::make($ps),
+      ]);
 
 
-    $user->type = $request->type;
-    $user->save();
+      $user->type = $request->type;
+      $user->save();
+    }
 
     $trabajador = new Trabajador();
     $trabajador->nombre = $request->nombre_completo;
@@ -67,9 +69,13 @@ class TrabajadorController extends Controller
     $trabajador->cargo = $request->cargo;
     $trabajador->estado = true;
 
-    $user->trabajador()->save($trabajador);
+    if($request->type == User::DEFAULT_TYPE){
+      $trabajador->save();
+    }else {
+      $user->trabajador()->save($trabajador);
+    }
 
-    if(!$user->isTrabajador())
+    if(!($request->type == User::DEFAULT_TYPE))
       $user->sendCreateNotification($ps);
 
     return redirect()->route('administrador.agregarTrabajadores')->with('success', '' . $trabajador->nombre . ' registrada con éxito');

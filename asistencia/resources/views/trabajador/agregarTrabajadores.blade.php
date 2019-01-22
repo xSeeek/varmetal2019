@@ -22,7 +22,6 @@
             <select name="type" class="form-control" name="type">
               <option value="Administrador">Administrador</option>
               <option value="Supervisor">Supervisor</option>
-              <option value="Encargado">Encargado</option>
               <option value="Trabajador">Trabajador</option>
             </select>
           </div>

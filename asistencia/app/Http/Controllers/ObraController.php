@@ -89,15 +89,10 @@ class ObraController extends Controller
     $trabajador = Trabajador::where('rut', $request->trabajador)->first();
     if($trabajador->obra == null)
     {
-      if($trabajador->user->isSupervisor()){
+      if($trabajador->user != null){
         return redirect()->back()
         ->withInput()
-        ->with('error', 'No puede agregar un supervisor como trabajador a una obra');
-      }
-      if ($trabajador->user->isAdmin()) {
-        return redirect()->back()
-        ->withInput()
-        ->with('error', 'No puede agregar un administrador como trabajador a una obra');
+        ->with('error', 'No puede agregar un supervisor o administrador como trabajador a una obra');
       }
 
       $obra->trabajadores()->save($trabajador);

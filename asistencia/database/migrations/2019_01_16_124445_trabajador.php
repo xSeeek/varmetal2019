@@ -19,7 +19,7 @@ class Trabajador extends Migration
           $table->string('rut')->unique();
           $table->string('cargo');
           $table->boolean('estado')->default('true');
-          $table->integer('users_id_user')->unsigned();
+          $table->integer('users_id_user')->unsigned()->nullable();
           $table->foreign('users_id_user')->references('id')->on('users')->onDelete('cascade');
           $table->integer('obra_id_obra')->unsigned()->nullable();
           $table->foreign('obra_id_obra')->references('idObra')->on('obra');
