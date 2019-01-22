@@ -175,26 +175,30 @@ class PausaController extends Controller
     public function deletePausa(Request $data)
     {
       $response = json_decode($data->DATA, true);
-      $idProducto = $response[1];
       $idPausa = $response[0];
+      $idProducto = $response[1];
       $pausa = Pausa::find($idPausa);
       $producto = Producto::find($idProducto);
+      $trabajador = Trabajador::find($pausa->trabajador_id_trabajador);
 
-      $usuarioActual = Auth::user();
-      if($usuarioActual->trabajador == NULL)
-        return view('welcome');
       if($pausa->fechaFin!=NULL)
-        return view('welcome');
+        return 'Pausa ya finalizada';
+      if($pausa == NULL)
+        return 'No existe la pausa';
 
       if($pausa->fechaFin==NULL)
       {
-        $trabajador = $usuarioActual->trabajador;
         $productos = $trabajador->productoWithAtributes()->where('producto_id_producto', '=', $producto->idProducto)->get()->first();
-        $productos->pivot->pausasRealizadas--;
-        $productos->pivot->save();
-        $producto->cantPausa--;
-        $producto->save();
-        $pausa->delete();
+        if($productos!=NULL)
+        {
+          $productos->pivot->pausasRealizadas--;
+          $productos->pivot->save();
+          $producto->cantPausa--;
+          $producto->save();
+          $pausa->delete();
+        }else {
+          return 'No existe el pivot';
+        }
       }else {
         return 'La pausa ya fue finalizada';
       }

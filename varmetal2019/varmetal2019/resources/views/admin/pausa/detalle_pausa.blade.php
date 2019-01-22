@@ -101,10 +101,14 @@
 </div>
   </br>
   <div class="row justify-content-center">
-    @if(Auth::user()->type == 'Trabajador' && $pausa->fechaFin == NULL)
-      <a class="btn btn-outline-success btn-md" id="finPausa" role="button" onclick="trabajadorDeletePausa({{$pausa->idPausa}})">Eliminar Pausa</a>
+    @if(Auth::user()->type == 'Trabajador')
+      @if($pausa->fechaFin == NULL)
+        <a class="btn btn-outline-success btn-md" id="finPausa" role="button" onclick="trabajadorDeletePausa({{$pausa->idPausa}})">Eliminar Pausa</a>
+      @endif
     @else
-      <a class="btn btn-outline-success btn-md" id="finPausa" role="button" onclick="adminDeletePausa({{$pausa->idPausa}})">Eliminar Pausa</a>
+      @if($pausa->fechaFin == NULL)
+        <a class="btn btn-outline-success btn-md" id="finPausa" role="button" onclick="adminDeletePausa({{$pausa->idPausa}})">Eliminar Pausa</a>
+      @endif
     @endif
   </div>
 </div>
@@ -155,8 +159,8 @@
     var datos, json_text;
 
     datos = Array();
-    datos[0] = {{$pausa->idPausa}};
-    datos[1] = {{$producto->idProducto}};
+    datos[0] = '{{$pausa->idPausa}}';
+    datos[1] = '{{$producto->idProducto}}';
     json_text = JSON.stringify(datos);
 
       $.ajax({
@@ -167,6 +171,7 @@
           data: {DATA:json_text},
           url: "{{url('/trabajadorDeletePausa')}}",
           success: function(response){
+              alert(response);
               console.log(response);
               sendEmail();
           }
@@ -177,8 +182,8 @@
     var datos, json_text;
 
     datos = Array();
-    datos[0] = {{$pausa->idPausa}};
-    datos[1] = {{$producto->idProducto}};
+    datos[0] = '{{$pausa->idPausa}}';
+    datos[1] = '{{$producto->idProducto}}';
     json_text = JSON.stringify(datos);
 
       $.ajax({
@@ -189,6 +194,7 @@
           data: {DATA:json_text},
           url: "{{url('/adminDeletePausa')}}",
           success: function(response){
+              alert(response);
               console.log(response);
               window.location.href = "{{url('/adminPausasAlmacenadas', [$producto->idProducto])}}";
           }

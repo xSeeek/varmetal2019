@@ -186,9 +186,6 @@ Route::get('/admin', 'AdminController@admin')
         Route::post('/trabajadorDeletePausa', ['uses' => 'PausaController@deletePausa'])
                     ->name('trabajadorDeletePausa');
         Route::post('/adminDeletePausa', ['uses' => 'PausaController@deletePausa'])
-                    ->middleware('is_admin')
-                    ->name('adminDeletePausa');
-        Route::post('/adminDeletePausa', ['uses' => 'PausaController@deletePausa'])
                     ->middleware('is_supervisor')
                     ->name('adminDeletePausa');
 

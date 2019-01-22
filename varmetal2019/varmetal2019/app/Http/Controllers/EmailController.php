@@ -53,14 +53,14 @@ class EmailController extends Controller
     {
       $response = JSON_decode($request->DATA, true);
 
-      if($response[4]=='0')
-        $response[4] == 'Falta materiales';
-      if($response[4]=='1')
-        $response[4] == 'Falla en el equipo';
-      if($response[4]=='2')
-        $response[4] == 'Falla en el plano';
-      if($response[4]=='3')
-        $response[4] == 'Cambio de pieza';
+      if($response[5]=='0')
+        $response[5] == 'Falta materiales';
+      if($response[5]=='1')
+        $response[5] == 'Falla en el equipo';
+      if($response[5]=='2')
+        $response[5] == 'Falla en el plano';
+      if($response[5]=='3')
+        $response[5] == 'Cambio de pieza';
       $data = array(
           'name' => $response[0],
           'rut' => $response[1],
