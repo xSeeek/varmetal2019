@@ -182,9 +182,9 @@ class PausaController extends Controller
 
       $usuarioActual = Auth::user();
       if($usuarioActual->trabajador == NULL)
-          return redirect()->route('/home');
+        return view('welcome');
       if($pausa->fechaFin!=NULL)
-          return redirect()->route('/home');
+        return view('welcome');
 
       if($pausa->fechaFin==NULL)
       {

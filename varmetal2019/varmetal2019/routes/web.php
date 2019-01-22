@@ -184,7 +184,6 @@ Route::get('/admin', 'AdminController@admin')
                     ->middleware('is_trabajador')
                     ->name('detallesCuentaTrabajador');
         Route::post('/trabajadorDeletePausa', ['uses' => 'PausaController@deletePausa'])
-                    ->middleware('is_trabajador')
                     ->name('trabajadorDeletePausa');
         Route::post('/adminDeletePausa', ['uses' => 'PausaController@deletePausa'])
                     ->middleware('is_admin')
