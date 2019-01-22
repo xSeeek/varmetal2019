@@ -52,7 +52,7 @@
                 <table id="tablaAdministracion" style="width:100%" align="center">
                     <thead>
                         <tr>
-                            <th>Nombre</th>
+                            <th>Código</th>
                             <th>Fecha Inicio</th>
                             <th>Fecha Fin</th>
                             <th>Estado</th>
@@ -63,7 +63,7 @@
                     <tbody>
                         @foreach($productos_trabajador as $key => $productos)
                             <tr id="id_productoTrabajador{{ $productos->idProductos }}">
-                                <td scope="col">{{ $productos->nombre }}</td>
+                                <td scope="col">{{ $productos->codigo }}</td>
                                 <td scope="col">{{ $productos->fechaInicio }}</td>
                                 @if($productos->fechaFin != NULL)
                                     <td scope="col">{{ $productos->fechaFin }}</td>
