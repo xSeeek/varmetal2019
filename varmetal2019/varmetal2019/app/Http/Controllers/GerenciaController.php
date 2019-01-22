@@ -68,8 +68,8 @@ class GerenciaController extends Controller
                 }
 
                 /* Contar tiempo en pausa por trabajador */
-                $tiempoPausa += $producto->tiempoEnPausa;
-                $tiempoSetUp += $producto->tiempoEnSetUp;
+                  $tiempoPausa += $producto->tiempoEnPausa;
+                  $tiempoSetUp += $producto->tiempoEnSetUp;
 
                 /* Acumular peso en kilogramos de los productos */
                 $kilosObra += ($producto->pesoKg * $producto->cantProducto);
@@ -126,7 +126,7 @@ class GerenciaController extends Controller
 
         $inDayStart = Carbon::parse($fechaInicio->format('Y-m-d'));
         $inDayEnd = Carbon::parse($fechaFin->format('Y-m-d'));
-        
+
         if($inDayEnd->diffInHours($inDayStart) < 24)
             return $fechaFin->diffInHours($fechaInicio);
         else
