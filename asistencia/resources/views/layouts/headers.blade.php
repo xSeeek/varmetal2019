@@ -45,6 +45,7 @@
     <script src={{asset("js/mensajes.js")}}></script>
     <script src={{asset("js/notify.js")}}></script>
 
+    <link rel="shortcut icon" href="{{{ asset('favicon.png') }}}">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
