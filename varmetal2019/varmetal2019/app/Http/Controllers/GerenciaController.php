@@ -54,7 +54,7 @@ class GerenciaController extends Controller
                         $array_trabajadores[$j] = array();
                         $data_trabajador = array();
                         $data_trabajador[0] = $trabajador->idTrabajador;
-                        $data_trabajador[1] = Carbon::parse($trabajador->pivot->fechaComienzo);
+                        $data_trabajador[1] = $trabajador->pivot->fechaComienzo;
                         $data_trabajador[2] = $trabajador->nombre;
                         $array_trabajadores[$j] = $data_trabajador;
                         $j++;
@@ -62,7 +62,7 @@ class GerenciaController extends Controller
                     else
                     {
                         $index_trabajador = $this->isOnArray($array_trabajadores, $trabajador->idTrabajador);
-                        if($trabajador->pivot->fechaComienzo != NULL && $array_trabajadores[$index_trabajador][1] > $trabajador->pivot->fechaComienzo)
+                        if(($trabajador->pivot->fechaComienzo != NULL) && ($array_trabajadores[$index_trabajador][1] > $trabajador->pivot->fechaComienzo))
                             $data_trabajador[$index_trabajador][1] = $trabajador->pivot->fechaComienzo;
                     }
                 }
@@ -76,7 +76,7 @@ class GerenciaController extends Controller
             }
 
             for($i = 0; $i < count($array_trabajadores); $i++)
-                $diffHoras += $this->calcularHorasHombre($array_trabajadores[$i][1], $fechaFin);
+                $diffHoras += $this->calcularHorasHombre(Carbon::parse($array_trabajadores[$i][1]), $fechaFin);
 
             $obra[0] = $obra_almacenada->idObra;
             $obra[1] = $obra_almacenada->codigo;
@@ -126,7 +126,7 @@ class GerenciaController extends Controller
 
         $inDayStart = Carbon::parse($fechaInicio->format('Y-m-d'));
         $inDayEnd = Carbon::parse($fechaFin->format('Y-m-d'));
-        
+
         if($inDayEnd->diffInHours($inDayStart) < 24)
             return $fechaFin->diffInHours($fechaInicio);
         else
