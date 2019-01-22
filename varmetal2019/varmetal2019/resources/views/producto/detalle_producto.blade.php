@@ -91,34 +91,6 @@
 </div>
 <script type="text/javascript">
 
-  function sendEmailProductosX(datos)
-    {
-      var datosPausa, json_text;
-
-      datosPausa = Array();
-      datosPausa[0] = '{{$trabajador->nombre}}';
-      datosPausa[1] = '{{$trabajador->rut}}';
-      datosPausa[2] = '{{$usuarioActual->email}}';
-      datosPausa[3] = '{{$producto->nombre}}';
-      datosPausa[4] = '{{$producto->codigo}}';
-      datosPausa[5] = datos;
-      json_text = JSON.stringify(datosPausa);
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            type: "POST",
-            data: {DATA:json_text},
-            url: "{{url('/enviarEmailProducto')}}",
-            success: function(response){
-                if(response!='Email enviado producto')
-                    showMensajeSwall(MSG_ERROR, response);
-                else
-                window.location.href = "{{url('/detalleProducto', [$producto->idProducto])}}";
-              }
-        });
-    }
-
   function sendEmailProductos()
     {
       var datosPausa, json_text;
@@ -251,6 +223,8 @@ function sendEmail()
                         }
                     });
             }
+            else if(result.value <= 0)
+                showMensajeSwall(MSG_ERROR, 'La cantidad ingresada no es válida.');
         });
     }
 </script>

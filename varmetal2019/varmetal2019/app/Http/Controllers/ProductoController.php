@@ -309,21 +309,36 @@ class ProductoController extends Controller
 
         $usuarioActual = Auth::user();
 
+        if($this->is_decimal($response[1]) == true)
+            return 'La cantidad ingresada no puede tener puntos ni comas';
+
         if($usuarioActual->trabajador == NULL)
             return redirect()->route('/home');
 
         $datos_trabajador = $usuarioActual->trabajador;
         $producto = Producto::find($response[0]);
+        $productosRealizados = 0;
 
         $dataProducto = $producto->trabajadorWithAtributtes()->where('trabajador_id_trabajador', '=', $datos_trabajador->idTrabajador)->get()->first();
-        $dataProducto->pivot->productosRealizados = ($dataProducto->pivot->productosRealizados) + $response[1];
-        if(($dataProducto->pivot->productosRealizados + $response[1]) > ($producto->cantProducto))
+        $trabajador = $producto->trabajadorWithAtributtes;
+
+        foreach($trabajador as $worker)
+            $productosRealizados += $worker->pivot->productosRealizados;
+
+        if(($productosRealizados + $response[1]) > ($producto->cantProducto))
             return 'La cantidad ingresada supera a la cantidad requerida del producto';
+
+        $dataProducto->pivot->productosRealizados = ($dataProducto->pivot->productosRealizados) + $response[1];
         $dataProducto->pivot->kilosTrabajados = ($dataProducto->pivot->productosRealizados) * $producto->pesoKg;
         $dataProducto->pivot->save();
         $dataProducto->save();
 
         return 1;
+    }
+
+    private function is_decimal( $val )
+    {
+        return is_numeric( $val ) && floor( $val ) != $val;
     }
 
     public function asignarObra($data)
