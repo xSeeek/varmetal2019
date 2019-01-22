@@ -75,7 +75,7 @@
                         @endif
                         <div class="col-sm-10">
                             @if($tiempoFinalizado < 1)
-                                <input type="text" readonly id="nombreObra" class="form-control-plaintext" value="{{$tiempoFinalizado/60}} Minutos">
+                                <input type="text" readonly id="nombreObra" class="form-control-plaintext" value="{{$tiempoFinalizado * 60}} Minutos">
                             @else
                                 <input type="text" readonly id="nombreObra" class="form-control-plaintext" value="{{$tiempoFinalizado}} Horas">
                             @endif
