@@ -9,6 +9,28 @@ use Varmetal\User;
 
 class EmailController extends Controller
 {
+
+    public function emailPausaEliminada(Request $request)
+    {
+      $response = JSON_decode($request->DATA, true);
+
+      $dataArray = array(
+        'nombre' => $response[0],
+        'rut' => $response[1],
+        'email' => $response[2],
+        'codigo' => $response[4],
+        'nombreProducto' => $response[5],
+      );
+      Mail::send('emails.eliminado', $dataArray, function($message){
+        $user = User::orderBy('id', 'DESC')->first();
+        $actual = Auth::user();
+        $message->from($actual->email,'Departamento de Informática Varmetal');
+        $message->to($user->email)->subject('Email eliminado');
+      });
+      return 'Email Eliminado';
+    }
+
+
     public function sendEmailRegistro(Request $data)
     {
       $dataArray = array(

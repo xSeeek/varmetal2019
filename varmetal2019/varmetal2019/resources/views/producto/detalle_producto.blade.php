@@ -107,7 +107,7 @@
         alert("La cantidad no puede ser mayor que el total");
         return 2;
       }
-
+      alert(datos[0]+'<='+cantidad);
       if((datos[0]+{{$cantidadProducida}})>5 && (datos[0]+{{$cantidadProducida}})<={{$producto->cantProducto}})
       {
         $.ajax({

@@ -54,15 +54,12 @@
                           @break
                         @endif
                       @endforeach
-                        <!--@if(($pausa->producto_id_producto == $producto->idProducto) && ($pausa->fechaFin != NULL))-->
-                              @if($producto->cantPausa<=14)
-                                <a class="btn btn-outline-success my-1 my-sm-0" role="button" onclick="sendEmail()"><b>Registrar Cambios</b></a>
-                              @else
-                                <a class="btn btn-outline-success my-1 my-sm-0" role="button" onclick=""><b>Limite de Pausas alcanzado</b></a>
-                              @endif
-                        <!--@endif-->
                     @else
-                      <a class="btn btn-outline-success my-1 my-sm-0" role="button" onclick="sendEmail()"><b>Registrar Cambios</b></a>
+                      @if($producto->cantPausa<=14)
+                        <a class="btn btn-outline-success my-1 my-sm-0" role="button" onclick="sendEmail()"><b>Registrar Cambios</b></a>
+                      @else
+                        <a class="btn btn-outline-success my-1 my-sm-0" role="button" onclick=""><b>Limite de Pausas alcanzado</b></a>
+                      @endif
                     @endif
               </div>
           </div>

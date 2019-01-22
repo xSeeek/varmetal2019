@@ -127,6 +127,7 @@
     datos[1] = '{{$trabajador->rut}}';
     datos[2] = '{{$trabajador->user->email}}';
     datos[3] = '{{$producto->codigo}}';
+    datos[4] = '{{$producto->nombre}}';
 
     json_text = JSON.stringify(datos);
 
