@@ -5,6 +5,8 @@ namespace Varmetal\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Varmetal\Pausa;
+use Varmetal\Trabajador;
+use Varmetal\Ayudante;
 
 class HomeController extends Controller
 {
@@ -30,7 +32,19 @@ class HomeController extends Controller
             return redirect()->route('admin');
         if($user->isGerente())
             return redirect()->route('gerencia');
-        return redirect()->route('/homepage/Trabajador');
+
+        $usuarioActual = Auth::user();
+
+        if($usuarioActual->trabajador == NULL)
+            return redirect()->route('/home');
+
+        $datos_trabajador = $usuarioActual->trabajador;
+        $ayudantes = $datos_trabajador->ayudante;
+
+        return redirect()->route('/homepage/Trabajador')
+              ->with('ayudantes_almacenados',$ayudantes)
+              ->with('trabajador',$datos_trabajador);
+
     }
 
     public function loop()

@@ -34,6 +34,10 @@ class TrabajadorController extends Controller
     public function detallesCuentaTrabajador()
     {
       $usuarioActual = Auth::user();
+
+      if($usuarioActual->trabajador == NULL)
+          return redirect()->route('/home');
+
       $trabajadorActual = $usuarioActual->trabajador;
       $kilosTrabajados = 0;
       $date = new Carbon();
@@ -47,10 +51,15 @@ class TrabajadorController extends Controller
                 $kilosTrabajados += $producto->pivot->kilosTrabajados;
       }
 
+      $datos_trabajador = $usuarioActual->trabajador;
+      $ayudantes = $datos_trabajador->ayudante;
+
       return view('trabajador')
                   ->with('user', $usuarioActual)
                   ->with('trabajador', $trabajadorActual)
-                  ->with('kilosTrabajados', $kilosTrabajados);
+                  ->with('kilosTrabajados', $kilosTrabajados)
+                  ->with('ayudantes_almacenados',$ayudantes)
+                  ->with('trabajador',$datos_trabajador);
     }
 
     public function adminTrabajadores($type)
@@ -147,7 +156,7 @@ class TrabajadorController extends Controller
         return redirect()->route('/home');
 
       $datos_trabajador = $usuarioActual->trabajador;
-      $ayudantes = Ayudante::get();
+      $ayudantes = Ayudante::where('lider_id_trabajador')->get();
 
       return view('trabajador.equipo')
               ->with('ayudantes_almacenados', $ayudantes)

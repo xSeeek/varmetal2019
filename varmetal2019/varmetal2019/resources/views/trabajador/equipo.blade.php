@@ -29,7 +29,7 @@
                             </table>
                             @else
                             <br>
-                                <h4 align="center">No hay Ayudantes disponibles en el sistema</h4>
+                                <h4 align="center">No hay Ayudantes disponibles</h4>
                             <br>
                             @endif
                             <br>

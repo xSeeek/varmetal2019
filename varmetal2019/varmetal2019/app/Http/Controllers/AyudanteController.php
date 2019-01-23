@@ -53,7 +53,7 @@ class AyudanteController extends Controller
         $trabajador = Trabajador::find($response[1]);
         $ayudante = Ayudante::find($response[0]);
 
-        $trabajador->ayudante()->attach($ayudante->idAyudante);
+        $ayudante->lider_id_trabajador = $trabajador->idTrabajador;
         $ayudante->save();
         return 1;
     }
