@@ -244,8 +244,8 @@ Route::get('/admin', 'AdminController@admin')
     /* [** ADMINISTRACIÓN **] */
         /* [** GET **] */
         Route::get('/gerencia', 'GerenciaController@showObras')
-                    ->name('gerencia')
-                    ->middleware('is_gerente');
+                    ->name('gerencia');
+                    //->middleware('is_gerente');
     /* [** Editar **] */
 /* [** ADMINISTRACIÓN **] */
     /* [** POST **] */

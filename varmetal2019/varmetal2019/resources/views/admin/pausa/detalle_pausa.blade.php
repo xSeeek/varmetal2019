@@ -48,8 +48,6 @@
                         <div class="col-sm-10">
                           @if($pausa->motivo!=NULL)
                             <input type="text" readonly id="motivo" class="form-control-plaintext" value="{{$pausa->motivo}}">
-                          @else
-                            <input type="text" readonly id="motivo" class="form-control-plaintext" value="No se pudo especificar el motivo (Leer la descripción)">
                           @endif
                         </div>
                         @if($pausa->fechaFin == NULL)

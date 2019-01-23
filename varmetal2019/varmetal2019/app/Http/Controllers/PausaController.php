@@ -52,6 +52,7 @@ class PausaController extends Controller
       $motivo = $response[2];
       $idObra = $response[3];
       $diferenciaTiempo = 0;
+      $diferenciaTiempoSetUp = 0;
 
       $trabajador = Trabajador::find($idTrabajador);
       $pausa = Pausa::find($idPausa);
@@ -66,34 +67,60 @@ class PausaController extends Controller
       $supervisor = $usuarioActual->trabajador;
 
       $pausa->fechaFin = now();
-      $diferenciaTiempo = $this->calcularHorasHombre(Carbon::parse($pausa->fechaInicio), ($pausa->fechaFin));
+      $pausa->save();
 
-      if($motivo=='Cambio de pieza')
+      $pausas_registradas = Pausa::all();
+
+      $producto->tiempoEnPausa=0;
+      $productos->pivot->tiempoEnPausa=0;
+      $producto->tiempoEnSetUp=0;
+      $productos->pivot->tiempoEnSetUp=0;
+
+      foreach ($pausas_registradas as $key => $pausa)
       {
-        if($producto->tiempoEnSetUp == NULL)
+        if($pausa!=NULL)
         {
-          $producto->tiempoEnSetUp = $diferenciaTiempo/60;
-          $productos->pivot->tiempoEnSetUp = $diferenciaTiempo/60;
-
-        }else{
-          $producto->tiempoEnSetUp += $diferenciaTiempo;
-          $productos->pivot->tiempoEnSetUp += $diferenciaTiempo/60;
+          if($pausa->producto_id_producto==$producto->idProducto)
+          {
+            if($pausa->motivo != "Cambio de pieza")
+            {
+              if($diferenciaTiempo==0)
+              {
+                $diferenciaTiempo = $this->calcularHorasHombre(Carbon::parse($pausa->fechaInicio), Carbon::parse($pausa->fechaFin));
+              }else{
+                $diferenciaTiempo += $this->calcularHorasHombre(Carbon::parse($pausa->fechaInicio), Carbon::parse($pausa->fechaFin));
+              }
+            }
+            if($pausa->motivo == 'Cambio de pieza')
+            {
+              if($diferenciaTiempoSetUp==0)
+              {
+                $diferenciaTiempoSetUp = $this->calcularHorasHombre(Carbon::parse($pausa->fechaInicio), Carbon::parse($pausa->fechaFin));
+              }else{
+                $diferenciaTiempoSetUp += $this->calcularHorasHombre(Carbon::parse($pausa->fechaInicio), Carbon::parse($pausa->fechaFin));
+              }
+            }
+          }
         }
       }
-      if($motivo != 'Cambio de pieza')
+      if($producto->tiempoEnSetUp == NULL)
       {
-        if($producto->tiempoEnPausa == NULL)
-        {
-          $producto->tiempoEnPausa = $diferenciaTiempo/60;
-          $productos->pivot->tiempoEnPausa = $diferenciaTiempo/60;
-        }else {
-          $producto->tiempoEnPausa += $diferenciaTiempo/60;
-          $productos->pivot->tiempoEnPausa += $diferenciaTiempo/60;
-        }
+        $producto->tiempoEnSetUp = $diferenciaTiempoSetUp/60;
+        $productos->pivot->tiempoEnSetUp = $diferenciaTiempoSetUp/60;
+      }else{
+        $producto->tiempoEnSetUp += $diferenciaTiempoSetUp/60;
+        $productos->pivot->tiempoEnSetUp += $diferenciaTiempoSetUp/60;
+      }
+      if($producto->tiempoEnPausa == NULL)
+      {
+        $producto->tiempoEnPausa = $diferenciaTiempo/60;
+        $productos->pivot->tiempoEnPausa = $diferenciaTiempo/60;
+      }else {
+        $producto->tiempoEnPausa += $diferenciaTiempo/60;
+        $productos->pivot->tiempoEnPausa += $diferenciaTiempo/60;
       }
       $producto->save();
       $productos->pivot->save();
-      $pausa->save();
       return 1;
     }
 
@@ -132,7 +159,7 @@ class PausaController extends Controller
       $response = json_decode($data->DATA, true);
       $idProducto = $response[0];
       $descripcion = $response[1];
-      $fechaInicio = $response[2];
+      $fechaInicio = now();
       $motivo = $response[3];
 
       if($motivo==4)

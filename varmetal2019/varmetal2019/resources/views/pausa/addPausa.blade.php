@@ -139,7 +139,6 @@ function savePausa()
       datosPausa = Array();
       datosPausa[0] = {{$producto->idProducto}};
       datosPausa[1] = document.getElementById("descripcion").value;
-      datosPausa[2] = document.getElementById("fechaInicio").value;
       datosPausa[3] = document.getElementById('motivo').value;
       json_text = JSON.stringify(datosPausa);
       $.ajax({
