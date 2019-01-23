@@ -25,7 +25,11 @@
           <div class="form-group">
             <div class="form-group">
                 <button type="button" class="btn btn-outline-info" onclick="habilitarEdicion()">Habilitar Edición</button>
-                <button class="btn btn-primary" type="button">Cambiar Supervisor</button>
+                <button class="btn btn-primary" data-toggle='modal'
+                data-target='#cambiarSupervisor'
+                type="button" disabled>
+                Cambiar Supervisor
+              </button>
             </div>
             <div class="form-group">
               <button class="btn btn-success" type="submit" id="btn_editar" hidden>Editar</button>
@@ -106,8 +110,7 @@
               </button>
             </div>
             <div class="modal-body">
-              <select placeholder="hola"
-              data-live-search-placeholder="Puede buscar por nombre o rut"
+              <select data-live-search-placeholder="Puede buscar por nombre o rut"
               data-live-search="true" name="trabajador"
               class="selectpicker form-control{{ $errors->has('trabajadores') ? ' is-invalid' : '' }}">
               @foreach ($trabajadores as $trabajador)

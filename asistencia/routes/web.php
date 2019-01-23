@@ -102,3 +102,7 @@ Route::post('menuAdministrador/detallesObra/{idObra}/editarObra', ['uses' => 'Ob
 Route::post('menuAdministrador/detallesObra/{idObra}/desvincular/{rut}', ['uses' => 'ObraController@desvincular'])
   ->name('administrador.desvincular')
   ->middleware('is_admin');
+
+Route::post('menuAdministrador/detallesObra/{idObra}/cambiarSupervisor', ['uses'=>'ObraController@cambiarSupervisor'])
+  ->name('administrador.cambiarSupervisor')
+  ->middleware('is_admin');
