@@ -44,7 +44,7 @@
                 <table id="tablaAdministracion" style="width:100%" align="center">
                     <thead>
                         <tr>
-                            <th>Opción</th>
+                            <th>Eliminar</th>
                             <th>RUT</th>
                             <th>Nombre</th>
                         </tr>
@@ -52,7 +52,7 @@
                     <tbody>
                         @foreach($ayudantes_almacenados as $key => $ayudante)
                             <tr id="id_ayudante{{ $ayudante->idAyudante }}">
-                                <td scope="col"><button class="btn btn-success" onclick="asignarAEquipo({{$ayudante->idAyudante}}, {{$trabajador->idTrabajador}})"><i class="far fa-check-square success"></i></button></td>
+                                <td scope="col"><button class="btn btn-danger" onclick="asignarAEquipo({{$ayudante->idAyudante}}, {{$trabajador->idTrabajador}})"><i class="fas fa-times success"></i></i></button></td>
                                 <td scope="col">{{ $ayudante->rut }}</td>
                                 <td scope="col">{{ $ayudante->nombre }}</td>
                             </tr>

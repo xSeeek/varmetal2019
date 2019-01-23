@@ -60,8 +60,8 @@ class AyudanteController extends Controller
     public function detalleAyudante($data)
     {
         $detalles_ayudante = Ayudante::find($data);
-        $trabajador = $detalles_ayudante->trabajador;
-
+        $trabajador = $detalles_ayudante->lider;
+        
         return view('admin.ayudante.ayudante_control')
                 ->with('detalles_ayudante', $detalles_ayudante)
                 ->with('detalles_trabajador', $trabajador);

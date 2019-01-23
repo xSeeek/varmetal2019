@@ -35,24 +35,24 @@
                     @if($detalles_trabajador != NULL)
                     <br>
                     <br>
-                        <h6>
+                        <h5>
                             <b>Nombre Encargado:</b>
                             <div class="col-sm-10">
                                 <input type="email" class="form-control-plaintext" readonly id="nombreEncargado" value="{{$detalles_trabajador->nombre}}">
                             </div>
-                        </h6>
-                        <h6>
+                        </h5>
+                        <h5>
                             <b>RUT Encargado:</b>
                             <div class="col-sm-10">
                                 <input type="email" class="form-control-plaintext" readonly id="rutEncargado" value="{{$detalles_trabajador->rut}}">
                             </div>
-                        </h6>
-                        <h6>
+                        </h5>
+                        <h5>
                             <b>Email Encargado:</b>
                             <div class="col-sm-10">
                                 <input type="email" class="form-control-plaintext" readonly id="correoEncargado" value="{{$detalles_trabajador->user->email}}">
                             </div>
-                        </h6>
+                        </h5>
                     <br>
                     @endif
                     <a class="btn btn-primary btn-md" id='changesButton' role="button" onclick="saveChanges()" hidden>Guardar Cambios</a>
