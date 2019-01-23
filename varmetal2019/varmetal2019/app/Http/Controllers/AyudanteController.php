@@ -35,6 +35,10 @@ class AyudanteController extends Controller
         if($trabajador != NULL)
             return 'No puede registrar a un trabajador como ayudante';
 
+        $ayudante = Ayudante::where('rut', '=', $request->rutAyudante)->first();
+        if($ayudante != NULL)
+            return 'Ya existe un ayudante con el RUT ingresado';
+
         $ayudante = new Ayudante;
         $ayudante->nombre = $request->nameAyudante;
         $ayudante->rut = $request->rutAyudante;
@@ -52,5 +56,14 @@ class AyudanteController extends Controller
         $trabajador->ayudante()->attach($ayudante->idAyudante);
         $ayudante->save();
         return 1;
+    }
+    public function detalleAyudante($data)
+    {
+        $detalles_ayudante = Ayudante::find($data);
+        $trabajador = $detalles_ayudante->trabajador;
+
+        return view('admin.ayudante.ayudante_control')
+                ->with('detalles_ayudante', $detalles_ayudante)
+                ->with('detalles_trabajador', $trabajador);
     }
 }

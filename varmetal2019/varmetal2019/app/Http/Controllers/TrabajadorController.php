@@ -9,6 +9,7 @@ use Varmetal\Producto;
 use Freshwork\ChileanBundle\Rut;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use Varmetal\Ayudante;
 
 class TrabajadorController extends Controller
 {
@@ -146,7 +147,7 @@ class TrabajadorController extends Controller
         return redirect()->route('/home');
 
       $datos_trabajador = $usuarioActual->trabajador;
-      $ayudantes = $datos_trabajador->ayudante;
+      $ayudantes = Ayudante::get();
 
       return view('trabajador.equipo')
               ->with('ayudantes_almacenados', $ayudantes)

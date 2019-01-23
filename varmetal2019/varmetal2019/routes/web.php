@@ -83,6 +83,9 @@ Route::get('/admin', 'AdminController@admin')
         Route::get('/addAyudante', 'AyudanteController@addAyudante')
                     ->middleware('is_supervisor')
                     ->name('/addAyudante');
+        Route::get('/ayudanteControl/{id}', ['uses' => 'AyudanteController@detalleAyudante'])
+                    ->middleware('is_supervisor')
+                    ->name('ayudanteControl');
         /* [** POST **] */
         Route::post('/ayudanteControl/addAyudante', 'AyudanteController@insertAyudante')
                     ->middleware('is_supervisor')

@@ -27,7 +27,7 @@
                                     @else
                                         <td scope="col">No Asignado</td>
                                     @endif
-                                    <td><a class="btn btn-outline-success my-2 my-sm-0" href="{{url('trabajadorControl', [$ayudante->idAyudante])}}" role="button" style="cursor: pointer;">Ver Detalles</a></td>
+                                    <td><a class="btn btn-outline-success my-2 my-sm-0" href="{{url('ayudanteControl', [$ayudante->idAyudante])}}" role="button" style="cursor: pointer;">Ver Detalles</a></td>
                                 </tr>
                                 @endforeach
                             </tbody>
