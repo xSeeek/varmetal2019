@@ -34,7 +34,13 @@
               @foreach ($obra->trabajadores as $trabajador)
               <tr>
                 <td class="text-center">{{$trabajador->rut}}</td>
-                <td class="text-center">{{$trabajador->nombre}} @if ($trabajador->user->isSupervisor()) (Supervisor) @endif</td>
+                <td class="text-center">{{$trabajador->nombre}}
+                  @if ($trabajador->user != null)
+                    @if($trabajador->user->isSupervisor())
+                      (Supervisor)
+                    @endif
+                  @endif
+                </td>
                 <td class="text-center">
                   <div class="btn-group" role="group">
                     <a role="button" class="btn btn-primary font-weight-bold text-light" href="{!! route('supervisor.verAsistencia', ['rut'=>$trabajador->rut]) !!}">Ver Asistencia</a>
