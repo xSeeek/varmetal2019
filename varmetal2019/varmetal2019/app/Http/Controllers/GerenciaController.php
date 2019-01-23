@@ -132,7 +132,7 @@ class GerenciaController extends Controller
         else
             $startHour = $this->getTimeStart($fechaInicio);
 
-        $finHour = ($fechaFin->format('G') - 8);
+        $finHour = $this->getTimeEnd($fechaFin);
 
         foreach($period as $date)
         {
@@ -213,5 +213,50 @@ class GerenciaController extends Controller
                 break;
         }
         return $resultDate;
+    }
+
+    private function getTimeEnd($date)
+    {
+        $actualDate = $date->format('l');
+        $resultDate = 0;
+        $diff = 0;
+        $hourDate = $date->format('G');
+
+        switch($actualDate)
+        {
+            case('Monday'):
+                if($hourDate > 18)
+                    $hourDate = 18;
+                return $hourDate - 8;
+                break;
+            case('Tuesday'):
+                if($hourDate > 19)
+                    $hourDate = 19;
+                return $hourDate - 8;
+                break;
+            case('Wednesday'):
+                if($hourDate > 19)
+                    $hourDate = 19;
+                return $hourDate - 8;
+                break;
+            case('Thursday'):
+                if($hourDate > 19)
+                    $hourDate = 19;
+                return $hourDate - 8;
+                break;
+            case('Friday'):
+                if($hourDate > 18)
+                    $hourDate = 18;
+                return $hourDate - 8;
+                break;
+            case('Saturday'):
+                if($hourDate > 13)
+                    $hourDate = 13;
+                return $hourDate - 8;
+                break;
+            default:
+                break;
+        }
+        return 0;
     }
 }
