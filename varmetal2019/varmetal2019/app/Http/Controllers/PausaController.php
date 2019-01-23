@@ -135,12 +135,13 @@ class PausaController extends Controller
       $fechaInicio = $response[2];
       $motivo = $response[3];
 
-      if($motivo==4 && $descripcion==NULL)
+      if($motivo==4)
       {
-        return "Debe ingresar una descripcion";
-      }else{
-        $descripcion = "No Posee descripcion";
+        if($descripcion==NULL)
+          return "Debe ingresar una descripcion";
       }
+      if($motivo!=4)
+        $descripcion='No Posee  Descripcion';
 
       $newPausa=new Pausa;
       $newPausa->fechaInicio = $fechaInicio;
@@ -162,9 +163,9 @@ class PausaController extends Controller
       {
         $newPausa->motivo='Cambio de pieza';
       }
-      if($response[3]=='No se pudo especificar el motivo (Leer la descripción)')
+      if($response[3]=='4')
       {
-        $newPausa->motivo='No se pudo especificar el motivo (Leer la descripción)';
+        $newPausa->motivo='Otro';
       }
       $producto = Producto::find($idProducto);
       $newPausa->producto()->associate($producto);

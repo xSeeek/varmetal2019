@@ -89,6 +89,7 @@ function mostrarDescripcion()
     etiqueta.setAttribute("style","display:none;");
     etiqueta.setAttribute("style","display:none;");
     descripcion.removeAttribute("required");
+    descripcion.value = document.getElementById('descripcion').value ;
   }
   return 1;
 }
