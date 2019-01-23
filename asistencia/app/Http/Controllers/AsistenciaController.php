@@ -62,7 +62,6 @@ class AsistenciaController extends Controller
         $file = $request->file('file');
 
         $image = Image::make($file)->crop(350, 350);
-        $image->orientate();
 
         $file_name = $dt->format('d-m-Y') . '-' . $request->tipo . '.' . $file->getClientOriginalExtension();
 
