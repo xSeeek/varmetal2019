@@ -67,10 +67,20 @@ Route::get('/admin', 'AdminController@admin')
         Route::get('/productosTrabajador', 'TrabajadorController@productosTrabajador')
                     ->middleware('is_trabajador')
                     ->name('productosTrabajador');
+        Route::get('/equipoTrabajador', 'TrabajadorController@equipoTrabajador')
+                    ->middleware('is_trabajador')
+                    ->name('equipoTrabajador');
         /* [** POST **] */
         Route::post('/trabajadorControl/setStartTime', ['uses' => 'TrabajadorController@setStartTime'])
                     ->middleware('is_trabajador')
                     ->name('/trabajadorControl/setStartTime');
+/* [** Ayudante Controller **] /*
+    /* [** TRABAJADOR **] */
+      /* [** POST **] */
+
+        Route::post('/ayudanteControl/addAyudante', ['uses' => 'AyudanteController@addAyudante'])
+                    ->middleware('is_trabajador')
+                    ->name('/AyudanteControl/addAyudante');
 
 /* [** Producto Controller **] */
     /* [** ADMINISTRACIÓN **] */
