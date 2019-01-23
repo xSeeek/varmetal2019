@@ -93,6 +93,9 @@ Route::get('/admin', 'AdminController@admin')
         Route::post('/trabajadorControl/addAyudante', ['uses' => 'AyudanteController@asignarAyudante'])
                     ->middleware('is_trabajador')
                     ->name('/trabajadorControl/addAyudante');
+        Route::post('/ayudanteControl/removeEquipo', ['uses' => 'AyudanteController@removeEquipo'])
+                    ->middleware('is_trabajador')
+                    ->name('removeEquipo');
 /* [** Producto Controller **] */
     /* [** ADMINISTRACIÓN **] */
         /* [** GET **] */

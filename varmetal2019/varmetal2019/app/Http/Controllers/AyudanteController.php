@@ -57,10 +57,20 @@ class AyudanteController extends Controller
         $ayudante->save();
         return 1;
     }
+
+    public function removeEquipo(Request $request)
+    {
+      $response = json_decode($request->DATA);
+
+      $ayudante = Ayudante::find($response[0]);
+      $ayudante->lider_id_trabajador = NULL;
+      $ayudante->save();
+    }
+
     public function detalleAyudante($data)
     {
         $detalles_ayudante = Ayudante::find($data);
-        $trabajador = $detalles_ayudante->trabajador;
+        $trabajador = $detalles_ayudante->lider;
 
         return view('admin.ayudante.ayudante_control')
                 ->with('detalles_ayudante', $detalles_ayudante)

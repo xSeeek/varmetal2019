@@ -28,23 +28,23 @@
             </div>
             </br>
             <div class="card">
-              <div class="card-header justify-content-center">Sus Productos</div>
+              <div class="card-header"  align="center">Sus Productos</div>
                           <a class="btn btn-outline-success my-2 my-sm-0" href="{{url('/productosTrabajador')}}" role="button" style="cursor: pointer;">Ingresar</a>
             </div>
             </br>
             <div class="card">
-              <div class="card-header justify-content-center">Añadir Ayudantes</div>
+              <div class="card-header"  align="center">Añadir Ayudantes</div>
                           <a class="btn btn-outline-success my-2 my-sm-0" href="{{url('/equipoTrabajador')}}" role="button" style="cursor: pointer;">Ver Ayudantes</a>
             </div>
           </br>
           <div class="card">
-            <div class="card-header justify-content-center">Su Equipo</div>
+            <div class="card-header" align="center">Su Equipo</div>
             <div class="container mt-3">
                 @if(($ayudantes_almacenados != NULL) && (count($ayudantes_almacenados) > 0))
                 <table id="tablaAdministracion" style="width:100%" align="center">
                     <thead>
                         <tr>
-                            <th>Opción</th>
+                            <th>Eliminar</th>
                             <th>RUT</th>
                             <th>Nombre</th>
                         </tr>
@@ -52,7 +52,7 @@
                     <tbody>
                         @foreach($ayudantes_almacenados as $key => $ayudante)
                             <tr id="id_ayudante{{ $ayudante->idAyudante }}">
-                                <td scope="col"><button class="btn btn-success" onclick="eliminarDeEquipa({{$ayudante->idAyudante}})"><i class="far fa-check-square success"></i></button></td>
+                                <td scope="col"><button class="btn btn-danger" onclick="eliminarDeEquipo({{$ayudante->idAyudante}})"><i class="fas fa-times success"></i></i></button></td>
                                 <td scope="col">{{ $ayudante->rut }}</td>
                                 <td scope="col">{{ $ayudante->nombre }}</td>
                             </tr>
@@ -71,3 +71,26 @@
     </div>
 </div>
 @endsection
+<script>
+    function eliminarDeEquipo(idAyudante)
+    {
+        var data, json_data;
+
+        data = Array();
+        data[0] = idAyudante;
+
+        json_data = JSON.stringify(data);
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: "POST",
+            data: {DATA:json_data},
+            url: "{{url('/ayudanteControl/removeEquipo')}}",
+            success: function(response){
+                window.location.reload();
+            }
+        });
+      }
+</script>
