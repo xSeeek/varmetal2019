@@ -38,7 +38,7 @@
                         </tr>
                       @endif
                         <tr>
-                            <th>Menú Trabajadores</th>
+                            <th>Menú Personal</th>
                             <td><a class="btn btn-outline-success my-2 my-sm-0" href="{{url('menuTrabajador')}}" role="button" style="cursor: pointer;">Ingresar</a></td>
                         </tr>
                       @if(($pausas != NULL) && (count($pausas) > 0))

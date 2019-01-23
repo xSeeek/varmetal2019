@@ -5,13 +5,19 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Trabajadores</div>
+                <div class="card-header">Personal</div>
                 <div class="card=body container mt-3">
                     <table id="tablaAdministracion" style="width:50%; margin:15px;">
                         <tr>
                             <th>Trabajadores</th>
                             <td><a class="btn btn-outline-success my-2 my-sm-0" href="{{url('adminTrabajador', [Varmetal\User::DEFAULT_TYPE])}}" role="button" style="cursor: pointer;">Ingresar</a></td>
                         </tr>
+                        @if(Auth::user()->isSupervisor() || Auth::user()->isAdmin())
+                            <tr>
+                                <th>Ayudantes</th>
+                                <td><a class="btn btn-outline-success my-2 my-sm-0" href="{{url('adminAyudante')}}" role="button" style="cursor: pointer;">Ingresar</a></td>
+                            </tr>
+                        @endif
                         @if(Auth::user()->isAdmin())
                             <tr>
                                 <th>Supervisores</th>

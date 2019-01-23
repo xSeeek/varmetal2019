@@ -20,7 +20,7 @@ class CreateAyudantesTable extends Migration
             $table->boolean('estado')->default('false');
             $table->timestamps();
 
-            $table->integer('lider_id_trabajador')->unsigned();
+            $table->integer('lider_id_trabajador')->unsigned()->nullable();
             $table->foreign('lider_id_trabajador')->references('idTrabajador')->on('trabajador')->onDelete('cascade');
         });
     }
