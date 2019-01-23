@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use Image;
 
 class AsistenciaController extends Controller
 {
@@ -59,8 +60,12 @@ class AsistenciaController extends Controller
         $dt = Carbon::now();
 
         $file = $request->file('file');
-        $file_name = $dt->format('d-m-Y') . '.' . $file->getClientOriginalExtension();
-        Storage::disk('asistencia')->put($request->rut.'/'. $file_name, File::get($file));
+
+        $image = Image::make($file)->crop(350, 350);
+
+        $file_name = $dt->format('d-m-Y') . '-' . $request->tipo . '.' . $file->getClientOriginalExtension();
+
+        Storage::disk('asistencia')->put($request->rut .'/'. $file_name, $image);
 
         $asistencia->image = $file_name;
         $trabajador->asistencias()->save($asistencia);
