@@ -138,6 +138,21 @@ class TrabajadorController extends Controller
         return 1;
     }
 
+    public function equipoTrabajador()
+    {
+      $usuarioActual = Auth::user();
+
+      if($usuarioActual->trabajador == NULL)
+        return redirect()->route('/home');
+
+      $datos_trabajador = $usuarioActual->trabajador;
+      $ayudantes = $datos_trabajador->ayudante;
+
+      return view('trabajador.equipo')
+              ->with('ayudantes_almacenados', $ayudantes)
+              ->with('trabajador', $datos_trabajador);
+    }
+
     public function productosTrabajador()
     {
         $usuarioActual = Auth::user();

@@ -21,7 +21,7 @@
                         </div>
                     </h5>
                     <h5>
-                        <b>Nombre del Proyecto: (Editebla)</b>
+                        <b>Nombre del Proyecto: (Editabla)</b>
                         <div class="col-sm-10">
                             <input type="text" readonly id="nombreProyecto" class="form-control-plaintext" value="{{$obra->proyecto}}">
                         </div>

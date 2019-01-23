@@ -28,8 +28,13 @@
             </div>
             </br>
             <div class="card">
-                <div class="card-heade row justify-content-center">Sus Productos</div>
-                            <a class="btn btn-outline-success my-2 my-sm-0" href="{{url('/productosTrabajador')}}" role="button" style="cursor: pointer;">Ingresar</a>
+              <div class="card-heade row justify-content-center">Su Equipo</div>
+                          <a class="btn btn-outline-success my-2 my-sm-0" href="{{url('/equipoTrabajador')}}" role="button" style="cursor: pointer;">Ver Equipo</a>
+            </div>
+            </br>
+            <div class="card">
+              <div class="card-heade row justify-content-center">Sus Productos</div>
+                          <a class="btn btn-outline-success my-2 my-sm-0" href="{{url('/productosTrabajador')}}" role="button" style="cursor: pointer;">Ingresar</a>
             </div>
         </div>
     </div>
