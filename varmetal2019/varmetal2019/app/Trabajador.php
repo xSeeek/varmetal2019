@@ -39,6 +39,10 @@ class Trabajador extends Model
         $instance->getQuery()->where('estado', '<>', 1);
         return $instance;
     }
+    public function ayudante()
+    {
+        return $this->hasMany('Varmetal\Ayudante', 'lider_id_trabajador');
+    }
     public function validateData($var)
     {
         if($var == NULL)
