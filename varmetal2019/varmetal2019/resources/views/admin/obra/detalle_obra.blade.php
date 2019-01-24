@@ -70,16 +70,28 @@
                     <h5>
                         @if($terminado == true && ($cantidadFinalizada == count($productos_obra)) && count($productos_obra) != 0)
                             <b>Tiempo requerido para completarse:</b>
-                        @else
+                            <div class="col-sm-10">
+                                @if($tiempoFinalizado < 1)
+                                    <input type="text" readonly id="nombreObra" class="form-control-plaintext" value="{{$tiempoFinalizado * 60}} Minutos">
+                                @else
+                                    <input type="text" readonly id="nombreObra" class="form-control-plaintext" value="{{$tiempoFinalizado}} Horas">
+                                @endif
+                            </div>
+                        @elseif (($cantidadFinalizada != count($productos_obra)) && count($productos_obra) != 0)
                             <b>Tiempo requerido para completarse (hasta hoy):</b>
+                            <div class="col-sm-10">
+                                @if($tiempoFinalizado < 1)
+                                    <input type="text" readonly id="nombreObra" class="form-control-plaintext" value="{{$tiempoFinalizado * 60}} Minutos">
+                                @else
+                                    <input type="text" readonly id="nombreObra" class="form-control-plaintext" value="{{$tiempoFinalizado}} Horas">
+                                @endif
+                            </div>
+                        @else
+                            <b>Tiempo requerido para completarse :</b>
+                            <div class="col-sm-10">
+                                <input type="text" readonly id="nombreObra" class="form-control-plaintext" value="Aún no se asignan piezas para determinar las Horas Hombre.">
+                            </div>
                         @endif
-                        <div class="col-sm-10">
-                            @if($tiempoFinalizado < 1)
-                                <input type="text" readonly id="nombreObra" class="form-control-plaintext" value="{{$tiempoFinalizado * 60}} Minutos">
-                            @else
-                                <input type="text" readonly id="nombreObra" class="form-control-plaintext" value="{{$tiempoFinalizado}} Horas">
-                            @endif
-                        </div>
                         <b>Tiempo en pausa:</b>
                         <div class="col-sm-10">
                             @if($tiempoPausa != 0)

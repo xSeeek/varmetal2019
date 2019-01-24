@@ -95,10 +95,13 @@ class ObraController extends Controller
         $obra->terminado = $terminado;
         $obra->save();
 
-        if($terminado == true)
-            $tiempoFinalizado = (new GerenciaController)->calcularHorasHombre(Carbon::parse($obra->fechaInicio), Carbon::parse($obra->fechaFin));
+        if(count($productos_obra) > 0)
+            if($terminado == true)
+                $tiempoFinalizado = (new GerenciaController)->calcularHorasHombre(Carbon::parse($obra->fechaInicio), Carbon::parse($obra->fechaFin));
+            else
+                $tiempoFinalizado = (new GerenciaController)->calcularHorasHombre(Carbon::parse($obra->fechaInicio), (new Carbon())->now());
         else
-            $tiempoFinalizado = (new GerenciaController)->calcularHorasHombre(Carbon::parse($obra->fechaInicio), (new Carbon())->now());
+            $tiempoFinalizado = -1;
 
         return view('admin.obra.detalle_obra')
                 ->with('obra', $obra)
