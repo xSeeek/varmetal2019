@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Varmetal\Ayudante;
 use Freshwork\ChileanBundle\Rut;
 use Varmetal\Trabajador;
+use Carbon\Carbon;
 
 class AyudanteController extends Controller
 {
@@ -71,9 +72,18 @@ class AyudanteController extends Controller
     {
         $detalles_ayudante = Ayudante::find($data);
         $trabajador = $detalles_ayudante->lider;
+        $trabajos = $detalles_ayudante->historial_trabajos;
+        $kilosRealizados = 0;
+
+        $date = new Carbon();
+
+        foreach($trabajos as $trabajo)
+            if((Carbon::parse($trabajo->fechaTrabajo))->format('m') == $date->today()->format('m'))
+                $kilosRealizados += $trabajo->kilosRealizados;
 
         return view('admin.ayudante.ayudante_control')
                 ->with('detalles_ayudante', $detalles_ayudante)
-                ->with('detalles_trabajador', $trabajador);
+                ->with('detalles_trabajador', $trabajador)
+                ->with('kilosRealizados', $kilosRealizados);
     }
 }

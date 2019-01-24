@@ -307,12 +307,18 @@ class ProductoController extends Controller
 
         $date = new Carbon();
 
-
-
         foreach($trabajador as $worker)
             foreach($worker->ayudante as $ayudantes)
             {
-                continue;
+                $dayWork = TrabajosAyudante::whereDate('fechaTrabajo', $date->today())->where('ayudante_id_ayudante', $ayudantes->idAyudante)->first();
+                if($dayWork == NULL)
+                {
+                    $dayWork = new TrabajosAyudante;
+                    $dayWork->fechaTrabajo = $date->today();
+                    $dayWork->ayudante_id_ayudante = $ayudantes->idAyudante;
+                }
+                $dayWork->kilosRealizados += ($response[1] * ($producto->pesoKg * 0.2));
+                $dayWork->save();
             }
 
         $dataProducto->pivot->save();

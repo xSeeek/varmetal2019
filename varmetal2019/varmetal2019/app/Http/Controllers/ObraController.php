@@ -88,7 +88,11 @@ class ObraController extends Controller
         $tiempoFinalizado = (new GerenciaController)->calcularHorasHombre(Carbon::parse($obra->fechaInicio), (new Carbon())->now());
 
         if($cantidadFinalizada == count($productos_obra))
+        {
             $terminado = true;
+            if($fechaFin  == NULL)
+                $fechaFin = $carbon->now();
+        }
         else
             $terminado = false;
 

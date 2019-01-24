@@ -31,6 +31,10 @@
                             <input type="text" readonly id="estadoAyudante" class="form-control-plaintext" value="No Asignado">
                         @endif
                         </div>
+                        <b>Kilos Trabajados (Mes actual):</b>
+                        <div class="col-sm-10">
+                            <input type="text" readonly id="kilosAyudante" class="form-control-plaintext" value="{{$kilosRealizados}} Kg.">
+                        </div>
                     </h5>
                     @if($detalles_trabajador != NULL)
                     <br>
