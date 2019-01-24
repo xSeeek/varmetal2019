@@ -90,8 +90,8 @@ class ObraController extends Controller
         if($cantidadFinalizada == count($productos_obra))
         {
             $terminado = true;
-            if($fechaFin  == NULL)
-                $fechaFin = $carbon->now();
+            if($obra->$fechaFin  == NULL)
+                $obra->$fechaFin = $carbon->now();
         }
         else
             $terminado = false;
