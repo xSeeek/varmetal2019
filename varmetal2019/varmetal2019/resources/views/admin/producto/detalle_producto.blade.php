@@ -206,7 +206,11 @@
                             @if($trabajador->pivot->fechaComienzo == NULL)
                                 <td scope="col">Aún no inicia</td>
                             @else
-                                <td scope="col">Inició el desarrollo</td>
+                                @if($producto->terminado == false)
+                                    <td scope="col">Inició el desarrollo</td>
+                                @else
+                                    <td scope="col">Completada</td>
+                                @endif
                             @endif
                             <td scope="col"><a class="btn btn-outline-secondary btn-sm" href="{{url('trabajadorControl', [$trabajador->idTrabajador])}}" role="button"><b>Ficha Trabajador</b></a>
                             <td scope="col"><a class="btn btn-outline-secondary btn-sm" onclick="deleteWorker({{ $trabajador->idTrabajador }}, {{ $producto->idProducto }})" role="button"><b>Eliminar</b></a>
