@@ -41,7 +41,7 @@ class AsistenciaController extends Controller
 
   public function registrarAsistencia(Request $request)
   {
-    echo $request->hasFile('file');
+    var_dump($request->file('file'));
     if($request->hasFile('file'))
     {
       $trabajador = Trabajador::where('rut', $request->rut)->first();
