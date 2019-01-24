@@ -24,10 +24,10 @@ function confirmMensajeSwal(type, msg, e) {
     text: msg,
     type: type,
     showCancelButton: true,
-    confirmButtonColor: "#10c916",
+    confirmButtonColor: COLOR_SUCCESS,
     confirmButtonText: "Si",
     cancelButtonText: "No",
-    cancelButtonColor: "#ff0000",
+    cancelButtonColor: COLOR_ERROR,
   }).then((result) => {
     if (result.value) {
       swal({
