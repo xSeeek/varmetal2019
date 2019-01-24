@@ -21,6 +21,10 @@
               <label for="fecha">Fecha</label>
               <input type="text" name="fecha" value="{{$asistencia->created_at}}" class="form-control" disabled>
             </div>
+            <div class="form-group">
+              <label for="tipo">Tipo</label>
+              <input type="text" name="tipo" value="{{$asistencia->tipo}}" class="form-control" disabled>
+            </div>
           </div>
           <div class="col">
             <figure class="figure">

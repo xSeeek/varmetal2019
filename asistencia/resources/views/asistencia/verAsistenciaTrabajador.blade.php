@@ -13,12 +13,14 @@
           <table class="table display" id="tabla_asistencias" style="width:100%">
             <thead class="thead-dark">
               <th class="text-center">Fecha</th>
+              <th class="text-center">Tipo</th>
               <th class="text-center" data-toggle="tooltip" title="Opciones"><i class="fas fa-cogs"></i></th>
             </thead>
             <tbody>
               @foreach ($trabajador->asistencias as $asistencia)
                 <tr>
                   <td class="text-center">{{$asistencia->created_at}}</td>
+                  <td class="text-center">{{$asistencia->tipo}}</td>
                   <td class="text-center"><a href="{!! route('supervisor.detallesAsistencia', ['rut'=>$trabajador->rut, 'id'=>$asistencia->idAsistencia]) !!}"
                      class="btn btn-primary text-light"
                      role="button" data-toggle="tooltip" data-placement="top"
