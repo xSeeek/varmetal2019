@@ -4,7 +4,7 @@
 @section('title', __('Error'))
 
 @section('image')
-    <div style="background-image: url({{ asset('/errors/500.jpg') }});" class="centered pin bg-cover bg-no-repeat md:bg-left lg:bg-center">
+    <div style="background-image: url({{ asset('/errors/500.jpg') }});" class="pin bg-cover bg-no-repeat md:bg-left lg:bg-center">
     </div>
 @endsection
 
