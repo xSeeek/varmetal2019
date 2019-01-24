@@ -26,9 +26,12 @@
               <input type="text" name="tipo" value="{{$asistencia->tipo}}" class="form-control" disabled>
             </div>
           </div>
-          <div class="col">
+          <div class="col"><button class="btn btn-info" onclick="rotarImagen()"><i class="fas fa-sync-alt"></i></button>
+            <div class="form-group">
+
+            </div>
             <figure class="figure">
-              <img src="{{ Storage::disk('asistencia')->url($trabajador->rut.'/'.$asistencia->image) }}" class="figure-img img-fluid rounded">
+              <img id="img" src="{{ Storage::disk('asistencia')->url($trabajador->rut.'/'.$asistencia->image) }}" class="figure-img img-fluid rounded">
               <figcaption class="figure-caption text-right">Imagen tomada el día en que se marco la asistencia.</figcaption>
             </figure>
           </div>
@@ -36,4 +39,21 @@
       </div>
     </div>
   </div>
+
+
+  <script type="text/javascript">
+    function rotarImagen() {
+      console.log('hola');  
+      var value = 0
+      $("#img").rotate({
+        bind:
+        {
+          click: function(){
+            value +=90;
+            $(this).rotate({ animateTo:value})
+          }
+        }
+      });
+    }
+  </script>
 @endsection

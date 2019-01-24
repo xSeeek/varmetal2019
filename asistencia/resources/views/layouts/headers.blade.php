@@ -44,6 +44,7 @@
     <!-- JS Mensajes -->
     <script src={{asset("js/mensajes.js")}}></script>
     <script src={{asset("js/notify.js")}}></script>
+    <script type="text/javascript" src="http://beneposto.pl/jqueryrotate/js/jQueryRotateCompressed.js"></script>
 
     <link rel="shortcut icon" href="{{{ asset('favicon.png') }}}">
 

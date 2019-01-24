@@ -63,7 +63,11 @@ class AsistenciaController extends Controller
 
         $file_name = $dt->format('d-m-Y') . '-' . $request->tipo . '.' . $file->getClientOriginalExtension();
 
-        Storage::disk('asistencia')->put($request->rut.'/'. $file_name, File::get($file));
+        $img = Image::make($file)->orientate()
+        ->resize(400, null, function ($constraint) { $constraint->aspectRatio(); } )
+        ->encode('jpg',80);
+
+        Storage::disk('asistencia')->put($request->rut.'/'. $file_name, $img);
 
         $asistencia->image = $file_name;
         $trabajador->asistencias()->save($asistencia);
