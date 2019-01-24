@@ -126,8 +126,8 @@ class GerenciaController extends Controller
 
         $inDayStart = Carbon::parse($fechaInicio->format('Y-m-d'));
         $inDayEnd = Carbon::parse($fechaFin->format('Y-m-d'));
- 
-        if($inDayEnd->diffInHours($inDayStart) < 24)
+
+        if($inDayEnd->diffInHours($inDayStart) <= 24)
             return $fechaFin->diffInHours($fechaInicio);
         else
             $startHour = $this->getTimeStart($fechaInicio);

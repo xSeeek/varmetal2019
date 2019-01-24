@@ -13,6 +13,7 @@
                                 <tr>
                                     <th>Código</th>
                                     <th>Proyecto</th>
+                                    <th>Estado</th>
                                     <th>Opciones</th>
                                 </tr>
                             </thead>
@@ -21,6 +22,11 @@
                                 <tr id="id_obra{{ $obra->idObra }}">
                                     <td scope="col">{{ $obra->codigo }}</td>
                                     <td scope="col">{{ $obra->proyecto }}</td>
+                                    @if($obra->terminado == true)
+                                        <td scope="col">Finalizada</td>
+                                    @else
+                                        <td scope="col">En producción</td>
+                                    @endif
                                     <td><a class="btn btn-outline-success my-2 my-sm-0" href="{{url('obraControl', [$obra->idObra])}}" role="button" style="cursor: pointer;">Ver Detalles</a></td>
                                 </tr>
                                 @endforeach
