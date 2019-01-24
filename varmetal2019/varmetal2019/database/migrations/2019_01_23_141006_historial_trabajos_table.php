@@ -18,6 +18,9 @@ class HistorialTrabajosTable extends Migration
             $table->timestamp('fechaTrabajo')->now();
             $table->float('kilosRealizados')->default(0);
             $table->timestamps();
+
+            $table->integer('ayudante_id_ayudante')->unsigned();
+            $table->foreign('ayudante_id_ayudante')->references('idAyudante')->on('ayudantes')->onDelete('cascade');
         });
     }
 

@@ -15,6 +15,6 @@ class Ayudante extends Model
     }
     public function historial_trabajos()
     {
-        return $this->belongsToMany('Varmetal\TrabajosAyudante', 'trabajos_ayudantes', 'ayudante_id_ayudante', 'historial_id_historial');
+        return $this->hasMany('Varmetal\TrabajosAyudante', 'ayudante_id_ayudante');
     }
 }

@@ -9,6 +9,8 @@ use Varmetal\User;
 use Varmetal\Obra;
 use Varmetal\Tipo;
 use Carbon\Carbon;
+use Varmetal\Ayudante;
+use Varmetal\TrabajosAyudante;
 use Illuminate\Support\Facades\Auth;
 
 class ProductoController extends Controller
@@ -275,30 +277,6 @@ class ProductoController extends Controller
         return 1;
     }
 
-    public function updateCantidadProductoX(Request $request)
-    {
-
-        $response = json_decode($request->DATA,true);
-
-
-
-        $usuarioActual = Auth::user();
-
-        if($usuarioActual->trabajador == NULL)
-            return redirect()->route('/home');
-
-        $datos_trabajador = $usuarioActual->trabajador;
-        $producto = Producto::find($response[1]);
-
-        $dataProducto = $producto->trabajadorWithAtributtes()->where('trabajador_id_trabajador', '=', $datos_trabajador->idTrabajador)->get()->first();
-        $dataProducto->pivot->productosRealizados = ($dataProducto->pivot->productosRealizados) + $response[0];
-        $dataProducto->pivot->kilosTrabajados = ($dataProducto->pivot->productosRealizados) * $producto->pesoKg;
-        $dataProducto->pivot->save();
-        $dataProducto->save();
-
-        return 1;
-    }
-
     public function updateCantidadProducto(Request $request)
     {
         $response = json_decode($request->DATA);
@@ -326,6 +304,17 @@ class ProductoController extends Controller
 
         $dataProducto->pivot->productosRealizados = ($dataProducto->pivot->productosRealizados) + $response[1];
         $dataProducto->pivot->kilosTrabajados = ($dataProducto->pivot->productosRealizados) * $producto->pesoKg;
+
+        $date = new Carbon();
+
+
+
+        foreach($trabajador as $worker)
+            foreach($worker->ayudante as $ayudantes)
+            {
+                continue;
+            }
+
         $dataProducto->pivot->save();
         $dataProducto->save();
 
