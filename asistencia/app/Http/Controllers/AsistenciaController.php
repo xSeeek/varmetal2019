@@ -61,11 +61,9 @@ class AsistenciaController extends Controller
 
         $file = $request->file('file');
 
-        $image = Image::make($file)->crop(350, 350);
-
         $file_name = $dt->format('d-m-Y') . '-' . $request->tipo . '.' . $file->getClientOriginalExtension();
 
-        Storage::disk('asistencia')->put($request->rut .'/'. $file_name, $image);
+        Storage::disk('asistencia')->put($request->rut.'/'. $file_name, File::get($file));
 
         $asistencia->image = $file_name;
         $trabajador->asistencias()->save($asistencia);
