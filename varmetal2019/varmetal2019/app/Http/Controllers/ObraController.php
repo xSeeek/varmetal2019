@@ -58,7 +58,7 @@ class ObraController extends Controller
     {
         $obra = Obra::find($data);
         $carbon = new Carbon();
-        $productos_obra = $obra->producto;
+        $productos_obra = $obra->producto()->orderBy('idProducto', 'DESC')->get();
         $cantidadFinalizada = 0;
         $kilosTerminados = 0;
         $kilosObra = 0;
@@ -66,11 +66,14 @@ class ObraController extends Controller
         $tiempoPausa = 0;
         $tiempoSetUp = 0;
         $fechaFin = NULL;
+        $fechaHH = NULL;
 
         foreach($productos_obra as $producto)
         {
             if($producto->terminado == true)
                 $cantidadFinalizada++;
+            if((($fechaFin == NULL) && ($producto->fechaFin != NULL)) || (($fechaFin != NULL) && ($producto->fechaFin > $fechaFin)))
+                $fechaFin = $producto->fechaFin;
             $kilosObra += ($producto->pesoKg * $producto->cantProducto);
             $trabajadores = $producto->trabajadorWithAtributtes;
             $tiempoPausa += $producto->tiempoEnPausa;
@@ -80,22 +83,22 @@ class ObraController extends Controller
                 $kilosTerminados += $trabajador->pivot->kilosTrabajados;
         }
 
-        $tiempoFinalizado = (new GerenciaController)->calcularHorasHombre(Carbon::parse($obra->fechaInicio), (new Carbon())->now());
-
         if($cantidadFinalizada == count($productos_obra))
         {
             $terminado = true;
             if($obra->$fechaFin == NULL)
-            {
-                $fechaFin = $carbon->now();
                 $obra->fechaFin = $fechaFin;
-            }
         }
         else
             $terminado = false;
 
         $obra->terminado = $terminado;
         $obra->save();
+
+        if($terminado == true)
+            $tiempoFinalizado = (new GerenciaController)->calcularHorasHombre(Carbon::parse($obra->fechaInicio), Carbon::parse($obra->fechaFin));
+        else
+            $tiempoFinalizado = (new GerenciaController)->calcularHorasHombre(Carbon::parse($obra->fechaInicio), (new Carbon())->now());
 
         return view('admin.obra.detalle_obra')
                 ->with('obra', $obra)
