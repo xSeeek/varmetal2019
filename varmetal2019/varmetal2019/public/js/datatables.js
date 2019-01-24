@@ -10,6 +10,3 @@ window.onload = function formatTable()
        $('[data-toggle="tooltip"]').tooltip();
    });
 }
-function goBack() {
-    window.history.back();
-}

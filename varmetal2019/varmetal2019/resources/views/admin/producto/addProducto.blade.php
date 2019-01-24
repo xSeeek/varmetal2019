@@ -91,7 +91,7 @@
                 </div>
             </div>
         </br>
-            <a class="btn btn-primary btn-lg" role="button" onclick="goBack()"><b>Volver</b></a>
+            <a class="btn btn-primary btn-lg" role="button" href="{{url('menuPiezas')}}"><b>Volver</b></a>
         </div>
     </div>
 </div>
