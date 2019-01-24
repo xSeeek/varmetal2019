@@ -59,7 +59,7 @@
                                       <br>
                                           Marcar como terminado:
                                           <br>
-                                          <a class="btn btn-warning btn-lg" id="stopButton" role="button" onclick="sendEmail()">Terminar</a>
+                                          <a class="btn btn-warning btn-lg" id="stopButton" role="button" onclick="markAsFinished({{$producto->idProducto}})">Terminar</a>
                                       </h5>
                                   @endif
                               @else
@@ -75,11 +75,7 @@
                     </h5>
                 </div>
                 @if($cantidadProducida != $producto->cantProducto)
-                    @if(($cantidadProducida+'1')%'5'==0)
-                        <a class="btn btn-outline-primary btn-lg" role="button" onclick="sendEmailProductos()"><b>Actualizar cantidad producida</b></a>
-                    @else
                         <a class="btn btn-outline-primary btn-lg" role="button" onclick="actualizarCantidad({{$producto->idProducto}})"><b>Actualizar cantidad producida</b></a>
-                    @endif
                 @endif
             </div>
         </div>
@@ -102,6 +98,7 @@
       datosPausa[3] = '{{$producto->nombre}}';
       datosPausa[4] = '{{$producto->codigo}}';
       datosPausa[5] = '{{$cantidadProducida}}';
+      datosPausa[6] = '{{{$trabajador->user->id}}}';
       json_text = JSON.stringify(datosPausa);
         $.ajax({
             headers: {
@@ -113,8 +110,6 @@
             success: function(response){
                 if(response!='Email enviado producto')
                     showMensajeSwall(MSG_ERROR, response);
-                else
-                    actualizarCantidad({{$producto->idProducto}});
           }
         });
     }
@@ -129,6 +124,7 @@ function sendEmail()
       datosPausa[2] = '{{$trabajador->user->email}}';
       datosPausa[3] = '{{$producto->nombre}}';
       datosPausa[4] = '{{$producto->codigo}}';
+      datosPausa[5] = '{{$trabajador->user->id}}';
       json_text = JSON.stringify(datosPausa);
         $.ajax({
             headers: {
@@ -140,8 +136,6 @@ function sendEmail()
             success: function(response){
                 if(response!='Email enviado producto Terminado')
                     showMensajeSwall(MSG_ERROR, response);
-                else
-                    markAsFinished({{$producto->idProducto}});
           }
         });
     }
@@ -157,8 +151,10 @@ function sendEmail()
             url: "{{url('producto/Finalizar')}}",
             success: function(response){
                 if(response == 1)
+                {
+                    sendEmail();
                     window.location.href = "{{url('/detalleProducto', [$producto->idProducto])}}";
-                else {
+                }else {
                     showMensajeSwall(MSG_ERROR, response);
                 }
             }
@@ -200,8 +196,9 @@ function sendEmail()
         {
             if (result.value > 0)
             {
-                var datos;
+                var datos, valorAntiguo;
 
+                valorAntiguo = '{{$producto->cantProducto}}';
                 datos = Array();
                 datos[0]= {{$producto->idProducto}};
                 datos[1]=result.value;
@@ -215,13 +212,27 @@ function sendEmail()
                     data: {DATA:json_text},
                     url: "{{url('producto/actualizarCantidad')}}",
                     success: function(response){
-                        if(response == 1)
-                            window.location.href = "{{url('/detalleProducto', [$producto->idProducto])}}";
-                        else {
-                                showMensajeSwall(MSG_ERROR, response);
-                            }
+                        if(response != 1)
+                            showMensajeSwall(MSG_ERROR, response);
                         }
                     });
+                    if({{$producto->cantProducto}}%5==0)
+                    {
+                      sendEmailProductos();
+                      window.location.href = "{{url('/detalleProducto', [$producto->idProducto])}}";
+                    }
+                    else
+                    {
+                      if(result.value>5)
+                      {
+                        sendEmailProductos();
+                        window.location.href = "{{url('/detalleProducto', [$producto->idProducto])}}";
+                      }else{
+                        if(result.value<5){
+                          window.location.href = "{{url('/detalleProducto', [$producto->idProducto])}}";
+                        }
+                      }
+                    }
             }
             else if(result.value <= 0)
                 showMensajeSwall(MSG_ERROR, 'La cantidad ingresada no es válida.');

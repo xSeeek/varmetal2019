@@ -16,8 +16,22 @@
         Email: {!! $email !!}.<br><br>
       </h5>
       <h4>
-        Motivo: {!! $motivo !!}<br><br>
-        Detalles: {!! $detalle !!}.<br><br>
+        @if($motivo==0)
+          Motivo: Falta materiales<br><br>
+        @endif
+        @if($motivo==1)
+          Motivo: Falla en el equipo<br><br>
+        @endif
+        @if($motivo==2)
+          Motivo: Falla en el plano<br><br>
+        @endif
+        @if($motivo==3)
+          Motivo: Cambio de pieza<br><br>
+        @endif
+        @if($motivo==4)
+          Motivo: Otro<br><br>
+          Detalles: {!! $detalle !!}.<br><br>
+        @endif
       </h4>
       <h3>Descripcion: Aviso para realizar una supervision debido a la pausa realizadas por el trabajador.</h3>
     </div>

@@ -27,6 +27,12 @@
                         </div>
                     </div>
                     <div class="form-group row">
+                      <label class="col-md-4 col-form-label text-md-right"><b>Hora Actual:</b></label>
+                        <div class="col-md-6">
+                          <input id="actual" type="timestamp" class="form-control" name="fechaInicio" readonly=”readonly”>
+                        </div>
+                    </div>
+                    <div class="form-group row">
                       <label class="col-md-4 col-form-label text-md-right"><b>Motivo:</b></label>
                         <select class="custom-select" id="motivo" aria-describedby="inputType" name="type" onchange="mostrarDescripcion()" required>
                                 <option select value="4">Otro</option>
@@ -74,6 +80,13 @@
 
 <script type="text/javascript">
 
+var myVar = setInterval(myTimer, 1000);
+
+function myTimer() {
+  var d = new Date();
+  document.getElementById("actual").innerHTML = d.toLocaleTimeString();
+}
+
 function mostrarDescripcion()
 {
   var etiqueta, valor;
@@ -111,6 +124,7 @@ function textAreaAdjust(o)
           datosPausa[3] = '{{$producto->cantPausa}}';
           datosPausa[4] = document.getElementById("descripcion").value;
           datosPausa[5] = document.getElementById("motivo").value;
+          datosPausa[6] = '{{$usuarioActual->id}}';
 
           json_text = JSON.stringify(datosPausa);
           $.ajax({
@@ -121,13 +135,11 @@ function textAreaAdjust(o)
               data: {DATA:json_text},
               url: "{{url('/enviarEmail')}}",
               success: function(response){
-                  if(response!='Email enviado')
-                  {
-                      alert(response);
-                      console.log(response);
-                  }
-                  else
-                  window.location.href="{{url('/addPausa', [$producto->idProducto])}}";
+                if(response!='Email enviado')
+                {
+                    alert(response);
+                    console.log(response);
+                }
             }
           });
         }
@@ -137,7 +149,7 @@ function savePausa()
       var datosPausa, json_text;
 
       datosPausa = Array();
-      datosPausa[0] = {{$producto->idProducto}};
+      datosPausa[0] = '{{$producto->idProducto}}';
       datosPausa[1] = document.getElementById("descripcion").value;
       datosPausa[3] = document.getElementById('motivo').value;
       json_text = JSON.stringify(datosPausa);
@@ -156,6 +168,7 @@ function savePausa()
               }
               else
               sendEmail();
+              window.location.href="{{url('/addPausa', [$producto->idProducto])}}";
           }
       });
     }

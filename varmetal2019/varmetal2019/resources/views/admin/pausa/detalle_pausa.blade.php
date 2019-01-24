@@ -132,6 +132,7 @@
     datos[2] = '{{$trabajador->user->email}}';
     datos[3] = '{{$producto->codigo}}';
     datos[4] = '{{$producto->nombre}}';
+    datos[5] = '{{$trabajador->user->id}}';
 
     json_text = JSON.stringify(datos);
 
@@ -145,9 +146,6 @@
         success: function(response){
             if(response!='Email Eliminado')
                 showMensajeSwall(MSG_ERROR, response);
-            else
-              window.location.href = "{{url('/addPausa', [$producto->idProducto])}}";
-
       }
     });
   }
@@ -172,6 +170,7 @@
               alert(response);
               console.log(response);
               sendEmail();
+              window.location.href = "{{url('/addPausa', [$producto->idProducto])}}";
           }
       });
   }

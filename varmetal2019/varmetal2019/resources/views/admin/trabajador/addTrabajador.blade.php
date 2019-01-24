@@ -13,6 +13,7 @@
                 <div class="card-body">
                     <form method="POST" name="nuevoTrabajadorForm" id="nuevoTrabajadorForm">
                         <div class="form-group row">
+                          <label for="idUser" name="idUser" id="idUser" class="col-md-4 col-form-label text-md-right" hidden>{{Auth::user()->id}}</label>
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Usuario') }}</label>
                             <div class="col-md-6">
                                 <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" aria-describedby="email" placeholder="Email del Trabajador" name="email" value="{{ old('email') }}" required>
