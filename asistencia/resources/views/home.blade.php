@@ -25,7 +25,7 @@
               </select>
             </div>
             <div class="form-group">
-              <input accept="image/*" capture name="file" type="file" class="form-control-file{{ $errors->has('file') ? ' is-invalid' : '' }}" id="img_select" required autofocus/>
+              <input accept="image/*" capture name="file" type="file" class="form-control-file{{ $errors->has('file') ? ' is-invalid' : '' }}" id="img_select" capture='capture' required autofocus/>
               @if ($errors->has('file'))
                 <span class="invalid-feedback" role="alert">
                   <strong>{{ $errors->first('file') }}</strong>
