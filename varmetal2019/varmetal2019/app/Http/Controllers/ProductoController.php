@@ -36,9 +36,12 @@ class ProductoController extends Controller
       $producto->save();
     }
 
-    public function adminProducto()
+    public function adminProducto($data)
     {
-        $productos = Producto::orderBy('prioridad', 'DESC')->get();
+        if($data == 'pendientes')
+            $productos = Producto::orderBy('prioridad', 'DESC')->where('terminado', 'false')->get();
+        else
+            $productos = Producto::orderBy('prioridad', 'DESC')->where('terminado', 'true')->get();
 
         return view('admin.administracion_productos')
                 ->with('productos', $productos);

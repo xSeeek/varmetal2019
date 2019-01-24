@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Listado de Piezas</div>
+                <div class="card-header">Listado de OT</div>
                     <div class="card=body container mt-3">
                         @if(($obras != NULL) && (count($obras) > 0))
                         <table id="tablaAdministracion" style="width:100%" align="center">

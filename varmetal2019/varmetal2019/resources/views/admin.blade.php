@@ -30,7 +30,7 @@
                       @if(($obras != NULL) && (count($obras) > 0))
                         <tr>
                             <th>Administración de Piezas</th>
-                            <td><a class="btn btn-outline-success my-2 my-sm-0" href="{{url('adminProducto')}}" role="button" style="cursor: pointer;">Ingresar</a></td>
+                            <td><a class="btn btn-outline-success my-2 my-sm-0" href="{{url('menuPiezas')}}" role="button" style="cursor: pointer;">Ingresar</a></td>
                         </tr>
                       @else
                         <tr>

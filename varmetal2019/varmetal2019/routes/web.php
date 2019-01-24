@@ -99,7 +99,10 @@ Route::get('/admin', 'AdminController@admin')
 /* [** Producto Controller **] */
     /* [** ADMINISTRACIÓN **] */
         /* [** GET **] */
-        Route::get('/adminProducto', 'ProductoController@adminProducto')
+        Route::get('/menuPiezas', 'SupervisorController@menuPiezas')
+                    ->middleware('is_supervisor')
+                    ->name('menuPiezas');
+        Route::get('/adminProducto/{id}', ['uses' => 'ProductoController@adminProducto'])
                     ->middleware('is_supervisor')
                     ->name('adminProducto');
         Route::get('/productoControl/{id}', ['uses' => 'ProductoController@productoControl'])

@@ -80,7 +80,7 @@
                 <a class="btn btn-outline-success btn-lg" align="right" role="button" href="{{url('/addProducto')}}"><b>Agregar Piezas</b></a>
             </div>
         </br>
-            <a class="btn btn-primary btn-lg" role="button" href="{{url('admin')}}"><b>Volver</b></a>
+            <a class="btn btn-primary btn-lg" role="button" href="{{url('menuPiezas')}}"><b>Volver</b></a>
         </div>
     </div>
 </div>

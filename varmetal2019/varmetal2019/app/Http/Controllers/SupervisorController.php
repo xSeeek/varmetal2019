@@ -10,4 +10,8 @@ class SupervisorController extends Controller
     {
         return view('menu_trabajadores');
     }
+    public function menuPiezas()
+    {
+        return view('menu_piezas');
+    }
 }
