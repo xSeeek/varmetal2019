@@ -42,8 +42,7 @@
                     <a class="btn btn-primary btn-md" id='changesButton' role="button" onclick="saveChanges()" hidden>Guardar Cambios</a>
                 </div>
             </div>
-        </br>
-        @if($usuario_trabajador->type == Varmetal\User::DEFAULT_TYPE)
+            <br>
             <div class="card">
                 <div class="card-header">Piezas a Realizar</div>
                 <div class="card-body">
@@ -97,9 +96,8 @@
                 @endif
                 </div>
             </div>
-        @endif
         </br>
-            <a class="btn btn-primary btn-lg" role="button" href="{{url('menuTrabajador')}}"><b>Volver</b></a>
+            <a class="btn btn-primary btn-lg" role="button" onclick="goBack()"><b>Volver</b></a>
         </div>
     </div>
 </div>

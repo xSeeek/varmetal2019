@@ -132,13 +132,18 @@
                           </select>
                           <br><br>
                         </div>
-                        @if($producto->estado == 1 && $producto->terminado == false)
-                            <br>
-                            <b style="color:red">Información Importante:</b>
-                            <div class="col-sm-10">
-                                <input type="text" readonly id="pesoProducto" style="color:red" class="form-control-plaintext" value="Este producto se marcó como terminado.">
-                            </div>
-                        @endif
+                        <b>Horas Hombre Requeridas:</b>
+                        <div class="col-sm-10">
+                            @if($horasHombre != NULL)
+                              @if($horasHombre < 1)
+                                <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="{{$horasHombre * 60}} Minutos">
+                              @else
+                                <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="{{$horasHombre}} Horas">
+                              @endif
+                            @else
+                              <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="No se ha iniciado el desarrollo de la pieza">
+                            @endif
+                        </div>
                         <b>Tiempo en Pausa:</b>
                         <div class="col-sm-10">
                             @if($producto->tiempoEnPausa != NULL)
@@ -163,6 +168,13 @@
                               <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="No se han producido cambios de pieza">
                             @endif
                         </div>
+                        @if($producto->estado == 1 && $producto->terminado == false)
+                            <br>
+                            <b style="color:red">Información Importante:</b>
+                            <div class="col-sm-10">
+                                <input type="text" readonly id="pesoProducto" style="color:red" class="form-control-plaintext" value="Este producto se marcó como terminado.">
+                            </div>
+                        @endif
                     </h5>
                 </div>
             </div>
@@ -213,7 +225,7 @@
     </div>
     </br>
     <div class="row justify-content-center">
-            <a class="btn btn-primary btn-lg" role="button" href="{{url('adminProducto')}}"><b>Volver</b></a>
+            <a class="btn btn-primary btn-lg" role="button" onclick="goBack()"><b>Volver</b></a>
     </div>
 </div>
 <div class="modal fade" id="modalOpciones" tabindex="-1" role="dialog" aria-labelledby="Opciones disponibles" aria-hidden="true">

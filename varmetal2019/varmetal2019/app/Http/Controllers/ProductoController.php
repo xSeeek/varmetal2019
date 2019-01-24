@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use Varmetal\Ayudante;
 use Varmetal\TrabajosAyudante;
 use Illuminate\Support\Facades\Auth;
+use Varmetal\Http\Controllers\GerenciaController;
 
 class ProductoController extends Controller
 {
@@ -56,17 +57,32 @@ class ProductoController extends Controller
         $trabajadores = $producto->trabajadorWithAtributtes;
         $obra = $producto->obra;
         $tipo = $producto->tipo;
+        $fechaInicio = NULL;
+        $fechaFin = NULL;
+        $horasHombre = NULL;
+
+        $date = new Carbon();
 
         $cantidadProducida = 0;
         foreach($trabajadores as $trabajador)
+        {
             $cantidadProducida += $trabajador->pivot->productosRealizados;
+            if(($fechaInicio == NULL) || ($fechaInicio > $trabajador->pivot->fechaComienzo))
+                $fechaInicio = $trabajador->pivot->fechaComienzo;
+        }
+        if($producto->fechaFin == NULL)
+            $fechaFin = $date->now();
+
+        if($fechaInicio != NULL)
+            $horasHombre = (new GerenciaController)->calcularHorasHombre(Carbon::parse($fechaInicio), Carbon::parse($fechaFin));
 
         return view('admin.producto.detalle_producto')
                 ->with('producto', $producto)
                 ->with('trabajadores', $trabajadores)
                 ->with('cantidadProducida', $cantidadProducida)
                 ->with('obra', $obra)
-                ->with('tipo', $tipo);
+                ->with('tipo', $tipo)
+                ->with('horasHombre', $horasHombre);
     }
 
     public function detalleProducto($id)
