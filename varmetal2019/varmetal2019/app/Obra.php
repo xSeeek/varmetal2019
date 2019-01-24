@@ -21,4 +21,8 @@ class Obra extends Model
     {
         return $this->belongsToMany('Varmetal\Trabajador', 'obra_supervisor','obras_id_obra', 'trabajador_id_trabajador');
     }
+
+    protected $fillable = [
+        'fechaFin',
+    ];
 }

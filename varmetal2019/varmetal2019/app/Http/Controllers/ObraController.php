@@ -65,17 +65,12 @@ class ObraController extends Controller
         $tiempoFinalizado = 0;
         $tiempoPausa = 0;
         $tiempoSetUp = 0;
-        $fechaFin = 0;
-        $fechaInicio = 0;
+        $fechaFin = NULL;
 
         foreach($productos_obra as $producto)
         {
             if($producto->terminado == true)
-            {
                 $cantidadFinalizada++;
-                $fechaFin = Carbon::parse($producto->fechaFin);
-                $fechaInicio = Carbon::parse($producto->fechaInicio);
-            }
             $kilosObra += ($producto->pesoKg * $producto->cantProducto);
             $trabajadores = $producto->trabajadorWithAtributtes;
             $tiempoPausa += $producto->tiempoEnPausa;
@@ -90,8 +85,11 @@ class ObraController extends Controller
         if($cantidadFinalizada == count($productos_obra))
         {
             $terminado = true;
-            if($obra->$fechaFin  == NULL)
-                $obra->$fechaFin = $carbon->now();
+            if($obra->$fechaFin == NULL)
+            {
+                $fechaFin = $carbon->now();
+                $obra->fechaFin = $fechaFin;
+            }
         }
         else
             $terminado = false;
