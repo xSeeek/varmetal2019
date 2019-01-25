@@ -21,19 +21,19 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                      <label class="col-md-4 col-form-label text-md-right"><b></b></label>
+                      <label class="col-md-5 col-form-label text-md-right"></label>
                       <div class="col-md-6">
                         <div id="liveclock" class="outer_face">
-                        	<div class="marker oneseven"></div>
-                        	<div class="marker twoeight"></div>
-                        	<div class="marker fourten"></div>
-                        	<div class="marker fiveeleven"></div>
+                            	<div class="marker oneseven"></div>
+                            	<div class="marker twoeight"></div>
+                            	<div class="marker fourten"></div>
+                            	<div class="marker fiveeleven"></div>
 
-                        	<div class="inner_face">
-                        		<div class="hand hour"></div>
-                        		<div class="hand minute"></div>
-                        		<div class="hand second"></div>
-                        	</div>
+                            	<div class="inner_face">
+                            		<div class="hand hour"></div>
+                            		<div class="hand minute"></div>
+                            		<div class="hand second"></div>
+                            	</div>
                         </div>
                       </div>
                     </div>
@@ -43,7 +43,7 @@
                           <input id="actual" type="timestamp" class="form-control text-center" name="fechaInicio" readonly=”readonly”>
                         </div>
                     </div>
-                    <div class="form-group row">
+                    <div id="select" class="form-group row">
                       <label class="col-md-4 col-form-label text-md-right"><b>Motivo:</b></label>
                         <div class="col-md-6">
                           <select class="custom-select form-control text-center" id="motivo" aria-describedby="inputType" name="type" onchange="mostrarDescripcion()" required>
@@ -55,12 +55,18 @@
                           </select>
                         </div>
                     </div>
-                    <div class="form-group row">
-                      <label class="col-form-label text-md-center"><b>Descripción: (Mientras ocurre el suceso, detalle con esmeración)</b>
-                        <div id="mostrarDes" class="col-md-6">
-                          <textarea class="custom-textarea text-center" id="descripcion" type="text" aria-describedby="descripcion" placeholder="Descripcion" name="descripcion" cols="50" onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
+                    <div class="form-group row" id="window">
+                      <label class="col-md-4 col-form-label text-md-right"><b>Descripción:</b></label>
+                        <div id="mostrarDesw" class="col-md-6">
+                          <textarea class="form-control text-center" id="descripcion" type="text" aria-describedby="descripcion" placeholder="Descripcion" name="descripcion" cols="50" onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
                         </div>
-                  </div>
+                    </div>
+                    <div class="form-group row" id="android">
+                      <label class="col-md-4 text-md-center"><b>Descripción:</b></label>
+                        <div id="mostrarDes" class="col-md-6">
+                          <textarea class="form-control text-center" id="descripcion" type="text" aria-describedby="descripcion" placeholder="Descripcion" name="descripcion" cols="50" onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
+                        </div>
+                    </div>
                 </form>
                   <div class="text-center">
                     @if(($pausas_almacenadas!=NULL) && (count($pausas_almacenadas)>0))
@@ -71,7 +77,7 @@
                         @endif
                       @endforeach
                     @endif
-                    @if($producto->cantPausas<=14)
+                    @if(($producto->cantPausa)<='14')
                       <a class="btn btn-outline-success my-1 my-sm-0" role="button" onclick="savePausa()"><b>Registrar Cambios</b></a>
                     @else
                       <a class="btn btn-outline-success my-1 my-sm-0" role="button"><b>Limite de pausas alcanzado</b></a>
@@ -88,6 +94,21 @@
 </div>
 
 <script type="text/javascript">
+
+window.onload(esWindows());
+
+function esWindows()
+{
+  var OSName;
+  if (navigator.appVersion.indexOf("Win")!=-1)
+  {
+    OSName = document.getElementById('android');
+    OSName.setAttribute("style","display:none;");
+  }else{
+    OSName = document.getElementById('window');
+    OSName.setAttribute("style","display:none;");
+  }
+}
 
 var $hands = $('#liveclock div.hand')
 
@@ -122,19 +143,23 @@ function myTimer() {
 function mostrarDescripcion()
 {
   var etiqueta, valor;
-  etiqueta = document.getElementById('mostrarDes');
+  etiqueta = document.getElementById('android');
+  etiquetaw = document.getElementById('window');
   valor = document.getElementById('motivo').value;
-  descripcion = document.getElementById('descripcion');
   if(valor==4)
   {
-    etiqueta.removeAttribute("style");
-    descripcion.setAttribute("required","");
+    if (navigator.appVersion.indexOf("Win")!=-1)
+    {
+      etiquetaw.removeAttribute("style");
+    }else
+      etiqueta.removeAttribute("style");
   }
   if(valor!=4){
-    etiqueta.setAttribute("style","display:none;");
-    etiqueta.setAttribute("style","display:none;");
-    descripcion.removeAttribute("required");
-    descripcion.value = document.getElementById('descripcion').value ;
+    if (navigator.appVersion.indexOf("Win")!=-1)
+    {
+      etiquetaw.setAttribute("style","display:none;");
+    }else
+      etiqueta.setAttribute("style","display:none;");
   }
   return 1;
 }
