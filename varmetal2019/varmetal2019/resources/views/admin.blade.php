@@ -31,6 +31,7 @@
                         <tr>
                             <th>Administración de Piezas</th>
                             <td><a class="btn btn-outline-success my-2 my-sm-0" href="{{url('menuPiezas')}}" role="button" style="cursor: pointer;">Ingresar</a></td>
+                            <td><a class="btn btn-outline-primary my-2 my-sm-0" href="{{url('import', [Varmetal\CSVData::PIEZA_TABLE])}}"  disabled role="button" style="cursor: pointer;">Importar CSV</a></td>
                         </tr>
                       @else
                         <tr>
@@ -54,6 +55,7 @@
                         <tr>
                             <th>Administración de OT</th>
                             <td><a class="btn btn-outline-success my-2 my-sm-0" href="{{url('adminObras')}}" role="button" style="cursor: pointer;">Ingresar</a></td>
+                            <td><a class="btn btn-outline-primary my-2 my-sm-0" href="{{url('import', [Varmetal\CSVData::OT_TABLE])}}" role="button" style="cursor: pointer;">Importar CSV</a></td>
                         </tr>
                         @if(Auth::user()->isAdmin())
                         <tr>
