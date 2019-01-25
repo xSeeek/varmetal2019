@@ -34,6 +34,7 @@ class MarcarAsistencia extends FormRequest
     return [
         'rut.required' => 'Se requiere el rut del usuario.',
         'rut.cl_rut' => 'El rut ingresado no es válido.',
+        'file.size' => 'El tamaño maximo fue exedido',
       ];
   }
 }
