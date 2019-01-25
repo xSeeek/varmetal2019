@@ -2,12 +2,6 @@
 
 @section('head')
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <!--style>
-    div.texto {
-        display: flex;
-        justify-content: center;
-    }
-  </style-->
 @endsection
 
 @section('content')
@@ -27,9 +21,26 @@
                         </div>
                     </div>
                     <div class="form-group row">
+                      <label class="col-md-4 col-form-label text-md-right"><b>Reloj Analogico</b></label>
+                      <div class="col-md-6">
+                        <div id="liveclock" class="outer_face">
+                        	<div class="marker oneseven"></div>
+                        	<div class="marker twoeight"></div>
+                        	<div class="marker fourten"></div>
+                        	<div class="marker fiveeleven"></div>
+
+                        	<div class="inner_face">
+                        		<div class="hand hour"></div>
+                        		<div class="hand minute"></div>
+                        		<div class="hand second"></div>
+                        	</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group row">
                       <label class="col-md-4 col-form-label text-md-right"><b>Hora Actual:</b></label>
                         <div class="col-md-6">
-                          <input id="actual" type="timestamp" class="form-control" name="fechaInicio" readonly=”readonly”>
+                          <input id="actual" type="timestamp" class="form-control text-center" name="fechaInicio" readonly=”readonly”>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -80,11 +91,34 @@
 
 <script type="text/javascript">
 
-var myVar = setInterval(myTimer, 1000);
+var $hands = $('#liveclock div.hand')
+
+window.requestAnimationFrame = window.requestAnimationFrame
+                               || window.mozRequestAnimationFrame
+                               || window.webkitRequestAnimationFrame
+                               || window.msRequestAnimationFrame
+                               || function(f){setTimeout(f, 60)}
+
+
+function updateclock(){
+	var curdate = new Date()
+	var hour_as_degree = ( curdate.getHours() + curdate.getMinutes()/60 ) / 12 * 360
+	var minute_as_degree = curdate.getMinutes() / 60 * 360
+	var second_as_degree = ( (curdate.getSeconds()-1) + curdate.getMilliseconds()/1000 ) /60 * 360
+	$hands.filter('.hour').css({transform: 'rotate(' + hour_as_degree + 'deg)' })
+	$hands.filter('.minute').css({transform: 'rotate(' + minute_as_degree + 'deg)' })
+	$hands.filter('.second').css({transform: 'rotate(' + second_as_degree + 'deg)' })
+	requestAnimationFrame(updateclock)
+}
+
+requestAnimationFrame(updateclock)
+
+setInterval(myTimer, 1000);
 
 function myTimer() {
-  var d = new Date();
-  document.getElementById("actual").innerHTML = d.toLocaleTimeString();
+  var time, d = new Date();
+  time = document.getElementById("actual");
+  time.value = d.toLocaleTimeString();
 }
 
 function mostrarDescripcion()
