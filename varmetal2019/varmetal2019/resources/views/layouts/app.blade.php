@@ -67,9 +67,9 @@
     <style>
     .outer_face {
     position: relative;
-    width: 200px; /* width of clock */
-    height: 200px; /* height of clock */
-    border-radius: 200px; /* clock round corner radius */
+    width: 100px; /* width of clock */
+    height: 100px; /* height of clock */
+    border-radius: 100px; /* clock round corner radius */
     background: white;
     box-shadow: inset 0 0 10px gray;
     border: 0 solid gray; /* thickness of outer border */
@@ -133,20 +133,19 @@
     width: 88%;
     height: 88%;
     background: white;
-    -moz-border-radius: 1000px;
-    -webkit-border-radius: 1000px;
-    border-radius: 1000px;
-    z-index: 1000;
+    -moz-border-radius: 100px;
+    -webkit-border-radius: 100px;
+    border-radius: 100px;
+    z-index: 100;
     left: 6%; /* set this value of 1/2 width value*/
     top: 6% /* set this value of 1/2 height value*/
     }
 
 .inner_face::before {
     /* clock center circle small */
-    content: "";
-    width: 18px; /* width of inner circle */
-    height: 18px; /* height of inner circle */
-    border-radius: 18px;
+    width: 10px; /* width of inner circle */
+    height: 10px; /* height of inner circle */
+    border-radius: 10px;
     margin-left: -9px; /* set this value of 1/2 width value*/
     margin-top: -9px; /* set this value of 1/2 height value*/
     background: black;
@@ -157,7 +156,6 @@
     }
 
 .inner_face::after {
-    content: "QUARTZ";
     position: absolute;
     width: 100%;
     font: normal 0.8em Arial;

@@ -20,8 +20,8 @@
                           <input id="fechaInicio" value="{{$fechaInicio}}" type="timestamp" class="form-control" name="fechaInicio" readonly=”readonly”>
                         </div>
                     </div>
-                    <!--div class="form-group row">
-                      <label class="col-md-4 col-form-label text-md-right"><b>Reloj Analogico</b></label>
+                    <div class="form-group row">
+                      <label class="col-md-4 col-form-label text-md-right"><b></b></label>
                       <div class="col-md-6">
                         <div id="liveclock" class="outer_face">
                         	<div class="marker oneseven"></div>
@@ -36,7 +36,7 @@
                         	</div>
                         </div>
                       </div>
-                    </div-->
+                    </div>
                     <div class="form-group row">
                       <label class="col-md-4 col-form-label text-md-right"><b>Hora Actual:</b></label>
                         <div class="col-md-6">
@@ -45,25 +45,23 @@
                     </div>
                     <div class="form-group row">
                       <label class="col-md-4 col-form-label text-md-right"><b>Motivo:</b></label>
-                        <select class="custom-select" id="motivo" aria-describedby="inputType" name="type" onchange="mostrarDescripcion()" required>
-                                <option select value="4">Otro</option>
-                                <option value="0">Falta materiales</option>
-                                <option value="1">Falla en el equipo</option>
-                                <option value="2">Falla en el plano</option>
-                                <option value="3">Cambio de pieza</option>
-                        </select>
-                    </div>
-                    <div class="form-group row">
-                    <div class="text-center" aling="center">
-                    <div class="text-center" id="mostrarDes">
-                      <label class="col-form-label text-md-center"><b>Descripción: (Mientras ocurre el suceso, detalle con esmeración)</b>
                         <div class="col-md-6">
-                          <textarea class="col-md-10" id="descripcion" type="text" aria-describedby="descripcion" placeholder="Descripcion" name="descripcion" cols="50" onkeyup="textAreaAdjust(this)" style="overflow:hidden" value""></textarea>
+                          <select class="custom-select form-control text-center" id="motivo" aria-describedby="inputType" name="type" onchange="mostrarDescripcion()" required>
+                                  <option select value="4">Otro</option>
+                                  <option value="0">Falta materiales</option>
+                                  <option value="1">Falla en el equipo</option>
+                                  <option value="2">Falla en el plano</option>
+                                  <option value="3">Cambio de pieza</option>
+                          </select>
                         </div>
                     </div>
+                    <div class="form-group row">
+                      <label class="col-form-label text-md-center"><b>Descripción: (Mientras ocurre el suceso, detalle con esmeración)</b>
+                        <div id="mostrarDes" class="col-md-6">
+                          <textarea class="custom-textarea text-center" id="descripcion" type="text" aria-describedby="descripcion" placeholder="Descripcion" name="descripcion" cols="50" onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
+                        </div>
                   </div>
-                  </form>
-                  </div>
+                </form>
                   <div class="text-center">
                     @if(($pausas_almacenadas!=NULL) && (count($pausas_almacenadas)>0))
                       @foreach($pausas_almacenadas as $key => $pausa)
