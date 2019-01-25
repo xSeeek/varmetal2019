@@ -18,6 +18,7 @@ class TrabajadorTable extends Migration
             $table->string('nombre');
             $table->string('rut')->unique();
             $table->string('cargo')->default('M1');
+            $table->string('tipo')->default('undefined');
             $table->boolean('estado')->default('true');
             $table->timestamps();
 
