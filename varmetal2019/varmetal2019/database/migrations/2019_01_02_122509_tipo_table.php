@@ -16,6 +16,7 @@ class TipoTable extends Migration
         Schema::create('tipo', function (Blueprint $table) {
             $table->increments('idTipo');
             $table->string('nombreTipo');
+            $table->float('factorKilo');
             $table->timestamps();
         });
     }

@@ -269,21 +269,21 @@ Route::get('/admin', 'AdminController@admin')
     /* [** ADMINISTRACIÓN **] */
         /* [** GET **] */
         Route::get('/gerencia', 'GerenciaController@showObras')
-                    ->name('gerencia');
+                    ->name('gerencia')
                     ->middleware('is_gerente');
     /* [** Editar **] */
 /* [** ADMINISTRACIÓN **] */
     /* [** POST **] */
         Route::post('/trabajadorControlEditar', ['uses' => 'TrabajadorController@editar'])
-                    ->name('editarTrabajador');
+                    ->name('editarTrabajador')
                     ->middleware('is_supervisor');
 
         Route::post('/productoControlEditar', ['uses' => 'ProductoController@editar'])
-                    ->name('editarProducto');
+                    ->name('editarProducto')
                     ->middleware('is_supervisor');
 
         Route::post('/obraControlEditar', ['uses' => 'ObraController@editar'])
-                    ->name('editarObra');
+                    ->name('editarObra')
                     ->middleware('is_supervisor');
 /* [**Supervisor**]*/
   /*[**loop**]*/
