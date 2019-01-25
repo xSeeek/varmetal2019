@@ -61,6 +61,13 @@
       confirmMensajeSwal(MSG_INFO, 'Seguro de marcar asistencia?', e);
     });
 
+    $('#img_select').bind('change', function() {
+
+      //this.files[0].size         gets the size of your file and then you can validate accourdingly...
+      alert(this.files[0].size);
+
+    });
+
     function readURL(input) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
