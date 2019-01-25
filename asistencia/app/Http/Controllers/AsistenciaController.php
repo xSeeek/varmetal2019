@@ -39,7 +39,7 @@ class AsistenciaController extends Controller
       ->with('obra', $user->trabajador->obra);
   }
 
-  public function registrarAsistencia(Request $request)
+  public function registrarAsistencia(MarcarAsistencia $request)
   {
     var_dump($request->file('file'));
     if($request->hasFile('file'))
