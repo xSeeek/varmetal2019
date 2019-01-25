@@ -41,7 +41,9 @@ class AsistenciaController extends Controller
 
   public function registrarAsistencia(MarcarAsistencia $request)
   {
-    var_dump($request->file('file'));
+    $a = var_dump($request->file('file'));
+    return $a;
+    /*
     if($request->hasFile('file'))
     {
       $trabajador = Trabajador::where('rut', $request->rut)->first();
@@ -81,6 +83,7 @@ class AsistenciaController extends Controller
     }else {
       return 'esta malloc';
     }
+    */
   }
 
   public function detallesAsistencia($rut, $id)
