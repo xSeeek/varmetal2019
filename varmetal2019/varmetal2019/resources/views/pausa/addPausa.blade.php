@@ -20,7 +20,7 @@
                           <input id="fechaInicio" value="{{$fechaInicio}}" type="timestamp" class="form-control" name="fechaInicio" readonly=”readonly”>
                         </div>
                     </div>
-                    <div class="form-group row">
+                    <!--div class="form-group row">
                       <label class="col-md-4 col-form-label text-md-right"><b>Reloj Analogico</b></label>
                       <div class="col-md-6">
                         <div id="liveclock" class="outer_face">
@@ -36,7 +36,7 @@
                         	</div>
                         </div>
                       </div>
-                    </div>
+                    </div-->
                     <div class="form-group row">
                       <label class="col-md-4 col-form-label text-md-right"><b>Hora Actual:</b></label>
                         <div class="col-md-6">
@@ -68,7 +68,7 @@
                     @if(($pausas_almacenadas!=NULL) && (count($pausas_almacenadas)>0))
                       @foreach($pausas_almacenadas as $key => $pausa)
                         @if(($pausa->producto_id_producto == $producto->idProducto) && ($pausa->fechaFin == NULL))
-                          <a class="btn btn-outline-success my-1 my-sm-0" role="button" href="{{url('trabajadorDetallesPausaGet', [$pausa->idPausa])}}"><b>El Producto Posee {{$producto->cantPausa}} Pausa/s (Ver última Pendiente)</b></a><br><br>
+                          <a class="btn btn-outline-success my-1 my-sm-0" role="button" href="{{url('trabajadorDetallesPausaGet', [$pausa->idPausa])}}"><b>El Producto Posee {{$producto->cantPausa}} Pausa/s<br>(Ver última Pendiente)</b></a><br><br>
                           @break
                         @endif
                       @endforeach
