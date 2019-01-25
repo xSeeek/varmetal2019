@@ -40,17 +40,19 @@ class TrabajadorController extends Controller
 
       $trabajadorActual = $usuarioActual->trabajador;
       $kilosTrabajados = 0;
+      $toneladas = 0;
       $date = new Carbon();
 
       $productos_trabajador = $trabajadorActual->productoWithAtributes;
-
       foreach($productos_trabajador as $producto)
       {
           if($producto->fechaFin != NULL)
             if((Carbon::parse($producto->fechaFin)->format('m')) == $date->now()->format('m'))
                 $kilosTrabajados += $producto->pivot->kilosTrabajados;
+          if($producto->pivot->kilosTrabajados!=0)
+            $toneladas += ($producto->tipo->factorKilo*$producto->pivot->kilosTrabajados);
       }
-
+      $toneladas /= 1000;
       $datos_trabajador = $usuarioActual->trabajador;
       $ayudantes = $datos_trabajador->ayudante;
 
@@ -59,7 +61,8 @@ class TrabajadorController extends Controller
                   ->with('trabajador', $trabajadorActual)
                   ->with('kilosTrabajados', $kilosTrabajados)
                   ->with('ayudantes_almacenados',$ayudantes)
-                  ->with('trabajador',$datos_trabajador);
+                  ->with('trabajador',$datos_trabajador)
+                  ->with('toneladas', $toneladas);
     }
 
     public function adminTrabajadores($type)
@@ -75,12 +78,35 @@ class TrabajadorController extends Controller
 
         $datos_trabajador = Trabajador::find($data);
         $userTrabajador = $datos_trabajador->user;
+
+        $kilosTrabajados = 0;
+        $toneladas = 0;
+        $date = new Carbon();
+
+        $productos_trabajador = $datos_trabajador->productoWithAtributes;
+        foreach($productos_trabajador as $producto)
+        {
+            if($producto->fechaFin != NULL)
+              if((Carbon::parse($producto->fechaFin)->format('m')) == $date->now()->format('m'))
+                  $kilosTrabajados += $producto->pivot->kilosTrabajados;
+            if($producto->pivot->kilosTrabajados!=0)
+              $toneladas += ($producto->tipo->factorKilo*$producto->pivot->kilosTrabajados);
+        }
+        $toneladas /= 1000;
+        $bono = $toneladas*5500;
+
+        if($datos_trabajador->cargo=='M1')
+          $sueldo = 385000;
+
         $productos = $datos_trabajador->productoIncompleto;
 
         return view('admin.trabajador.trabajador_control')
                                 ->with('trabajador', $datos_trabajador)
                                 ->with('usuario_trabajador', $userTrabajador)
-                                ->with('productos_trabajador', $productos);
+                                ->with('productos_trabajador', $productos)
+                                ->with('bono', $bono)
+                                ->with('kilosTrabajados',$kilosTrabajados)
+                                ->with('sueldo',$sueldo);
     }
 
     public function addTrabajador()

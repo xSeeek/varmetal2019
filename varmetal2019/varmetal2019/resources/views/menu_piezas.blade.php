@@ -12,6 +12,7 @@
                             <th>Piezas Pendientes</th>
                             <td><a class="btn btn-outline-success my-2 my-sm-0" href="{{url('adminProducto', ['pendientes'])}}" role="button" style="cursor: pointer;">Ingresar</a></td>
                         </tr>
+
                         <tr>
                             <th>Piezas Finalizadas</th>
                             <td><a class="btn btn-outline-success my-2 my-sm-0" href="{{url('adminProducto', ['terminados'])}}" role="button" style="cursor: pointer;">Ingresar</a></td>

@@ -31,15 +31,30 @@
                             <input type="text" readonly id="estadoTrabajador" class="form-control-plaintext" value="Inactivo">
                         @endif
                         </div>
-                    </h5>
-                    <h5>
                         <b>Correo:</b>
                         <div class="col-sm-10">
                             <input type="email" class="form-control-plaintext" readonly id="correoTrabajador" value="{{$usuario_trabajador->email}}">
                         </div>
                     </h5>
-                    <br>
                     <a class="btn btn-primary btn-md" id='changesButton' role="button" onclick="saveChanges()" hidden>Guardar Cambios</a>
+                    <h5>
+                        <b>Mes:</b>
+                        <div class="col-sm-10">
+                          <input type="text" readonly id="kilosTrabajados" class="form-control-plaintext" value="@php setlocale(LC_TIME, ''); echo strtoupper(strftime("%B")); @endphp">
+                        </div>
+                        <b>Kilos Totales Realizados: </b><br>
+                        <div class="col-sm-10">
+                          <input type="text" readonly id="kilosTrabajados" class="form-control-plaintext" value="{{$kilosTrabajados}} Kg.">
+                        </div>
+                        <b>Bono:</b>
+                        <div class="col-sm-10">
+                          <input type="text" readonly id="kilosTrabajados" class="form-control-plaintext" value="{{$bono}} pesos.">
+                        </div>
+                        <b>Sueldo: </b>
+                        <div class="col-sm-10">
+                          <input type="text" readonly id="kilosTrabajados" class="form-control-plaintext" value="{{$sueldo}} pesos.">
+                        </div>
+                    </h5>
                 </div>
             </div>
             <br>
