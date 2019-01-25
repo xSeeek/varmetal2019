@@ -60,13 +60,8 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     <script src={{ asset("js/datatables.js")}}></script>
-<<<<<<< HEAD
-    </style>
-=======
 
     @yield('head')
-
->>>>>>> 817a986bdc18783728266d16e7aaffcba44799ed
 </head>
 <body>
     <div id="app">

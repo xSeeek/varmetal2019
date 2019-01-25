@@ -283,24 +283,20 @@ Route::get('/admin', 'AdminController@admin')
                     ->middleware('is_supervisor');
 
         Route::post('/obraControlEditar', ['uses' => 'ObraController@editar'])
-<<<<<<< HEAD
-                    ->name('editarObra');
+                    ->name('editarObra')
+                    ->middleware('is_supervisor');
 /* [** Import Controller] */
     /* [** GET **] */
         Route::get('/import/{id}', ['uses' => 'ImportController@getImport'])
                     ->middleware('is_supervisor')
                     ->name('import');
+    /* [** POST **] */
         Route::post('/import_parse', 'ImportController@parseImport')
                     ->middleware('is_supervisor')
                     ->name('import_parse');
         Route::post('/import_process', 'ImportController@processImport')
                     ->middleware('is_supervisor')
                     ->name('import_process');
-    /* [** POST **] */
-=======
-                    ->name('editarObra')
-                    ->middleware('is_supervisor');
->>>>>>> 817a986bdc18783728266d16e7aaffcba44799ed
 /* [**Supervisor**]*/
   /*[**loop**]*/
         Route::post('/loopInfinito', ['uses' => 'HomeController@loop'])
