@@ -63,6 +63,7 @@ class User extends Authenticatable
     $this->notify(new CreatedNotification($this, $password));
   }
 
+  protected $dates = ['created_at', 'updated_at'];
   use Notifiable;
 
   /**

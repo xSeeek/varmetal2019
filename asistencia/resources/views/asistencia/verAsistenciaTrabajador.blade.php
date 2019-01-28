@@ -19,7 +19,7 @@
             <tbody>
               @foreach ($trabajador->asistencias as $asistencia)
                 <tr>
-                  <td class="text-center">{{$asistencia->created_at}}</td>
+                  <td class="text-center">{{Date::parse($asistencia->created_at)->format('l j M Y H:i:s A')}}</td>
                   <td class="text-center">{{$asistencia->tipo}}</td>
                   <td class="text-center"><a href="{!! route('supervisor.detallesAsistencia', ['rut'=>$trabajador->rut, 'id'=>$asistencia->idAsistencia]) !!}"
                      class="btn btn-primary text-light"
