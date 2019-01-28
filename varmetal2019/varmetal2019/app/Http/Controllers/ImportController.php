@@ -60,7 +60,8 @@ class ImportController extends Controller
             }
             if($obra->fechaInicio = 'No determinada')
                 $obra->fechaInicio = (new Carbon())->now();
-            return $obra;
+            else
+                $obra->fechaInicio = Carbon::parse($obra->fechaInicio);
             $obra->save();
         }
         return;
