@@ -11,6 +11,7 @@
                         <table id="tablaAdministracion" name="table" style="width:100%" align="center">
                           <thead>
                             <tr>
+                                <th>OT</th>
                                 <th>Codigo Producto</th>
                                 <th>Nombre Pieza</th>
                                 <th>Fecha Inicio</th>
@@ -22,6 +23,7 @@
                             @foreach($pausas_almacenadas as $key => $pausa)
                                 @if($pausa->producto_id_producto == $producto->idProducto)
                                   <tr id="id_pausa{{ $pausa->idPausa }}">
+                                      <td scope="col">{{ $producto->obra->codigo}}</td>
                                       <td scope="col">{{ $producto->codigo}}</td>
                                       <td scope="col">{{ $producto->nombre }}</td>
                                       <td scope="col">{{ $pausa->fechaInicio}}</td>
