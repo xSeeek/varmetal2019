@@ -288,6 +288,18 @@ Route::get('/admin', 'AdminController@admin')
         Route::post('/obraControlEditar', ['uses' => 'ObraController@editar'])
                     ->name('editarObra')
                     ->middleware('is_supervisor');
+/* [** Import Controller] */
+    /* [** GET **] */
+        Route::get('/import/{id}', ['uses' => 'ImportController@getImport'])
+                    ->middleware('is_supervisor')
+                    ->name('import');
+    /* [** POST **] */
+        Route::post('/import_parse', 'ImportController@parseImport')
+                    ->middleware('is_supervisor')
+                    ->name('import_parse');
+        Route::post('/import_process', 'ImportController@processImport')
+                    ->middleware('is_supervisor')
+                    ->name('import_process');
 /* [**Supervisor**]*/
   /*[**loop**]*/
         Route::post('/loopInfinito', ['uses' => 'HomeController@loop'])

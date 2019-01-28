@@ -66,7 +66,6 @@
     <script src={{ asset("js/datatables.js")}}></script>
 
     @yield('head')
-
 </head>
 <body>
     <div id="app">
@@ -141,7 +140,6 @@
 </html>
 
 <script>
-
   window.setInterval(sistema(), 1000);
 
   function detenerPausa()

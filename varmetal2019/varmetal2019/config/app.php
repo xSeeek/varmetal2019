@@ -225,4 +225,22 @@ return [
 
     ],
 
+    /* Definición de columnas a importar */
+    'db_obras' => [
+        'codigo',
+        'proyecto',
+        'fechaInicio',
+    ],
+    'db_piezas' => [
+        'nombre',
+        'codigo',
+        'fechaInicio',
+        'pesoKg',
+        'prioridad',
+        'OT'
+    ],
+    'db_maestros' => [
+        'codigo',
+        'proyecto'
+    ]
 ];
