@@ -60,6 +60,22 @@ class ProductoController extends Controller
         $fechaInicio = NULL;
         $fechaFin = NULL;
         $horasHombre = NULL;
+        $producto->tiempoEnPausa=0;
+        $producto->tiempoEnSetUp=0;
+        $pausas_almacenadas = $producto->pausa;
+
+        foreach ($pausas_almacenadas as $key => $pausa)
+        {
+          if($pausa->fechaFin!=NULL)
+          {
+            if($pausa->motivo=='Cambio de pieza')
+            {
+              $producto->tiempoEnSetUp += (new PausaController)->calcularHorasHombre(Carbon::parse($pausa->fechaInicio),Carbon::parse($pausa->fechaFin));
+            }
+            else
+              $producto->tiempoEnPausa += (new PausaController)->calcularHorasHombre(Carbon::parse($pausa->fechaInicio),Carbon::parse($pausa->fechaFin));
+          }
+        }
 
         $date = new Carbon();
 
@@ -99,13 +115,26 @@ class ProductoController extends Controller
 
         $trabajador = $usuarioActual->trabajador;
 
-        return view('producto.detalle_producto')
-                ->with('producto', $producto)
-                ->with('trabajadores', $trabajadores)
-                ->with('cantidadProducida', $cantidadProducida)
-                ->with('obra', $obra)
-                ->with('usuarioActual',$usuarioActual)
-                ->with('trabajador', $trabajador);
+        if($trabajador->tipo=="Operador")
+        {
+          return view('producto.detalle_producto')
+                  ->with('producto', $producto)
+                  ->with('trabajadores', $trabajadores)
+                  ->with('cantidadProducida', $cantidadProducida)
+                  ->with('obra', $obra)
+                  ->with('usuarioActual',$usuarioActual)
+                  ->with('trabajador', $trabajador);
+        }
+        if($trabajador->tipo=="Soldador")
+        {
+          return view('producto.detalle_producto_soldador')
+                  ->with('producto', $producto)
+                  ->with('trabajadores', $trabajadores)
+                  ->with('cantidadProducida', $cantidadProducida)
+                  ->with('obra', $obra)
+                  ->with('usuarioActual',$usuarioActual)
+                  ->with('trabajador', $trabajador);
+        }
     }
 
     public function addProducto()

@@ -11,6 +11,7 @@
                         <table id="tablaAdministracion" style="width:100%" align="center">
                           <thead>
                             <tr>
+                                <th>OT</th>
                                 <th>Codigo Producto</th>
                                 <th>Nombre Pieza</th>
                                 <th>Fecha Inicio</th>
@@ -23,6 +24,7 @@
                               @foreach($productos_almacenados as $key => $producto)
                                 @if($pausa->producto_id_producto == $producto->idProducto)
                                   <tr id="tablaAdministracion">
+                                      <td scope="col">{{ $producto->obra->codigo}}</td>
                                       <td scope="col">{{ $producto->codigo}}</td>
                                       <td scope="col">{{ $producto->nombre }}</td>
                                       <td scope="col">{{$pausa->fechaInicio}}</td>

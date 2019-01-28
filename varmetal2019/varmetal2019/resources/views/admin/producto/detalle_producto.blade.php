@@ -135,8 +135,8 @@
                         <b>Horas Hombre Requeridas:</b>
                         <div class="col-sm-10">
                             @if($horasHombre != NULL)
-                              @if($horasHombre < 1)
-                                <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="{{$horasHombre * 60}} Minutos">
+                              @if($horasHombre/60 > 1)
+                                <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="{{$horasHombre/60}} Minutos">
                               @else
                                 <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="{{$horasHombre}} Horas">
                               @endif
@@ -159,8 +159,8 @@
                         <b>Tiempo en SetUp:</b>
                         <div class="col-sm-10">
                             @if($producto->tiempoEnSetUp != NULL)
-                              @if($producto->tiempoEnSetUp/60 > 1)
-                                <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="{{$producto->tiempoEnSetUp/60}} Minutos">
+                              @if($producto->tiempoEnSetUp < 1)
+                                <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="{{$producto->tiempoEnSetUp*60}} Minutos">
                               @else
                                 <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="{{$producto->tiempoEnSetUp}} Horas">
                               @endif

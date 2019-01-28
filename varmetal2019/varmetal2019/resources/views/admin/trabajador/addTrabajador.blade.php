@@ -50,11 +50,20 @@
                         <div class="form-group row">
                             <label class="col-md-4 col-form-label text-md-right">Tipo:</label>
                             <div class="col-md-6">
-                                <select class="custom-select" id="inputType" aria-describedby="inputType" name="type" required>
+                                <select class="custom-select" id="inputType" aria-describedby="inputType" name="type" onchange="clasesDiponibles()" required>
                                         <option value="1">Administrador</option>
-                                        <option selected value="0">Operador</option>
+                                        <option selected value="0">Trabajador</option>
                                         <option value="2">Supervisor</option>
                                         <option value="3">Gerente</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div id="tipo" class="form-group row">
+                            <label class="col-md-4 col-form-label text-md-right">Clase:</label>
+                            <div class="col-md-6">
+                                <select class="custom-select" id="inputClass" aria-describedby="inputClass" name="class" required>
+                                  <option value="1">Operador</option>
+                                  <option value="2">Soldador</option>
                                 </select>
                             </div>
                         </div>
@@ -70,6 +79,51 @@
     </div>
 </div>
 <script type="text/javascript">
+
+function clasesDiponibles()
+{
+  var selectType = document.getElementById('inputType');
+  var selectClass = document.getElementById("inputClass");
+  var operador = document.createElement("option");
+  var soldador = document.createElement("option");
+  var admin = document.createElement("option");
+  var gerente = document.createElement("option");
+  var supervisor = document.createElement("option");
+  if(selectType.value == 1)
+  {
+    selectClass.options.length = 0;
+    admin.text = "Administrador";
+    admin.value = 0;
+    selectClass.add(admin);
+  }
+  if(selectType.value == 2)
+  {
+    selectClass.options.length = 0;
+    operador.text = "Operador";
+    operador.value = 1;
+    selectClass.add(operador);
+    soldador.text = "Soldador";
+    soldador.value = 2;
+    selectClass.add(soldador);
+  }
+  if(selectType.value == 3)
+  {
+    selectClass.options.length = 0;
+    gerente.text = "Gerente";
+    gerente.value = 3;
+    selectClass.add(gerente);
+  }
+  if(selectType.value == 0)
+  {
+    selectClass.options.length = 0;
+    operador.text = "Operador";
+    operador.value = 1;
+    selectClass.add(operador);
+    soldador.text = "Soldador";
+    soldador.value = 2;
+    selectClass.add(soldador);
+  }
+}
 
 function emailRegistrado()
     {

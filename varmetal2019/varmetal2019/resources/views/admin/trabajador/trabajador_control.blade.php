@@ -42,18 +42,18 @@
                         <div class="col-sm-10">
                           <input type="text" readonly id="kilosTrabajados" class="form-control-plaintext" value="@php setlocale(LC_TIME, ''); echo strtoupper(strftime("%B")); @endphp">
                         </div>
-                        <b>Kilos Totales Realizados: </b><br>
+                        <h2><b>Kilos Totales Realizados:</b><br>
                         <div class="col-sm-10">
                           <input type="text" readonly id="kilosTrabajados" class="form-control-plaintext" value="{{$kilosTrabajados}} Kg.">
-                        </div>
-                        <b>Bono:</b>
+                        </div></h2>
+                        <!--b>Bono:</b>
                         <div class="col-sm-10">
                           <input type="text" readonly id="kilosTrabajados" class="form-control-plaintext" value="{{$bono}} pesos.">
                         </div>
                         <b>Sueldo: </b>
                         <div class="col-sm-10">
                           <input type="text" readonly id="kilosTrabajados" class="form-control-plaintext" value="{{$sueldo}} pesos.">
-                        </div>
+                        </div-->
                     </h5>
                 </div>
             </div>

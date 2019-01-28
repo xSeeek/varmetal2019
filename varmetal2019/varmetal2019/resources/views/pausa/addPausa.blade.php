@@ -152,32 +152,26 @@
                 <div class="card-body">
                   <form method="POST" name="nuevaPausa" id="nuevaPausa">
                     <div class="form-group row">
-                      <label class="col-md-4 col-form-label text-md-right"><b>Hora Inicio Pausa:</b></label>
-                        <div class="col-md-6">
-                          <input id="fechaInicio" value="{{$fechaInicio}}" type="timestamp" class="form-control" name="fechaInicio" readonly=”readonly”>
-                        </div>
-                    </div>
-                    <div class="form-group row">
                       <label class="col-md-5 col-form-label text-md-right"></label>
                       <div class="col-md-6">
                         <div id="liveclock" class="outer_face">
-                            	<div class="marker oneseven"></div>
-                            	<div class="marker twoeight"></div>
-                            	<div class="marker fourten"></div>
-                            	<div class="marker fiveeleven"></div>
+                              <div class="marker oneseven"></div>
+                              <div class="marker twoeight"></div>
+                              <div class="marker fourten"></div>
+                              <div class="marker fiveeleven"></div>
 
-                            	<div class="inner_face">
-                            		<div class="hand hour"></div>
-                            		<div class="hand minute"></div>
-                            		<div class="hand second"></div>
-                            	</div>
+                              <div class="inner_face">
+                                <div class="hand hour"></div>
+                                <div class="hand minute"></div>
+                                <div class="hand second"></div>
+                              </div>
                         </div>
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label class="col-md-4 col-form-label text-md-right"><b>Hora Actual:</b></label>
+                      <label class="col-md-4 col-form-label text-md-right"><b>Hora Inicio Pausa:</b></label>
                         <div class="col-md-6">
-                          <input id="actual" type="timestamp" class="form-control text-center" name="fechaInicio" readonly=”readonly”>
+                          <input id="fechaInicio" type="timestamp" class="form-control" name="fechaInicio" readonly=”readonly”>
                         </div>
                     </div>
                     <div id="select" class="form-group row">
@@ -272,9 +266,9 @@ requestAnimationFrame(updateclock)
 setInterval(myTimer, 1000);
 
 function myTimer() {
-  var time, d = new Date();
-  time = document.getElementById("actual");
-  time.value = d.toLocaleTimeString();
+  var time = document.getElementById('fechaInicio');
+  moment.locale('es');
+  time.value = moment().format('MMMM Do YYYY, h:mm:ss a');;
 }
 
 function mostrarDescripcion()

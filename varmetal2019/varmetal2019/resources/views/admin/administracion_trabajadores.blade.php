@@ -14,6 +14,7 @@
                                     <th>RUT</th>
                                     <th>Nombre</th>
                                     <th>Estado</th>
+                                    <th>Cargo</th>
                                     <th>Opciones</th>
                                 </tr>
                             </thead>
@@ -26,6 +27,11 @@
                                         <td scope="col">Activo</td>
                                     @else
                                         <td scope="col">Inactivo</td>
+                                    @endif
+                                    @if($trabajador->cargo=="M1")
+                                        <td scope="col">Lider</td>
+                                    @else
+                                        <td scope="col">Ayudante</td>
                                     @endif
                                     <td><a class="btn btn-outline-success my-2 my-sm-0" href="{{url('trabajadorControl', [$trabajador->idTrabajador])}}" role="button" style="cursor: pointer;">Ver Detalles</a></td>
                                 </tr>

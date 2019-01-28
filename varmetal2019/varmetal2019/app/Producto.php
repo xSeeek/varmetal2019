@@ -19,7 +19,7 @@ class Producto extends Model
     }
     public function pausa()
     {
-        return $this->hasMany('Varmetal\Pausa','pausa_id_pausa');
+        return $this->hasMany('Varmetal\Pausa','producto_id_producto');
     }
     public function obra()
     {
