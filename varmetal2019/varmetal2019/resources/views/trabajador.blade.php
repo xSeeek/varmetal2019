@@ -17,15 +17,10 @@
                     @endif
 
                     Bienvenido, <b>{{$trabajador->nombre}}</b>.
-                    <br>Correo actual: {{$user->email}}
-                    <br>RUT: {{$trabajador->rut}}
-                    <br>Cargo: {{$trabajador->cargo}}
-                    <br>Tipo: {{$trabajdor->tipo}}
 
                     <br>Mes: <b>@php setlocale(LC_TIME, ''); echo strtoupper(strftime("%B")); @endphp</b>
-                    <br>Kilos Totales Realizados: <b>{{$kilosTrabajados}} Kg.</b>
+                    <h3><br>Kilos Totales Realizados: <b>{{$kilosTrabajados}} Kg.</b></h3>
                     <!--br>Bono Producción: <b>{{$toneladas*5500}} pesos.</b-->
-
                 </div>
             </div>
             </br>

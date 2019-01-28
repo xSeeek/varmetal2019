@@ -46,7 +46,7 @@ class TrabajadorController extends Controller
       $productos_trabajador = $trabajadorActual->productoWithAtributes;
       foreach($productos_trabajador as $producto)
       {
-          if($producto->fechaFin != NULL)
+          //if($producto->fechaFin != NULL)
             if((Carbon::parse($producto->fechaFin)->format('m')) == $date->now()->format('m'))
                 $kilosTrabajados += $producto->pivot->kilosTrabajados;
           if($producto->pivot->kilosTrabajados!=0)
@@ -220,7 +220,8 @@ class TrabajadorController extends Controller
         $productos = $datos_trabajador->productoWithAtributes;
 
         return view('trabajador.productos_trabajador')
-                ->with('productos', $productos);
+                ->with('productos', $productos)
+                ->with('trabajador', $datos_trabajador);
     }
 
     public function asignarTrabajo($data)

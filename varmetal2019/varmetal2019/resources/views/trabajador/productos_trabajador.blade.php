@@ -33,20 +33,30 @@
                                             <tr id="id_producto{{ $producto->idProducto }}">
                                                 <td scope="col">{{ $producto->codigo }}</td>
                                                 <td scope="col">{{ $producto->pesoKg }}</td>
-                                                @switch($producto->estado)
-                                                    @case(0)
-                                                        <td scope="col">Por realizar</th>
-                                                        @break
-                                                    @case(1)
-                                                        <td scope="col">Finalizado</th>
-                                                        @break
-                                                    @case(2)
-                                                        <td scope="col">En proceso de desarrollo</th>
-                                                        @break
-                                                    @default
-                                                        <td scope="col">Sin estado definido</th>
-                                                        @break
-                                                @endswitch
+                                                @foreach($producto->pausa as $key => $pausa)
+                                                  @if($pausa->trabajador_id_trabajador == $trabajador->idTrabajador)
+                                                    @php $motivo = $pausa->motivo @endphp
+                                                    @break
+                                                  @endif
+                                                @endforeach
+                                                @if($motivo != NULL)
+                                                  <td scope="col">{{$motivo}}</th>
+                                                @else
+                                                  @switch($producto->estado)
+                                                      @case(0)
+                                                          <td scope="col">Por realizar</th>
+                                                          @break
+                                                      @case(1)
+                                                          <td scope="col">Finalizado</th>
+                                                          @break
+                                                      @case(2)
+                                                          <td scope="col">En proceso de desarrollo</th>
+                                                          @break
+                                                      @default
+                                                          <td scope="col">Sin estado definido</th>
+                                                          @break
+                                                  @endswitch
+                                                @endif
                                                 @switch($producto->prioridad)
                                                     @case(1)
                                                         <td scope="col">Baja</td>
