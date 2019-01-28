@@ -19,22 +19,17 @@
             </div>
             <div class="form-group">
               <label for="fecha">Fecha</label>
-              <input type="text" name="fecha" value="{{$asistencia->created_at}}" class="form-control" disabled>
+              <input type="text" name="fecha" value="{{Date::parse($asistencia->created_at)->format('l j M Y H:i:s A')}}" class="form-control" disabled>
             </div>
             <div class="form-group">
               <label for="tipo">Tipo</label>
               <input type="text" name="tipo" value="{{$asistencia->tipo}}" class="form-control" disabled>
             </div>
           </div>
-          <div class="col"><button class="btn btn-info" onclick="rotarImagen()"><i class="fas fa-sync-alt"></i></button>
-            <div class="form-group">
-
-            </div>
-            <figure class="figure">
-              <img id="img" src="{{ Storage::disk('asistencia')->url($trabajador->rut.'/'.$asistencia->image) }}" class="figure-img img-fluid rounded">
-              <figcaption class="figure-caption text-right">Imagen tomada el día en que se marco la asistencia.</figcaption>
-            </figure>
-          </div>
+          <figure class="figure">
+            <img id="img" src="{{ Storage::disk('asistencia')->url($trabajador->rut.'/'.$asistencia->image) }}" class="figure-img img-fluid rounded">
+            <figcaption class="figure-caption text-right">Imagen tomada el día en que se marco la asistencia.</figcaption>
+          </figure>
         </div>
       </div>
     </div>
@@ -43,7 +38,7 @@
 
   <script type="text/javascript">
     function rotarImagen() {
-      console.log('hola');  
+      console.log('hola');
       var value = 0
       $("#img").rotate({
         bind:
