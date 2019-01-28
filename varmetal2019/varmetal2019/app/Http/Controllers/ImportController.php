@@ -56,7 +56,7 @@ class ImportController extends Controller
                     break;
                 $obra->$field = $row[$request->fields[$index]];
                 if($field == 'fechaInicio')
-                    $obra->$field = Carbon::parse($obra->$field);
+                    $obra->$field = $obra->$field;
             }
             if($obra->fechaInicio = 'No determinada')
                 $obra->fechaInicio = (new Carbon())->now();
