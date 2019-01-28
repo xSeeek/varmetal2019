@@ -24,7 +24,7 @@
 
                     <br>Mes: <b>@php setlocale(LC_TIME, ''); echo strtoupper(strftime("%B")); @endphp</b>
                     <br>Kilos Totales Realizados: <b>{{$kilosTrabajados}} Kg.</b>
-                    <br>Bono Producción: <b>{{$toneladas*5500}} pesos.</b>
+                    <!--br>Bono Producción: <b>{{$toneladas*5500}} pesos.</b-->
 
                 </div>
             </div>

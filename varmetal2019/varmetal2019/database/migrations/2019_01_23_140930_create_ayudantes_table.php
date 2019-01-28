@@ -18,7 +18,6 @@ class CreateAyudantesTable extends Migration
             $table->string('nombre');
             $table->string('rut')->unique();
             $table->boolean('estado')->default('false');
-            //$table->string('tipo')->default('Operador');
             $table->timestamps();
 
             $table->integer('lider_id_trabajador')->unsigned()->nullable();

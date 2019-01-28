@@ -147,8 +147,8 @@
                         <b>Tiempo en Pausa:</b>
                         <div class="col-sm-10">
                             @if($producto->tiempoEnPausa != NULL)
-                              @if($producto->tiempoEnPausa/60 > 1)
-                                <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="{{$producto->tiempoEnPausa/60}} Minutos">
+                              @if($producto->tiempoEnPausa < 1)
+                                <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="{{$producto->tiempoEnPausa*60}} Minutos">
                               @else
                                 <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="{{$producto->tiempoEnPausa}} Horas">
                               @endif
@@ -159,8 +159,8 @@
                         <b>Tiempo en SetUp:</b>
                         <div class="col-sm-10">
                             @if($producto->tiempoEnSetUp != NULL)
-                              @if($producto->tiempoEnSetUp/60 > 1)
-                                <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="{{$producto->tiempoEnSetUp/60}} Minutos">
+                              @if($producto->tiempoEnSetUp < 1)
+                                <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="{{$producto->tiempoEnSetUp*60}} Minutos">
                               @else
                                 <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="{{$producto->tiempoEnSetUp}} Horas">
                               @endif
