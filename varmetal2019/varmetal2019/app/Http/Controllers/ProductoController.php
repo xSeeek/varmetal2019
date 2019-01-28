@@ -60,6 +60,22 @@ class ProductoController extends Controller
         $fechaInicio = NULL;
         $fechaFin = NULL;
         $horasHombre = NULL;
+        $producto->tiempoEnPausa=0;
+        $producto->tiempoEnSetUp=0;
+        $pausas_almacenadas = $producto->pausa;
+
+        foreach ($pausas_almacenadas as $key => $pausa)
+        {
+          if($pausa->fechaFin!=NULL)
+          {
+            if($pausa->motivo=='Cambio de pieza')
+            {
+              $producto->tiempoEnSetUp += (new PausaController)->calcularHorasHombre(Carbon::parse($pausa->fechaInicio),Carbon::parse($pausa->fechaFin));
+            }
+            else
+              $producto->tiempoEnPausa += (new PausaController)->calcularHorasHombre(Carbon::parse($pausa->fechaInicio),Carbon::parse($pausa->fechaFin));
+          }
+        }
 
         $date = new Carbon();
 
