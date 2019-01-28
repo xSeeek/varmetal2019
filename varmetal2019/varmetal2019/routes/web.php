@@ -211,6 +211,9 @@ Route::get('/admin', 'AdminController@admin')
         Route::post('/adminDeletePausa', ['uses' => 'PausaController@deletePausa'])
                     ->middleware('is_supervisor')
                     ->name('adminDeletePausa');
+        Route::post('/pausaControlEditar', ['uses' => 'PausaController@editarPausa'])
+                    ->name('pausaControlEditar')
+                    ->middleware('is_supervisor');
 
 /* [** Obra Controller **] */
     /* [** ADMINISTRACIÓN **] */

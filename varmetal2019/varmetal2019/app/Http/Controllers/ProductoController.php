@@ -99,13 +99,26 @@ class ProductoController extends Controller
 
         $trabajador = $usuarioActual->trabajador;
 
-        return view('producto.detalle_producto')
-                ->with('producto', $producto)
-                ->with('trabajadores', $trabajadores)
-                ->with('cantidadProducida', $cantidadProducida)
-                ->with('obra', $obra)
-                ->with('usuarioActual',$usuarioActual)
-                ->with('trabajador', $trabajador);
+        if($trabajador->tipo=="Operador")
+        {
+          return view('producto.detalle_producto')
+                  ->with('producto', $producto)
+                  ->with('trabajadores', $trabajadores)
+                  ->with('cantidadProducida', $cantidadProducida)
+                  ->with('obra', $obra)
+                  ->with('usuarioActual',$usuarioActual)
+                  ->with('trabajador', $trabajador);
+        }
+        if($trabajador->tipo=="Soldador")
+        {
+          return view('producto.detalle_producto_soldador')
+                  ->with('producto', $producto)
+                  ->with('trabajadores', $trabajadores)
+                  ->with('cantidadProducida', $cantidadProducida)
+                  ->with('obra', $obra)
+                  ->with('usuarioActual',$usuarioActual)
+                  ->with('trabajador', $trabajador);
+        }
     }
 
     public function addProducto()

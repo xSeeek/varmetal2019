@@ -21,14 +21,30 @@
                         <div class="col-sm-10">
                             <input type="text" readonly id="fechaInicioPausa" class="form-control-plaintext" value="{{$pausa->fechaInicio}}" readonly="readonly">
                         </div>
+                        <div id="divFechaInicioEdit" style="display:none;">
+                          <b>Nueva Fecha de Inicio:</b>
+                          <div class="col-sm-10">
+                            <br>
+                            <input class="form-control"  type="datetime-local" id="fechaInicioEdit" name="fechaInicio">
+                            <br>
+                          </div>
+                        </div>
                         <b>Fecha de Finalización:</b>
                         <div class="col-sm-10">
                             @if($pausa->fechaFin == NULL)
                                 <input type="text" readonly id="fechaFinPausa" class="form-control-plaintext" value="Pausa pendiente">
                             @else
                                 <input type="text" readonly id="fechaFinPausa" class="form-control-plaintext" value="{{$pausa->fechaFin}}" readonly="readonly">
-                            @endif
                         </div>
+                                <div id="divFechaFinEdit" style="display:none;">
+                                  <b>Nueva Fecha de Fin:</b>
+                                  <div class="col-sm-10">
+                                    <br>
+                                    <input class="form-control"  type="datetime-local" id="fechaFinEdit" name="fechaInicio">
+                                    <br>
+                                  </div>
+                                </div>
+                            @endif
                         @if(Auth::user()->type!='Trabajador')
                           <b>Nombre de la Pieza:</b>
                           <div class="col-sm-10">
@@ -48,19 +64,21 @@
                         <div class="col-sm-10">
                           @if($pausa->motivo!=NULL)
                             <input type="text" readonly id="motivo" class="form-control-plaintext" value="{{$pausa->motivo}}">
+                            <select class="custom-select form-control text-center" style="display:none;" id="motivoEdit" aria-describedby="inputType" name="type" onchange="mostrarDescripcion()" required>
+                                    <option select value="5">No Modificado</option>
+                                    <option value="4">Otro</option>
+                                    <option value="0">Falta materiales</option>
+                                    <option value="1">Falla en el equipo</option>
+                                    <option value="2">Falla en el plano</option>
+                                    <option value="3">Cambio de pieza</option>
+                            </select>
+                            <br>
                           @endif
                         </div>
-                        @if($pausa->fechaFin == NULL)
+                        <br>
                           <b>Descripcion:</b>
-                        @else
-                          <b>Descripcion:</b>
-                        @endif
                         <div class="col-sm-10">
-                          @if($pausa->fechaFin == NULL)
                             <input type="text" readonly id="descripcion" class="form-control-plaintext" value="{{$pausa->descripcion}}">
-                          @else
-                            <input type="text" readonly id="descripcion" class="form-control-plaintext" value="{{$pausa->descripcion}}">
-                          @endif
                         </div>
                     </h5>
                 </div>
@@ -86,6 +104,8 @@
                     @endif
                     <hr>
                     @if($usuarioActual->type != 'Trabajador')
+                      <a class="btn btn-outline-success btn-md" id="enableChangesButton" role="button" onclick="changeStatus()">Habilitar Edición</a>
+                      <br><br>
                       <a class="btn btn-outline-success btn-md" id="detallesTrabajador" role="button" href="{{url('/trabajadorControl', [$trabajador->idTrabajador])}}">Ver Trabajador</a>
                       <br><br>
                       <a class="btn btn-outline-success btn-md" id="detallesProducto" role="button" href="{{url('/productoControl', [$producto->idProducto])}}">Ver Producto</a>
@@ -121,9 +141,76 @@
 </div>
 <script>
 
+function changeStatus()
+{
+  var divFechaInicioEdit,divFechaFinEdit, motivoEdit, descripcion, enableChangesButton;
+
+  divFechaInicioEdit = document.getElementById('divFechaInicioEdit');
+  divFechaFinEdit = document.getElementById('divFechaFinEdit');
+  motivoEdit = document.getElementById('motivoEdit');
+  descripcion= document.getElementById('descripcion');
+  divFechaInicioEdit.removeAttribute("style");
+  divFechaFinEdit.removeAttribute("style");
+  motivoEdit.removeAttribute("style");
+  descripcion.removeAttribute("readonly");
+
+  enableChangesButton = document.getElementById('enableChangesButton');
+  enableChangesButton.innerText="Guardar Cambios";
+  enableChangesButton.setAttribute("onclick","postChangeData()");
+  return 'boton cambiado';
+}
+
+function postChangeData()
+{
+  var datos, json_text, fechaInicioEdit, fechaFinEdit, enableChangesButton, motivoEdit;
+
+  fechaInicioEdit = document.getElementById('fechaInicioEdit');
+  fechaFinEdit = document.getElementById('fechaFinEdit');
+  motivoEdit = document.getElementById('motivoEdit');
+  descripcion = document.getElementById('descripcion');
+
+  enableChangesButton = document.getElementById('enableChangesButton');
+
+  datos = Array();
+  datos[0]= fechaInicioEdit.value;
+  datos[1]= fechaFinEdit.value;
+  datos[2]= motivoEdit.value;
+  datos[3]= descripcion.value;
+  datos[4]= '{{$pausa->idPausa}}';
+
+  json_text = JSON.stringify(datos);
+  $.ajax({
+      headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      type: "POST",
+      data: {DATA:json_text},
+      url: "{{url('/pausaControlEditar')}}",
+      success: function(response){
+          window.location.href = "{{url('productoControl',[$producto->idProducto])}}";
+      }
+  });
+        enableChangesButton.innerText="Habilitar/Deshabilitar Edicion";
+        enableChangesButton.setAttribute("onclick","changeStatus()");
+        enableChangesButton.setAttribute("readonly","");
+}
+
+  function mostrarDescripcion()
+  {
+    var descripcion = document.getElementById('descripcion');
+    var motivo = document.getElementById('motivoEdit').value;
+    if(motivo==4)
+    {
+      descripcion.removeAttribute("readonly");
+    }
+    else {
+      descripcion.setAttribute("readonly", "");
+      descripcion.value="{{$pausa->descripcion}}";
+    }
+  }
+
   function sendEmail()
   {
-
     var datos,json_text;
 
     datos = Array();

@@ -56,19 +56,31 @@ class TrabajadorController extends Controller
       $datos_trabajador = $usuarioActual->trabajador;
       $ayudantes = $datos_trabajador->ayudante;
 
-      return view('trabajador')
+      if($trabajadorActual->tipo=="Operador")
+      {
+        return view('trabajador')
                   ->with('user', $usuarioActual)
                   ->with('trabajador', $trabajadorActual)
                   ->with('kilosTrabajados', $kilosTrabajados)
                   ->with('ayudantes_almacenados',$ayudantes)
                   ->with('trabajador',$datos_trabajador)
                   ->with('toneladas', $toneladas);
+      }
+      if($trabajadorActual->tipo=="Soldador")
+      {
+        return view('soldador')
+                  ->with('user', $usuarioActual)
+                  ->with('trabajador', $trabajadorActual)
+                  ->with('ayudantes_almacenados', $ayudantes);
+      }
+
     }
 
     public function adminTrabajadores($type)
     {
         $trabajadores_registrados = Trabajador::join('users', 'users_id_user', 'id')->where('type', 'like', $type)->get();
-        return view('admin.administracion_trabajadores')->with('trabajadores_almacenados', $trabajadores_registrados);
+        return view('admin.administracion_trabajadores')
+                  ->with('trabajadores_almacenados', $trabajadores_registrados);
     }
 
     public function trabajadorControl($data)

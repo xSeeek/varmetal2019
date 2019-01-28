@@ -43,6 +43,35 @@ class PausaController extends Controller
               ->with('usuarioActual', $usuarioActual);
     }
 
+    public function editarPausa(Request $data)
+    {
+      $response = json_decode($data->DATA, true);
+
+      $fechaInicio = $response[0];
+      $fechaFin = $response[1];
+      $motivo = $response[2];
+      $descripcion = $response[3];
+      $idPausa = $response[4];
+
+      $pausa = Pausa::find($idPausa);
+
+      if($motivo==4)
+      {
+        if($descripcion==NULL)
+        {
+          return "Debe Añadir una Descripción";
+        }else {
+          $pausa->motivo="Otro";
+          $pausa->descripcion=$descripcion;;
+        }
+      }
+      $pausa->fechaInicio=$fechaInicio;
+      $pausa->fechaFin=$fechaFin;
+      $pausa->save();
+
+    }
+
+
     public function trabajadorUpdateFechaFin(Request $data)
     {
       $response = json_decode($data->DATA, true);

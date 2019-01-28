@@ -95,10 +95,10 @@
                         <b>Tiempo en pausa:</b>
                         <div class="col-sm-10">
                             @if($tiempoPausa != 0)
-                                @if($tiempoPausa/60 < 1)
-                                    <input type="text" readonly id="nombreObra" class="form-control-plaintext" value="{{$tiempoPausa}} Minutos">
+                                @if($tiempoPausa/60 > 1)
+                                    <input type="text" readonly id="nombreObra" class="form-control-plaintext" value="{{$tiempoPausa/60}} Minutos">
                                 @else
-                                    <input type="text" readonly id="nombreObra" class="form-control-plaintext" value="{{$tiempoPausa/60}} Horas">
+                                    <input type="text" readonly id="nombreObra" class="form-control-plaintext" value="{{$tiempoPausa}} Horas">
                                 @endif
                             @else
                                 <input type="text" readonly id="nombreObra" class="form-control-plaintext" value="No se ha registrado ninguna pausa.">
@@ -107,10 +107,10 @@
                         <b>Tiempo en Set-Up:</b>
                         <div class="col-sm-10">
                             @if($tiempoSetUp != 0)
-                                @if($tiempoSetUp/60 < 1)
-                                    <input type="text" readonly id="nombreObra" class="form-control-plaintext" value="{{$tiempoSetUp}} Minutos">
+                                @if($tiempoSetUp/60 > 1)
+                                    <input type="text" readonly id="nombreObra" class="form-control-plaintext" value="{{$tiempoSetUp/60}} Minutos">
                                 @else
-                                    <input type="text" readonly id="nombreObra" class="form-control-plaintext" value="{{$tiempoSetUp/60}} Horas">
+                                    <input type="text" readonly id="nombreObra" class="form-control-plaintext" value="{{$tiempoSetUp}} Horas">
                                 @endif
                             @else
                                 <input type="text" readonly id="nombreObra" class="form-control-plaintext" value="No se registran pausas por cambio de pieza.">
