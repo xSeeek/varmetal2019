@@ -17,14 +17,6 @@
                     @endif
 
                     Bienvenido, <b>{{$trabajador->nombre}}</b>.
-<<<<<<< HEAD
-=======
-                    <br>Correo actual: {{$user->email}}
-                    <br>RUT: {{$trabajador->rut}}
-                    <br>Cargo: {{$trabajador->cargo}}
-                    <br>Tipo: {{$trabajador->tipo}}
->>>>>>> 9b5c30dbc31f02fc1578bbe7c54a103d14f99be0
-
                     <br>Mes: <b>@php setlocale(LC_TIME, ''); echo strtoupper(strftime("%B")); @endphp</b>
                     <h3><br>Kilos Totales Realizados: <b>{{$kilosTrabajados}} Kg.</b></h3>
                     <!--br>Bono Producción: <b>{{$toneladas*5500}} pesos.</b-->
