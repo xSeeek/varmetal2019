@@ -41,7 +41,15 @@
               <button type="button" class="btn btn-outline-info" onclick="habilitarEdicion()">Habilitar Edición</button>
               <button class="btn btn-success" type="submit" id="btn_editar" hidden>Editar</button>
             </div>
-        </form>
+          </form>
+          <div class="form-group">
+            @if(count($trabajador->asistencias)==0)
+              <h2>No registran asistencias para {{$trabajador->nombre}}</h2>
+            @else
+              <a role="button" class="btn btn-primary font-weight-bold text-light" href="{!! route('supervisor.verAsistencia', ['rut'=>$trabajador->rut]) !!}">Ver Asistencia</a>
+            @endif
+          </div>
+        </div>
       </div>
     </div>
   </div>

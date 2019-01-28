@@ -24,10 +24,10 @@
           </div>
           <div class="form-group">
             <div class="form-group">
-                <button type="button" class="btn btn-outline-info" onclick="habilitarEdicion()">Habilitar Edición</button>
-                <button class="btn btn-primary" data-toggle='modal'
-                data-target='#cambiarSupervisor'
-                type="button" disabled>
+              <button type="button" class="btn btn-outline-info" onclick="habilitarEdicion()">Habilitar Edición</button>
+              <button class="btn btn-primary" data-toggle='modal'
+              data-target='#cambiarSupervisor'
+              type="button" disabled>
                 Cambiar Supervisor
               </button>
             </div>
