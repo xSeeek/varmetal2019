@@ -20,7 +20,7 @@
                     <br>Correo actual: {{$user->email}}
                     <br>RUT: {{$trabajador->rut}}
                     <br>Cargo: {{$trabajador->cargo}}
-                    <br>Tipo: {{$trabajdor->tipo}}
+                    <br>Tipo: {{$trabajador->tipo}}
 
                     <br>Mes: <b>@php setlocale(LC_TIME, ''); echo strtoupper(strftime("%B")); @endphp</b>
                     <br>Kilos Totales Realizados: <b>{{$kilosTrabajados}} Kg.</b>
