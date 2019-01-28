@@ -79,8 +79,6 @@ class AsistenciaController extends Controller
       return redirect()->back()
         ->withInput()
         ->with('error', 'El trabajador ingresado no posee una obra asignada');
-    }else {
-      return 'esta malloc';
     }
   }
 

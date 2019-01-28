@@ -114,19 +114,12 @@
               data-live-search="true" name="trabajador"
               class="selectpicker form-control{{ $errors->has('trabajadores') ? ' is-invalid' : '' }}">
               @foreach ($trabajadores as $trabajador)
-                <option
-                @if ($trabajador->user != null)
-                  @if ($trabajador->user->isSupervisor())
-                    style="background: #c82828; color: #fff;"
-                  @endif
+                @if($trabajador->user->isAdmin() || $trabajador->user->isSupervisor())
+                  @break
                 @endif
+                <option
                 data-tokens="{{$trabajador->nombre}} {{$trabajador->rut}}" value="{{$trabajador->rut}}">
                 {{$trabajador->nombre}}
-                @if ($trabajador->user != null)
-                  @if($trabajador->user->isSupervisor())
-                    (Supervisor)
-                  @endif
-                @endif
               </option>
             @endforeach
             </select>
