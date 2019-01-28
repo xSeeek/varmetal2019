@@ -15,7 +15,6 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
                     Bienvenido, <b>{{$trabajador->nombre}}</b>.
                     <br>Mes: <b>@php setlocale(LC_TIME, ''); echo strtoupper(strftime("%B")); @endphp</b>
                     <h3><br>Kilos Totales Realizados: <b>{{$kilosTrabajados}} Kg.</b></h3>
