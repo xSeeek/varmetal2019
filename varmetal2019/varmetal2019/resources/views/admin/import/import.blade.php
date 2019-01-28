@@ -17,7 +17,7 @@
                             <label for="csv_file" class="col-md-4 control-label"><b>CSV a importar:</b></label>
                             {{ csrf_field() }}
                             <div class="col-md-6">
-                                <input id="csv_file" type="file" class="form-control-file" name="csv_file" required>
+                                <input id="csv_file" type="file" class="form-control-file" name="csv_file" onchange="checkfile(this);" required>
 
                                 @if ($errors->has('csv_file'))
                                     <span class="help-block">
@@ -55,4 +55,17 @@
         <a class="btn btn-primary btn-lg" role="button" href="{{url('/admin')}}"><b>Volver</b></a>
 </div>
 </div>
+<script type="text/javascript" language="javascript">
+    function checkfile(sender) {
+        var validExts = new Array(".csv");
+        var fileExt = sender.value;
+        fileExt = fileExt.substring(fileExt.lastIndexOf('.'));
+        if (validExts.indexOf(fileExt) < 0) {
+          showMensajeSwall(MSG_INFO, "Tipo de archivo no válido, solo se aceptan archivos " +
+                   validExts.toString());
+          return false;
+        }
+        else return true;
+    }
+</script>
 @endsection
