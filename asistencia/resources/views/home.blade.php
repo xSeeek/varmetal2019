@@ -11,6 +11,7 @@
           <form enctype="multipart/form-data" method="post" id="form_registrar_asistencia" action="{{route('registrarAsistencia')}}">
             <div class="form-group">
               @csrf
+              <input type="text" name="supervisor" value="{{Auth::user()->trabajador->rut}}" hidden>
               <input class="form-control{{ $errors->has('rut') ? ' is-invalid' : '' }}" id="rut" type="text" name="rut" placeholder="Ingrese un rut" value="{{ old('rut') }}" required autofocus>
               @if ($errors->has('rut'))
                 <span class="invalid-feedback" role="alert">
@@ -64,7 +65,6 @@
     $('#img_select').bind('change', function() {
 
       //this.files[0].size         gets the size of your file and then you can validate accourdingly...
-      alert(this.files[0].size);
 
     });
 

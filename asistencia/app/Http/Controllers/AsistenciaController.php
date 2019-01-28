@@ -41,44 +41,69 @@ class AsistenciaController extends Controller
 
   public function registrarAsistencia(MarcarAsistencia $request)
   {
-    var_dump($request->file('file'));
+    $supervisor = Trabajador::where('rut', $request->supervisor)->first();
 
-    if($request->hasFile('file'))
-    {
-      $trabajador = Trabajador::where('rut', $request->rut)->first();
-      if($trabajador->obra != null)
-      {
-        $asistencias = Asistencia::where('trabajador_id_trabajador', $trabajador->idTrabajador)
-        ->whereDate('created_at', Carbon::today())->where('tipo', $request->tipo)->get();
-        if(count($asistencias) > 0)
-        {
-          return redirect()->back()
-            ->withInput()
-            ->with('error', 'El trabajador ya tiene una asistencia marcada hoy');
-        }
-        $asistencia = new Asistencia();
-        $asistencia->tipo = $request->tipo;
+    if($supervisor->obra == null){
+      return redirect()->back()
+        ->withInput()
+        ->with('error', 'El supervisor no esta vinculado a ninguna obra');
+    }
 
-        $dt = Carbon::now();
+    $trabajador = Trabajador::where('rut', $request->rut)->first();
 
-        $file = $request->file('file');
-
-        $file_name = $dt->format('d-m-Y') . '-' . $request->tipo . '.' . $file->getClientOriginalExtension();
-
-        $img = Image::make($file)->orientate()
-        ->resize(400, null, function ($constraint) { $constraint->aspectRatio(); } )
-        ->encode('jpg',80);
-
-        Storage::disk('asistencia')->put($request->rut.'/'. $file_name, $img);
-
-        $asistencia->image = $file_name;
-        $trabajador->asistencias()->save($asistencia);
-
-        return redirect()->route('home')->with('success', 'Asistencia a ' . $trabajador->nombre . ' registrada con éxito');
+    if($trabajador->obra != null){
+      if($trabajador->obra != $supervisor->obra){
+        return redirect()->back()
+          ->withInput()
+          ->with('error', 'El trabajador seleccionado no pertenece a esta obra');
       }
+    }else {
       return redirect()->back()
         ->withInput()
         ->with('error', 'El trabajador ingresado no posee una obra asignada');
+    }
+
+    if($request->tipo == Asistencia::SALIDA_TYPE){
+      $asistencias = Asistencia::where('trabajador_id_trabajador', $trabajador->idTrabajador)
+      ->whereDate('created_at', Carbon::today())->where('tipo', Asistencia::ENTRADA_TYPE)->get();
+      if(count($asistencias) == 0)
+      {
+        return redirect()->back()
+          ->withInput()
+          ->with('error', 'El trabajador no cuenta con asistencia de entrada hoy');
+      }
+    }
+
+    if($request->hasFile('file'))
+    {
+      $asistencias = Asistencia::where('trabajador_id_trabajador', $trabajador->idTrabajador)
+      ->whereDate('created_at', Carbon::today())->where('tipo', $request->tipo)->get();
+      if(count($asistencias) > 0)
+      {
+        return redirect()->back()
+          ->withInput()
+          ->with('error', 'El trabajador ya tiene una asistencia marcada hoy');
+      }
+      $asistencia = new Asistencia();
+      $asistencia->tipo = $request->tipo;
+
+      $dt = Carbon::now();
+
+      $file = $request->file('file');
+
+      $file_name = $dt->format('d-m-Y') . '-' . $request->tipo . '.' . $file->getClientOriginalExtension();
+
+      $img = Image::make($file)->orientate()
+      ->resize(400, null, function ($constraint) { $constraint->aspectRatio(); } )
+      ->encode('jpg',80);
+
+      Storage::disk('asistencia')->put($request->rut.'/'. $file_name, $img);
+
+      $asistencia->image = $file_name;
+      $trabajador->asistencias()->save($asistencia);
+
+      return redirect()->route('home')->with('success', 'Asistencia a ' . $trabajador->nombre . ' registrada con éxito');
+
     }
   }
 
