@@ -117,7 +117,7 @@ class AsistenciaController extends Controller
   public function obtenerAsistencia(Request $request)
   {
     $rut = Rut::parse($request->data)->format();
-    $trabajador=Trabajador::where('rut', $rut)->first()
+    $trabajador=Trabajador::where('rut', $rut)->first();
     return $trabajador->nombre;
   }
 
