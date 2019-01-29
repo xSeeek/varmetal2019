@@ -17,7 +17,7 @@ class EditarTrabajadorRequest extends FormRequest
     [
       'nombre_completo'=>'required|min:3',
       'rut'=>'required|cl_rut',
-      'cargo'=>'required|min:3|max:5'
+      'cargo'=>'required'
     ];
   }
 

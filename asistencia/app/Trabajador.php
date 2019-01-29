@@ -10,7 +10,7 @@ class Trabajador extends Model
   protected $table = 'trabajador';
 
   protected $fillable = [
-      'rut',
+      'rut', 'nombre', 'cargo',
   ];
 
   public function user()
