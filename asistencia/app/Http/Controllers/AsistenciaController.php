@@ -116,7 +116,7 @@ class AsistenciaController extends Controller
 
   public function obtenerAsistencia(Request $request)
   {
-    return response()->json('hola');
+    return response()->json($request);
   }
 
 }
