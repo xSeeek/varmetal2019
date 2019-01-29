@@ -17,8 +17,6 @@ use Image;
 
 class AsistenciaController extends Controller
 {
-
-
   public function verAsistencia($rut)
   {
     $trabajador = Trabajador::where('rut', $rut)->first();
