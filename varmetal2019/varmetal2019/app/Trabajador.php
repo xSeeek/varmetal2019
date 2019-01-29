@@ -25,17 +25,25 @@ class Trabajador extends Model
     {
         return $this->hasMany('Varmetal\Pausa','pausa_id_pausa');
     }
+    public function conjunto()
+    {
+        return $this->belongsToMany('Varmetal\ConjuntoProducto', 'trabajadores_producto', 'trabajador_id_trabajador', 'conjunto_id_conjunto');
+    }
+    public function conjuntoWithAtributtes()
+    {
+        return $this->belongsToMany('Varmetal\ConjuntoProducto', 'trabajadores_producto', 'trabajador_id_trabajador', 'conjunto_id_conjunto')->withPivot('fechaComienzo', 'kilosTrabajados', 'pausasRealizadas', 'productosRealizados');
+    }
     public function producto()
     {
-        return $this->belongsToMany('Varmetal\Producto', 'trabajadores_producto', 'trabajador_id_trabajador', 'producto_id_producto');
+        return $this->belongsToMany('Varmetal\Producto', 'productos_trabajador', 'trabajador_id_trabajador', 'producto_id_producto');
     }
     public function productoWithAtributes()
     {
-        return $this->belongsToMany('Varmetal\Producto', 'trabajadores_producto', 'trabajador_id_trabajador', 'producto_id_producto')->withPivot('fechaComienzo', 'kilosTrabajados', 'pausasRealizadas', 'productosRealizados');
+        return $this->belongsToMany('Varmetal\Producto', 'productos_trabajador', 'trabajador_id_trabajador', 'producto_id_producto')->withPivot('fechaComienzo', 'productosRealizados');
     }
     public function productoIncompleto()
     {
-        $instance = $this->belongsToMany('Varmetal\Producto', 'trabajadores_producto', 'trabajador_id_trabajador', 'producto_id_producto');
+        $instance = $this->belongsToMany('Varmetal\Producto', 'productos_trabajador', 'trabajador_id_trabajador', 'producto_id_producto');
         $instance->getQuery()->where('estado', '<>', 1);
         return $instance;
     }

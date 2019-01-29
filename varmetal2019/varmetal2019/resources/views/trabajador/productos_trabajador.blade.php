@@ -27,18 +27,21 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                    @php $motivo = NULL @endphp
                                     @foreach($productos as $key => $producto)
                                         @if($producto->terminado == false)
                                             @php $cont++ @endphp
                                             <tr id="id_producto{{ $producto->idProducto }}">
                                                 <td scope="col">{{ $producto->codigo }}</td>
                                                 <td scope="col">{{ $producto->pesoKg }}</td>
-                                                @foreach($producto->pausa as $key => $pausa)
-                                                  @if($pausa->trabajador_id_trabajador == $trabajador->idTrabajador)
-                                                    @php $motivo = $pausa->motivo @endphp
-                                                    @break
-                                                  @endif
-                                                @endforeach
+                                                @if($producto->pausa != NULL)
+                                                    @foreach($producto->pausa as $key => $pausa)
+                                                      @if($pausa->trabajador_id_trabajador == $trabajador->idTrabajador)
+                                                        @php $motivo = $pausa->motivo @endphp
+                                                        @break
+                                                      @endif
+                                                    @endforeach
+                                                @endif
                                                 @if($motivo != NULL)
                                                   <td scope="col">{{$motivo}}</th>
                                                 @else
@@ -80,7 +83,7 @@
                                                 @if($producto->pivot->fechaComienzo != NULL)
                                                     <td><a class="btn btn-outline-success my-2 my-sm-0" href="{{url('/detalleProducto', [$producto->idProducto])}}" role="button" style="cursor: pointer;">Ver Detalles</a></td>
                                                 @else
-                                                    <td><a class="btn btn-outline-success my-2 my-sm-0" onclick="updateDate({{$producto->idProducto}}, '{{url('/detalleProducto', [$producto->idProducto])}}')" role="button" style="cursor: pointer;">Iniciar Producción</a></td>
+                                                    <td><a class="btn btn-outline-success my-2 my-sm-0" id="pickButton" onclick="updateDatos({{$producto->idProducto}})" role="button" style="cursor: pointer;">Seleccionar</a></td>
                                                 @endif
                                             </tr>
                                         @endif
@@ -94,14 +97,18 @@
                         <br>
                         @endif
                     </div>
+                    <td><a class="btn btn-outline-success my-2 my-sm-0" hidden onclick="" id = "desarrolloButton" role="button" style="cursor: pointer;">Iniciar Desarrollo</a></td>
             </div>
         </div>
     </div>
 <script type="text/javascript">
+    //"updateDate({{$producto->idProducto}}, '{{url('/detalleProducto', [$producto->idProducto])}}')"
+    var datosSeleccionados = Array();
+    var index = 0;
+
     window.onload = function formatTable()
     {
         var table = $('#tablaProductos').DataTable({
-            "order": [[ 3, "desc" ]],
             "language":{
                 "url":"//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
             },
@@ -110,6 +117,56 @@
        $(function () {
            $('[data-toggle="tooltip"]').tooltip();
        });
+    }
+
+    function updateDatos(idProducto)
+    {
+        datosSeleccionados[index] = idProducto;
+        index++;
+
+        changeButton(idProducto);
+    }
+
+    function changeButton(idProducto)
+    {
+        var button;
+        button = document.getElementById('pickButton');
+
+        if(button.innerHTML == 'Seleccionar')
+        {
+            button.innerHTML = "Eliminar";
+            button.setAttribute('class', "btn btn-outline-danger my-2 my-sm-0");
+            button.setAttribute('onclick', 'removeProducto(' + idProducto + ')');
+        }
+        else
+        {
+            button.innerHTML = "Seleccionar";
+            button.setAttribute('class', "btn btn-outline-success my-2 my-sm-0");
+            button.setAttribute('onclick', 'updateDatos(' + idProducto + ')');
+        }
+        readyToStart();
+    }
+
+    function removeProducto(idProducto)
+    {
+        for(i = 0; i < datosSeleccionados.length; i++)
+            if(datosSeleccionados[i] == idProducto)
+            {
+                datosSeleccionados.splice(i);
+                index--;
+                break;
+            }
+        changeButton(idProducto);
+    }
+
+    function readyToStart()
+    {
+        button = document.getElementById('desarrolloButton');
+
+        if(datosSeleccionados.length > 0)
+            button.hidden = false;
+        else
+            button.hidden = true;
     }
 
     function updateDate(idProducto, ruta)

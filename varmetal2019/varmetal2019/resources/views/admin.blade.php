@@ -38,7 +38,7 @@
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                         <h6 class="dropdown-header">Administración de Piezas</h6>
                                         <a class="dropdown-item my-2 my-sm-0" href="{{url('menuPiezas')}}" role="button" style="cursor: pointer;">Ingresar</a>
-                                        <a class="dropdown-item my-2 my-2 my-sm-0 disabled" href="{{url('import', [Varmetal\CSVData::PIEZA_TABLE])}}" role="button" style="cursor: pointer;">Importar CSV</a>
+                                        <a class="dropdown-item my-2 my-2 my-sm-0 disabled" href="{{url('import', [Varmetal\CSVData::PIEZA_TABLE])}}" role="button" style="display:none; cursor: pointer;">Importar CSV</a>
                                     </div>
                                 </div>
                             </td>

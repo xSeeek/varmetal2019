@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class TrabajadoresProductoTable extends Migration
+class ProductosTrabajador extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,14 @@ class TrabajadoresProductoTable extends Migration
      */
     public function up()
     {
-        Schema::create('trabajadores_producto', function (Blueprint $table) {
+        Schema::create('productos_trabajador', function (Blueprint $table) {
             $table->integer('trabajador_id_trabajador')->unsigned();
-            $table->integer('conjunto_id_conjunto')->unsigned();
+            $table->integer('producto_id_producto')->unsigned();
             $table->timestamp('fechaComienzo')->nullable();
-            $table->float('kilosTrabajados')->default(0);
             $table->integer('productosRealizados')->default(0);
-            $table->integer('pausasRealizadas')->default(0);
-            $table->float('tiempoEnPausa')->nullable();
-            $table->float('tiempoEnSetUp')->nullable();
 
             $table->foreign('trabajador_id_trabajador')->references('idTrabajador')->on('trabajador')->onDelete('cascade');
-            $table->foreign('conjunto_id_conjunto')->references('idConjunto')->on('conjunto_producto')->onDelete('cascade');
+            $table->foreign('producto_id_producto')->references('idProducto')->on('producto')->onDelete('cascade');
         });
     }
 
@@ -35,6 +31,6 @@ class TrabajadoresProductoTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('trabajadores_producto');
+        Schema::dropIfExists('productos_trabajador');
     }
 }
