@@ -116,7 +116,11 @@ class AsistenciaController extends Controller
 
   public function obtenerAsistencia(Request $request)
   {
-    return response()->json($request);
+    if(Rut::parse($request->data)->validate()){
+      return response()->json('rut válido');
+    }else {
+      return response()->json('rut inválido');
+    }
   }
 
 }
