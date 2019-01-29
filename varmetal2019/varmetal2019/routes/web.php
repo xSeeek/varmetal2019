@@ -190,6 +190,9 @@ Route::get('/admin', 'AdminController@admin')
         Route::get('/detallesCuentaTrabajador', ['uses' => 'TrabajadorController@detallesCuentaTrabajador'])
                     ->middleware('is_trabajador')
                     ->name('detallesCuentaTrabajador');
+        Route::get('/terminarProducto', ['uses' => 'TrabajadorController@terminarProducto'])
+                    ->middleware('is_trabajador')
+                    ->name('terminarProducto');
         /* [** POST **] */
         Route::post('/SuperPausaControl', ['uses' =>'PausaController@insertPausa'])
                     ->middleware('is_trabajador')
@@ -305,3 +308,13 @@ Route::get('/admin', 'AdminController@admin')
         Route::post('/loopInfinito', ['uses' => 'HomeController@loop'])
                     ->name('loopInfinito')
                     ->middleware('is_supervisor');
+
+/* [**Materiales**]*/
+    /*[**Trbajador**]*/
+        Route::post('/materialesGastados', ['uses' => 'MaterialController@materialesGastados'])
+                    ->middleware('is_trabajador')
+                    ->name('materialesGastados');
+
+        Route::post('/productoTerminado', [' uses' => 'MaterialController@productoTerminado'])
+                    ->middleware('is_trabajador')
+                    ->name('productoTerminado');

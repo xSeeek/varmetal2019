@@ -252,6 +252,11 @@ class TrabajadorController extends Controller
                 ->with('idTrabajador', $data);
     }
 
+    public function terminarProducto()
+    {
+      return view('trabajador.terminarProducto');
+    }
+
     public function setStartTime(Request $request)
     {
         $idProducto = $request->DATA;

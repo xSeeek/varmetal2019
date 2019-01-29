@@ -17,17 +17,15 @@
                     @endif
 
                     Bienvenido, <b>{{$trabajador->nombre}}</b>.
-                    <br>Correo actual: {{$user->email}}
                     <br>RUT: {{$trabajador->rut}}
-                    <br>Cargo: {{$trabajador->cargo}}<br>
                     <br>Tipo: {{$trabajador->tipo}}<br>
 
                 </div>
             </div>
             </br>
             <div class="card">
-              <div class="card-header"  align="center">Sus Productos</div>
-                          <a class="btn btn-outline-success my-2 my-sm-0" href="{{url('/productosTrabajador')}}" role="button" style="cursor: pointer;">Ingresar</a>
+              <div class="card-header"  align="center">Iniciar Producción</div>
+                          <a class="btn btn-outline-success my-2 my-sm-0" href="{{url('/terminarProducto')}}" role="button" style="cursor: pointer;">Ingresar</a>
             </div>
             </br>
             <div class="card">
