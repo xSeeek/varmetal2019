@@ -126,7 +126,8 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-            <button type="submit" id="btn_submit" class="btn btn-success">Agregar Trabajadores</button>
+            <a href="{!! route('administrador.agregarTrabajadores') !!}" class="btn btn-primary text-light" role="button">Registrar nuevo</a>
+            <button type="submit" id="btn_submit" class="btn btn-success">Añadir</button>
           </div>
         </form>
       </div>
