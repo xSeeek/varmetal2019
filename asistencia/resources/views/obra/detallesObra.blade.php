@@ -113,15 +113,14 @@
               <select data-live-search-placeholder="Puede buscar por nombre o rut"
               data-live-search="true" name="trabajador"
               class="selectpicker form-control{{ $errors->has('trabajadores') ? ' is-invalid' : '' }}">
-              @foreach ($trabajadores as $trabajador)
-                @if($trabajador->user->isAdmin() || $trabajador->user->isSupervisor())
-                  @break
-                @endif
-                <option
-                data-tokens="{{$trabajador->nombre}} {{$trabajador->rut}}" value="{{$trabajador->rut}}">
-                {{$trabajador->nombre}}
-              </option>
-            @endforeach
+                @foreach ($trabajadores as $trabajador)
+                  @if($trabajador->user == null)
+                    <option
+                    data-tokens="{{$trabajador->nombre}} {{$trabajador->rut}}" value="{{$trabajador->rut}}">
+                    {{$trabajador->nombre}}
+                  </option>
+                  @endif
+              @endforeach
             </select>
           </div>
           <div class="modal-footer">
@@ -189,6 +188,12 @@
   function verificarEstado(object) {
     return object.attr('readonly') == 'readonly';
   }
+
+  $(document).ready(function() {
+    $(".selectpicker").each(function () {
+      $(this).selectpicker();
+    });
+  });
 
 </script>
 @endsection
