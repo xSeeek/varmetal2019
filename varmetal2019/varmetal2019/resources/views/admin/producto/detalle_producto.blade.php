@@ -378,7 +378,7 @@
             data: {DATA:data},
             url: "{{url('/productoControl/deleteProducto')}}",
             success: function(response){
-                window.location.href = "url('/menuPiezas')";
+                window.location.href = "{{url('/menuPiezas')}}";
             }
         });
     }
