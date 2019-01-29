@@ -116,8 +116,12 @@ class AsistenciaController extends Controller
 
   public function obtenerAsistencia(Request $request)
   {
+    if(($request->rut == null) || ($request->tipo == null) || ($request->fecha_inicio == null) || ($request->fecha_fin == null))
+      {return -4;}
+
     if(!Rut::parse($request->rut)->validate())
       {return -1;}
+
     $rut = Rut::parse($request->rut)->format();
 
     $trabajador = Trabajador::where('rut', $rut)->first();
@@ -125,7 +129,18 @@ class AsistenciaController extends Controller
     if($trabajador == null)
       {return -2;}
 
-    return $trabajador;
+    $fecha_inicio = new Carbon($request->fecha_inicio);
+    $fecha_fin = new Carbon($request->fecha_fin);
+
+    $fecha_inicio->startOfDay();
+    $fecha_fin->endOfDay();
+
+    if($fecha_inicio > $fecha_fin)
+      {return -5;}
+
+    
+
+    return $asistencias;
   }
 
 }

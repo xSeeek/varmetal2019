@@ -114,7 +114,7 @@
               data-live-search="true" name="trabajador"
               class="selectpicker form-control{{ $errors->has('trabajadores') ? ' is-invalid' : '' }}">
                 @foreach ($trabajadores as $trabajador)
-                  @if($trabajador->user == null)
+                  @if($trabajador->user == null && $trabajador->obra == null)
                     <option
                     data-tokens="{{$trabajador->nombre}} {{$trabajador->rut}}" value="{{$trabajador->rut}}">
                     {{$trabajador->nombre}}
