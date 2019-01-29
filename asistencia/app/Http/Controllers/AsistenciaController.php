@@ -120,8 +120,6 @@ class AsistenciaController extends Controller
       {return -1;}
     $rut = Rut::parse($request->rut)->format();
 
-    return $rut;
-
     $trabajador = Trabajador::where('rut', $rut)->first();
 
     if($trabajador == null)
