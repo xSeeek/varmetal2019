@@ -119,7 +119,10 @@ class AsistenciaController extends Controller
     if(!Rut::parse($request->rut)->validate())
       {return -1;}
     $rut = Rut::parse($request->rut)->format();
-    $trabajador=Trabajador::where('rut', $rut)->first();
+
+    return $rut;
+
+    $trabajador = Trabajador::where('rut', $rut)->first();
 
     if($trabajador == null)
       {return -2;}
