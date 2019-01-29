@@ -46,14 +46,18 @@
                         <div class="col-sm-10">
                           <input type="text" readonly id="kilosTrabajados" class="form-control-plaintext" value="{{$kilosTrabajados}} Kg.">
                         </div></h2>
-                        <!--b>Bono:</b>
+                        <b>Horas en Pausa:</b>
                         <div class="col-sm-10">
-                          <input type="text" readonly id="kilosTrabajados" class="form-control-plaintext" value="{{$bono}} pesos.">
+                          <input type="text" readonly id="kilosTrabajados" class="form-control-plaintext">
                         </div>
-                        <b>Sueldo: </b>
+                        <b>Horas en SetUp: </b>
                         <div class="col-sm-10">
-                          <input type="text" readonly id="kilosTrabajados" class="form-control-plaintext" value="{{$sueldo}} pesos.">
-                        </div-->
+                          <input type="text" readonly id="kilosTrabajados" class="form-control-plaintext">
+                        </div>
+                        <b>Horas Hombre: </b>
+                        <div class="col-sm-10">
+                          <input type="text" readonly id="kilosTrabajados" class="form-control-plaintext">
+                        </div>
                     </h5>
                 </div>
             </div>

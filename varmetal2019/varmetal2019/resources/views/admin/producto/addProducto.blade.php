@@ -109,7 +109,10 @@
                 if(response != 1)
                     showMensajeBanner(MSG_ERROR, response);
                 else
-                    window.location.href = "{{url('adminProducto')}}";
+                {
+                    alert("Se agrego Correctamente");
+                    window.location.reload();
+                  }
             }
         });
     }
