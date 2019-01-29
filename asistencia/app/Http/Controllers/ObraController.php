@@ -58,7 +58,7 @@ class ObraController extends Controller
       }
     }
 
-    $trabajadoresTodos = Trabajador::where('obra_id_obra', )->get();
+    $trabajadoresTodos = Trabajador::all();
 
     return view('obra.detallesObra')
       ->with('obra', $obra)
