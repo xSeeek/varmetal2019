@@ -70,7 +70,11 @@ Route::get('/asistencias/{rut}', ['uses'=>'AsistenciaController@verAsistencia'])
     ->middleware('is_supervisor', 'auth');
 
   Route::post('/registrarAsistencia', ['uses'=>'AsistenciaController@registrarAsistencia'])
-  ->name('registrarAsistencia');
+  ->name('registrarAsistencia')
+  ->middleware('is_supervisor', 'auth');;
+
+  Route::post('/obtenerAsistencia', ['uses'=>'AsistenciaController@obtenerAsistencia'])
+  ->name('obtenerAsistencia');
 
 /**
  * [[Controller Obra]]
