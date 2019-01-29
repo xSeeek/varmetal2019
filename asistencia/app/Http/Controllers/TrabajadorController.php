@@ -70,7 +70,7 @@ class TrabajadorController extends Controller
 
     $trabajador = new Trabajador();
     $trabajador->nombre = $request->nombre_completo;
-    $trabajador->rut = $request->rut;
+    $trabajador->rut = Rut::parse($request->rut)->format();
     $trabajador->cargo = $request->cargo;
     $trabajador->estado = true;
 
