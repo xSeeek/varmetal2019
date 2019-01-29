@@ -116,4 +116,9 @@ class AsistenciaController extends Controller
       ->with('asistencia', $asistencia);
   }
 
+  public function obtenerAsistencia(Request $request)
+  {
+    return response()->json('hola');
+  }
+
 }
