@@ -39,6 +39,8 @@ class AsistenciaController extends Controller
 
   public function registrarAsistencia(MarcarAsistencia $request)
   {
+    print_r($request->file->getClientSize());
+    /*
     $rut = Rut::parse($request->rut)->format();
     $rut_supervisor = Rut::parse($request->supervisor)->format();
 
@@ -105,7 +107,7 @@ class AsistenciaController extends Controller
 
       return redirect()->route('home')->with('success', 'Asistencia a ' . $trabajador->nombre . ' registrada con éxito');
 
-    }
+    }*/
   }
 
   public function detallesAsistencia($rut, $id)
