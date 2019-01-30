@@ -11,7 +11,12 @@
 
           {{ Form::open( array('route' => 'registrarAsistencia', 'files' => true, 'id' => 'form_registrar_asistencia')) }}
             <div class="form-group">
-              {{Form::text('rut', null, ['id' => 'rut', 'class' => 'form-control', 'placeholder' => 'Ingrese su rut', 'required'])}}
+              {{Form::text('rut', null, ['id' => 'rut', 'class' => 'form-control{{ $errors->has('rut') ? ' is-invalid' : '' }}', 'placeholder' => 'Ingrese su rut', 'required'])}}
+              @if ($errors->has('rut'))
+                <span class="invalid-feedback" role="alert">
+                  <strong>{{ $errors->first('rut') }}</strong>
+                </span>
+              @endif
             </div>
 
             <div class="form-group">
@@ -24,38 +29,6 @@
 
           {{ Form::close() }}
 
-          <!--
-          <form enctype="multipart/form-data" method="post" id="form_registrar_asistencia" action="{{route('registrarAsistencia')}}">
-            <div class="form-group">
-              @csrf
-              <input type="text" name="supervisor" value="{{Auth::user()->trabajador->rut}}" hidden>
-              <input class="form-control{{ $errors->has('rut') ? ' is-invalid' : '' }}" id="rut" type="text" name="rut" placeholder="Ingrese un rut" value="{{ old('rut') }}" required autofocus>
-              @if ($errors->has('rut'))
-                <span class="invalid-feedback" role="alert">
-                  <strong>{{ $errors->first('rut') }}</strong>
-                </span>
-              @endif
-            </div>
-            <div class="form-group">
-              <select class="form-control" name="tipo">
-                <option value="Entrada">Entrada</option>
-                <option value="Salida">Salida</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <input accept="image/*" capture name="file" type="file" class="form-control-file{{ $errors->has('file') ? ' is-invalid' : '' }}" id="img_select" required autofocus/>
-              @if ($errors->has('file'))
-                <span class="invalid-feedback" role="alert">
-                  <strong>{{ $errors->first('file') }}</strong>
-                </span>
-              @endif
-            </div>
-            <div class="form-group">
-              <button class="btn btn-success" type="submit">Marcar Asistencia</button>
-            </div>
-
-          </form>
-          -->
           <div class="form-group">
             <img id="img_show" width="100%" class="img-thumbnail" src="{{ Storage::disk('asistencia')->url('default.jpeg') }}"/>
           </div>
