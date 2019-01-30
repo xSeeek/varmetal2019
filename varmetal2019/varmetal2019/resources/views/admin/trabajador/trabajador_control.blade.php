@@ -133,7 +133,7 @@
                 <div class="card-body">
 
                 @if(($productosCompletos != NULL) && (count($productosCompletos)>0))
-                <table id="tablaAdministracion" style="width:100%" align="center">
+                <table id="tablaProductosFinalizados" class="display" style="width:100%" align="center">
                     <thead>
                         <tr>
                             <th>Código</th>
@@ -203,7 +203,14 @@
     </div>
 </div>
 <script type="text/javascript">
-
+    $(document).ready(function() {
+        $('table.display').DataTable({
+            "language":{
+                "url":"//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+            },
+            "scrollX": true,
+       });
+    } );
     function changeStatus()
     {
       var nombreTrabajador, enableChangesButton;
