@@ -30,7 +30,7 @@
                 <span class="invalid-feedback" role="alert">
                   <strong>{{ $errors->first('file') }}</strong>
                 </span>
-              @endi
+              @endif
             </div>
 
             <div class="form-group">
