@@ -29,7 +29,7 @@
             </div>
 
             <div class="form-group">
-              {{ Form::submit('Marcar Asistencia', array('class' => 'btn btn-success')) }}
+              {{ Form::submit('Marcar Asistencia', array('class' => 'btn btn-success', 'id'=>'button_submit')) }}
             </div>
 
           {{ Form::close() }}
@@ -80,6 +80,7 @@
 
             reader.onload = function (e) {
                 $('#img_show').attr('src', e.target.result);
+
             }
             reader.readAsDataURL(input.files[0]);
         }

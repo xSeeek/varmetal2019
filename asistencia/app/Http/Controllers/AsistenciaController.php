@@ -101,8 +101,8 @@ class AsistenciaController extends Controller
       $file_name = $dt->format('d-m-Y') . '-' . $request->tipo . '.' . $file->getClientOriginalExtension();
 
       $img = Image::make($file)->orientate()
-      ->resize(400, null, function ($constraint) { $constraint->aspectRatio(); } )
-      ->encode('jpg',80);
+      ->resize(1280, 960)
+      ->encode('jpg',85);
 
       Storage::disk('asistencia')->put($rut.'/'. $file_name, $img);
 
