@@ -25,8 +25,6 @@ class ProductoTable extends Migration
             $table->integer('estado')->default('0');
             $table->integer('prioridad')->default('3');
             $table->boolean('terminado')->default('false');
-            $table->float('tiempoEnPausa')->nullable();
-            $table->float('tiempoEnSetUp')->nullable();
             $table->timestamps();
 
             $table->integer('obras_id_obra')->unsigned()->nullable();
