@@ -30,13 +30,13 @@ class ProductoTable extends Migration
             $table->timestamps();
 
             $table->integer('obras_id_obra')->unsigned()->nullable();
-            $table->foreign('obras_id_obra')->references('idObra')->on('obra')->onDelete('cascade');
+            $table->foreign('obras_id_obra')->references('idObra')->on('obra')->onDelete('set null');
 
             $table->integer('tipo_id_tipo')->unsigned()->default('1');
-            $table->foreign('tipo_id_tipo')->references('idTipo')->on('tipo')->onDelete('cascade');
+            $table->foreign('tipo_id_tipo')->references('idTipo')->on('tipo')->onDelete('set default');
 
             $table->integer('conjunto_id_conjunto')->nullable();
-            $table->foreign('conjunto_id_conjunto')->references('idConjunto')->on('conjunto_producto')->onDelete('cascade');
+            $table->foreign('conjunto_id_conjunto')->references('idConjunto')->on('conjunto_producto')->onDelete('set null');
         });
     }
 
