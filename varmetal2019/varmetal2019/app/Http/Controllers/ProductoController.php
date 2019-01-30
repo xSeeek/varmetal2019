@@ -77,6 +77,11 @@ class ProductoController extends Controller
         $date = new Carbon();
         $cantidadProducida = 0;
 
+        if($producto->fechaFin == NULL)
+            $fechaFin = $date->now();
+        else
+            $fechaFin = $producto->fechaFin;
+
         foreach($trabajadores as $trabajador)
         {
             $cantidadProducida += $trabajador->pivot->productosRealizados;
@@ -84,9 +89,6 @@ class ProductoController extends Controller
                 $fechaInicio = $trabajador->pivot->fechaComienzo;
             $horasHombre += (new GerenciaController)->calcularHorasHombre(Carbon::parse($fechaInicio), Carbon::parse($fechaFin));
         }
-
-        if($producto->fechaFin == NULL)
-            $fechaFin = $date->now();
 
         return view('admin.producto.detalle_producto')
                 ->with('producto', $producto)

@@ -3,6 +3,7 @@
 namespace Varmetal;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Trabajador extends Model
 {
@@ -45,6 +46,13 @@ class Trabajador extends Model
     {
         $instance = $this->belongsToMany('Varmetal\Producto', 'productos_trabajador', 'trabajador_id_trabajador', 'producto_id_producto');
         $instance->getQuery()->where('estado', '<>', 1);
+        return $instance;
+    }
+    public function productosCompletosMesActual()
+    {
+        $date = new Carbon();
+        $instance = $this->belongsToMany('Varmetal\Producto', 'productos_trabajador', 'trabajador_id_trabajador', 'producto_id_producto')->withPivot('fechaComienzo', 'kilosTrabajados', 'productosRealizados');;
+        $instance->getQuery()->where('terminado', 'true')->whereMonth('fechaFin', $date->now()->month);
         return $instance;
     }
     public function ayudante()

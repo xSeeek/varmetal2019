@@ -112,6 +112,7 @@ class TrabajadorController extends Controller
           $sueldo = 385000;
 
         $productos = $datos_trabajador->productoIncompleto;
+        $productosCompletos = $datos_trabajador->productosCompletosMesActual;
 
         return view('admin.trabajador.trabajador_control')
                                 ->with('trabajador', $datos_trabajador)
@@ -119,7 +120,8 @@ class TrabajadorController extends Controller
                                 ->with('productos_trabajador', $productos)
                                 ->with('bono', $bono)
                                 ->with('kilosTrabajados',$kilosTrabajados)
-                                ->with('sueldo',$sueldo);
+                                ->with('sueldo',$sueldo)
+                                ->with('productosCompletos', $productosCompletos);
     }
 
     public function addTrabajador()
