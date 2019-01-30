@@ -22,6 +22,8 @@ class GerenciaController extends Controller
         $fechaFin = 0;
         $fechaInicio = 0;
         $diffHoras = 0;
+        $productos_registrados = array();
+        $fechaConjunto = NULL;
 
         $obras_reporte = array();
         $index = 0;
@@ -49,19 +51,24 @@ class GerenciaController extends Controller
                 foreach($trabajadores as $trabajador)
                 {
                     $kilosTerminados += $trabajador->pivot->kilosTrabajados;
-                    if(($this->isOnArray($array_trabajadores, $trabajador->idTrabajador) == -1))
+                    if(($this->isOnArray($array_trabajadores, $producto->idProducto, 3) == -1) && ($trabajador->pivot->fechaComienzo != NULL))
                     {
-                        $array_trabajadores[$j] = array();
-                        $data_trabajador = array();
-                        $data_trabajador[0] = $trabajador->idTrabajador;
-                        $data_trabajador[1] = $trabajador->pivot->fechaComienzo;
-                        $data_trabajador[2] = $trabajador->nombre;
-                        $array_trabajadores[$j] = $data_trabajador;
-                        $j++;
+                        if($this->isOnArray($array_trabajadores, $producto->conjunto_id_conjunto, 4) == -1)
+                        {
+                            $array_trabajadores[$j] = array();
+                            $data_trabajador = array();
+                            $data_trabajador[0] = $trabajador->idTrabajador;
+                            $data_trabajador[1] = $trabajador->pivot->fechaComienzo;
+                            $data_trabajador[2] = $trabajador->nombre;
+                            $data_trabajador[3] = $producto->idProducto;
+                            $data_trabajador[4] = $producto->conjunto_id_conjunto;
+                            $array_trabajadores[$j] = $data_trabajador;
+                            $j++;
+                        }
                     }
                     else
                     {
-                        $index_trabajador = $this->isOnArray($array_trabajadores, $trabajador->idTrabajador);
+                        $index_trabajador = $this->isOnArray($array_trabajadores, $trabajador->idTrabajador, 0);
                         if(($trabajador->pivot->fechaComienzo != NULL) && ($array_trabajadores[$index_trabajador][1] > $trabajador->pivot->fechaComienzo))
                             $array_trabajadores[$index_trabajador][1] = $trabajador->pivot->fechaComienzo;
                     }
@@ -108,11 +115,11 @@ class GerenciaController extends Controller
                 ->with('obras', $obras_reporte);
     }
 
-    private function isOnArray($array, $toFind)
+    private function isOnArray($array, $toFind, $index)
     {
         if(count($array) != 0)
             for($i = 0; $i < count($array); $i++)
-                if($array[$i][0] == $toFind)
+                if($array[$i][$index] == $toFind)
                     return $i;
         return -1;
     }
