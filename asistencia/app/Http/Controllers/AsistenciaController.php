@@ -39,7 +39,10 @@ class AsistenciaController extends Controller
 
   public function registrarAsistencia(MarcarAsistencia $request)
   {
-    $supervisor = Trabajador::where('rut', $request->supervisor)->first();
+    $rut = Rut::parse($request->rut)->format();
+    $rut_supervisor = Rut::parse($request->supervisor)->format();
+
+    $supervisor = Trabajador::where('rut', $rut_supervisor)->first();
 
     if($supervisor->obra == null){
       return redirect()->back()
@@ -47,7 +50,7 @@ class AsistenciaController extends Controller
         ->with('error', 'El supervisor no esta vinculado a ninguna obra');
     }
 
-    $trabajador = Trabajador::where('rut', $request->rut)->first();
+    $trabajador = Trabajador::where('rut', $rut)->first();
 
     if($trabajador->obra != null){
       if($trabajador->obra != $supervisor->obra){
@@ -95,7 +98,7 @@ class AsistenciaController extends Controller
       ->resize(400, null, function ($constraint) { $constraint->aspectRatio(); } )
       ->encode('jpg',80);
 
-      Storage::disk('asistencia')->put($request->rut.'/'. $file_name, $img);
+      Storage::disk('asistencia')->put($rut.'/'. $file_name, $img);
 
       $asistencia->image = $file_name;
       $trabajador->asistencias()->save($asistencia);
@@ -138,7 +141,7 @@ class AsistenciaController extends Controller
     if($fecha_inicio > $fecha_fin)
       {return -5;}
 
-    
+
 
     return $asistencias;
   }
