@@ -145,7 +145,7 @@
                 </table>
                 @else
                 </br>
-                    <h4 align="center">El Operador no tiene ningún trabajo en desarrollo.</h4>
+                    <h4 align="center">El Operador no ha realizado ninguna pieza este mes.</h4>
                 </br>
                 @endif
                 </div>
