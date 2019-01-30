@@ -319,9 +319,6 @@ class ProductoController extends Controller
             $producto->fechaFin = $date->now();
             $producto->terminado = true;
 
-            $conjunto = $producto->conjuntoWithAtributtes;
-            return $conjunto;
-
             $producto->save();
             return 1;
         }
