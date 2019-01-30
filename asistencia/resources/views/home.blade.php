@@ -11,7 +11,7 @@
 
           {{ Form::open( array('route' => 'registrarAsistencia', 'files' => true, 'id' => 'form_registrar_asistencia')) }}
             <div class="form-group">
-              {{Form::text('rut', null, ['id' => 'rut', 'class' => 'form-control', 'placeholder' => 'Ingrese su rut', 'required'])}}
+              {{Form::text('rut', null, ['id' => 'rut', 'class' => 'form-control', 'accept' => 'image/*', 'placeholder' => 'Ingrese su rut', 'required'])}}
               @if ($errors->has('rut'))
                 <span class="invalid-feedback" role="alert">
                   <strong>{{ $errors->first('rut') }}</strong>
