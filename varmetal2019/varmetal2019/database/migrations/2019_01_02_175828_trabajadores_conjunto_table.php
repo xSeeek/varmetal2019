@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class TrabajadoresProductoTable extends Migration
+class TrabajadoresConjuntoTable extends Migration
 {
     /**
      * Run the migrations.
@@ -35,6 +35,6 @@ class TrabajadoresProductoTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('trabajadores_producto');
+        Schema::dropIfExists('trabajadores_conjunto');
     }
 }
