@@ -11,7 +11,7 @@ class Producto extends Model
 
     public function conjunto()
     {
-        return $this->belongsTo('Varmetal\ConjuntoProducto', 'trabajadores_conjunto');
+        return $this->belongsTo('Varmetal\ConjuntoProducto', 'conjunto_id_conjunto');
     }
     public function trabajador()
     {

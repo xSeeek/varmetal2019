@@ -90,7 +90,7 @@ class PausaController extends Controller
       if($pausa->fechaFin != NULL)
         return view('welcome');
 
-      $productos = $trabajador->productoWithAtributes()->where('producto_id_producto', '=', $producto->idProducto)->get()->first();
+      $productos = $producto->conjunto;
 
       $usuarioActual = Auth::user();
       $supervisor = $usuarioActual->trabajador;
@@ -233,9 +233,10 @@ class PausaController extends Controller
       }
       else
           return 'Usted no es un Trabajador';
-      $productos = $trabajador->productoWithAtributes()->where('producto_id_producto', '=', $producto->idProducto)->get()->first();
-      $productos->pivot->pausasRealizadas++;
-      $productos->pivot->save();
+      $productos = $producto->conjunto;
+      return $productos;
+      $productos->pausasRealizadas++;
+      $productos->save();
       $producto->cantPausa++;
       $producto->save();
       $newPausa->save();
