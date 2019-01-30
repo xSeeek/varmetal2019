@@ -26,6 +26,11 @@
 
             <div class="form-group">
               {{Form::file('file', array('class' => 'form-control-file', 'id' => 'img_select', 'accept' => 'image/*', 'required', 'capture' => 'camera'))}}
+              @if ($errors->has('file'))
+                <span class="invalid-feedback" role="alert">
+                  <strong>{{ $errors->first('file') }}</strong>
+                </span>
+              @endi
             </div>
 
             <div class="form-group">
@@ -60,11 +65,6 @@
       if (!localParams.send) {
         e.preventDefault();
       }
-      console.log($('#img_select').get(0).files);
-
-      form = $(this);
-
-      console.log(form.serialize());
       confirmMensajeSwal(MSG_INFO, 'Seguro de marcar asistencia?', e);
     });
 
