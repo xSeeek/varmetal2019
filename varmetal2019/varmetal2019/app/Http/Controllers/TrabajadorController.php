@@ -157,7 +157,7 @@ class TrabajadorController extends Controller
                                 ->with('kilosTrabajados',$kilosTrabajados)
                                 ->with('sueldo',$sueldo)
                                 ->with('tiempoPausa', $tiempoPausa)
-                                ->with('tiempoSetUp', $tiempoSetUp);
+                                ->with('tiempoSetUp', $tiempoSetUp)
                                 ->with('productosCompletos', $productosCompletos);
     }
 
