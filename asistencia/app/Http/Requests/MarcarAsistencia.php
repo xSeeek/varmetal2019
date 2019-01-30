@@ -17,7 +17,7 @@ class MarcarAsistencia extends FormRequest
     return
     [
       'rut'=>'required|exists:trabajador,rut',
-      //'file'=>'required|mimes:jpeg,bmp,png|max:100000'
+      'file'=>'required|image|mimes:jpeg,bmp,png|max:100000'
     ];
   }
 
@@ -25,7 +25,7 @@ class MarcarAsistencia extends FormRequest
   {
       return [
           'rut' => 'Rut del usuario',
-          //'file' => 'Imagen del archivo'
+          'file' => 'Imagen del archivo'
       ];
   }
 
@@ -34,7 +34,7 @@ class MarcarAsistencia extends FormRequest
     return [
         'rut.required' => 'Se requiere el rut del usuario.',
         'rut.cl_rut' => 'El rut ingresado no es válido.',
-        //'file.size' => 'El tamaño maximo fue exedido',
+        'file.size' => 'El tamaño maximo fue exedido',
       ];
   }
 }
