@@ -102,7 +102,6 @@
         </div>
     </div>
 <script type="text/javascript">
-    //"updateDate({{$producto->idProducto}}, '{{url('/detalleProducto', [$producto->idProducto])}}')"
     var datosSeleccionados = [];
     var index = 0;
 
