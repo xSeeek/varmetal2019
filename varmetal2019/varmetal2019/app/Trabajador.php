@@ -27,11 +27,11 @@ class Trabajador extends Model
     }
     public function conjunto()
     {
-        return $this->belongsToMany('Varmetal\ConjuntoProducto', 'trabajadores_producto', 'trabajador_id_trabajador', 'conjunto_id_conjunto');
+        return $this->belongsToMany('Varmetal\ConjuntoProducto', 'trabajadores_conjunto', 'trabajador_id_trabajador', 'conjunto_id_conjunto');
     }
     public function conjuntoWithAtributtes()
     {
-        return $this->belongsToMany('Varmetal\ConjuntoProducto', 'trabajadores_producto', 'trabajador_id_trabajador', 'conjunto_id_conjunto')->withPivot('fechaComienzo', 'kilosTrabajados', 'pausasRealizadas', 'productosRealizados');
+        return $this->belongsToMany('Varmetal\ConjuntoProducto', 'trabajadores_conjunto', 'trabajador_id_trabajador', 'conjunto_id_conjunto')->withPivot('fechaComienzo', 'kilosTrabajados', 'pausasRealizadas', 'productosRealizados');
     }
     public function producto()
     {

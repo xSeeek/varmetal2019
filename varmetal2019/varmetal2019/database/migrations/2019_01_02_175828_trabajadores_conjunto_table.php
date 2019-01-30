@@ -13,7 +13,7 @@ class TrabajadoresProductoTable extends Migration
      */
     public function up()
     {
-        Schema::create('trabajadores_producto', function (Blueprint $table) {
+        Schema::create('trabajadores_conjunto', function (Blueprint $table) {
             $table->integer('trabajador_id_trabajador')->unsigned();
             $table->integer('conjunto_id_conjunto')->unsigned();
             $table->timestamp('fechaComienzo')->nullable();
