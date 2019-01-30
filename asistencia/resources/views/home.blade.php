@@ -11,12 +11,17 @@
 
           {{ Form::open( array('route' => 'registrarAsistencia', 'files' => true, 'id' => 'form_registrar_asistencia')) }}
             <div class="form-group">
+              {{Form::hidden('supervisor', Auth::user()->trabajador->rut)}}
               {{Form::text('rut', null, ['id' => 'rut', 'class' => 'form-control', 'placeholder' => 'Ingrese su rut', 'required'])}}
               @if ($errors->has('rut'))
                 <span class="invalid-feedback" role="alert">
                   <strong>{{ $errors->first('rut') }}</strong>
                 </span>
               @endif
+            </div>
+
+            <div class="form-group">
+              {{Form::select('tipo', ['Entrada'=>'Entrada', 'Salida'=>'Salida'], null, ['class' => 'form-control'])}}
             </div>
 
             <div class="form-group">
