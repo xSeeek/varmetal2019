@@ -39,7 +39,7 @@ class Trabajador extends Model
     }
     public function productoWithAtributes()
     {
-        return $this->belongsToMany('Varmetal\Producto', 'productos_trabajador', 'trabajador_id_trabajador', 'producto_id_producto')->withPivot('fechaComienzo', 'productosRealizados');
+        return $this->belongsToMany('Varmetal\Producto', 'productos_trabajador', 'trabajador_id_trabajador', 'producto_id_producto')->withPivot('fechaComienzo', 'kilosTrabajados', 'productosRealizados');
     }
     public function productoIncompleto()
     {

@@ -10,6 +10,7 @@ use Freshwork\ChileanBundle\Rut;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Varmetal\Ayudante;
+use Varmetal\ConjuntoProducto;
 
 class TrabajadorController extends Controller
 {
@@ -259,18 +260,35 @@ class TrabajadorController extends Controller
 
     public function setStartTime(Request $request)
     {
-        $idProducto = $request->DATA;
         $usuarioActual = Auth::user();
 
         if($usuarioActual->trabajador == NULL)
             return redirect()->route('/home');
 
-        $datos_trabajador = $usuarioActual->trabajador;
-        $productos = $datos_trabajador->productoWithAtributes()->where('producto_id_producto', '=', $idProducto)->get()->first();
-
+        $conjunto = new ConjuntoProducto;
         $date = new Carbon();
-        $productos->pivot->fechaComienzo = $date->now();
-        $productos->pivot->save();
+
+        $data = json_decode($request->DATA);
+        $productos = array();
+
+        $datos_trabajador = $usuarioActual->trabajador;
+        $conjunto->fechaInicio = $date->now();
+        $conjunto->save();
+        $datos_trabajador->conjunto()->attach($conjunto->idConjunto);
+        $data_conjunto = $datos_trabajador->conjuntoWithAtributtes()->where('conjunto_id_conjunto', '=', $conjunto->idConjunto)->get()->first();
+        $data_conjunto->pivot->fechaComienzo = $date->now();
+        $data_conjunto->pivot->save();
+
+        foreach($data as $idProductos)
+        {
+            $producto = Producto::find($idProductos);
+            $producto->conjunto_id_conjunto = $conjunto->idConjunto;
+
+            $productos = $datos_trabajador->productoWithAtributes()->where('producto_id_producto', '=', $idProductos)->get()->first();
+            $productos->pivot->fechaComienzo = $date->now();
+            $productos->pivot->save();
+            $producto->save();
+        }
 
         return 1;
     }

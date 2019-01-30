@@ -80,21 +80,17 @@ class ProductoController extends Controller
         $date = new Carbon();
 
         $cantidadProducida = 0;
-        $conjunto = $producto->conjunto;
-        if($conjunto != NULL)
+        foreach($trabajadores as $trabajador)
         {
-            foreach($conjunto->trabajadores as $trabajador)
-            {
-                $cantidadProducida += $trabajador->pivot->productosRealizados;
-                if(($fechaInicio == NULL) || ($fechaInicio > $trabajador->pivot->fechaComienzo))
-                    $fechaInicio = $trabajador->pivot->fechaComienzo;
-            }
-            if($producto->fechaFin == NULL)
-                $fechaFin = $date->now();
-
-            if($fechaInicio != NULL)
-                $horasHombre = (new GerenciaController)->calcularHorasHombre(Carbon::parse($fechaInicio), Carbon::parse($fechaFin));
+            $cantidadProducida += $trabajador->pivot->productosRealizados;
+            if(($fechaInicio == NULL) || ($fechaInicio > $trabajador->pivot->fechaComienzo))
+                $fechaInicio = $trabajador->pivot->fechaComienzo;
         }
+        if($producto->fechaFin == NULL)
+            $fechaFin = $date->now();
+
+        if($fechaInicio != NULL)
+            $horasHombre = (new GerenciaController)->calcularHorasHombre(Carbon::parse($fechaInicio), Carbon::parse($fechaFin));
 
         return view('admin.producto.detalle_producto')
                 ->with('producto', $producto)
@@ -268,7 +264,20 @@ class ProductoController extends Controller
             $producto->estado = 1;
             $producto->fechaFin = $date->now();
 
+            $conjunto = $producto->conjunto;
+            $contTerminado = 0;
             $producto->save();
+
+            foreach($conjunto->productos as $productoConjunto)
+            {
+                if($productoConjunto->estado == 1)
+                    $contTerminado++;
+            }
+            if($contTerminado == count($conjunto->productos))
+            {
+                $conjunto->fechaFin = (new Carbon())->now();
+                $conjunto->save();
+            }
             return 1;
         }
         return 'El producto fue finalizado por el supervisor';
@@ -285,6 +294,13 @@ class ProductoController extends Controller
 
             $producto->estado = 2;
             $producto->fechaFin = NULL;
+            $conjunto = $producto->conjunto;
+
+            if($conjunto->fechaFin != NULL)
+            {
+                $conjunto->fechaFin = NULL;
+                $conjunto->save();
+            }
 
             $producto->save();
             return 1;
@@ -302,6 +318,9 @@ class ProductoController extends Controller
             $producto->estado = 1;
             $producto->fechaFin = $date->now();
             $producto->terminado = true;
+
+            $conjunto = $producto->conjuntoWithAtributtes;
+            return $conjunto;
 
             $producto->save();
             return 1;

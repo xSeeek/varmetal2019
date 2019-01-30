@@ -15,6 +15,7 @@ class ConjuntoProductosTable extends Migration
     {
         Schema::create('conjunto_producto', function (Blueprint $table) {
             $table->increments('idConjunto');
+            $table->timestamp('fechaInicio');
             $table->timestamp('fechaFin')->nullable();
             $table->timestamps();
         });

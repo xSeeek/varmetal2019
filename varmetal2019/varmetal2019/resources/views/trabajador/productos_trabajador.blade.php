@@ -83,7 +83,7 @@
                                                 @if($producto->pivot->fechaComienzo != NULL)
                                                     <td><a class="btn btn-outline-success my-2 my-sm-0" href="{{url('/detalleProducto', [$producto->idProducto])}}" role="button" style="cursor: pointer;">Ver Detalles</a></td>
                                                 @else
-                                                    <td><a class="btn btn-outline-success my-2 my-sm-0" id="pickButton" onclick="updateDatos({{$producto->idProducto}})" role="button" style="cursor: pointer;">Seleccionar</a></td>
+                                                    <td><a class="btn btn-outline-warning my-2 my-sm-0" id="pickButton{{$producto->idProducto}}" onclick="updateDatos({{$producto->idProducto}})" role="button" style="cursor: pointer;">Seleccionar</a></td>
                                                 @endif
                                             </tr>
                                         @endif
@@ -97,13 +97,13 @@
                         <br>
                         @endif
                     </div>
-                    <td><a class="btn btn-outline-success my-2 my-sm-0" hidden onclick="" id = "desarrolloButton" role="button" style="cursor: pointer;">Iniciar Desarrollo</a></td>
+                    <td><a class="btn btn-outline-success my-2 my-sm-0" hidden onclick="createConjunto()" id = "desarrolloButton" role="button" style="cursor: pointer;">Iniciar Desarrollo</a></td>
             </div>
         </div>
     </div>
 <script type="text/javascript">
     //"updateDate({{$producto->idProducto}}, '{{url('/detalleProducto', [$producto->idProducto])}}')"
-    var datosSeleccionados = Array();
+    var datosSeleccionados = [];
     var index = 0;
 
     window.onload = function formatTable()
@@ -119,18 +119,31 @@
        });
     }
 
+    function createConjunto()
+    {
+        var data;
+
+        if(datosSeleccionados.length > 0)
+            data = JSON.stringify(datosSeleccionados);
+        else
+        {
+            showMensajeSwall(MSG_INFO, 'Debe seleccionar almenos una pieza para iniciar la producción');
+            return;
+        }
+
+        updateDate(data);
+    }
+
     function updateDatos(idProducto)
     {
-        datosSeleccionados[index] = idProducto;
-        index++;
-
+        datosSeleccionados[datosSeleccionados.length] = idProducto;
         changeButton(idProducto);
     }
 
     function changeButton(idProducto)
     {
         var button;
-        button = document.getElementById('pickButton');
+        button = document.getElementById('pickButton' + idProducto);
 
         if(button.innerHTML == 'Seleccionar')
         {
@@ -141,10 +154,11 @@
         else
         {
             button.innerHTML = "Seleccionar";
-            button.setAttribute('class', "btn btn-outline-success my-2 my-sm-0");
+            button.setAttribute('class', "btn btn-outline-warning my-2 my-sm-0");
             button.setAttribute('onclick', 'updateDatos(' + idProducto + ')');
         }
-        readyToStart();
+        if(datosSeleccionados.length >= 0)
+            readyToStart();
     }
 
     function removeProducto(idProducto)
@@ -152,10 +166,11 @@
         for(i = 0; i < datosSeleccionados.length; i++)
             if(datosSeleccionados[i] == idProducto)
             {
-                datosSeleccionados.splice(i);
-                index--;
+                datosSeleccionados.splice(i, 1);
                 break;
             }
+        if(datosSeleccionados.length < 1)
+            datosSeleccionados = [];
         changeButton(idProducto);
     }
 
@@ -169,11 +184,11 @@
             button.hidden = true;
     }
 
-    function updateDate(idProducto, ruta)
+    function updateDate(data)
     {
         swal({
         title: "Confirmación",
-        text: "Presione Si para iniciar la producción de la pieza:",
+        text: "Presione Si para iniciar la producción de la(s) pieza(s):",
         type: "warning",
         showCancelButton: true,
         confirmButtonColor: "#6A9944",
@@ -188,10 +203,10 @@
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     type: "POST",
-                    data: {DATA:idProducto},
+                    data: {DATA:data},
                     url: "{{url('/trabajadorControl/setStartTime')}}",
                     success: function(response){
-                        window.location.href = ruta;
+                        window.location.reload();
                     }
                 });
             }

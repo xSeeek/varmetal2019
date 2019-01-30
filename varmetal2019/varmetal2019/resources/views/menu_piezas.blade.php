@@ -19,6 +19,7 @@
                         </tr>
                     </table>
                 </div>
+                <a class="btn btn-outline-success btn-lg" align="right" role="button" href="{{url('/addProducto')}}"><b>Agregar Piezas</b></a>
             </div>
         </div>
     </div>
