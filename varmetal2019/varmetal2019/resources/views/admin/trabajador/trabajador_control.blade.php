@@ -133,7 +133,7 @@
                 <div class="card-body">
 
                 @if(($productosCompletos != NULL) && (count($productosCompletos)>0))
-                <table id="tablaAdministracion" style="width:100%" align="center">
+                <table id="tablaProductosFinalizados" class="display" style="width:100%" align="center">
                     <thead>
                         <tr>
                             <th>Código</th>
@@ -157,7 +157,7 @@
                 </table>
                 @else
                 </br>
-                    <h4 align="center">El Operador no tiene ningún trabajo en desarrollo.</h4>
+                    <h4 align="center">El Operador no ha realizado ninguna pieza este mes.</h4>
                 </br>
                 @endif
                 </div>
@@ -203,7 +203,14 @@
     </div>
 </div>
 <script type="text/javascript">
-
+    $(document).ready(function() {
+        $('table.display').DataTable({
+            "language":{
+                "url":"//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+            },
+            "scrollX": true,
+       });
+    } );
     function changeStatus()
     {
       var nombreTrabajador, enableChangesButton;

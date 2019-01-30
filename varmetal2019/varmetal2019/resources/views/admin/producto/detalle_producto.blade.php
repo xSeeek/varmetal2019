@@ -27,11 +27,11 @@
                         <div class="col-sm-10">
                             <input type="text" readonly id="nombreProducto" class="form-control-plaintext" value="{{$tipo->nombreTipo}}">
                         </div>
-                        <b>Fecha de Inicio de Desarrollo:</b>
+                        <b>Fecha de registro de la pieza:</b>
                         <div class="col-sm-10">
                             <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="{{$producto->fechaInicio}}">
                         </div>
-                        <b>Fecha de Finalización de Desarrollo:</b>
+                        <b>Fecha de confirmación de término:</b>
                         <div class="col-sm-10">
                             @if($producto->fechaFin == NULL)
                                 <input type="text" readonly id="fechaFinProducto" class="form-control-plaintext" value="Aún no se finaliza">
@@ -136,8 +136,12 @@
                         <div class="col-sm-10">
                             @if($horasHombre != 0)
                                 <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="{{$horasHombre}} Horas">
+                            @elseif($horasHombre == 0 && $producto->terminado == false)
+                              <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="Aún no transcurre una hora">
+                            @elseif($horasHombre == 0 && $producto->terminado == true)
+                                <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="Se completó la pieza en menos de una hora">
                             @else
-                              <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="No se ha iniciado el desarrollo de la pieza">
+                                <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="No se ha iniciado el desarrollo de la pieza">
                             @endif
                         </div>
                         <b>Tiempo en Pausa:</b>
