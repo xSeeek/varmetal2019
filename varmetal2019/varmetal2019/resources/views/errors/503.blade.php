@@ -1,5 +1,5 @@
 <!doctype html>
-<title>Styde - En Mantenimiento</title>
+<title>Varmetal - Mantenimiento</title>
 <style>
   body { text-align: center; padding: 150px; }
   h1 { font-size: 50px; }
@@ -48,6 +48,9 @@
         <div>
             <p>Pedimos disculpas por los incovenientes, se están realizando operaciones de mantenimiento.</p>
             <p>&mdash; Departamento de Informática</p>
+            <br>
+            <br>
+            <a href="/asistencia" style="color:white"><b>Presione aquí para ingresar a asistencia</b></a>
         </div>
     </div>
 </article>
