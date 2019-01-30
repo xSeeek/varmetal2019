@@ -147,10 +147,10 @@
                         <b>Tiempo en Pausa:</b>
                         <div class="col-sm-10">
                             @if($producto->tiempoEnPausa != NULL)
-                              @if($producto->tiempoEnPausa/60 > 1)
-                                <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="{{$producto->tiempoEnPausa/60}} Minutos">
+                              @if($producto->tiempoEnPausa > 1)
+                                <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="{{$producto->tiempoEnPausa}} Minutos">
                               @else
-                                <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="{{$producto->tiempoEnPausa}} Horas">
+                                <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="{{$producto->tiempoEnPausa/60}} Horas">
                               @endif
                             @else
                             <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="No se han solicitado Pausas">
@@ -159,10 +159,10 @@
                         <b>Tiempo en SetUp:</b>
                         <div class="col-sm-10">
                             @if($producto->tiempoEnSetUp != NULL)
-                              @if($producto->tiempoEnSetUp < 1)
-                                <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="{{$producto->tiempoEnSetUp*60}} Minutos">
+                              @if($producto->tiempoEnSetUp > 1)
+                                <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="{{$producto->tiempoEnSetUp}} Minutos">
                               @else
-                                <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="{{$producto->tiempoEnSetUp}} Horas">
+                                <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="{{$producto->tiempoEnSetUp/60}} Horas">
                               @endif
                             @else
                               <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="No se han producido cambios de pieza">

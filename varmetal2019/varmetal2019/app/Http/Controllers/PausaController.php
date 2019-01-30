@@ -90,7 +90,10 @@ class PausaController extends Controller
       if($pausa->fechaFin != NULL)
         return view('welcome');
 
-      $productos = $producto->conjunto;
+      $conjunto = $producto->conjunto;
+
+      $productos = $trabajador->conjuntoWithAtributtes()->where('conjunto_id_conjunto', '=', $conjunto->idConjunto)->get()->first();
+
 
       $usuarioActual = Auth::user();
       $supervisor = $usuarioActual->trabajador;
@@ -98,7 +101,7 @@ class PausaController extends Controller
       $pausa->fechaFin = now();
       $pausa->save();
 
-      $pausas_registradas = Pausa::all();
+      $pausas_registradas = $producto->pausa;
 
       $producto->tiempoEnPausa=0;
       $productos->pivot->tiempoEnPausa=0;
@@ -109,8 +112,6 @@ class PausaController extends Controller
       {
         if($pausa!=NULL)
         {
-          if($pausa->producto_id_producto==$producto->idProducto)
-          {
             if($pausa->motivo != "Cambio de pieza")
             {
               if($diferenciaTiempo==0)
@@ -130,7 +131,6 @@ class PausaController extends Controller
               }
             }
           }
-        }
       }
       if($producto->tiempoEnSetUp == NULL)
       {
@@ -150,6 +150,7 @@ class PausaController extends Controller
       }
       $producto->save();
       $productos->pivot->save();
+      $productos->save();
       return 1;
     }
 

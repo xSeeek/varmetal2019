@@ -76,8 +76,22 @@ class ObraController extends Controller
                 $fechaFin = $producto->fechaFin;
             $kilosObra += ($producto->pesoKg * $producto->cantProducto);
             $trabajadores = $producto->trabajadorWithAtributtes;
-            $tiempoPausa += $producto->tiempoEnPausa;
-            $tiempoSetUp += $producto->tiempoEnSetUp;
+            if($producto->pausa != NULL)
+            {
+              $pausas_almacenadas = $producto->pausa;
+              foreach ($pausas_almacenadas as $key => $pausa)
+              {
+                if($pausa->fechaFin!=NULL)
+                {
+                  if($pausa->motivo=='Cambio de pieza')
+                  {
+                    $tiempoSetUp += (new PausaController)->calcularHorasHombre(Carbon::parse($pausa->fechaInicio),Carbon::parse($pausa->fechaFin));
+                  }
+                  else
+                    $tiempoPausa += (new PausaController)->calcularHorasHombre(Carbon::parse($pausa->fechaInicio),Carbon::parse($pausa->fechaFin));
+                }
+              }
+            }
 
             foreach($trabajadores as $trabajador)
                 $kilosTerminados += $trabajador->pivot->kilosTrabajados;
