@@ -51,17 +51,24 @@ class GerenciaController extends Controller
                 foreach($trabajadores as $trabajador)
                 {
                     $kilosTerminados += $trabajador->pivot->kilosTrabajados;
-                    if(($this->isOnArray($array_trabajadores, $producto->idProducto, 3) == -1) && ($trabajador->pivot->fechaComienzo != NULL))
+                    if(($this->isOnArray($array_trabajadores, $producto->idProducto, 3) == -1) && ($producto->conjunto->fechaFin != NULL))
                     {
                         if($this->isOnArray($array_trabajadores, $producto->conjunto_id_conjunto, 4) == -1)
                         {
                             $array_trabajadores[$j] = array();
                             $data_trabajador = array();
                             $data_trabajador[0] = $trabajador->idTrabajador;
-                            $data_trabajador[1] = $trabajador->pivot->fechaComienzo;
+                            $data_trabajador[1] = $producto->conjunto->fechaInicio;
                             $data_trabajador[2] = $trabajador->nombre;
                             $data_trabajador[3] = $producto->idProducto;
                             $data_trabajador[4] = $producto->conjunto_id_conjunto;
+
+                            $fechaFin = $producto->conjunto->fechaFin;
+                            if($fechaFin == NULL)
+                                $data_trabajador[5] = $carbon->now();
+                            else
+                                $data_trabajador[5] = $fechaFin;
+
                             $array_trabajadores[$j] = $data_trabajador;
                             $j++;
                         }
@@ -101,7 +108,7 @@ class GerenciaController extends Controller
             $tiempoSetUp = (new TrabajadorController)->convertToHoursMins($tiempoSetUp);
 
             for($i = 0; $i < count($array_trabajadores); $i++)
-                $diffHoras += $this->calcularHorasHombre(Carbon::parse($array_trabajadores[$i][1]), $fechaFin);
+                $diffHoras += $this->calcularHorasHombre(Carbon::parse($array_trabajadores[$i][1]), Carbon::parse($array_trabajadores[$i][5]));
 
             $obra[0] = $obra_almacenada->idObra;
             $obra[1] = $obra_almacenada->codigo;

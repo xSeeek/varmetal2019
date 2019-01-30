@@ -297,6 +297,7 @@ class ProductoController extends Controller
 
             $producto->estado = 2;
             $producto->fechaFin = NULL;
+            $producto->terminado = false;
             $conjunto = $producto->conjunto;
 
             if($conjunto != NULL && $conjunto->fechaFin != NULL)
@@ -341,6 +342,7 @@ class ProductoController extends Controller
         foreach($trabajadores as $trabajador)
         {
             $trabajador->pivot->productosRealizados = 0;
+            $trabajador->pivot->kilosTrabajados = 0;
             $trabajador->pivot->save();
         }
 
