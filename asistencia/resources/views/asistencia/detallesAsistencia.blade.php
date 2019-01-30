@@ -38,7 +38,6 @@
 
   <script type="text/javascript">
     function rotarImagen() {
-      console.log('hola');
       var value = 0
       $("#img").rotate({
         bind:

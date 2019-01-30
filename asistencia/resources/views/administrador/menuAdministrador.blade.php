@@ -99,6 +99,7 @@
           "url":"//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
         },
         "scrollX": true,
+        "scrollY": "300px",
         'fixedColumns': true,
         "autoWidth": false,
       });
@@ -108,6 +109,7 @@
           "url":"//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
         },
         "scrollX": true,
+        "scrollY": "300px",
         'fixedColumns': true,
         "autoWidth": false,
       });
