@@ -90,7 +90,7 @@ class PausaController extends Controller
       if($pausa->fechaFin != NULL)
         return view('welcome');
 
-      $productos = $trabajador->productoWithAtributes()->where('producto_id_producto', '=', $producto->idProducto)->get()->first();
+      $productos = $producto->conjunto;
 
       $usuarioActual = Auth::user();
       $supervisor = $usuarioActual->trabajador;
@@ -233,9 +233,11 @@ class PausaController extends Controller
       }
       else
           return 'Usted no es un Trabajador';
-      $productos = $trabajador->productoWithAtributes()->where('producto_id_producto', '=', $producto->idProducto)->get()->first();
-      $productos->pivot->pausasRealizadas++;
-      $productos->pivot->save();
+      $conjunto = $producto->conjunto;
+      $data_conjunto = $trabajador->conjuntoWithAtributtes()->where('conjunto_id_conjunto', '=', $conjunto->idConjunto)->get()->first();
+      $data_conjunto->pivot->pausasRealizadas++;
+      $data_conjunto->pivot->save();
+      $data_conjunto->save();
       $producto->cantPausa++;
       $producto->save();
       $newPausa->save();
@@ -258,11 +260,14 @@ class PausaController extends Controller
 
       if($pausa->fechaFin==NULL)
       {
-        $productos = $trabajador->productoWithAtributes()->where('producto_id_producto', '=', $producto->idProducto)->get()->first();
-        if($productos!=NULL)
+        $conjunto = $producto->conjunto;
+        $data_conjunto = $trabajador->conjuntoWithAtributtes()->where('conjunto_id_conjunto', '=', $conjunto->idConjunto)->get()->first();
+
+        if($data_conjunto!=NULL)
         {
-          $productos->pivot->pausasRealizadas--;
-          $productos->pivot->save();
+          $data_conjunto->pivot->pausasRealizadas--;
+          $data_conjunto->pivot->save();
+          $data_conjunto->save();
           $producto->cantPausa--;
           $producto->save();
           $pausa->delete();
