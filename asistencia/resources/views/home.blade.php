@@ -26,7 +26,19 @@
               </select>
             </div>
             <div class="form-group">
-              <input accept="image/*" capture name="file" type="file" class="form-control-file{{ $errors->has('file') ? ' is-invalid' : '' }}" id="img_select" capture='capture' required autofocus/>
+              <!-- Camera sensor -->
+              <canvas id="camera--sensor"></canvas>
+
+              <!-- Camera view -->
+              <video id="camera--view" autoplay playsinline></video>
+
+              <!-- Camera output -->
+              <img src="//:0" alt="" id="camera--output">
+              <!-- Camera trigger -->
+              <button id="camera--trigger">Take a picture</button>
+            </div>
+            <div class="form-group">
+              <input accept="image/*" capture="camera" name="file" type="file" class="form-control-file{{ $errors->has('file') ? ' is-invalid' : '' }}" id="img_select" capture='capture' required autofocus/>
               @if ($errors->has('file'))
                 <span class="invalid-feedback" role="alert">
                   <strong>{{ $errors->first('file') }}</strong>
