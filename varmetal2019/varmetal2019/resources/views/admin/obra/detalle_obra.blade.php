@@ -94,27 +94,19 @@
                         @endif
                         <b>Tiempo en pausa:</b>
                         <div class="col-sm-10">
-                            @if($tiempoPausa > 0)
-                                @if($tiempoPausa/60 < 1)
-                                    <input type="text" readonly id="nombreObra" class="form-control-plaintext" value="{{$tiempoPausa}} Minutos">
-                                @else
-                                    <input type="text" readonly id="nombreObra" class="form-control-plaintext" value="{{$tiempoPausa/60}} Horas">
-                                @endif
-                            @else
-                                <input type="text" readonly id="nombreObra" class="form-control-plaintext" value="No se ha registrado ninguna pausa.">
-                            @endif
+                          @if($tiempoPausa != '')
+                            <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="{{$tiempoPausa}}">
+                          @else
+                            <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="No se solicitado Pausas">
+                          @endif
                         </div>
                         <b>Tiempo en Set-Up:</b>
                         <div class="col-sm-10">
-                            @if($tiempoSetUp > 0)
-                                @if($tiempoSetUp/60 < 1)
-                                    <input type="text" readonly id="nombreObra" class="form-control-plaintext" value="{{$tiempoSetUp}} Minutos">
-                                @else
-                                    <input type="text" readonly id="nombreObra" class="form-control-plaintext" value="{{$tiempoSetUp/60}} Horas">
-                                @endif
-                            @else
-                                <input type="text" readonly id="nombreObra" class="form-control-plaintext" value="No se registran pausas por cambio de pieza.">
-                            @endif
+                          @if($tiempoSetUp != '')
+                            <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="{{$tiempoSetUp}}">
+                          @else
+                            <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="No se solicitado cambios de Pieza">
+                          @endif
                         </div>
                     </h5>
                 </div>

@@ -33,8 +33,16 @@
                                     <td scope="col" align="center">{{ $obra[3] }}</td>
                                     <td scope="col" align="center">{{ $obra[4] }}</td>
                                     <td scope="col" align="center">{{ $obra[5] }}</td>
-                                    <td scope="col" align="center">{{ $obra[6] }}</td>
-                                    <td scope="col" align="center">{{ $obra[7] }}</td>
+                                    @if($obra[6] != '')
+                                      <td scope="col" align="center">{{ $obra[6] }}</td>
+                                    @else
+                                      <td scope="col" align="center">00:00</td>
+                                    @endif
+                                    @if($obra[7] != '')
+                                      <td scope="col" align="center">{{ $obra[7] }}</td>
+                                    @else
+                                      <td scope="col" align="center">00:00</td>
+                                    @endif
                                 </tr>
                                 @endforeach
                             </tbody>

@@ -117,6 +117,9 @@ class ObraController extends Controller
         else
             $tiempoFinalizado = -1;
 
+        $tiempoPausa = (new TrabajadorController)->convertToHoursMins($tiempoPausa);
+        $tiempoSetUp = (new TrabajadorController)->convertToHoursMins($tiempoSetUp);
+
         return view('admin.obra.detalle_obra')
                 ->with('obra', $obra)
                 ->with('productos_obra', $productos_obra)

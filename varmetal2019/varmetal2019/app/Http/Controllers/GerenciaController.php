@@ -97,6 +97,9 @@ class GerenciaController extends Controller
                 $kilosObra += ($producto->pesoKg * $producto->cantProducto);
             }
 
+            $tiempoPausa = (new TrabajadorController)->convertToHoursMins($tiempoPausa);
+            $tiempoSetUp = (new TrabajadorController)->convertToHoursMins($tiempoSetUp);
+
             for($i = 0; $i < count($array_trabajadores); $i++)
                 $diffHoras += $this->calcularHorasHombre(Carbon::parse($array_trabajadores[$i][1]), $fechaFin);
 
@@ -106,8 +109,8 @@ class GerenciaController extends Controller
             $obra[3] = $kilosTerminados;
             $obra[4] = $kilosObra - $kilosTerminados;
             $obra[5] = $diffHoras;
-            $obra[6] = number_format($tiempoPausa/60,0,'.',',');
-            $obra[7] = number_format($tiempoSetUp/60,0,'.',',');
+            $obra[6] = $tiempoPausa;
+            $obra[7] = $tiempoSetUp;
 
             // Actualización y asignación de datos a los indices //
             $obras_reporte[$index] = $obra;
