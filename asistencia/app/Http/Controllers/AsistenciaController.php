@@ -70,7 +70,7 @@ class AsistenciaController extends Controller
         ->with('error', 'El trabajador ingresado no posee una obra asignada');
     }
 
-    if($request->tipo == Asistencia::SALIDA_TYPE){
+    /*if($request->tipo == Asistencia::SALIDA_TYPE){
       $asistencias = Asistencia::where('trabajador_id_trabajador', $trabajador->idTrabajador)
       ->whereDate('created_at', Carbon::today())->where('tipo', Asistencia::ENTRADA_TYPE)->get();
       if(count($asistencias) == 0)
@@ -79,7 +79,7 @@ class AsistenciaController extends Controller
           ->withInput()
           ->with('error', 'El trabajador no cuenta con asistencia de entrada hoy');
       }
-    }
+    }*/
 
     if($request->hasFile('file'))
     {
