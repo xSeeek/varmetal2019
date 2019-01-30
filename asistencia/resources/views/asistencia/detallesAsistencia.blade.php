@@ -28,7 +28,7 @@
           </div>
           <figure class="figure">
             <img id="img" src="{{ Storage::disk('asistencia')->url($trabajador->rut.'/'.$asistencia->image) }}" class="figure-img img-fluid rounded">
-            <figcaption class="figure-caption text-right">Imagen tomada el día en que se marco la asistencia.</figcaption>
+            <figcaption class="figure-caption text-right">Imagen tomada el día en que se marcó la asistencia.</figcaption>
           </figure>
         </div>
       </div>

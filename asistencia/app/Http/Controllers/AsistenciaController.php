@@ -89,7 +89,7 @@ class AsistenciaController extends Controller
       {
         return redirect()->back()
           ->withInput()
-          ->with('error', 'El trabajador ya tiene una asistencia marcada hoy');
+          ->with('error', 'El trabajador ya tiene una asistencia de '. $request->tipo .' marcada hoy');
       }
       $asistencia = new Asistencia();
       $asistencia->tipo = $request->tipo;
