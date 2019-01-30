@@ -133,17 +133,13 @@
                           <br><br>
                         </div>
                         <b>Horas Hombre Requeridas:</b>
-                        <!--div class="col-sm-10">
-                            @if($horasHombre != NULL)
-                              @if($horasHombre/60 > 1)
-                                <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="{{$horasHombre/60}} Minutos">
-                              @else
+                        <div class="col-sm-10">
+                            @if($horasHombre != 0)
                                 <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="{{$horasHombre}} Horas">
-                              @endif
                             @else
                               <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="No se ha iniciado el desarrollo de la pieza">
                             @endif
-                        </div-->
+                        </div>
                         <b>Tiempo en Pausa:</b>
                         <div class="col-sm-10">
                             @if($producto->tiempoEnPausa != NULL)

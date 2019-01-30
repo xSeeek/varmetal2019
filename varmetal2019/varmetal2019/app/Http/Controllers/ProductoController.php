@@ -59,38 +59,34 @@ class ProductoController extends Controller
         $tipo = $producto->tipo;
         $fechaInicio = NULL;
         $fechaFin = NULL;
-        $horasHombre = NULL;
+        $horasHombre = 0;
         $producto->tiempoEnPausa=0;
         $producto->tiempoEnSetUp=0;
         $pausas_almacenadas = $producto->pausa;
 
         foreach ($pausas_almacenadas as $key => $pausa)
         {
-          if($pausa->fechaFin!=NULL)
-          {
-            if($pausa->motivo=='Cambio de pieza')
+            if($pausa->fechaFin!=NULL)
             {
-              $producto->tiempoEnSetUp += (new PausaController)->calcularHorasHombre(Carbon::parse($pausa->fechaInicio),Carbon::parse($pausa->fechaFin));
+                if($pausa->motivo=='Cambio de pieza')
+                    $producto->tiempoEnSetUp += (new PausaController)->calcularHorasHombre(Carbon::parse($pausa->fechaInicio),Carbon::parse($pausa->fechaFin));
+                else
+                    $producto->tiempoEnPausa += (new PausaController)->calcularHorasHombre(Carbon::parse($pausa->fechaInicio),Carbon::parse($pausa->fechaFin));
             }
-            else
-              $producto->tiempoEnPausa += (new PausaController)->calcularHorasHombre(Carbon::parse($pausa->fechaInicio),Carbon::parse($pausa->fechaFin));
-          }
         }
-
         $date = new Carbon();
-
         $cantidadProducida = 0;
+
         foreach($trabajadores as $trabajador)
         {
             $cantidadProducida += $trabajador->pivot->productosRealizados;
             if(($fechaInicio == NULL) || ($fechaInicio > $trabajador->pivot->fechaComienzo))
                 $fechaInicio = $trabajador->pivot->fechaComienzo;
+            $horasHombre += (new GerenciaController)->calcularHorasHombre(Carbon::parse($fechaInicio), Carbon::parse($fechaFin));
         }
+
         if($producto->fechaFin == NULL)
             $fechaFin = $date->now();
-
-        if($fechaInicio != NULL)
-            $horasHombre = (new GerenciaController)->calcularHorasHombre(Carbon::parse($fechaInicio), Carbon::parse($fechaFin));
 
         return view('admin.producto.detalle_producto')
                 ->with('producto', $producto)
