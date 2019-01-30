@@ -60,8 +60,8 @@ class ProductoController extends Controller
         $fechaInicio = NULL;
         $fechaFin = NULL;
         $horasHombre = 0;
-        $producto->tiempoEnPausa=0;
-        $producto->tiempoEnSetUp=0;
+        $tiempoPausa=0;
+        $tiempoSetUp=0;
         $pausas_almacenadas = $producto->pausa;
 
         foreach ($pausas_almacenadas as $key => $pausa)
@@ -69,9 +69,9 @@ class ProductoController extends Controller
             if($pausa->fechaFin!=NULL)
             {
                 if($pausa->motivo=='Cambio de pieza')
-                    $producto->tiempoEnSetUp += (new PausaController)->calcularHorasHombre(Carbon::parse($pausa->fechaInicio),Carbon::parse($pausa->fechaFin));
+                    $tiempoSetUp += (new PausaController)->calcularHorasHombre(Carbon::parse($pausa->fechaInicio),Carbon::parse($pausa->fechaFin));
                 else
-                    $producto->tiempoEnPausa += (new PausaController)->calcularHorasHombre(Carbon::parse($pausa->fechaInicio),Carbon::parse($pausa->fechaFin));
+                    $tiempoPausa += (new PausaController)->calcularHorasHombre(Carbon::parse($pausa->fechaInicio),Carbon::parse($pausa->fechaFin));
             }
         }
         $date = new Carbon();
@@ -81,6 +81,9 @@ class ProductoController extends Controller
             $fechaFin = $date->now();
         else
             $fechaFin = $producto->fechaFin;
+
+        $tiempoPausa = (new TrabajadorController)->convertToHoursMins($tiempoPausa);
+        $tiempoSetUp = (new TrabajadorController)->convertToHoursMins($tiempoSetUp);
 
         foreach($trabajadores as $trabajador)
         {
@@ -92,6 +95,8 @@ class ProductoController extends Controller
 
         return view('admin.producto.detalle_producto')
                 ->with('producto', $producto)
+                ->with('tiempoPausa', $tiempoPausa)
+                ->with('tiempoSetUp', $tiempoSetUp)
                 ->with('trabajadores', $trabajadores)
                 ->with('cantidadProducida', $cantidadProducida)
                 ->with('obra', $obra)

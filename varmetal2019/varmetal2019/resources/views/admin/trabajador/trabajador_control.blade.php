@@ -42,23 +42,35 @@
                         <div class="col-sm-10">
                           <input type="text" readonly id="kilosTrabajados" class="form-control-plaintext" value="@php setlocale(LC_TIME, ''); echo strtoupper(strftime("%B")); @endphp">
                         </div>
-                        <h2><b>Kilos Totales Realizados:</b><br>
+                    </h5>
+                    <h2>
+                        <b>Kilos Totales Realizados:</b><br>
                         <div class="col-sm-10">
                           <input type="text" readonly id="kilosTrabajados" class="form-control-plaintext" value="{{$kilosTrabajados}} Kg.">
-                        </div></h2>
+                        </div>
+                    </h2>
+                    <h4>
                         <b>Horas en Pausa:</b>
                         <div class="col-sm-10">
-                          <input type="text" readonly id="kilosTrabajados" class="form-control-plaintext">
+                          @if($tiempoPausa != '')
+                            <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="{{$tiempoPausa}}">
+                          @else
+                            <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="No se han producido Pausas">
+                          @endif
                         </div>
                         <b>Horas en SetUp: </b>
                         <div class="col-sm-10">
-                          <input type="text" readonly id="kilosTrabajados" class="form-control-plaintext">
+                          @if($tiempoSetUp != '')
+                              <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="{{$tiempoSetUp}}">
+                          @else
+                              <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="No se han producido Cambios de Pieza">
+                          @endif
                         </div>
                         <b>Horas Hombre: </b>
                         <div class="col-sm-10">
                           <input type="text" readonly id="kilosTrabajados" class="form-control-plaintext">
                         </div>
-                    </h5>
+                    </h4>
                 </div>
             </div>
             <br>

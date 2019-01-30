@@ -84,6 +84,18 @@ class TrabajadorController extends Controller
                   ->with('trabajadores_almacenados', $trabajadores_registrados);
     }
 
+    public function convertToHoursMins($time)
+    {
+        $format = '%d horas con %d minutos';
+
+        if ($time < 1) {
+            return;
+        }
+        $hours = floor($time/60);
+        $minutes = ($time%60);
+        return sprintf($format, $hours, $minutes);
+    }
+
     public function trabajadorControl($data)
     {
         if($data == 'undefined')
@@ -94,6 +106,8 @@ class TrabajadorController extends Controller
 
         $kilosTrabajados = 0;
         $toneladas = 0;
+        $tiempoPausa = 0;
+        $tiempoSetUp = 0;
         $date = new Carbon();
 
         $productos_trabajador = $datos_trabajador->productoWithAtributes;
@@ -104,12 +118,33 @@ class TrabajadorController extends Controller
                   $kilosTrabajados += $producto->pivot->kilosTrabajados;
             if($producto->pivot->kilosTrabajados!=0)
               $toneladas += ($producto->tipo->factorKilo*$producto->pivot->kilosTrabajados);
+
+              if($producto->pausa !=NULL)
+              {
+                $pausas_almacenadas = $producto->pausa;
+
+                foreach ($pausas_almacenadas as $key => $pausa)
+                {
+                  if($pausa->fechaFin!=NULL)
+                  {
+                    if($pausa->motivo=='Cambio de pieza')
+                    {
+                      $tiempoSetUp += (new PausaController)->calcularHorasHombre(Carbon::parse($pausa->fechaInicio),Carbon::parse($pausa->fechaFin));
+                    }
+                    else
+                      $tiempoPausa += (new PausaController)->calcularHorasHombre(Carbon::parse($pausa->fechaInicio),Carbon::parse($pausa->fechaFin));
+                  }
+                }
+              }
         }
         $toneladas /= 1000;
         $bono = $toneladas*5500;
 
         if($datos_trabajador->cargo=='M1')
           $sueldo = 385000;
+
+        $tiempoPausa = $this->convertToHoursMins($tiempoPausa);
+        $tiempoSetUp = $this->convertToHoursMins($tiempoSetUp);
 
         $productos = $datos_trabajador->productoIncompleto;
         $productosCompletos = $datos_trabajador->productosCompletosMesActual;
@@ -121,6 +156,8 @@ class TrabajadorController extends Controller
                                 ->with('bono', $bono)
                                 ->with('kilosTrabajados',$kilosTrabajados)
                                 ->with('sueldo',$sueldo)
+                                ->with('tiempoPausa', $tiempoPausa)
+                                ->with('tiempoSetUp', $tiempoSetUp);
                                 ->with('productosCompletos', $productosCompletos);
     }
 
