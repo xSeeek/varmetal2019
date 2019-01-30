@@ -296,7 +296,7 @@ class ProductoController extends Controller
             $producto->fechaFin = NULL;
             $conjunto = $producto->conjunto;
 
-            if($conjunto->fechaFin != NULL)
+            if($conjunto != NULL && $conjunto->fechaFin != NULL)
             {
                 $conjunto->fechaFin = NULL;
                 $conjunto->save();
