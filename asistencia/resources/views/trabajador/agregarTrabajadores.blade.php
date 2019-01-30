@@ -67,7 +67,10 @@
 
 <script type="text/javascript">
   $(document).ready(function() {
-    $("input#rut").rut({formatOn: 'keyup', ignoreControlKeys: false});
+    $("input#rut").rut({formatOn: 'keyup', ignoreControlKeys: true});
+    $('input#rut').keyup(function(){
+      $(this).val($(this).val().toUpperCase());
+    });
   });
   $("form[id^='form_agregar']").submit(function (e, params) {
     var localParams = params || {};

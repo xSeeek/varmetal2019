@@ -48,7 +48,12 @@
 
   <script type="text/javascript">
     $(document).ready(function() {
-      $("input#rut").rut({formatOn: 'keyup', ignoreControlKeys: false});
+      $("input#rut").rut({formatOn: 'keyup', ignoreControlKeys: true});
+
+      $('input#rut').keyup(function(){
+        $(this).val($(this).val().toUpperCase());
+      });
+
       $("#img_select").change(function(){
           readURL(this);
       });
