@@ -75,8 +75,23 @@ class GerenciaController extends Controller
                 }
 
                 /* Contar tiempo en pausa por trabajador */
-                  $tiempoPausa += $producto->tiempoEnPausa;
-                  $tiempoSetUp += $producto->tiempoEnSetUp;
+                if($producto->pausa !=NULL)
+                {
+                  $pausas_almacenadas = $producto->pausa;
+
+                  foreach ($pausas_almacenadas as $key => $pausa)
+                  {
+                    if($pausa->fechaFin!=NULL)
+                    {
+                      if($pausa->motivo=='Cambio de pieza')
+                      {
+                        $tiempoSetUp += (new PausaController)->calcularHorasHombre(Carbon::parse($pausa->fechaInicio),Carbon::parse($pausa->fechaFin));
+                      }
+                      else
+                        $tiempoPausa += (new PausaController)->calcularHorasHombre(Carbon::parse($pausa->fechaInicio),Carbon::parse($pausa->fechaFin));
+                    }
+                  }
+                }
 
                 /* Acumular peso en kilogramos de los productos */
                 $kilosObra += ($producto->pesoKg * $producto->cantProducto);
@@ -91,8 +106,8 @@ class GerenciaController extends Controller
             $obra[3] = $kilosTerminados;
             $obra[4] = $kilosObra - $kilosTerminados;
             $obra[5] = $diffHoras;
-            $obra[6] = $tiempoPausa;
-            $obra[7] = $tiempoSetUp;
+            $obra[6] = number_format($tiempoPausa/60,0,'.',',');
+            $obra[7] = number_format($tiempoSetUp/60,0,'.',',');
 
             // Actualización y asignación de datos a los indices //
             $obras_reporte[$index] = $obra;
