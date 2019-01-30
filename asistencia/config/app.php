@@ -181,6 +181,7 @@ return [
         Freshwork\ChileanBundle\Laravel\ChileanBundleServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Laraveles\Spanish\SpanishServiceProvider::class,
+        Collective\Html\HtmlServiceProvider::class,
 
     ],
 
@@ -236,6 +237,8 @@ return [
          */
         'Rut' => Freshwork\ChileanBundle\Laravel\Facades\Rut::class,
         'Image' => Intervention\Image\Facades\Image::class,
+        'Form' => Collective\Html\FormFacade::class,
+        'Html' => Collective\Html\HtmlFacade::class,
     ],
 
 ];
