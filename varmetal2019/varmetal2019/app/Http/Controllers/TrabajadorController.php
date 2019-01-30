@@ -147,6 +147,7 @@ class TrabajadorController extends Controller
         $tiempoSetUp = $this->convertToHoursMins($tiempoSetUp);
 
         $productos = $datos_trabajador->productoIncompleto;
+        $productosCompletos = $datos_trabajador->productosCompletosMesActual;
 
         return view('admin.trabajador.trabajador_control')
                                 ->with('trabajador', $datos_trabajador)
@@ -157,6 +158,7 @@ class TrabajadorController extends Controller
                                 ->with('sueldo',$sueldo)
                                 ->with('tiempoPausa', $tiempoPausa)
                                 ->with('tiempoSetUp', $tiempoSetUp);
+                                ->with('productosCompletos', $productosCompletos);
     }
 
     public function addTrabajador()

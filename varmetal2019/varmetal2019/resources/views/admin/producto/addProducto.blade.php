@@ -110,9 +110,9 @@
                     showMensajeBanner(MSG_ERROR, response);
                 else
                 {
-                    alert("Se agrego Correctamente");
+                    showMensajeBanner(MSG_SUCCESS, "Se agrego Correctamente");
                     window.location.reload();
-                  }
+                }
             }
         });
     }

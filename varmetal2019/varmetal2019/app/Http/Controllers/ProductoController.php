@@ -77,6 +77,11 @@ class ProductoController extends Controller
         $date = new Carbon();
         $cantidadProducida = 0;
 
+        if($producto->fechaFin == NULL)
+            $fechaFin = $date->now();
+        else
+            $fechaFin = $producto->fechaFin;
+
         $tiempoPausa = (new TrabajadorController)->convertToHoursMins($tiempoPausa);
         $tiempoSetUp = (new TrabajadorController)->convertToHoursMins($tiempoSetUp);
 
@@ -87,9 +92,6 @@ class ProductoController extends Controller
                 $fechaInicio = $trabajador->pivot->fechaComienzo;
             $horasHombre += (new GerenciaController)->calcularHorasHombre(Carbon::parse($fechaInicio), Carbon::parse($fechaFin));
         }
-
-        if($producto->fechaFin == NULL)
-            $fechaFin = $date->now();
 
         return view('admin.producto.detalle_producto')
                 ->with('producto', $producto)

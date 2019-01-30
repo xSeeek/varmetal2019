@@ -127,6 +127,41 @@
                 @endif
                 </div>
             </div>
+            <br>
+            <div class="card">
+                <div class="card-header">Productos realizados en el mes actual</div>
+                <div class="card-body">
+
+                @if(($productosCompletos != NULL) && (count($productosCompletos)>0))
+                <table id="tablaAdministracion" style="width:100%" align="center">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Piezas Realizadas</th>
+                            <th>Kilos Realizados</th>
+                            <th>Peso (kg)</th>
+                            <th>Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($productosCompletos as $key => $productos)
+                            <tr id="id_productoTrabajador{{ $productos->idProductos }}">
+                                <td scope="col">{{ $productos->codigo }}</td>
+                                <td scope="col">{{ $productos->pivot->productosRealizados }}</td>
+                                <td scope="col">{{ $productos->pivot->kilosTrabajados }}</td>
+                                <td scope="col">{{ $productos->pesoKg }}</td>
+                                <td scope="col"><a class="btn btn-outline-primary btn-sm" href="{{url('productoControl', [$productos->idProducto])}}" role="button" style="cursor: pointer;"><b>Detalles Pieza</b></a>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                @else
+                </br>
+                    <h4 align="center">El Operador no tiene ningún trabajo en desarrollo.</h4>
+                </br>
+                @endif
+                </div>
+            </div>
         </br>
             <a class="btn btn-primary btn-lg" role="button" href="{{url('menuTrabajador')}}"><b>Volver</b></a>
         </div>
