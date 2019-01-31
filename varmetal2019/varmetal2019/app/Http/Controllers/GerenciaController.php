@@ -105,23 +105,7 @@ class GerenciaController extends Controller
                 $kilosObra += ($producto->pesoKg * $producto->cantProducto);
             }
 
-            for($i = 0; $i < count($productosAuxiliar); $i++)
-            {
-                $cont = 0;
-                $trabajador = Trabajador::find($productosAuxiliar[$i][1]);
-                $producto = Producto::find($productosAuxiliar[$i][0]);
-                foreach($trabajador->conjunto as $conjunto)
-                    if($conjunto->idConjunto == $producto->conjunto_id_conjunto)
-                        $cont++;
-                if($cont == 0)
-                {
-                    if($producto->fechaFin != NULL)
-                        $fechaFin = $producto->fechaFin;
-                    else
-                        $fechaFin = $date->now();
-                    $diffHoras += $this->calcularHorasHombre(Carbon::parse($productosAuxiliar[$i][2]), Carbon::parse($fechaFin));
-                }
-            }
+            $diffHoras += $this->productosEnAyuda($productosAuxiliar);
 
             $tiempoPausa = (new TrabajadorController)->convertToHoursMins($tiempoPausa);
             $tiempoSetUp = (new TrabajadorController)->convertToHoursMins($tiempoSetUp);
@@ -166,6 +150,30 @@ class GerenciaController extends Controller
                 if($array[$i][$index] == $toFind)
                     return $i;
         return -1;
+    }
+
+    public function productosEnAyuda($productosAuxiliar)
+    {
+        $diffHoras = 0;
+        if($productosAuxiliar != NULL)
+            for($i = 0; $i < count($productosAuxiliar); $i++)
+            {
+                $cont = 0;
+                $trabajador = Trabajador::find($productosAuxiliar[$i][1]);
+                $producto = Producto::find($productosAuxiliar[$i][0]);
+                foreach($trabajador->conjunto as $conjunto)
+                    if($conjunto->idConjunto == $producto->conjunto_id_conjunto)
+                        $cont++;
+                if($cont == 0)
+                {
+                    if($producto->fechaFin != NULL)
+                        $fechaFin = $producto->fechaFin;
+                    else
+                        $fechaFin = $date->now();
+                    $diffHoras += $this->calcularHorasHombre(Carbon::parse($productosAuxiliar[$i][2]), Carbon::parse($fechaFin));
+                }
+            }
+        return $diffHoras;
     }
 
     public function calcularHorasHombre($fechaInicio, $fechaFin)

@@ -117,6 +117,7 @@ class TrabajadorController extends Controller
         $j = 0;
         $k = 0;
         $array_productos = array();
+        $productosAyuda = array();
 
         $productos_trabajador = $datos_trabajador->productoWithAtributes;
         foreach($productos_trabajador as $producto)
@@ -127,23 +128,17 @@ class TrabajadorController extends Controller
             if($producto->pivot->kilosTrabajados!=0)
               $toneladas += ($producto->tipo->factorKilo*$producto->pivot->kilosTrabajados);
 
-              if($producto->pausa !=NULL)
-              {
+            if($producto->pausa !=NULL)
+            {
                 $pausas_almacenadas = $producto->pausa;
-
                 foreach ($pausas_almacenadas as $key => $pausa)
-                {
-                  if($pausa->fechaFin!=NULL)
-                  {
-                    if($pausa->motivo=='Cambio de pieza')
-                    {
-                      $tiempoSetUp += (new PausaController)->calcularHorasHombre(Carbon::parse($pausa->fechaInicio),Carbon::parse($pausa->fechaFin));
-                    }
-                    else
-                      $tiempoPausa += (new PausaController)->calcularHorasHombre(Carbon::parse($pausa->fechaInicio),Carbon::parse($pausa->fechaFin));
-                  }
-                }
-              }
+                    if($pausa->fechaFin!=NULL)
+                        if($pausa->motivo=='Cambio de pieza')
+                            $tiempoSetUp += (new PausaController)->calcularHorasHombre(Carbon::parse($pausa->fechaInicio),Carbon::parse($pausa->fechaFin));
+                        else
+                            $tiempoPausa += (new PausaController)->calcularHorasHombre(Carbon::parse($pausa->fechaInicio),Carbon::parse($pausa->fechaFin));
+            }
+
             if(((new GerenciaController)->isOnArray($array_productos, $producto->conjunto_id_conjunto, 1) == -1) && ($this->hasConjunto($producto->conjunto_id_conjunto, $datos_trabajador->conjunto) == true))
             {
                 $array_productos[$j] = array();
@@ -160,12 +155,23 @@ class TrabajadorController extends Controller
                 $array_productos[$j] = $data_trabajador;
                 $j++;
             }
+            if($producto->pivot->fechaComienzo != NULL)
+            {
+                $data_producto = array();
+                $data_producto[0] = $producto->idProducto;
+                $data_producto[1] = $datos_trabajador->idTrabajador;
+                $data_producto[2] = $producto->pivot->fechaComienzo;
+                $productosAyuda[$k] = $data_producto;
+                $k++;
+            }
         }
 
-        print_r($array_productos);
         for($i = 0; $i < count($array_productos); $i++)
             $horasHombre += (new GerenciaController)->calcularHorasHombre(Carbon::parse($array_productos[$i][0]), Carbon::parse($array_productos[$i][2]));
 
+        var_dump($horasHombre);
+        $horasHombre += (new GerenciaController)->productosEnAyuda($productosAyuda);
+        var_dump((new GerenciaController)->productosEnAyuda($productosAyuda));
 
         $toneladas /= 1000;
         $bono = $toneladas*5500;
