@@ -37,13 +37,14 @@ class AsistenciaController extends Controller
       ->with('obra', $user->trabajador->obra);
   }
 
-  public function registrarAsistencia(Request $request)
+  public function registrarAsistencia(MarcarAsistencia $request)
   {
+    /*
     $size = $request->file->getClientSize();
     $file_size = number_format($size / 1048576,2);
 
     print_r($file_size);
-    /*
+    */
     $rut = Rut::parse($request->rut)->format();
     $rut_supervisor = Rut::parse($request->supervisor)->format();
 
@@ -68,7 +69,7 @@ class AsistenciaController extends Controller
         ->withInput()
         ->with('error', 'El trabajador ingresado no posee una obra asignada');
     }
-    */
+
     /*if($request->tipo == Asistencia::SALIDA_TYPE){
       $asistencias = Asistencia::where('trabajador_id_trabajador', $trabajador->idTrabajador)
       ->whereDate('created_at', Carbon::today())->where('tipo', Asistencia::ENTRADA_TYPE)->get();
@@ -79,7 +80,7 @@ class AsistenciaController extends Controller
           ->with('error', 'El trabajador no cuenta con asistencia de entrada hoy');
       }
     }*/
-    /*
+
     if($request->hasFile('file'))
     {
       $asistencias = Asistencia::where('trabajador_id_trabajador', $trabajador->idTrabajador)
@@ -111,7 +112,6 @@ class AsistenciaController extends Controller
       return redirect()->route('home')->with('success', 'Asistencia a ' . $trabajador->nombre . ' registrada con éxito');
 
     }
-    */
   }
 
   public function detallesAsistencia($rut, $id)
