@@ -62,7 +62,11 @@
                         </div>
                         <b>Horas Hombre: </b>
                         <div class="col-sm-10">
-                          <input type="text" readonly id="horasHombre" class="form-control-plaintext">
+                            @if($horasHombre != 0)
+                                <input type="text" readonly id="horasHombre" class="form-control-plaintext" value = "{{$horasHombre}} Horas">
+                            @else
+                                <input type="text" readonly id="horasHombre" class="form-control-plaintext" value = "Aún no cumple 1 hora de trabajo este mes.">
+                            @endif
                         </div>
                     </h4>
                     <h2>
