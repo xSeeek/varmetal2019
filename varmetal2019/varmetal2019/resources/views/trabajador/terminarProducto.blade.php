@@ -48,13 +48,11 @@
 
     if((datos[0] || datos[1]) == "")
     {
-      alert("Faltan Datos");
       return 2;
     }
 
     json_text = JSON.stringify(datos);
 
-    alert(json_text);
     return;
 
     $.ajax({
@@ -101,7 +99,6 @@
           {
             json_text = JSON.stringify(datos);
 
-            alert(json_text);
             return;
 
             $.ajax({
@@ -117,7 +114,6 @@
                     }
                 });
           }else {
-            alert("Faltan Datos");
             return 2;
           }
       })

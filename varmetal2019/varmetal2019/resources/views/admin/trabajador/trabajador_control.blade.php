@@ -55,7 +55,7 @@
                           @if($tiempoPausa != '')
                             <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="{{$tiempoPausa}}">
                           @else
-                            <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="No se han producido Pausas">
+                            <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="0 horas con 0 minutos">
                           @endif
                         </div>
                         <b>Horas en SetUp: </b>
@@ -63,7 +63,7 @@
                           @if($tiempoSetUp != '')
                               <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="{{$tiempoSetUp}}">
                           @else
-                              <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="No se han producido Cambios de Pieza">
+                              <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="0 horas con 0 minutos">
                           @endif
                         </div>
                         <b>Horas Hombre: </b>
@@ -243,7 +243,6 @@
           data: {DATA:json_text},
           url: "{{url('/trabajadorControlEditar')}}",
           success: function(response){
-              alert('Datos Cambiados');
               window.location.href = "{{url('trabajadorControl',[$trabajador->idTrabajador])}}";
           }
       });

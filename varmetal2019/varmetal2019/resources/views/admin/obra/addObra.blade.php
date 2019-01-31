@@ -49,7 +49,10 @@
                 if(response != 1)
                     showMensajeSwall(MSG_ERROR, response);
                 else
+                {
+                    showMensajeSwall(MSG_SUCCESS, response);
                     window.location.href = "{{url('adminObras')}}";
+                  }
             }
         });
     }

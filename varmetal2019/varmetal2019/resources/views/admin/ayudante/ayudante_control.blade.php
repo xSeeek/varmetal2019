@@ -129,7 +129,6 @@
           data: {DATA:json_text},
           url: "{{url('/trabajadorControlEditar')}}",
           success: function(response){
-              alert('Datos Cambiados');
               window.location.href = "{{url('trabajadorControl',[$detalles_ayudante->idAyudante])}}";
           }
       });

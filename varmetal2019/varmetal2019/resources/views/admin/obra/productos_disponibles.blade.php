@@ -62,8 +62,6 @@
             success: function(response){
                 if(response == 1)
                     window.location.reload();
-                else
-                    alert('Error al asignar la pieza');
             }
         });
     }

@@ -10,10 +10,6 @@ class Trabajador extends Model
     public $primaryKey = 'idTrabajador';
     protected $table = 'trabajador';
 
-    public function obraWithAtributes()
-    {
-        return $this->belongsToMany('Varmetal\Obra', 'obra_supervisor', 'trabajador_id_trabajador', 'obras_id_obra')->withPivot('tiempoPerdido', 'tiempoSetUp');
-    }
     public function obra()
     {
         return $this->belongsToMany('Varmetal\Obra', 'obra_supervisor', 'trabajador_id_trabajador', 'obras_id_obra');
@@ -32,7 +28,7 @@ class Trabajador extends Model
     }
     public function conjuntoWithAtributtes()
     {
-        return $this->belongsToMany('Varmetal\ConjuntoProducto', 'trabajadores_conjunto', 'trabajador_id_trabajador', 'conjunto_id_conjunto')->withPivot('fechaComienzo', 'kilosTrabajados', 'pausasRealizadas', 'productosRealizados', 'tiempoEnSetUp', 'tiempoEnSetUp');
+        return $this->belongsToMany('Varmetal\ConjuntoProducto', 'trabajadores_conjunto', 'trabajador_id_trabajador', 'conjunto_id_conjunto')->withPivot('fechaComienzo', 'kilosTrabajados', 'pausasRealizadas', 'productosRealizados');
     }
     public function producto()
     {

@@ -232,7 +232,7 @@ function postChangeData()
         url: "{{url('/emailPausaEliminada')}}",
         success: function(response){
             if(response!='Email Eliminado')
-                showMensajeSwall(MSG_ERROR, response);
+                console.log(response);
       }
     });
   }
@@ -254,7 +254,6 @@ function postChangeData()
           data: {DATA:json_text},
           url: "{{url('/trabajadorDeletePausa')}}",
           success: function(response){
-              alert(response);
               console.log(response);
               sendEmail();
               window.location.href = "{{url('/addPausa', [$producto->idProducto])}}";
@@ -278,7 +277,6 @@ function postChangeData()
           data: {DATA:json_text},
           url: "{{url('/adminDeletePausa')}}",
           success: function(response){
-              alert(response);
               console.log(response);
               window.location.href = "{{url('/adminPausasAlmacenadas', [$producto->idProducto])}}";
           }
@@ -344,7 +342,6 @@ function postChangeData()
                 data: {DATA:json_text},
                 url: "{{url('adminUpdateFechaFinPost')}}",
                 success: function(response){
-                    alert(response);
                     console.log(response);
                     window.location.href = "{{url('/adminDetallesPausaGet', [$pausa->idPausa])}}";
                 }

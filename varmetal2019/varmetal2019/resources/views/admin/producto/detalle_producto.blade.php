@@ -149,7 +149,7 @@
                             @if($tiempoPausa != '')
                                 <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="{{$tiempoPausa}}">
                             @else
-                                <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="No se han solicitado Pausas">
+                                <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="0 horas con 0 minutos">
                             @endif
                         </div>
                         <b>Tiempo en SetUp:</b>
@@ -157,7 +157,7 @@
                           @if($tiempoSetUp != '')
                             <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="{{$tiempoSetUp}}">
                           @else
-                            <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="No se solicitado cambios de Pieza">
+                            <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="0 horas con 0 minutos">
                           @endif
                         </div>
                         @if($producto->estado == 1 && $producto->terminado == false)

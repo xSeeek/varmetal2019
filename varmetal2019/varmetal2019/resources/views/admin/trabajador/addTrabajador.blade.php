@@ -135,9 +135,7 @@ function emailRegistrado()
             data: $('#nuevoTrabajadorForm').serialize(),
             url: "{{url('/enviarEmailRegistrado')}}",
             success: function(response){
-                if(response!='Email enviado registrado')
-                    showMensajeSwall(MSG_ERROR, response);
-                else
+                if(response=='Email enviado registrado')
                   window.location.href = "{{url('menuTrabajador')}}";
 
           }
@@ -159,9 +157,12 @@ function emailRegistrado()
             url: "{{url('trabajadorControl/addTrabajador')}}",
             success: function(response){
                 if(response != 1)
-                    showMensajeBanner(MSG_ERROR, response);
+                    showMensajeSwall(MSG_ERROR, response);
                 else
+                {
+                  showMensajeSwall(MSG_SUCCESS, response);
                   emailRegistrado();
+                }
             }
         });
     }

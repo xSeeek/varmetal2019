@@ -325,7 +325,6 @@ function textAreaAdjust(o)
               success: function(response){
                 if(response!='Email enviado')
                 {
-                    alert(response);
                     console.log(response);
                 }
             }
@@ -351,11 +350,11 @@ function savePausa()
           success: function(response){
               if(response!='Datos almacenados')
               {
-                  alert(response);
                   console.log(response);
               }
               else
               sendEmail();
+              showMensajeSwall(MSG_SUCCESS, "Pausa Agregada");
               window.location.href="{{url('/addPausa', [$producto->idProducto])}}";
           }
       });

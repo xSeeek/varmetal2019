@@ -214,22 +214,22 @@ function sendEmail()
                     success: function(response){
                         if(response != 1)
                             showMensajeSwall(MSG_ERROR, response);
-                        }
+                            window.location.reload();
                     });
                     if({{$producto->cantProducto}}%5==0)
                     {
                       sendEmailProductos();
-                      window.location.href = "{{url('/detalleProducto', [$producto->idProducto])}}";
+                      window.location.reload();
                     }
                     else
                     {
                       if(result.value>5)
                       {
                         sendEmailProductos();
-                        window.location.href = "{{url('/detalleProducto', [$producto->idProducto])}}";
+                        window.location.reload();
                       }else{
                         if(result.value<5){
-                          window.location.href = "{{url('/detalleProducto', [$producto->idProducto])}}";
+                          window.location.reload();
                         }
                       }
                     }
