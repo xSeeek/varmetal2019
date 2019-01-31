@@ -109,14 +109,21 @@ class ProductoController extends Controller
         $usuarioActual= Auth::user();
         $producto = Producto::find($id);
         $trabajadores = $producto->trabajadorWithAtributtes;
+        $trabajador = $usuarioActual->trabajador;
+        $cont = 0;
 
         $cantidadProducida = 0;
         foreach($trabajadores as $trabajador)
             $cantidadProducida += $trabajador->pivot->productosRealizados;
 
-        $obra = $producto->obra;
+        $pausas_almacenadas = $producto->pausa;
+        foreach ($pausas_almacenadas as $key => $pausa) {
+            if($pausa->fechaFin == NULL)
+              if($pausa->trabajador_id_trabajador == $trabajador->idTrabajador)
+                $cont++;
+        }
 
-        $trabajador = $usuarioActual->trabajador;
+        $obra = $producto->obra;
 
         if($trabajador->tipo=="Operador")
         {
@@ -126,6 +133,7 @@ class ProductoController extends Controller
                   ->with('cantidadProducida', $cantidadProducida)
                   ->with('obra', $obra)
                   ->with('usuarioActual',$usuarioActual)
+                  ->with('cont', $cont)
                   ->with('trabajador', $trabajador);
         }
         if($trabajador->tipo=="Soldador")

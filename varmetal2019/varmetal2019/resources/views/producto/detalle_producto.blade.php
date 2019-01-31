@@ -59,7 +59,11 @@
                                       <br>
                                           Marcar como terminado:
                                           <br>
-                                          <a class="btn btn-warning btn-lg" id="stopButton" role="button" onclick="markAsFinished({{$producto->idProducto}})">Terminar</a>
+                                          @if($cont==0)
+                                            <a class="btn btn-warning btn-lg" id="stopButton" role="button" onclick="markAsFinished({{$producto->idProducto}})">Terminar</a>
+                                          @else
+                                            <a class="btn btn-warning btn-lg" id="stopButton" role="button">Estas en pausa</a>
+                                          @endif
                                       </h5>
                                   @endif
                               @else
@@ -75,7 +79,11 @@
                     </h5>
                 </div>
                 @if($cantidadProducida != $producto->cantProducto)
+                      @if($cont==0)
                         <a class="btn btn-outline-primary btn-lg" role="button" onclick="actualizarCantidad({{$producto->idProducto}})"><b>Actualizar cantidad producida</b></a>
+                      @else
+                        <a class="btn btn-outline-primary btn-lg" role="button"><b>Estas en pausa</b></a>
+                      @endif
                 @endif
             </div>
         </div>
