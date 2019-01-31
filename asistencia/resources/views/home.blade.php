@@ -26,7 +26,7 @@
             </div>
 
             <div class="form-group">
-              {{Form::file('file', array('class' => 'form-control-file', 'id' => 'img_select', 'accept' => 'image/*', 'required', 'capture' => 'camera'))}}
+              {{Form::file('image', array('class' => 'form-control-file', 'id' => 'img_select', 'accept' => 'image/*', 'required', 'capture' => 'camera'))}}
 
             </div>
 

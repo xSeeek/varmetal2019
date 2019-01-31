@@ -40,7 +40,7 @@ class AsistenciaController extends Controller
   public function registrarAsistencia(MarcarAsistencia $request)
   {
     /*
-    $size = $request->file->getClientSize();
+    $size = $request->image->getClientSize();
     $file_size = number_format($size / 1048576,2);
 
     print_r($file_size);
@@ -81,7 +81,7 @@ class AsistenciaController extends Controller
       }
     }*/
 
-    if($request->hasFile('file'))
+    if($request->hasFile('image'))
     {
       $asistencias = Asistencia::where('trabajador_id_trabajador', $trabajador->idTrabajador)
       ->whereDate('created_at', Carbon::today())->where('tipo', $request->tipo)->get();
@@ -96,7 +96,7 @@ class AsistenciaController extends Controller
 
       $dt = Carbon::now();
 
-      $file = $request->file('file');
+      $file = $request->file('image');
 
       $file_name = $dt->format('d-m-Y') . '-' . $request->tipo . '.' . $file->getClientOriginalExtension();
 
