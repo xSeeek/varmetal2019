@@ -16,7 +16,7 @@ class MarcarAsistencia extends FormRequest
   {
     return
     [
-      'rut'=>'required|exists:trabajador,rut',
+      'rut'=>'required|cl_rut|exists:trabajador,rut',
       'file'=>'required|image|mimes:jpeg,bmp,png|max:100000'
     ];
   }

@@ -8,13 +8,19 @@
         <div class="col-sm-5">
           <h1 class="display-4">Bienvenido</h1>
           <p class="lead">Si desea marcar asistencia ingrese un rut</p>
-
+          @if($errors->all() != null)
+            <div class="alert alert-danger" role="alert">
+               @foreach ($errors->all() as $error)
+                <div>{{ $error }}</div>
+              @endforeach
+            </div>
+          @endif
           {{ Form::open( array('route' => 'registrarAsistencia', 'files' => true, 'id' => 'form_registrar_asistencia')) }}
             <div class="form-group">
               {{Form::hidden('supervisor', Auth::user()->trabajador->rut)}}
               {{Form::text('rut', null, ['id' => 'rut', 'class' => 'form-control', 'placeholder' => 'Ingrese su rut', 'required'])}}
 
-
+            </div>
             <div class="form-group">
               {{Form::select('tipo', ['Entrada'=>'Entrada', 'Salida'=>'Salida'], null, ['class' => 'form-control'])}}
             </div>
@@ -27,15 +33,7 @@
             <div class="form-group">
               {{ Form::submit('Marcar Asistencia', array('class' => 'btn btn-success', 'id'=>'button_submit')) }}
             </div>
-
-            @if($errors->has())
-               @foreach ($errors->all() as $error)
-                <div>{{ $error }}</div>
-              @endforeach
-            @endif
-
           {{ Form::close() }}
-
           <div class="form-group">
             <img id="img_show" width="100%" class="img-thumbnail" src="{{ Storage::disk('asistencia')->url('default.jpeg') }}"/>
           </div>
