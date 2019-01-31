@@ -13,12 +13,7 @@
             <div class="form-group">
               {{Form::hidden('supervisor', Auth::user()->trabajador->rut)}}
               {{Form::text('rut', null, ['id' => 'rut', 'class' => 'form-control', 'placeholder' => 'Ingrese su rut', 'required'])}}
-              @if ($errors->has('rut'))
-                <span class="invalid-feedback" role="alert">
-                  <strong>{{ $errors->first('rut') }}</strong>
-                </span>
-              @endif
-            </div>
+
 
             <div class="form-group">
               {{Form::select('tipo', ['Entrada'=>'Entrada', 'Salida'=>'Salida'], null, ['class' => 'form-control'])}}
@@ -26,16 +21,18 @@
 
             <div class="form-group">
               {{Form::file('file', array('class' => 'form-control-file', 'id' => 'img_select', 'accept' => 'image/*', 'required', 'capture' => 'camera'))}}
-              @if ($errors->has('file'))
-                <span class="invalid-feedback" role="alert">
-                  <strong>{{ $errors->first('file') }}</strong>
-                </span>
-              @endif
+
             </div>
 
             <div class="form-group">
               {{ Form::submit('Marcar Asistencia', array('class' => 'btn btn-success', 'id'=>'button_submit')) }}
             </div>
+
+            @if($errors->has())
+               @foreach ($errors->all() as $error)
+                <div>{{ $error }}</div>
+              @endforeach
+            @endif
 
           {{ Form::close() }}
 
