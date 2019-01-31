@@ -137,7 +137,6 @@ function emailRegistrado()
             success: function(response){
                 if(response=='Email enviado registrado')
                   window.location.href = "{{url('menuTrabajador')}}";
-
           }
         });
     }
@@ -160,7 +159,7 @@ function emailRegistrado()
                     showMensajeSwall(MSG_ERROR, response);
                 else
                 {
-                  showMensajeSwall(MSG_SUCCESS, response);
+                  showMensajeSwall(MSG_SUCCESS, "Usuario creado con éxito.");
                   emailRegistrado();
                 }
             }

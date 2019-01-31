@@ -311,22 +311,32 @@ class TrabajadorController extends Controller
         $productos = array();
 
         $datos_trabajador = $usuarioActual->trabajador;
-        $conjunto->fechaInicio = $date->now();
-        $conjunto->save();
-        $datos_trabajador->conjunto()->attach($conjunto->idConjunto);
-        $data_conjunto = $datos_trabajador->conjuntoWithAtributtes()->where('conjunto_id_conjunto', '=', $conjunto->idConjunto)->get()->first();
-        $data_conjunto->pivot->fechaComienzo = $date->now();
-        $data_conjunto->pivot->save();
 
-        foreach($data as $idProductos)
+        if(is_array($data))
         {
-            $producto = Producto::find($idProductos);
-            $producto->conjunto_id_conjunto = $conjunto->idConjunto;
+            $conjunto->fechaInicio = $date->now();
+            $conjunto->save();
+            $datos_trabajador->conjunto()->attach($conjunto->idConjunto);
+            $data_conjunto = $datos_trabajador->conjuntoWithAtributtes()->where('conjunto_id_conjunto', '=', $conjunto->idConjunto)->get()->first();
+            $data_conjunto->pivot->fechaComienzo = $date->now();
+            $data_conjunto->pivot->save();
 
-            $productos = $datos_trabajador->productoWithAtributes()->where('producto_id_producto', '=', $idProductos)->get()->first();
+            foreach($data as $idProductos)
+            {
+                $producto = Producto::find($idProductos);
+                $producto->conjunto_id_conjunto = $conjunto->idConjunto;
+
+                $productos = $datos_trabajador->productoWithAtributes()->where('producto_id_producto', '=', $idProductos)->get()->first();
+                $productos->pivot->fechaComienzo = $date->now();
+                $productos->pivot->save();
+                $producto->save();
+            }
+        }
+        else
+        {
+            $productos = $datos_trabajador->productoWithAtributes()->where('producto_id_producto', '=', $data)->get()->first();
             $productos->pivot->fechaComienzo = $date->now();
             $productos->pivot->save();
-            $producto->save();
         }
 
         return 1;
