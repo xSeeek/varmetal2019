@@ -55,23 +55,21 @@ class GerenciaController extends Controller
                     $kilosTerminados += $trabajador->pivot->kilosTrabajados;
                     if(($this->isOnArray($array_trabajadores, $producto->conjunto_id_conjunto, 3) == -1) && ($producto->conjunto->fechaFin != NULL))
                     {
-                        {
-                            $array_trabajadores[$j] = array();
-                            $data_trabajador = array();
-                            $data_trabajador[0] = $trabajador->idTrabajador;
-                            $data_trabajador[1] = $producto->conjunto->fechaInicio;
-                            $data_trabajador[2] = $trabajador->nombre;
-                            $data_trabajador[3] = $producto->conjunto_id_conjunto;
+                        $array_trabajadores[$j] = array();
+                        $data_trabajador = array();
+                        $data_trabajador[0] = $trabajador->idTrabajador;
+                        $data_trabajador[1] = $producto->conjunto->fechaInicio;
+                        $data_trabajador[2] = $trabajador->nombre;
+                        $data_trabajador[3] = $producto->conjunto_id_conjunto;
 
-                            $fechaFin = $producto->conjunto->fechaFin;
-                            if($fechaFin == NULL)
-                                $data_trabajador[5] = $carbon->now();
-                            else
-                                $data_trabajador[5] = $fechaFin;
+                        $fechaFin = $producto->conjunto->fechaFin;
+                        if($fechaFin == NULL)
+                            $data_trabajador[5] = $carbon->now();
+                        else
+                            $data_trabajador[5] = $fechaFin;
 
-                            $array_trabajadores[$j] = $data_trabajador;
-                            $j++;
-                        }
+                        $array_trabajadores[$j] = $data_trabajador;
+                        $j++;
                     }
                     if($trabajador->pivot->fechaComienzo != NULL)
                     {
@@ -161,7 +159,7 @@ class GerenciaController extends Controller
                 ->with('obras', $obras_reporte);
     }
 
-    private function isOnArray($array, $toFind, $index)
+    public function isOnArray($array, $toFind, $index)
     {
         if(count($array) != 0)
             for($i = 0; $i < count($array); $i++)

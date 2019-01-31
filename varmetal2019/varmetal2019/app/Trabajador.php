@@ -41,7 +41,7 @@ class Trabajador extends Model
     public function productoIncompleto()
     {
         $instance = $this->belongsToMany('Varmetal\Producto', 'productos_trabajador', 'trabajador_id_trabajador', 'producto_id_producto');
-        $instance->getQuery()->where('estado', '<>', 1);
+        $instance->getQuery()->where('terminado', 'false');
         return $instance;
     }
     public function productosCompletosMesActual()

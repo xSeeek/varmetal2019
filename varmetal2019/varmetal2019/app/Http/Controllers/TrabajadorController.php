@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Varmetal\Ayudante;
 use Varmetal\ConjuntoProducto;
+use Varmetal\Http\Controllers\GerenciaController;
 
 class TrabajadorController extends Controller
 {
@@ -108,7 +109,14 @@ class TrabajadorController extends Controller
         $toneladas = 0;
         $tiempoPausa = 0;
         $tiempoSetUp = 0;
+        $horasHombre = 0;
         $date = new Carbon();
+        $productos_registrados = array();
+        $fechaConjunto = NULL;
+        $productosAuxiliar = array();
+        $j = 0;
+        $k = 0;
+        $array_productos = array();
 
         $productos_trabajador = $datos_trabajador->productoWithAtributes;
         foreach($productos_trabajador as $producto)
@@ -136,7 +144,29 @@ class TrabajadorController extends Controller
                   }
                 }
               }
+            if(((new GerenciaController)->isOnArray($array_productos, $producto->conjunto_id_conjunto, 1) == -1) && ($this->hasConjunto($producto->conjunto_id_conjunto, $datos_trabajador->conjunto) == true))
+            {
+                $array_productos[$j] = array();
+                $data_trabajador = array();
+                $data_trabajador[0] = $producto->conjunto->fechaInicio;
+                $data_trabajador[1] = $producto->conjunto_id_conjunto;
+
+                $fechaFin = $producto->conjunto->fechaFin;
+                if($fechaFin == NULL)
+                    $data_trabajador[2] = $date->now();
+                else
+                    $data_trabajador[2] = $fechaFin;
+
+                $array_productos[$j] = $data_trabajador;
+                $j++;
+            }
         }
+
+        print_r($array_productos);
+        for($i = 0; $i < count($array_productos); $i++)
+            $horasHombre += (new GerenciaController)->calcularHorasHombre(Carbon::parse($array_productos[$i][0]), Carbon::parse($array_productos[$i][2]));
+
+
         $toneladas /= 1000;
         $bono = $toneladas*5500;
 
@@ -158,7 +188,17 @@ class TrabajadorController extends Controller
                                 ->with('sueldo',$sueldo)
                                 ->with('tiempoPausa', $tiempoPausa)
                                 ->with('tiempoSetUp', $tiempoSetUp)
+                                ->with('horasHombre', $horasHombre)
                                 ->with('productosCompletos', $productosCompletos);
+    }
+
+    private function hasConjunto($idConjunto, $array)
+    {
+        if($array != NULL)
+            foreach($array as $conjunto)
+                if($conjunto->idConjunto == $idConjunto)
+                    return true;
+        return false;
     }
 
     public function addTrabajador()

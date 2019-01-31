@@ -72,7 +72,7 @@
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                         <h6 class="dropdown-header">Administración de OT</h6>
                                         <a class="dropdown-item my-2 my-sm-0" href="{{url('adminObras')}}" role="button" style="cursor: pointer;">Ingresar</a>
-                                        <a class="dropdown-item my-2 my-sm-0" href="{{url('import', [Varmetal\CSVData::OT_TABLE])}}" role="button" style="cursor: pointer;">Importar CSV</a>
+                                        <a class="dropdown-item my-2 my-sm-0" href="{{url('import', [Varmetal\CSVData::OT_TABLE])}}" role="button" style="cursor: pointer; display:none">Importar CSV</a>
                                     </div>
                                 </div>
                             </td>
