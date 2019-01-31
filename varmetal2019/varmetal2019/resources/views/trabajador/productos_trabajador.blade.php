@@ -80,8 +80,12 @@
                                                         <td scope="col">Sin prioridad</td>
                                                         @break
                                                 @endswitch
-                                                @if($producto->pivot->fechaComienzo != NULL)
-                                                    <td><a class="btn btn-outline-success my-2 my-sm-0" href="{{url('/detalleProducto', [$producto->idProducto])}}" role="button" style="cursor: pointer;">Ver Detalles</a></td>
+                                                @if($producto->pivot->fechaComienzo != NULL || $producto->conjunto_id_conjunto != NULL)
+                                                    @if($producto->pivot->fechaComienzo == NULL)
+                                                        <td><a class="btn btn-outline-success my-2 my-sm-0" onclick="updateDateStarted({{$producto->idProducto}}, '{{url('/detalleProducto', [$producto->idProducto])}}')" role="button" style="cursor: pointer;">Iniciar Producción</a></td>
+                                                    @else
+                                                        <td><a class="btn btn-outline-success my-2 my-sm-0" href="{{url('/detalleProducto', [$producto->idProducto])}}" role="button" style="cursor: pointer;">Ver Detalles</a></td>
+                                                    @endif
                                                 @else
                                                     <td><a class="btn btn-outline-warning my-2 my-sm-0" id="pickButton{{$producto->idProducto}}" onclick="updateDatos({{$producto->idProducto}})" role="button" style="cursor: pointer;">Seleccionar</a></td>
                                                 @endif
@@ -206,6 +210,35 @@
                     url: "{{url('/trabajadorControl/setStartTime')}}",
                     success: function(response){
                         window.location.reload();
+                    }
+                });
+            }
+        });
+    }
+
+    function updateDateStarted(idProducto, ruta)
+    {
+        swal({
+        title: "Confirmación",
+        text: "Presione Si para iniciar la producción de la pieza:",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#6A9944",
+        confirmButtonText: "Si",
+        cancelButtonText: "No",
+        cancelButtonColor: "#d71e1e",
+        }).then((result) =>
+        {
+            if (result.value) {
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    type: "POST",
+                    data: {DATA:idProducto},
+                    url: "{{url('/trabajadorControl/setStartTime')}}",
+                    success: function(response){
+                        window.location.href = ruta;
                     }
                 });
             }

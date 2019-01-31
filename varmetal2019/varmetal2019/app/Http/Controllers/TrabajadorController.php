@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Varmetal\Ayudante;
 use Varmetal\ConjuntoProducto;
+use Varmetal\Http\Controllers\GerenciaController;
 
 class TrabajadorController extends Controller
 {
@@ -108,7 +109,15 @@ class TrabajadorController extends Controller
         $toneladas = 0;
         $tiempoPausa = 0;
         $tiempoSetUp = 0;
+        $horasHombre = 0;
         $date = new Carbon();
+        $productos_registrados = array();
+        $fechaConjunto = NULL;
+        $productosAuxiliar = array();
+        $j = 0;
+        $k = 0;
+        $array_productos = array();
+        $productosAyuda = array();
 
         $productos_trabajador = $datos_trabajador->productoWithAtributes;
         foreach($productos_trabajador as $producto)
@@ -119,24 +128,52 @@ class TrabajadorController extends Controller
             if($producto->pivot->kilosTrabajados!=0)
               $toneladas += ($producto->tipo->factorKilo*$producto->pivot->kilosTrabajados);
 
-              if($producto->pausa !=NULL)
-              {
-                $pausas_almacenadas = $producto->pausa;
-
-                foreach ($pausas_almacenadas as $key => $pausa)
+            if((Carbon::parse($producto->fechaFin)->format('m')) == $date->now()->format('m'))
+            {
+                if($producto->pausa !=NULL)
                 {
-                  if($pausa->fechaFin!=NULL)
-                  {
-                    if($pausa->motivo=='Cambio de pieza')
-                    {
-                      $tiempoSetUp += (new PausaController)->calcularHorasHombre(Carbon::parse($pausa->fechaInicio),Carbon::parse($pausa->fechaFin));
-                    }
-                    else
-                      $tiempoPausa += (new PausaController)->calcularHorasHombre(Carbon::parse($pausa->fechaInicio),Carbon::parse($pausa->fechaFin));
-                  }
+                    $pausas_almacenadas = $producto->pausa;
+                    foreach ($pausas_almacenadas as $key => $pausa)
+                        if($pausa->fechaFin!=NULL)
+                            if($pausa->motivo=='Cambio de pieza')
+                                $tiempoSetUp += (new PausaController)->calcularHorasHombre(Carbon::parse($pausa->fechaInicio),Carbon::parse($pausa->fechaFin));
+                            else
+                                $tiempoPausa += (new PausaController)->calcularHorasHombre(Carbon::parse($pausa->fechaInicio),Carbon::parse($pausa->fechaFin));
                 }
-              }
+
+                if(((new GerenciaController)->isOnArray($array_productos, $producto->conjunto_id_conjunto, 1) == -1) && ($this->hasConjunto($producto->conjunto_id_conjunto, $datos_trabajador->conjunto) == true))
+                {
+                    $array_productos[$j] = array();
+                    $data_trabajador = array();
+                    $data_trabajador[0] = $producto->conjunto->fechaInicio;
+                    $data_trabajador[1] = $producto->conjunto_id_conjunto;
+
+                    $fechaFin = $producto->conjunto->fechaFin;
+                    if($fechaFin == NULL)
+                        $data_trabajador[2] = $date->now();
+                    else
+                        $data_trabajador[2] = $fechaFin;
+
+                    $array_productos[$j] = $data_trabajador;
+                    $j++;
+                }
+                if($producto->pivot->fechaComienzo != NULL)
+                {
+                    $data_producto = array();
+                    $data_producto[0] = $producto->idProducto;
+                    $data_producto[1] = $datos_trabajador->idTrabajador;
+                    $data_producto[2] = $producto->pivot->fechaComienzo;
+                    $productosAyuda[$k] = $data_producto;
+                    $k++;
+                }
+            }
         }
+
+        for($i = 0; $i < count($array_productos); $i++)
+            $horasHombre += (new GerenciaController)->calcularHorasHombre(Carbon::parse($array_productos[$i][0]), Carbon::parse($array_productos[$i][2]));
+
+        $horasHombre += (new GerenciaController)->productosEnAyuda($productosAyuda);
+
         $toneladas /= 1000;
         $bono = $toneladas*5500;
 
@@ -158,7 +195,17 @@ class TrabajadorController extends Controller
                                 ->with('sueldo',$sueldo)
                                 ->with('tiempoPausa', $tiempoPausa)
                                 ->with('tiempoSetUp', $tiempoSetUp)
+                                ->with('horasHombre', $horasHombre)
                                 ->with('productosCompletos', $productosCompletos);
+    }
+
+    private function hasConjunto($idConjunto, $array)
+    {
+        if($array != NULL)
+            foreach($array as $conjunto)
+                if($conjunto->idConjunto == $idConjunto)
+                    return true;
+        return false;
     }
 
     public function addTrabajador()
@@ -311,22 +358,32 @@ class TrabajadorController extends Controller
         $productos = array();
 
         $datos_trabajador = $usuarioActual->trabajador;
-        $conjunto->fechaInicio = $date->now();
-        $conjunto->save();
-        $datos_trabajador->conjunto()->attach($conjunto->idConjunto);
-        $data_conjunto = $datos_trabajador->conjuntoWithAtributtes()->where('conjunto_id_conjunto', '=', $conjunto->idConjunto)->get()->first();
-        $data_conjunto->pivot->fechaComienzo = $date->now();
-        $data_conjunto->pivot->save();
 
-        foreach($data as $idProductos)
+        if(is_array($data))
         {
-            $producto = Producto::find($idProductos);
-            $producto->conjunto_id_conjunto = $conjunto->idConjunto;
+            $conjunto->fechaInicio = $date->now();
+            $conjunto->save();
+            $datos_trabajador->conjunto()->attach($conjunto->idConjunto);
+            $data_conjunto = $datos_trabajador->conjuntoWithAtributtes()->where('conjunto_id_conjunto', '=', $conjunto->idConjunto)->get()->first();
+            $data_conjunto->pivot->fechaComienzo = $date->now();
+            $data_conjunto->pivot->save();
 
-            $productos = $datos_trabajador->productoWithAtributes()->where('producto_id_producto', '=', $idProductos)->get()->first();
+            foreach($data as $idProductos)
+            {
+                $producto = Producto::find($idProductos);
+                $producto->conjunto_id_conjunto = $conjunto->idConjunto;
+
+                $productos = $datos_trabajador->productoWithAtributes()->where('producto_id_producto', '=', $idProductos)->get()->first();
+                $productos->pivot->fechaComienzo = $date->now();
+                $productos->pivot->save();
+                $producto->save();
+            }
+        }
+        else
+        {
+            $productos = $datos_trabajador->productoWithAtributes()->where('producto_id_producto', '=', $data)->get()->first();
             $productos->pivot->fechaComienzo = $date->now();
             $productos->pivot->save();
-            $producto->save();
         }
 
         return 1;

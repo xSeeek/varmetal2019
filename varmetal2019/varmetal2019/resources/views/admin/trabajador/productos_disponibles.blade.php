@@ -15,7 +15,7 @@
                             <thead>
                                 <tr>
                                     <th>Opción</th>
-                                    <th>Nombre</th>
+                                    <th>Código</th>
                                     <th>Prioridad</th>
                                     <th>Estado</th>
                                     <th>Cantidad</th>
@@ -26,7 +26,7 @@
                                 @foreach($productos_almacenados as $key => $producto)
                                 <tr id="id_trabajador{{ $producto->idProducto }}">
                                     <td scope="col"><button class="btn btn-success" onclick="asignarTrabajo({{$idTrabajador}}, {{$producto->idProducto}})"><i class="far fa-check-square success"></i></button></td>
-                                    <td scope="col">{{ $producto->nombre }}</td>
+                                    <td scope="col">{{ $producto->codigo }}</td>
                                     @switch($producto->prioridad)
                                         @case(1)
                                             <td scope="col">Baja</td>

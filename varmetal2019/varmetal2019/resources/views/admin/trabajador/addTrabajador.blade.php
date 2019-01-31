@@ -28,7 +28,7 @@
                             <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Contraseña') }}</label>
                             <div class="col-md-6">
                                 <div class="input-group mb-2">
-                                    <input class="form-control" id="password" type="text" aria-describedby="password" placeholder="Contraseña del Trabajador" name="password" readonly>
+                                    <input class="form-control" id="password" type="text" aria-describedby="password" placeholder="Contraseña del Trabajador" name="password">
                                     <div class="input-group-append">
                                         <button class="btn btn-primary" onclick="generarPassword()" type="button">Generar</button>
                                     </div>
@@ -137,7 +137,6 @@ function emailRegistrado()
             success: function(response){
                 if(response=='Email enviado registrado')
                   window.location.href = "{{url('menuTrabajador')}}";
-
           }
         });
     }
@@ -160,7 +159,7 @@ function emailRegistrado()
                     showMensajeSwall(MSG_ERROR, response);
                 else
                 {
-                  showMensajeSwall(MSG_SUCCESS, response);
+                  showMensajeSwall(MSG_SUCCESS, "Usuario creado con éxito.");
                   emailRegistrado();
                 }
             }

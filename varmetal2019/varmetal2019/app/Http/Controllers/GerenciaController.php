@@ -24,6 +24,8 @@ class GerenciaController extends Controller
         $diffHoras = 0;
         $productos_registrados = array();
         $fechaConjunto = NULL;
+        $productosAuxiliar = array();
+        $k = 0;
 
         $obras_reporte = array();
         $index = 0;
@@ -51,33 +53,32 @@ class GerenciaController extends Controller
                 foreach($trabajadores as $trabajador)
                 {
                     $kilosTerminados += $trabajador->pivot->kilosTrabajados;
-                    if(($this->isOnArray($array_trabajadores, $producto->idProducto, 3) == -1) && ($producto->conjunto->fechaFin != NULL))
+                    if(($this->isOnArray($array_trabajadores, $producto->conjunto_id_conjunto, 3) == -1) && ($producto->conjunto->fechaFin != NULL))
                     {
-                        if($this->isOnArray($array_trabajadores, $producto->conjunto_id_conjunto, 4) == -1)
-                        {
-                            $array_trabajadores[$j] = array();
-                            $data_trabajador = array();
-                            $data_trabajador[0] = $trabajador->idTrabajador;
-                            $data_trabajador[1] = $producto->conjunto->fechaInicio;
-                            $data_trabajador[2] = $trabajador->nombre;
-                            $data_trabajador[3] = $producto->idProducto;
-                            $data_trabajador[4] = $producto->conjunto_id_conjunto;
+                        $array_trabajadores[$j] = array();
+                        $data_trabajador = array();
+                        $data_trabajador[0] = $trabajador->idTrabajador;
+                        $data_trabajador[1] = $producto->conjunto->fechaInicio;
+                        $data_trabajador[2] = $trabajador->nombre;
+                        $data_trabajador[3] = $producto->conjunto_id_conjunto;
 
-                            $fechaFin = $producto->conjunto->fechaFin;
-                            if($fechaFin == NULL)
-                                $data_trabajador[5] = $carbon->now();
-                            else
-                                $data_trabajador[5] = $fechaFin;
+                        $fechaFin = $producto->conjunto->fechaFin;
+                        if($fechaFin == NULL)
+                            $data_trabajador[5] = $carbon->now();
+                        else
+                            $data_trabajador[5] = $fechaFin;
 
-                            $array_trabajadores[$j] = $data_trabajador;
-                            $j++;
-                        }
+                        $array_trabajadores[$j] = $data_trabajador;
+                        $j++;
                     }
-                    else
+                    if($trabajador->pivot->fechaComienzo != NULL)
                     {
-                        $index_trabajador = $this->isOnArray($array_trabajadores, $trabajador->idTrabajador, 0);
-                        if(($trabajador->pivot->fechaComienzo != NULL) && ($array_trabajadores[$index_trabajador][1] > $trabajador->pivot->fechaComienzo))
-                            $array_trabajadores[$index_trabajador][1] = $trabajador->pivot->fechaComienzo;
+                        $data_trabajador = array();
+                        $data_trabajador[0] = $producto->idProducto;
+                        $data_trabajador[1] = $trabajador->idTrabajador;
+                        $data_trabajador[2] = $trabajador->pivot->fechaComienzo;
+                        $productosAuxiliar[$k] = $data_trabajador;
+                        $k++;
                     }
                 }
 
@@ -103,6 +104,8 @@ class GerenciaController extends Controller
                 /* Acumular peso en kilogramos de los productos */
                 $kilosObra += ($producto->pesoKg * $producto->cantProducto);
             }
+
+            $diffHoras += $this->productosEnAyuda($productosAuxiliar);
 
             $tiempoPausa = (new TrabajadorController)->convertToHoursMins($tiempoPausa);
             $tiempoSetUp = (new TrabajadorController)->convertToHoursMins($tiempoSetUp);
@@ -140,13 +143,37 @@ class GerenciaController extends Controller
                 ->with('obras', $obras_reporte);
     }
 
-    private function isOnArray($array, $toFind, $index)
+    public function isOnArray($array, $toFind, $index)
     {
         if(count($array) != 0)
             for($i = 0; $i < count($array); $i++)
                 if($array[$i][$index] == $toFind)
                     return $i;
         return -1;
+    }
+
+    public function productosEnAyuda($productosAuxiliar)
+    {
+        $diffHoras = 0;
+        if($productosAuxiliar != NULL)
+            for($i = 0; $i < count($productosAuxiliar); $i++)
+            {
+                $cont = 0;
+                $trabajador = Trabajador::find($productosAuxiliar[$i][1]);
+                $producto = Producto::find($productosAuxiliar[$i][0]);
+                foreach($trabajador->conjunto as $conjunto)
+                    if($conjunto->idConjunto == $producto->conjunto_id_conjunto)
+                        $cont++;
+                if($cont == 0)
+                {
+                    if($producto->fechaFin != NULL)
+                        $fechaFin = $producto->fechaFin;
+                    else
+                        $fechaFin = $date->now();
+                    $diffHoras += $this->calcularHorasHombre(Carbon::parse($productosAuxiliar[$i][2]), Carbon::parse($fechaFin));
+                }
+            }
+        return $diffHoras;
     }
 
     public function calcularHorasHombre($fechaInicio, $fechaFin)
@@ -159,7 +186,7 @@ class GerenciaController extends Controller
         $inDayStart = Carbon::parse($fechaInicio->format('Y-m-d'));
         $inDayEnd = Carbon::parse($fechaFin->format('Y-m-d'));
 
-        if($inDayEnd->diffInHours($inDayStart) <= 24)
+        if($inDayEnd->diffInHours($inDayStart) == 0)
             return $fechaFin->diffInHours($fechaInicio);
         else
             $startHour = $this->getTimeStart($fechaInicio);
