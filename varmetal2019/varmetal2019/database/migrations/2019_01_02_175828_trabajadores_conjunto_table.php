@@ -17,9 +17,6 @@ class TrabajadoresConjuntoTable extends Migration
             $table->integer('trabajador_id_trabajador')->unsigned();
             $table->integer('conjunto_id_conjunto')->unsigned();
             $table->timestamp('fechaComienzo')->nullable();
-            $table->float('kilosTrabajados')->default(0);
-            $table->integer('productosRealizados')->default(0);
-            $table->integer('pausasRealizadas')->default(0);
 
             $table->foreign('trabajador_id_trabajador')->references('idTrabajador')->on('trabajador')->onDelete('cascade');
             $table->foreign('conjunto_id_conjunto')->references('idConjunto')->on('conjunto_producto')->onDelete('cascade');
