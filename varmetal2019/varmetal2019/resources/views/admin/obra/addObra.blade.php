@@ -50,11 +50,7 @@
                     showMensajeSwall(MSG_ERROR, response);
                 else
                 {
-<<<<<<< HEAD
                     showMensajeSwall(MSG_SUCCESS, "Se agrego Correctamente");
-=======
-                    showMensajeSwall(MSG_SUCCESS, "Se agrego la OT con éxito.");
->>>>>>> ec2d7e791788fe63aef84aa36a04b304ccde18cc
                     window.location.href = "{{url('adminObras')}}";
                 }
             }
