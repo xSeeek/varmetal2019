@@ -220,28 +220,18 @@ function sendEmail()
                     type: "POST",
                     data: {DATA:json_text},
                     url: "{{url('producto/actualizarCantidad')}}",
-                    success: function(response){
+                    success: function(response)
+                    {
                         if(response != 1)
                             showMensajeSwall(MSG_ERROR, response);
-                        }
+                    }
                     });
                     if({{$producto->cantProducto}}%5==0)
-                    {
-                      sendEmailProductos();
-                      window.location.href = "{{url('/detalleProducto', [$producto->idProducto])}}";
-                    }
-                    else
-                    {
-                      if(result.value>5)
-                      {
                         sendEmailProductos();
-                        window.location.href = "{{url('/detalleProducto', [$producto->idProducto])}}";
-                      }else{
-                        if(result.value<5){
-                          window.location.href = "{{url('/detalleProducto', [$producto->idProducto])}}";
-                        }
-                      }
-                    }
+                    else
+                        if(result.value>5)
+                            sendEmailProductos();
+                    window.location.reload();
             }
             else if(result.value <= 0)
                 showMensajeSwall(MSG_ERROR, 'La cantidad ingresada no es válida.');
