@@ -19,6 +19,6 @@ class ConjuntoProducto extends Model
     }
     public function trabajadorWithAtributtes()
     {
-        return $this->belongsToMany('Varmetal\Trabajador', 'trabajadores_conjunto', 'conjunto_id_conjunto', 'trabajador_id_trabajador')->withPivot('fechaComienzo', 'kilosTrabajados', 'pausasRealizadas', 'productosRealizados');
+        return $this->belongsToMany('Varmetal\Trabajador', 'trabajadores_conjunto', 'conjunto_id_conjunto', 'trabajador_id_trabajador')->withPivot('fechaComienzo');
     }
 }
