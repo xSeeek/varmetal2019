@@ -234,11 +234,6 @@ class PausaController extends Controller
       }
       else
           return 'Usted no es un Trabajador';
-      $conjunto = $producto->conjunto;
-      $data_conjunto = $trabajador->conjuntoWithAtributtes()->where('conjunto_id_conjunto', '=', $conjunto->idConjunto)->get()->first();
-      $data_conjunto->pivot->pausasRealizadas++;
-      $data_conjunto->pivot->save();
-      $data_conjunto->save();
       $producto->cantPausa++;
       $producto->save();
       $newPausa->save();
