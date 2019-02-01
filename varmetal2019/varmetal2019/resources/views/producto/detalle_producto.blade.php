@@ -117,7 +117,7 @@
             url: "{{url('/enviarEmailProducto')}}",
             success: function(response){
                 if(response!='Email enviado producto')
-                    showMensajeSwall(MSG_ERROR, response);
+                    showMensajeBanner(MSG_SUCCESS, response);
           }
         });
     }
