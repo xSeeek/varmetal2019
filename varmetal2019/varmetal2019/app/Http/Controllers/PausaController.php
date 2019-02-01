@@ -261,9 +261,6 @@ class PausaController extends Controller
 
         if($data_conjunto!=NULL)
         {
-          $data_conjunto->pivot->pausasRealizadas--;
-          $data_conjunto->pivot->save();
-          $data_conjunto->save();
           $producto->cantPausa--;
           $producto->save();
           $pausa->delete();
