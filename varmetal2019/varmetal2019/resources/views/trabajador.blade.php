@@ -23,7 +23,7 @@
             </div>
             </br>
             <div class="card">
-              <div class="card-header"  align="center">Sus Productos</div>
+              <div class="card-header"  align="center">Sus Piezas</div>
                           <a class="btn btn-outline-success my-2 my-sm-0" href="{{url('/productosTrabajador')}}" role="button" style="cursor: pointer;">Ingresar</a>
             </div>
             </br>
