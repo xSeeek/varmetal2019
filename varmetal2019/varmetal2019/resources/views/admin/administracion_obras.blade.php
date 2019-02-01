@@ -22,8 +22,10 @@
                                 <tr id="id_obra{{ $obra->idObra }}">
                                     <td scope="col">{{ $obra->codigo }}</td>
                                     <td scope="col">{{ $obra->proyecto }}</td>
-                                    @if($obra->terminado == true)
+                                    @if(count($obra->producto) != 0 && $obra->terminado == true)
                                         <td scope="col">Finalizada</td>
+                                    @elseif(count($obra->producto) == 0 && $obra->terminado == true)
+                                        <td scope="col">Sin piezas</td>
                                     @else
                                         <td scope="col">En producción</td>
                                     @endif

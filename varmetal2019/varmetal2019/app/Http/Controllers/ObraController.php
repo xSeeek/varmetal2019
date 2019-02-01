@@ -39,10 +39,14 @@ class ObraController extends Controller
     public function insertObra(Request $request)
     {
         if($request->nameListado == NULL)
-            return 'Tiene que ingresar un nombre para el listado';
+            return 'Tiene que ingresar un nombre para la OT';
 
         if($request->nameProyecto == NULL)
             return 'Tiene que ingresar un nombre para el proyecto';
+
+        $obra_find = Obra::where('codigo', '=', $request->nameListado)->first();
+        if($obra_find != NULL)
+            return 'Ya existe una OT con el código ingresado';
 
         $obra = new Obra;
         $date = new Carbon();
