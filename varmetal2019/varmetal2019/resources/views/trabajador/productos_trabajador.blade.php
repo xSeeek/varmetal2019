@@ -4,7 +4,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Productos en desarrollo</div>
+                <div class="card-header">Piezas en desarrollo</div>
                     <div class="card-body">
                         @php $cont = 0 @endphp
                         @if(($productos != NULL) && (count($productos) > 0))
