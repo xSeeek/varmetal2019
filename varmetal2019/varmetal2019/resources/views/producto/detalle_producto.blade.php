@@ -161,8 +161,9 @@ function sendEmail()
                 if(response == 1)
                 {
                     sendEmail();
-                    window.location.href = "{{url('/detalleProducto', [$producto->idProducto])}}";
-                }else {
+                    window.location.reload();
+                }
+                else {
                     showMensajeSwall(MSG_ERROR, response);
                 }
             }
