@@ -227,10 +227,16 @@ function sendEmail()
                     }
                     });
                     if({{$producto->cantProducto}}%5==0)
+                    {
                         sendEmailProductos();
+                    }
                     else
+                    {
                         if(result.value>5)
+                        {
                             sendEmailProductos();
+                        }
+                    }
                     window.location.reload();
             }
             else if(result.value <= 0)
