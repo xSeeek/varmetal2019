@@ -36,7 +36,7 @@
                                                 <td scope="col">{{ $producto->pesoKg }}</td>
                                                 @if($producto->pausa != NULL)
                                                     @foreach($producto->pausa as $key => $pausa)
-                                                      @if($pausa->trabajador_id_trabajador == $trabajador->idTrabajador)
+                                                      @if($pausa->trabajador_id_trabajador == $trabajador->idTrabajador && $pausa->fechaFin == NULL)
                                                         @php $motivo = $pausa->motivo @endphp
                                                         @break
                                                       @endif
