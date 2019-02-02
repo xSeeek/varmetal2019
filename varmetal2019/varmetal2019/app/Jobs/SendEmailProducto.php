@@ -34,7 +34,7 @@ class SendEmailProducto implements ShouldQueue
           'email' => $response[2],
           'nombreProducto' => $response[3],
           'codigoProducto' => $response[4],
-          'cantProductos' => $response[5]+1,
+          'cantProductos' => $response[5],
           'idUser' => $response[6],
       );
     }

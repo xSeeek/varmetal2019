@@ -405,7 +405,11 @@ class ProductoController extends Controller
         $dataProducto->pivot->save();
         $dataProducto->save();
 
-        return 1;
+        $array = array();
+        $array[0]=$dataProducto->pivot->productosRealizados;
+        $array[1]=$response[1];
+
+        return $array;
     }
 
     private function is_decimal( $val )

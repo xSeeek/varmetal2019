@@ -95,7 +95,63 @@
 </div>
 <script type="text/javascript">
 
-  function sendEmailProductos()
+function actualizarCantidad(idProducto)
+{
+    swal({
+    title: "Confirmación",
+    input: 'text',
+    inputAttributes: {
+        autocapitalize: 'off'
+    },
+    text: "Ingrese la cantidad de piezas realizadas:",
+    type: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#6A9944",
+    confirmButtonText: "Continuar",
+    cancelButtonText: "Salir",
+    cancelButtonColor: "#d71e1e",
+    }).then((result) =>
+    {
+        if (result.value > 0 && result.value <= {{$producto->cantProducto}})
+        {
+            var datos, valorAntiguo;
+
+            valorAntiguo = '{{$producto->cantProducto}}';
+            datos = Array();
+            datos[0]= {{$producto->idProducto}};
+            datos[1]=result.value;
+            json_text = JSON.stringify(datos);
+
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: "POST",
+                data: {DATA:json_text},
+                url: "{{url('producto/actualizarCantidad')}}",
+                success: function(response)
+                {
+                    if(response[0]%5==0 || response[1]>=5)
+                    {
+                      alert(response);
+                      sendEmailProductos(response[0]);
+                      showMensajeBanner(MSG_SUCCESS, "Email Enviado");
+                      window.location.reload();
+                    }
+                    else
+                    {
+                      window.location.reload();
+                    }
+                }
+                });
+          }else
+          {
+            showMensajeSwall(MSG_ERROR, "Cantidad no valida");
+          }
+    });
+}
+
+  function sendEmailProductos(response)
     {
       var datosPausa, json_text;
 
@@ -105,7 +161,7 @@
       datosPausa[2] = '{{$usuarioActual->email}}';
       datosPausa[3] = '{{$producto->nombre}}';
       datosPausa[4] = '{{$producto->codigo}}';
-      datosPausa[5] = '{{$cantidadProducida}}';
+      datosPausa[5] = response;
       datosPausa[6] = '{{{$trabajador->user->id}}}';
       json_text = JSON.stringify(datosPausa);
         $.ajax({
@@ -184,63 +240,6 @@ function sendEmail()
                 else
                     showMensajeSwall(MSG_ERROR, response);
             }
-        });
-    }
-    function actualizarCantidad(idProducto)
-    {
-        swal({
-        title: "Confirmación",
-        input: 'text',
-        inputAttributes: {
-            autocapitalize: 'off'
-        },
-        text: "Ingrese la cantidad de piezas realizadas:",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#6A9944",
-        confirmButtonText: "Continuar",
-        cancelButtonText: "Salir",
-        cancelButtonColor: "#d71e1e",
-        }).then((result) =>
-        {
-            if (result.value > 0)
-            {
-                var datos, valorAntiguo;
-
-                valorAntiguo = '{{$producto->cantProducto}}';
-                datos = Array();
-                datos[0]= {{$producto->idProducto}};
-                datos[1]=result.value;
-                json_text = JSON.stringify(datos);
-
-                $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    type: "POST",
-                    data: {DATA:json_text},
-                    url: "{{url('producto/actualizarCantidad')}}",
-                    success: function(response)
-                    {
-                        if(response != 1)
-                            showMensajeSwall(MSG_ERROR, response);
-                    }
-                    });
-                    if({{$producto->cantProducto}}%5==0)
-                    {
-                        sendEmailProductos();
-                    }
-                    else
-                    {
-                        if(result.value>5)
-                        {
-                            sendEmailProductos();
-                        }
-                    }
-                    window.location.reload();
-            }
-            else if(result.value <= 0)
-                showMensajeSwall(MSG_ERROR, 'La cantidad ingresada no es válida.');
         });
     }
 </script>

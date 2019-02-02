@@ -46,7 +46,7 @@ class EmailController extends Controller //implements ShouldQueue
       $response = JSON_decode($request->DATA, true);
       $job = new \Varmetal\Jobs\SendEmailProducto($response);
       dispatch($job);
-      return 'Email 5 o más productos terminados';
+      //return 'Email 5 o más productos terminados';
     }
 
     public function sendEmailProductoTerminado(Request $request)
