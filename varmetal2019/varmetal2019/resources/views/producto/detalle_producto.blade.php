@@ -133,7 +133,6 @@ function actualizarCantidad(idProducto)
                 {
                     if(response[0]%5==0 || response[1]>=5)
                     {
-                      alert(response);
                       sendEmailProductos(response[0]);
                       showMensajeBanner(MSG_SUCCESS, "Email Enviado");
                       window.location.reload();
