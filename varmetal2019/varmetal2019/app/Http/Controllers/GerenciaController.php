@@ -53,7 +53,7 @@ class GerenciaController extends Controller
                 foreach($trabajadores as $trabajador)
                 {
                     $kilosTerminados += $trabajador->pivot->kilosTrabajados;
-                    if(($this->isOnArray($array_trabajadores, $producto->conjunto_id_conjunto, 3) == -1) && ($producto->conjunto->fechaFin != NULL))
+                    if(($producto->conjunto_id_conjunto != NULL) && ($this->isOnArray($array_trabajadores, $producto->conjunto_id_conjunto, 3) == -1) && ($producto->conjunto->fechaFin != NULL))
                     {
                         $array_trabajadores[$j] = array();
                         $data_trabajador = array();
