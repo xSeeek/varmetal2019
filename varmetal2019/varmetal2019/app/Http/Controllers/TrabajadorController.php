@@ -85,18 +85,6 @@ class TrabajadorController extends Controller
                   ->with('trabajadores_almacenados', $trabajadores_registrados);
     }
 
-    public function convertToHoursMins($time)
-    {
-        $format = '%d horas con %d minutos';
-
-        if ($time < 1) {
-            return;
-        }
-        $hours = floor($time/60);
-        $minutes = ($time%60);
-        return sprintf($format, $hours, $minutes);
-    }
-
     public function trabajadorControl($data)
     {
         if($data == 'undefined')
@@ -179,9 +167,6 @@ class TrabajadorController extends Controller
 
         if($datos_trabajador->cargo=='M1')
           $sueldo = 385000;
-
-        $tiempoPausa = $this->convertToHoursMins($tiempoPausa);
-        $tiempoSetUp = $this->convertToHoursMins($tiempoSetUp);
 
         $productos = $datos_trabajador->productoIncompleto;
         $productosCompletos = $datos_trabajador->productosCompletosMesActual;

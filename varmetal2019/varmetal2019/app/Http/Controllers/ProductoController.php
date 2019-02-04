@@ -82,9 +82,6 @@ class ProductoController extends Controller
         else
             $fechaFin = $producto->fechaFin;
 
-        $tiempoPausa = (new TrabajadorController)->convertToHoursMins($tiempoPausa);
-        $tiempoSetUp = (new TrabajadorController)->convertToHoursMins($tiempoSetUp);
-
         foreach($trabajadores as $trabajador)
         {
             $cantidadProducida += $trabajador->pivot->productosRealizados;

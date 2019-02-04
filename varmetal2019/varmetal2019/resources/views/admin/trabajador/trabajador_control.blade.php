@@ -47,18 +47,22 @@
                         <h4>
                             <b>Horas en Pausa:</b>
                             <div class="col-sm-10">
-                              @if($tiempoPausa != '')
-                                <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="{{$tiempoPausa}}">
-                              @else
-                                <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="0 horas con 0 minutos">
+                              @if($tiempoPausa != 0)
+                                  <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="{{$tiempoPausa}} Horas">
+                              @elseif($tiempoPausa == 0 && $trabajador->pausa == NULL)
+                                  <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="No ha solicitado pausas">
+                              @elseif($tiempoPausa == 0 && $trabajador->pausa != NULL)
+                                  <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="El Operador aún no está 1 hora en pausa">
                               @endif
                             </div>
                             <b>Horas en SetUp: </b>
                             <div class="col-sm-10">
-                              @if($tiempoSetUp != '')
-                                  <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="{{$tiempoSetUp}}">
-                              @else
-                                  <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="0 horas con 0 minutos">
+                              @if($tiempoSetUp != 0)
+                                  <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="{{$tiempoSetUp}} Horas">
+                              @elseif($tiempoSetUp == 0 && $trabajador->pausa == NULL)
+                                  <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="No se han producido cambios de pieza">
+                              @elseif($tiempoSetUp == 0 && $trabajador->pausa != NULL)
+                                  <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="El Operador aún no está 1 hora en SetUp">
                               @endif
                             </div>
                             <b>Horas Hombre: </b>

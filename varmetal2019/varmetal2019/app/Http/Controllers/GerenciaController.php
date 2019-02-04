@@ -107,8 +107,6 @@ class GerenciaController extends Controller
 
             $diffHoras += $this->productosEnAyuda($productosAuxiliar);
 
-            $tiempoPausa = (new TrabajadorController)->convertToHoursMins($tiempoPausa);
-            $tiempoSetUp = (new TrabajadorController)->convertToHoursMins($tiempoSetUp);
 
             for($i = 0; $i < count($array_trabajadores); $i++)
                 $diffHoras += $this->calcularHorasHombre(Carbon::parse($array_trabajadores[$i][1]), Carbon::parse($array_trabajadores[$i][5]));
