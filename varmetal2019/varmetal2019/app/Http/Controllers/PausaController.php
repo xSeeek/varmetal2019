@@ -289,7 +289,7 @@ class PausaController extends Controller
         else
             $startHour = $this->getTimeStart($fechaInicio);
 
-        $finHour = ($fechaFin->format('m') - 8*60);
+        $finHour = $this->getTimeEnd($fechaFin);
 
         foreach($period as $date)
         {
@@ -331,8 +331,8 @@ class PausaController extends Controller
     private function getTimeStart($date)
     {
         $actualDate = $date->format('l');
-        $resultDate = 0.0;
-        $diff = 0.0;
+        $resultDate = 0;
+        $diff = 0;
         $hourDate = $date->format('m');
 
         switch($actualDate)
@@ -370,5 +370,49 @@ class PausaController extends Controller
                 break;
         }
         return $resultDate;
+    }
+    private function getTimeEnd($date)
+    {
+        $actualDate = $date->format('l');
+        $resultDate = 0;
+        $diff = 0;
+        $hourDate = $date->format('m');
+
+        switch($actualDate)
+        {
+            case('Monday'):
+                if($hourDate > 18*60)
+                    $hourDate = 18*60;
+                return $hourDate - 8*60;
+                break;
+            case('Tuesday'):
+                if($hourDate > 19*60)
+                    $hourDate = 19*60;
+                return $hourDate - 8*60;
+                break;
+            case('Wednesday'):
+                if($hourDate > 19*60)
+                    $hourDate = 19*60;
+                return $hourDate - 8*60;
+                break;
+            case('Thursday'):
+                if($hourDate > 19*60)
+                    $hourDate = 19*60;
+                return $hourDate - 8*60;
+                break;
+            case('Friday'):
+                if($hourDate > 18*60)
+                    $hourDate = 18*60;
+                return $hourDate - 8*60;
+                break;
+            case('Saturday'):
+                if($hourDate > 13*60)
+                    $hourDate = 13*60;
+                return $hourDate - 8*60;
+                break;
+            default:
+                break;
+        }
+        return 0;
     }
 }
