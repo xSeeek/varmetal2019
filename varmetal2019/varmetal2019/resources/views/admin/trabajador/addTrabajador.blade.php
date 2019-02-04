@@ -147,6 +147,8 @@ function emailRegistrado()
 
     function saveTrabajador()
     {
+      confirmMensajeSwal(MSG_QUESTION, 'Seguro que desea agregar a este Trabajador'):
+
         $.ajax({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -155,16 +157,17 @@ function emailRegistrado()
             data: $('#nuevoTrabajadorForm').serialize(),
             url: "{{url('trabajadorControl/addTrabajador')}}",
             success: function(response){
-                if(response != 1)
-                    showMensajeSwall(MSG_ERROR, response);
-                else
-                {
-                  showMensajeSwall(MSG_SUCCESS, "Usuario creado con éxito.");
-                  emailRegistrado();
-                }
+              if(response != 1)
+                  showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR,response);
+              else
+              {
+                showMensajeSwal(MSG_SUCCESS, BTN_SUCCESS, COLOR_SUCCESS,"Usuario creado con éxito.");
+                emailRegistrado();
+              }
             }
         });
     }
+    
     function validateStatus()
     {
         var hiddenStatus;

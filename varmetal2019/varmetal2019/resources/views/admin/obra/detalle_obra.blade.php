@@ -253,20 +253,34 @@
 
     function deleteObra(data)
     {
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            type: "POST",
-            data: {DATA:data},
-            url: "{{url('/obraControl/deleteObra')}}",
-            success: function(response){
-                if(response == 1)
-                    window.location.href = "{{url('adminObras')}}";
-                else
-                    showMensajeSwall(MSG_ERROR, response)
-            }
-        });
+      swal({
+        title: "Confirmación",
+        text: '¿Desea eliminar esta OT?',
+        type: MSG_QUESTION,
+        showCancelButton: true,
+        confirmButtonColor: COLOR_SUCCESS,
+        confirmButtonText: "Si",
+        cancelButtonText: "No",
+        cancelButtonColor: COLOR_ERROR,
+      }).then((result) => {
+        if (result.value) {
+          $.ajax({
+              headers: {
+                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              },
+              type: "POST",
+              data: {DATA:data},
+              url: "{{url('/obraControl/deleteObra')}}",
+              success: function(response){
+                  if(response == 1)
+                      window.location.href = "{{url('adminObras')}}";
+                  else
+                      showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR, response)
+              }
+          });
+        }
+      });
+
     }
     function eliminarProducto(data)
     {

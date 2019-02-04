@@ -239,48 +239,80 @@ function postChangeData()
 
   function trabajadorDeletePausa()
   {
-    var datos, json_text;
+    swal({
+      title: "Confirmación",
+      text: '¿Desea eliminar esta pausa?',
+      type: MSG_QUESTION,
+      showCancelButton: true,
+      confirmButtonColor: COLOR_SUCCESS,
+      confirmButtonText: "Si",
+      cancelButtonText: "No",
+      cancelButtonColor: COLOR_ERROR,
+    }).then((result) => {
+      if (result.value) {
+        var datos, json_text;
 
-    datos = Array();
-    datos[0] = '{{$pausa->idPausa}}';
-    datos[1] = '{{$producto->idProducto}}';
-    json_text = JSON.stringify(datos);
+        datos = Array();
+        datos[0] = '{{$pausa->idPausa}}';
+        datos[1] = '{{$producto->idProducto}}';
+        json_text = JSON.stringify(datos);
 
-      $.ajax({
+        $.ajax({
           headers: {
-              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
           },
           type: "POST",
           data: {DATA:json_text},
           url: "{{url('/trabajadorDeletePausa')}}",
           success: function(response){
-              console.log(response);
-              sendEmail();
-              window.location.href = "{{url('/addPausa', [$producto->idProducto])}}";
+            console.log(response);
+            sendEmail();
+            window.location.href = "{{url('/addPausa', [$producto->idProducto])}}";
           }
-      });
+        });
+
+      }
+    });
+
   }
+
   function adminDeletePausa(data)
   {
-    var datos, json_text;
+    swal({
+      title: "Confirmación",
+      type: MSG_QUESTION,
+      text: '¿Seguro que desea eliminar esta pausa?',
+      showCancelButton: true,
+      confirmButtonColor: COLOR_SUCCESS,
+      confirmButtonText: "Si",
+      cancelButtonText: "No",
+      cancelButtonColor: COLOR_ERROR,
+    }).then((result) => {
+      if (result.value) {
 
-    datos = Array();
-    datos[0] = '{{$pausa->idPausa}}';
-    datos[1] = '{{$producto->idProducto}}';
-    json_text = JSON.stringify(datos);
+        var datos, json_text;
 
-      $.ajax({
+        datos = Array();
+        datos[0] = '{{$pausa->idPausa}}';
+        datos[1] = '{{$producto->idProducto}}';
+        json_text = JSON.stringify(datos);
+
+        $.ajax({
           headers: {
-              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
           },
           type: "POST",
           data: {DATA:json_text},
           url: "{{url('/adminDeletePausa')}}",
           success: function(response){
-              console.log(response);
-              window.location.href = "{{url('/adminPausasAlmacenadas', [$producto->idProducto])}}";
+            console.log(response);
+            window.location.href = "{{url('/adminPausasAlmacenadas', [$producto->idProducto])}}";
           }
-      });
+        });
+      }
+    });
+
+  
   }
 
   /*function adminUpdateFechaFin(data)

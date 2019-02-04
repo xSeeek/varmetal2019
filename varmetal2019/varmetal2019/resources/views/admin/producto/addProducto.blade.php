@@ -107,10 +107,10 @@
             url: "{{url('productoControl/addProducto')}}",
             success: function(response){
                 if(response != 1)
-                    showMensajeSwall(MSG_ERROR, response);
+                    showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR,response);
                 else
                 {
-                    showMensajeSwall(MSG_SUCCESS, "Se agrego Correctamente");
+                    showMensajeSwal(MSG_SUCCESS, BTN_SUCCESS, COLOR_SUCCESS,"Se agrego Correctamente");
                     window.location.reload();
                 }
             }

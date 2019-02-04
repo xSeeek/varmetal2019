@@ -64,7 +64,7 @@
         url: "{{url('/productoTerminado')}}",
         success: function(response){
             if(response != 1)
-                showMensajeSwall(MSG_ERROR, response);
+                showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR,response);
             }
         });
 
@@ -110,7 +110,7 @@
                 url: "{{url('/materialesGastados')}}",
                 success: function(response){
                     if(response != 1)
-                        showMensajeSwall(MSG_ERROR, response);
+                        showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR,response);
                     }
                 });
           }else {
