@@ -279,12 +279,12 @@ class PausaController extends Controller
         $period = CarbonPeriod::create($fechaInicio->format('Y-m-d h:m:s'), $fechaFin->format('Y-m-d h:m:s'));
         $period->toggleOptions(CarbonPeriod::EXCLUDE_START_DATE, true);
         $period->toggleOptions(CarbonPeriod::EXCLUDE_END_DATE, true);
-        $horasHombre = 0*60;
+        $horasHombre = 0;
 
         $inDayStart = Carbon::parse($fechaInicio->format('Y-m-d h:m:s'));
         $inDayEnd = Carbon::parse($fechaFin->format('Y-m-d h:m:s'));
 
-        if($inDayEnd->diffInMinutes($inDayStart) < 24*60*60)
+        if($inDayEnd->diffInMinutes($inDayStart) < 24*60)
             return $fechaFin->diffInMinutes($fechaInicio);
         else
             $startHour = $this->getTimeStart($fechaInicio);
