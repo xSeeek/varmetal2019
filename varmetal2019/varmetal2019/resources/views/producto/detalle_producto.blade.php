@@ -145,7 +145,7 @@ function actualizarCantidad(idProducto)
                 });
           }else
           {
-            showMensajeSwall(MSG_ERROR, "Cantidad no valida");
+            showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR, "Cantidad no valida");
           }
     });
 }
@@ -198,7 +198,7 @@ function sendEmail()
             url: "{{url('/enviarEmailTerminado')}}",
             success: function(response){
                 if(response!='Email enviado producto Terminado')
-                    showMensajeSwall(MSG_ERROR, response);
+                    showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR,response);
           }
         });
     }
@@ -219,7 +219,7 @@ function sendEmail()
                     window.location.reload();
                 }
                 else {
-                    showMensajeSwall(MSG_ERROR, response);
+                    showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR,response);
                 }
             }
         });
@@ -237,7 +237,7 @@ function sendEmail()
                 if(response == 1)
                     window.location.href = "{{url('/detalleProducto', [$producto->idProducto])}}";
                 else
-                    showMensajeSwall(MSG_ERROR, response);
+                    showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR,response);
             }
         });
     }

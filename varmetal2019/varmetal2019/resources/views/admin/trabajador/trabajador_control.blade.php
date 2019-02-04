@@ -273,39 +273,71 @@
     }
     function deleteTrabajador(data)
     {
-        $.ajax({
+      swal({
+        title: "Confirmación",
+        text: '¿Desea eliminar este trabajador?',
+        type: MSG_QUESTION,
+        showCancelButton: true,
+        confirmButtonColor: COLOR_SUCCESS,
+        confirmButtonText: "Si",
+        cancelButtonText: "No",
+        cancelButtonColor: COLOR_ERROR,
+      }).then((result) => {
+        if (result.value) {
+
+          $.ajax({
             headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             type: "POST",
             data: {DATA:data},
             url: "{{url('/trabajadorControl/deleteTrabajador')}}",
             success: function(response){
-                window.location.href = "{{url('menuTrabajador')}}";
+              window.location.href = "{{url('menuTrabajador')}}";
             }
-        });
+          });
+        }
+      });
+
+    
     }
     function deleteProducto(idTrabajador, idProducto)
     {
-        var data, json_data;
+      swal({
+        title: "Confirmación",
+        text: '¿Desea eliminar desvincular este producto?',
+        type: MSG_QUESTION,
+        showCancelButton: true,
+        confirmButtonColor: COLOR_SUCCESS,
+        confirmButtonText: "Si",
+        cancelButtonText: "No",
+        cancelButtonColor: COLOR_ERROR,
+      }).then((result) => {
+        if (result.value) {
 
-        data = Array();
-        data[0] = idTrabajador;
-        data[1] = idProducto;
+          var data, json_data;
 
-        json_data = JSON.stringify(data);
+          data = Array();
+          data[0] = idTrabajador;
+          data[1] = idProducto;
 
-        $.ajax({
+          json_data = JSON.stringify(data);
+
+          $.ajax({
             headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             type: "POST",
             data: {DATA:json_data},
             url: "{{url('/productoControl/removeWorker')}}",
             success: function(response){
-                window.location.href = "{{url('trabajadorControl', [$trabajador->idTrabajador])}}";
+              window.location.href = "{{url('trabajadorControl', [$trabajador->idTrabajador])}}";
             }
-        });
+          });
+        }
+      });
+
     }
+
 </script>
 @endsection

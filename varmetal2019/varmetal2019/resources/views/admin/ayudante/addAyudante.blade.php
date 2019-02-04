@@ -54,7 +54,7 @@
                 if(response != 1)
                     showMensajeBanner(MSG_ERROR, response);
                 else
-                    showMensajeSwall(MSG_SUCCESS, response);
+                    showMensajeSwal(MSG_SUCCESS, 'ok', COLOR_SUCCESS, response);
                     window.location.href = "{{url('menuTrabajador')}}";
             }
         });

@@ -362,39 +362,71 @@
 
     function deleteProducto(data)
     {
+      swal({
+      title: "Confirmación",
+      text: '¿Desea eliminar este producto?',
+      type: MSG_QUESTION,
+      showCancelButton: true,
+      confirmButtonColor: COLOR_SUCCESS,
+      confirmButtonText: "Si",
+      cancelButtonText: "No",
+      cancelButtonColor: COLOR_ERROR,
+    }).then((result) => {
+      if (result.value) {
+
         $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            type: "POST",
-            data: {DATA:data},
-            url: "{{url('/productoControl/deleteProducto')}}",
-            success: function(response){
-                window.location.href = "{{url('/menuPiezas')}}";
-            }
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          type: "POST",
+          data: {DATA:data},
+          url: "{{url('/productoControl/deleteProducto')}}",
+          success: function(response){
+            window.location.href = "{{url('/menuPiezas')}}";
+          }
         });
-    }
+
+      }
+    });
+
+  }
     function deleteWorker(idTrabajador, idProducto)
     {
-        var data, json_data;
+      swal({
+        title: "Confirmación",
+        text: '¿Desea desvincular a este trabajador?',
+        type: MSG_QUESTION,
+        showCancelButton: true,
+        confirmButtonColor: COLOR_SUCCESS,
+        confirmButtonText: "Si",
+        cancelButtonText: "No",
+        cancelButtonColor: COLOR_ERROR,
+      }).then((result) => {
+        if (result.value) {
 
-        data = Array();
-        data[0] = idTrabajador;
-        data[1] = idProducto;
 
-        json_data = JSON.stringify(data);
+          var data, json_data;
 
-        $.ajax({
+          data = Array();
+          data[0] = idTrabajador;
+          data[1] = idProducto;
+
+          json_data = JSON.stringify(data);
+
+          $.ajax({
             headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             type: "POST",
             data: {DATA:json_data},
             url: "{{url('/productoControl/removeWorker')}}",
             success: function(response){
-                window.location.href = "{{url('productoControl', [$producto->idProducto])}}";
+              window.location.href = "{{url('productoControl', [$producto->idProducto])}}";
             }
-        });
+          });
+
+        }
+      });
     }
     function resetProduccion(idProducto)
     {
@@ -423,7 +455,7 @@
                 if(response == 1)
                     window.location.href = "{{url('productoControl', [$producto->idProducto])}}";
                 else
-                    showMensajeSwall(MSG_ERROR, response);
+                    showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR,response);
             }
         });
     }

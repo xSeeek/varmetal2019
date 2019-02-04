@@ -130,7 +130,7 @@
             data = JSON.stringify(datosSeleccionados);
         else
         {
-            showMensajeSwall(MSG_INFO, 'Debe seleccionar almenos una pieza para iniciar la producción');
+            showMensajeSwal(MSG_INFO, BTN_OK, COLOR_INFO, 'Debe seleccionar almenos una pieza para iniciar la producción');
             return;
         }
 

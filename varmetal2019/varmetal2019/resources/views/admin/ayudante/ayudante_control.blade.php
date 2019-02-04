@@ -139,17 +139,31 @@
 
     function deleteAyudante(data)
     {
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            type: "POST",
-            data: {DATA:data},
-            url: "{{url('/trabajadorControl/deleteTrabajador')}}",
-            success: function(response){
-                window.location.href = "{{url('menuTrabajador')}}";
-            }
-        });
+      swal({
+        title: "Confirmación",
+        text: '¿Desea eliminar este ayudante?',
+        type: MSG_QUESTION,
+        showCancelButton: true,
+        confirmButtonColor: COLOR_SUCCESS,
+        confirmButtonText: "Si",
+        cancelButtonText: "No",
+        cancelButtonColor: COLOR_ERROR,
+      }).then((result) => {
+        if (result.value) {
+          $.ajax({
+              headers: {
+                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              },
+              type: "POST",
+              data: {DATA:data},
+              url: "{{url('/trabajadorControl/deleteTrabajador')}}",
+              success: function(response){
+                  window.location.href = "{{url('menuTrabajador')}}";
+              }
+          });
+        }
+      });
+
     }
 </script>
 @endsection

@@ -61,7 +61,7 @@
         var fileExt = sender.value;
         fileExt = fileExt.substring(fileExt.lastIndexOf('.'));
         if (validExts.indexOf(fileExt) < 0) {
-          showMensajeSwall(MSG_INFO, "Tipo de archivo no válido, solo se aceptan archivos " +
+          showMensajeSwal(MSG_INFO, 'OK', COLOR_INFO,"Tipo de archivo no válido, solo se aceptan archivos " +
                    validExts.toString());
           return false;
         }

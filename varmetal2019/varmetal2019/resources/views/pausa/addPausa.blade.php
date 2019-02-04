@@ -354,7 +354,7 @@ function savePausa()
               }
               else
               sendEmail();
-              showMensajeSwall(MSG_SUCCESS, "Pausa Agregada");
+              showMensajeSwal(MSG_SUCCESS, BTN_SUCCESS, COLOR_SUCCESS,"Pausa Agregada");
               window.location.href="{{url('/addPausa', [$producto->idProducto])}}";
           }
       });

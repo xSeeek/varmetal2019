@@ -69,7 +69,7 @@
                 if(response == 1)
                     window.location.href = "{{url('producto/asignarTrabajo', [$idProducto])}}";
                 else
-                    showMensajeSwall(MSG_ERROR, 'Error al asignar al trabajador');
+                    showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR,'Error al asignar al trabajador');
             }
         });
     }

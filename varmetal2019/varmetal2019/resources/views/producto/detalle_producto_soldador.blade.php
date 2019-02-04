@@ -109,7 +109,7 @@
             url: "{{url('/enviarEmailProducto')}}",
             success: function(response){
                 if(response!='Email enviado producto')
-                    showMensajeSwall(MSG_ERROR, response);
+                    showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR,response);
           }
         });
     }
@@ -135,7 +135,7 @@ function sendEmail()
             url: "{{url('/enviarEmailTerminado')}}",
             success: function(response){
                 if(response!='Email enviado producto Terminado')
-                    showMensajeSwall(MSG_ERROR, response);
+                    showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR,response);
           }
         });
     }
@@ -155,7 +155,7 @@ function sendEmail()
                     sendEmail();
                     window.location.href = "{{url('/detalleProducto', [$producto->idProducto])}}";
                 }else {
-                    showMensajeSwall(MSG_ERROR, response);
+                    showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR,response);
                 }
             }
         });
@@ -173,7 +173,7 @@ function sendEmail()
                 if(response == 1)
                     window.location.href = "{{url('/detalleProducto', [$producto->idProducto])}}";
                 else
-                    showMensajeSwall(MSG_ERROR, response);
+                    showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR,response);
             }
         });
     }
@@ -213,7 +213,7 @@ function sendEmail()
                     url: "{{url('producto/actualizarCantidad')}}",
                     success: function(response){
                         if(response != 1)
-                            showMensajeSwall(MSG_ERROR, response);
+                            showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR,response);
                             window.location.reload();
                     });
                     if({{$producto->cantProducto}}%5==0)
@@ -235,7 +235,7 @@ function sendEmail()
                     }
             }
             else if(result.value <= 0)
-                showMensajeSwall(MSG_ERROR, 'La cantidad ingresada no es válida.');
+                showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR, 'La cantidad ingresada no es válida.');
         });
     }
 </script>
