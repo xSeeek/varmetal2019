@@ -14,7 +14,7 @@
                                 @endif
                             @endforeach
                             @if($cont == count($productos))
-                                <h4 align="center">No tiene productos activos en desarrollo</h4>
+                                <h4 align="center">No tiene piezas activos en desarrollo</h4>
                             @else
                                 <table id="tablaProductos" style="width:100%" align="center">
                                     <thead>
@@ -97,7 +97,7 @@
                             @endif
                         @else
                         <br>
-                            <h4 align="center">No tiene productos activos en desarrollo</h4>
+                            <h4 align="center">No tiene piezas activos en desarrollo</h4>
                         <br>
                         @endif
                     </div>

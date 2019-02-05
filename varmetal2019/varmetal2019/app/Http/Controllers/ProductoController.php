@@ -158,17 +158,17 @@ class ProductoController extends Controller
     public function insertProducto(Request $request)
     {
         if($request->pesoProducto == NULL)
-            return 'Tiene que ingresar el peso del producto.';;
+            return 'Tiene que ingresar el peso de la pieza.';;
         if($request->cantidadProducto == NULL)
-            return 'Tiene que ingresar una cantidad para el producto';
+            return 'Tiene que ingresar una cantidad para  la pieza.';
         if($request->cantidadProducto < 0)
             return 'La cantidad tiene que ser mayor a 0';
         if($request->pesoProducto < 0)
             return 'La cantidad tiene que ser mayor a 0';
         if($request->codigoProducto == NULL)
-            return 'El código del producto no puede estar en blanco.';
+            return 'El código de la pieza no puede estar en blanco.';
         if($request->fechaInicio == NULL)
-            return 'La fecha de inicio del producto no puede estar en blanco.';
+            return 'La fecha de inicio de la pieza no puede estar en blanco.';
 
         $busqueda = Producto::where('codigo', $request->codigoProducto)->get();
 
