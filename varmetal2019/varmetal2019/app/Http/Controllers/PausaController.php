@@ -231,9 +231,6 @@ class PausaController extends Controller
             $actualHour = $date->format('G');
             $actualMinutes = $date->format('m');
 
-            if($actualHour < 8)
-                $actualHour = 8;
-
             switch($actualDate)
             {
                 case('Monday'):
@@ -257,97 +254,98 @@ class PausaController extends Controller
                     break;
             }
         }
-        $horasHombre += $startHour;
-        $horasHombre += $finHour;
-        return $horasHombre;
+        $horasHombre += $startHour; //3 horas
+        $horasHombre += $finHour; //6 horas
+        return $horasHombre; //9 horas
     }
 
-    private function getTimeStart($date)
+    private function getTimeStart($date) //2019-02-02 10:55:16
     {
-        $actualDate = $date->format('l');
+        $actualDate = $date->format('l');//sabado
         $resultDate = 0;
         $diff = 0;
-        $hourDate = $date->format('G');
+        $hourDate = $date->format('G');//10
 
         switch($actualDate)
         {
             case('Monday'):
                 if($hourDate > 8)
-                    $diff = $hourDate - 8;
-                $resultDate += (9 - $diff);
+                    $diff = 9-($hourDate - 8);
+                $resultDate = $diff;
                 break;
             case('Tuesday'):
                 if($hourDate > 8)
-                    $diff = $hourDate - 8;
-                $resultDate += (10 - $diff);
+                    $diff = 10-($hourDate - 8);
+                $resultDate = $diff;
                 break;
             case('Wednesday'):
                 if($hourDate > 8)
-                    $diff = $hourDate - 8;
-                $resultDate += (10 - $diff);
+                    $diff = 10-($hourDate - 8);
+                $resultDate = $diff;
                 break;
             case('Thursday'):
                 if($hourDate > 8)
-                    $diff = $hourDate - 8;
-                $resultDate += (10 - $diff);
+                    $diff = 10-($hourDate - 8);
+                $resultDate = $diff;
                 break;
             case('Friday'):
                 if($hourDate > 8)
-                    $diff = $hourDate - 8;
-                $resultDate += (9 - $diff);
+                    $diff = 9-($hourDate - 8);
+                $resultDate = $diff;
                 break;
             case('Saturday'):
                 if($hourDate > 8)
-                    $diff = $hourDate - 8;
-                $resultDate += (5 - $diff);
+                    $diff = 5-($hourDate-8); //5-(10-8)=3
+                $resultDate = $diff;
+            default:
+                break;
+        }
+        //9
+        return $resultDate;
+    }
+
+    private function getTimeEnd($date) //2019-02-04 15:48:48
+    {
+        $actualDate = $date->format('l'); //lunes
+        $resultDate = 0;
+        $diff = 0;
+        $hourDate = $date->format('G'); //15
+
+        switch($actualDate)
+        {
+            case('Monday'):
+                if($hourDate < 18)//15<18
+                  $diff = 9-(18 - $hourDate); //9-(18-15)=6
+                $resultDate = $diff;
+                break;
+            case('Tuesday'):
+                if($hourDate < 19)
+                  $diff = 10-(19 - $hourDate);
+                $resultDate = $diff;
+                break;
+            case('Wednesday'):
+                if($hourDate < 19)
+                  $diff = 10-(19 - $hourDate);
+                $resultDate = $diff;
+                break;
+            case('Thursday'):
+                if($hourDate < 19)
+                  $diff = 10-(19 - $hourDate);
+                $resultDate = $diff;
+                break;
+            case('Friday'):
+                if($hourDate < 18)
+                  $diff = 9-(18 - $hourDate);
+                $resultDate = $diff;
+                break;
+            case('Saturday'):
+                if($hourDate < 13)
+                  $diff = 5-(13 - $hourDate);
+                $resultDate = $diff;
+                break;
             default:
                 break;
         }
         return $resultDate;
-    }
-
-    private function getTimeEnd($date)
-    {
-        $actualDate = $date->format('l');
-        $resultDate = 0;
-        $diff = 0;
-        $hourDate = $date->format('G');
-
-        switch($actualDate)
-        {
-            case('Monday'):
-                if($hourDate > 18)
-                    $hourDate = 18;
-                return $hourDate - 8;
-                break;
-            case('Tuesday'):
-                if($hourDate > 19)
-                    $hourDate = 19;
-                return $hourDate - 8;
-                break;
-            case('Wednesday'):
-                if($hourDate > 19)
-                    $hourDate = 19;
-                return $hourDate - 8;
-                break;
-            case('Thursday'):
-                if($hourDate > 19)
-                    $hourDate = 19;
-                return $hourDate - 8;
-                break;
-            case('Friday'):
-                if($hourDate > 18)
-                    $hourDate = 18;
-                return $hourDate - 8;
-                break;
-            case('Saturday'):
-                if($hourDate > 13)
-                    $hourDate = 13;
-                return $hourDate - 8;
-                break;
-            default:
-                break;
-        }
-        return 0;
     }
 }
