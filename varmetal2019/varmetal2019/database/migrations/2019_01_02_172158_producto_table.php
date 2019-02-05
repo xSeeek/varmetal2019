@@ -15,7 +15,7 @@ class ProductoTable extends Migration
     {
         Schema::create('producto', function (Blueprint $table) {
             $table->increments('idProducto');
-            $table->string('nombre')->default('No Especificado');
+            $table->string('nombre')->nullable()->default('No Especificado');
             $table->string('codigo')->unique();
             $table->timestamp('fechaInicio')->timestamps();
             $table->timestamp('fechaFin')->nullable();
