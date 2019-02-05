@@ -167,6 +167,8 @@ class ProductoController extends Controller
             return 'La cantidad tiene que ser mayor a 0';
         if($request->codigoProducto == NULL)
             return 'El código del producto no puede estar en blanco.';
+        if($request->fechaInicio == NULL)
+            return 'La fecha de inicio del producto no puede estar en blanco.';
 
         $busqueda = Producto::where('codigo', $request->codigoProducto)->get();
 
