@@ -113,7 +113,6 @@
 
     $(document).ready(function()
     {
-
       $('.selectpicker').selectpicker();
 
         var table = $('#tablaProductos').DataTable({
