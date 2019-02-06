@@ -12,7 +12,7 @@
                             <div class="input-group-prepend">
                                 <label class="input-group-text" for="inputObra">OT</label>
                             </div>
-                            <select class="form-control" id='selectObra'>
+                            <select class="form-control selectpicker" data-live-search="true" id='selectObra'>
                                <option id ="-1" value="-1" selected>Todas</option>
                                @foreach ($obras as $key => $obra)
                                     <option id ="obra_id{{$obra->idObra}}" value="{{$obra->codigo}}">{{$obra->codigo}}</option>
@@ -113,6 +113,9 @@
 
     $(document).ready(function()
     {
+
+      $('.selectpicker').selectpicker();
+
         var table = $('#tablaProductos').DataTable({
             "language":{
                 "url":"//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
