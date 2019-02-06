@@ -112,7 +112,7 @@
     );
 
     $(document).ready(function() {
-        var table = $('#tablaAdministracion').DataTable();
+        var table = $('#tablaAdministracion');
 
         $('#selectObra').on('change',  function() {
             table.draw();
