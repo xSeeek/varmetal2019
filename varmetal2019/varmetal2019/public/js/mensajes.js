@@ -18,7 +18,7 @@ function showMensajeBanner(type, msg){
   $.notify(msg, type);
 }
 
-function confirmMensajeSwal(type, msg) {
+function confirmMensajeSwal(type, msg, functionToExecute) {
   swal({
     title: "Confirmación",
     text: msg,
@@ -28,11 +28,13 @@ function confirmMensajeSwal(type, msg) {
     confirmButtonText: "Si",
     cancelButtonText: "No",
     cancelButtonColor: COLOR_ERROR,
-    showLoaderOnConfirm: true,
-  }).then((result) => {
-    if (result.value) {
-    }
-  });
+    }).then((result) =>
+    {
+        if (result.value)
+        {
+
+        }
+    });
 }
 
 function showMensajeSwal(type, button_text, color_btn, msg)

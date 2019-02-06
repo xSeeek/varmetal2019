@@ -136,7 +136,7 @@ function emailRegistrado()
             url: "{{url('/enviarEmailRegistrado')}}",
             success: function(response){
                 if(response=='Email enviado registrado')
-                  window.location.href = "{{url('menuTrabajador')}}";
+                    window.location.href = "{{url('menuTrabajador')}}";
           }
         });
     }
@@ -147,8 +147,6 @@ function emailRegistrado()
 
     function saveTrabajador()
     {
-      confirmMensajeSwal(MSG_QUESTION, 'Seguro que desea agregar a este Trabajador');
-
         $.ajax({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
