@@ -19,7 +19,7 @@
                                @endforeach
                             </select>
                         </div>
-                        <table id="tablaAdministracion" style="width:100%" align="center">
+                        <table id="tablaProductos" style="width:100%" align="center">
                             <thead>
                                 <tr>
                                     <th>Código</th>
@@ -111,13 +111,22 @@
         }
     );
 
-    $(document).ready(function() {
-        var table = $('#tablaAdministracion');
+    $(document).ready(function()
+    {
+        var table = $('#tablaProductos').DataTable({
+            "language":{
+                "url":"//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+            },
+            "scrollX": true,
+       });
+       $(function () {
+           $('[data-toggle="tooltip"]').tooltip();
+       });
 
         $('#selectObra').on('change',  function() {
             table.draw();
         } );
-    } );
+    });
 
 </script>
 @endsection
