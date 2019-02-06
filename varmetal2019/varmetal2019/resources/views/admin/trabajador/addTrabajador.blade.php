@@ -147,7 +147,7 @@ function emailRegistrado()
 
     function saveTrabajador()
     {
-      confirmMensajeSwal(MSG_QUESTION, 'Seguro que desea agregar a este Trabajador'):
+      confirmMensajeSwal(MSG_QUESTION, 'Seguro que desea agregar a este Trabajador');
 
         $.ajax({
             headers: {
@@ -167,7 +167,7 @@ function emailRegistrado()
             }
         });
     }
-    
+
     function validateStatus()
     {
         var hiddenStatus;
