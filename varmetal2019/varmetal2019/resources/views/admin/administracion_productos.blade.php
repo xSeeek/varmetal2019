@@ -8,6 +8,17 @@
                 <div class="card-header">Piezas</div>
                     <div class="card=body container mt-3">
                         @if(($productos != NULL) && (count($productos) > 0))
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputObra">OT</label>
+                            </div>
+                            <select class="form-control" id='selectObra'>
+                               <option id ="-1" value="-1" selected>Todas</option>
+                               @foreach ($obras as $key => $obra)
+                                    <option id ="obra_id{{$obra->idObra}}" value="{{$obra->codigo}}">{{$obra->codigo}}</option>
+                               @endforeach
+                            </select>
+                        </div>
                         <table id="tablaAdministracion" style="width:100%" align="center">
                             <thead>
                                 <tr>
@@ -24,7 +35,7 @@
                                 @foreach($productos as $key => $producto)
                                 <tr id="id_producto{{ $producto->idProducto }}">
                                     <td scope="col">{{ $producto->codigo }}</td>
-                                    <td scope="col">{{ $producto->obra->codigo }}</td>
+                                    <td scope="col" value="{{$producto->obra->codigo}}">{{ $producto->obra->codigo }}</td>
                                     @switch($producto->prioridad)
                                         @case(1)
                                             <td scope="col">Baja</td>
@@ -83,4 +94,30 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+
+    $.fn.dataTable.ext.search.push
+    (
+        function( settings, data, dataIndex )
+        {
+            var OTtoFind = $('#selectObra').val();
+            var OTActual = data[1];
+
+            if(OTtoFind == -1)
+                return true;
+            if ( OTtoFind == OTActual)
+                return true;
+            return false;
+        }
+    );
+
+    $(document).ready(function() {
+        var table = $('#tablaAdministracion').DataTable();
+
+        $('#selectObra').on('change',  function() {
+            table.draw();
+        } );
+    } );
+
+</script>
 @endsection

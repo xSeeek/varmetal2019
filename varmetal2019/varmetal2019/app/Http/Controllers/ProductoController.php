@@ -44,8 +44,11 @@ class ProductoController extends Controller
         else
             $productos = Producto::orderBy('prioridad', 'DESC')->where('terminado', 'true')->get();
 
+        $obras = Obra::get();
+
         return view('admin.administracion_productos')
-                ->with('productos', $productos);
+                ->with('productos', $productos)
+                ->with('obras', $obras);
     }
 
     public function productoControl($id)
