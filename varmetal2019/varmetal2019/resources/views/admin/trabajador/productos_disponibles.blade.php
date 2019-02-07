@@ -11,11 +11,23 @@
                 <div class="card=body">
                     <div class="container mt-3">
                         @if(($productos_almacenados != NULL) && (count($productos_almacenados) > 0))
-                        <table id="tablaAdministracion" style="width:100%" align="center">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputObra">OT</label>
+                            </div>
+                            <select class="form-control selectpicker" data-live-search="true" id='selectObra'>
+                               <option id ="-1" value="-1" selected>Todas</option>
+                               @foreach ($obras as $key => $obra)
+                                    <option id ="obra_id{{$obra->idObra}}" value="{{$obra->codigo}}">{{$obra->codigo}} - {{$obra->proyecto}}</option>
+                               @endforeach
+                            </select>
+                        </div>
+                        <table id="tablaProductos" style="width:100%" align="center">
                             <thead>
                                 <tr>
                                     <th>Opción</th>
                                     <th>Código</th>
+                                    <th>OT</th>
                                     <th>Prioridad</th>
                                     <th>Estado</th>
                                     <th>Cantidad</th>
@@ -27,6 +39,7 @@
                                 <tr id="id_trabajador{{ $producto->idProducto }}">
                                     <td scope="col"><button class="btn btn-success" onclick="asignarTrabajo({{$idTrabajador}}, {{$producto->idProducto}})"><i class="far fa-check-square success"></i></button></td>
                                     <td scope="col">{{ $producto->codigo }}</td>
+                                    <td scope="col">{{ $producto->obra->codigo }}</td>
                                     @switch($producto->prioridad)
                                         @case(1)
                                             <td scope="col">Baja</td>
@@ -82,6 +95,41 @@
     </div>
 </div>
 <script type="text/javascript">
+
+    $.fn.dataTable.ext.search.push
+    (
+        function( settings, data, dataIndex )
+        {
+            var OTtoFind = $('#selectObra').val();
+            var OTActual = data[2];
+
+            if(OTtoFind == -1)
+                return true;
+            if ( OTtoFind == OTActual)
+                return true;
+            return false;
+        }
+    );
+
+    $(document).ready(function()
+    {
+        $('.selectpicker').selectpicker();
+
+        var table = $('#tablaProductos').DataTable({
+            "language":{
+                "url":"//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+            },
+            "scrollX": true,
+       });
+       $(function () {
+           $('[data-toggle="tooltip"]').tooltip();
+       });
+
+        $('#selectObra').on('change',  function() {
+            table.draw();
+        } );
+    });
+
     function asignarTrabajo(idTrabajador, idProducto)
     {
         var datosWorker, json_data;
