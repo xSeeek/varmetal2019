@@ -14,6 +14,11 @@
                         </tr>
 
                         <tr>
+                            <th>Piezas Esperando Revisión</th>
+                            <td><a class="btn btn-outline-success my-2 my-sm-0" href="{{url('adminProducto', ['revision'])}}" role="button" style="cursor: pointer;">Ingresar</a></td>
+                        </tr>
+
+                        <tr>
                             <th>Piezas Finalizadas</th>
                             <td><a class="btn btn-outline-success my-2 my-sm-0" href="{{url('adminProducto', ['terminados'])}}" role="button" style="cursor: pointer;">Ingresar</a></td>
                         </tr>

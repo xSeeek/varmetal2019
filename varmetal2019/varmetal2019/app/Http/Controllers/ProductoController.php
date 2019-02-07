@@ -41,8 +41,10 @@ class ProductoController extends Controller
     {
         if($data == 'pendientes')
             $productos = Producto::orderBy('prioridad', 'DESC')->where('terminado', 'false')->get();
-        else
+        elseif($data == 'terminados')
             $productos = Producto::orderBy('prioridad', 'DESC')->where('terminado', 'true')->get();
+        else
+            $productos = Producto::orderBy('prioridad', 'DESC')->where('terminado', 'false')->where('estado', '1')->get();
 
         $obras = Obra::get();
 
@@ -197,6 +199,9 @@ class ProductoController extends Controller
     public function deleteProducto(Request $request)
     {
         $producto = Producto::find($request)->first();
+        $conjunto = $producto->conjunto;
+        if(($conjunto != NULL) && (count($conjunto->productos) == 1))
+            $conjunto->delete();
         $producto->delete();
         return 1;
     }
