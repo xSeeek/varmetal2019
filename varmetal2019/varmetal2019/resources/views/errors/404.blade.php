@@ -5,8 +5,7 @@
 
 @section('image')
     @php $error = rand(1, 4); @endphp
-    <div style="background-image: url({{ asset('/errors/404.jpg') }});" class="absolute pin bg-cover bg-no-repeat md:bg-left lg:bg-center">
-    </div>
+    <div style="background-image: url({{ asset('/errors/404_'.$error.'.jpg') }}); width: 100%; height: auto;" class="absolute pin bg-cover bg-no-repeat md:bg-left lg:bg-center"></div>
 @endsection
 
 @section('message', __('La página solicitada no fue encontrada.'))
