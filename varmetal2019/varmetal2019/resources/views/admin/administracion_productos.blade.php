@@ -15,7 +15,7 @@
                             <select class="form-control selectpicker" data-live-search="true" id='selectObra'>
                                <option id ="-1" value="-1" selected>Todas</option>
                                @foreach ($obras as $key => $obra)
-                                    <option id ="obra_id{{$obra->idObra}}" value="{{$obra->codigo}}">{{$obra->codigo}}</option>
+                                    <option id ="obra_id{{$obra->idObra}}" value="{{$obra->codigo}}">{{$obra->codigo}} - {{$obra->proyecto}}</option>
                                @endforeach
                             </select>
                         </div>

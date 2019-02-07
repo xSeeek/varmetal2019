@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Varmetal\Ayudante;
 use Varmetal\ConjuntoProducto;
+use Varmetal\Obra;
 use Varmetal\Http\Controllers\GerenciaController;
 
 class TrabajadorController extends Controller
@@ -306,6 +307,8 @@ class TrabajadorController extends Controller
         $i = 0;
         $cont = 0;
 
+        $obras = Obra::get();
+
         foreach($productos_almacenados as $p_saved)
         {
             foreach($productos as $p_asig)
@@ -321,7 +324,8 @@ class TrabajadorController extends Controller
 
         return view('admin.trabajador.productos_disponibles')
                 ->with('productos_almacenados', $productos_disponibles)
-                ->with('idTrabajador', $data);
+                ->with('idTrabajador', $data)
+                ->with('obras', $obras);
     }
 
     public function terminarProducto()

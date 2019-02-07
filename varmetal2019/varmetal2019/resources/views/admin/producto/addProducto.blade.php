@@ -46,11 +46,11 @@
                             <label class="col-md-4 col-form-label text-md-right">OT a la cual pertenece:</label>
                             <div class="col-md-6">
                                 <div class="input-group mb-3">
-                                    <select class="custom-select" id="inputObra" aria-describedby="obraProducto" name="obraProducto" required>
+                                    <select class="form-control selectpicker" data-live-search="true" id="inputObra" aria-describedby="obraProducto" name="obraProducto" required>
                                         <option selected disabled>Seleccione una obra...</option>
                                         @if(($obras != NULL) && (count($obras)>0))
                                             @foreach($obras as $obra)
-                                                <option value="{{$obra->idObra}}">{{$obra->codigo}}</option>
+                                                <option value="{{$obra->idObra}}">{{$obra->codigo}} - {{$obra->proyecto}}</option>
                                             @endforeach
                                         @endif
                                     </select>
@@ -96,6 +96,12 @@
     </div>
 </div>
 <script type="text/javascript">
+
+    $(document).ready(function()
+    {
+        $('.selectpicker').selectpicker();
+    });
+
     function saveProducto()
     {
         $.ajax({
@@ -116,5 +122,6 @@
             }
         });
     }
+
 </script>
 @endsection
