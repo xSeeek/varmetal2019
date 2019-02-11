@@ -220,6 +220,8 @@ function postChangeData()
     datos[3] = '{{$producto->codigo}}';
     datos[4] = '{{$producto->nombre}}';
     datos[5] = '{{$trabajador->user->id}}';
+    datos[6] = '{{$pausa->descripcion}}';
+    datos[7] = '{{$pausa->motivo}}';
 
     json_text = JSON.stringify(datos);
 
@@ -312,7 +314,7 @@ function postChangeData()
       }
     });
 
-  
+
   }
 
   /*function adminUpdateFechaFin(data)
