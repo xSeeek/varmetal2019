@@ -34,6 +34,8 @@ class EmailPausaEliminada implements ShouldQueue
         'codigo' => $response[3],
         'nombreProducto' => $response[4],
         'idUser' => $response[5],
+        'descripcion' => $response[6],
+        'motivo' => $response[7],
       );
     }
 
