@@ -63,6 +63,6 @@ class EmailFinPausa implements ShouldQueue
      */
     public function handle()
     {
-        $this->sendEmailPausas();
+        $this->emailFinPausa();
     }
 }
