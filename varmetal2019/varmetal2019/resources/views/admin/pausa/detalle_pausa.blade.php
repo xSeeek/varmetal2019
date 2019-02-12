@@ -96,7 +96,7 @@
               <div class="modal-body" align="center">
                 <h5>
                     @if($pausa->fechaFin==NULL)
-                        @if($usuarioActual->type != 'Trabajador')
+                        @if($usuarioActual->type == 'Supervisor')
                           <a class="btn btn-outline-success btn-md" id="finPausa" role="button" onclick="adminUpdateFechaFin()">Finalizar Pausa</a>
                         @endif
                     @else
@@ -234,6 +234,39 @@ function postChangeData()
         url: "{{url('/emailPausaEliminada')}}",
         success: function(response){
             if(response!='Email Eliminado')
+                console.log(response);
+      }
+    });
+  }
+
+  function emailFinPausa()
+  {
+    var datos,json_text;
+
+    datos = Array();
+    datos[0] = '{{$trabajador->nombre}}';
+    datos[1] = '{{$trabajador->rut}}';
+    datos[2] = '{{$trabajador->user->email}}';
+    datos[3] = '{{$producto->codigo}}';
+    datos[4] = '{{$producto->nombre}}';
+    datos[5] = '{{$trabajador->idTrabajador}}';
+    datos[6] = '{{$pausa->descripcion}}';
+    datos[7] = '{{$pausa->motivo}}';
+    datos[8] = '{{$usuarioActual->id}}';
+    datos[9] = '{{$usuarioActual->trabajador->nombre}}';
+    datos[10] = '{{$usuarioActual->email}}';
+
+    json_text = JSON.stringify(datos);
+
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        type: "POST",
+        data: {DATA:json_text},
+        url: "{{url('/emailFinPausa')}}",
+        success: function(response){
+            if(response!='Email Finalizada')
                 console.log(response);
       }
     });
@@ -377,6 +410,7 @@ function postChangeData()
                 url: "{{url('adminUpdateFechaFinPost')}}",
                 success: function(response){
                     console.log(response);
+                    emailFinPausa();
                     window.location.href = "{{url('/adminDetallesPausaGet', [$pausa->idPausa])}}";
                 }
             });

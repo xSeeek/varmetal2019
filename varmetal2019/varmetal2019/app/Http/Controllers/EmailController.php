@@ -25,6 +25,15 @@ class EmailController extends Controller //implements ShouldQueue
       return 'Email Pausa Eliminada';
     }
 
+    emailFinPausa
+
+    public function emailFinPausa(Request $request)
+    {
+      $response = JSON_decode($request->DATA, true);
+      $job = new \Varmetal\Jobs\EmailFinPausa($response);
+      dispatch($job);
+      return 'Email Finalizada';
+    }
 
     public function sendEmailRegistro(Request $data)
     {

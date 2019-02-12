@@ -261,6 +261,8 @@ Route::get('/admin', 'AdminController@admin')
                     ->name('nuevaContraseña'); //cambio de contraseña
         Route::post('/nuevoEmail', ['uses' => 'UserController@postProfileEmail'])
                     ->name('nuevoEmail'); //cambo de email
+        Route::post('/emailFinPausa', ['uses' => 'EmailController@emailFinPausa'])
+                    ->name('emailFinPausa'); //Pausa eliminada
 
 /* [** Cambiar Email **] */
     /*[** GENERAL **] */
