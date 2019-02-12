@@ -24,9 +24,7 @@ class EmailController extends Controller //implements ShouldQueue
       dispatch($job);
       return 'Email Pausa Eliminada';
     }
-
-    emailFinPausa
-
+    
     public function emailFinPausa(Request $request)
     {
       $response = JSON_decode($request->DATA, true);
