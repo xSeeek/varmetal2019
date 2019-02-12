@@ -32,10 +32,10 @@ class PausaController extends Controller
 
     public function addPausa($idProducto)
     {
-      $pausas_registradas = Pausa::get();
       $date = Carbon::now()->toDateTimeString();
       $producto=Producto::find($idProducto);
       $usuarioActual = Auth::user();
+      $pausas_registradas = $usuarioActual->trabajador->pausa;
       return view('pausa.addPausa')
               ->with('producto', $producto)
               ->with('fechaInicio', $date)
