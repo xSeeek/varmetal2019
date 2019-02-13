@@ -97,6 +97,7 @@
                                 <th>Fecha Inicio</th>
                                 <th>Fecha Fin</th>
                                 <th>Estado</th>
+                                <th>Área (m<sup>2</sup>)</th>
                                 <th>Peso (kg)</th>
                                 <th>Opciones</th>
                             </tr>
@@ -125,6 +126,11 @@
                                             <td scope="col">Sin estado definido</td>
                                             @break
                                     @endswitch
+                                    @if ($productos->area != null)
+                                      <td scope="col">{{ $productos->area }}</td>
+                                    @elseif ($productos->area == null)
+                                      <td scope="col">0</td>
+                                    @endif
                                     <td scope="col">{{ $productos->pesoKg }}</td>
                                     <td scope="col"><a class="btn btn-outline-secondary btn-sm" onclick="deleteProducto({{ $trabajador->idTrabajador }}, {{ $productos->idProducto }})" role="button"><b>Eliminar</b></a>
                                 </tr>
@@ -150,6 +156,7 @@
                                 <th>Código</th>
                                 <th>Piezas Realizadas</th>
                                 <th>Kilos Realizados</th>
+                                <th>Área (m<sup>2</sup>)</th>
                                 <th>Peso (kg)</th>
                                 <th>Opciones</th>
                             </tr>
@@ -160,6 +167,7 @@
                                     <td scope="col">{{ $productos->codigo }}</td>
                                     <td scope="col">{{ $productos->pivot->productosRealizados }}</td>
                                     <td scope="col">{{ $productos->pivot->kilosTrabajados }}</td>
+                                    <td scope="col">{{ $producto->area }}</td>
                                     <td scope="col">{{ $productos->pesoKg }}</td>
                                     <td scope="col"><a class="btn btn-outline-primary btn-sm" href="{{url('productoControl', [$productos->idProducto])}}" role="button" style="cursor: pointer;"><b>Detalles Pieza</b></a>
                                 </tr>
@@ -303,7 +311,7 @@
         }
       });
 
-    
+
     }
     function deleteProducto(idTrabajador, idProducto)
     {

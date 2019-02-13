@@ -31,6 +31,7 @@
                                     <th>Prioridad</th>
                                     <th>Estado</th>
                                     <th>Cantidad</th>
+                                    <th>Área Total(m<sup>2</sup>)</th>
                                     <th>Peso total (Kg)</th>
                                 </tr>
                             </thead>
@@ -75,6 +76,11 @@
                                             @break
                                     @endswitch
                                     <td scope="col">{{ $producto->cantProducto }}</td>
+                                    @if ($producto->area != null)
+                                      <td scope="col">{{ $producto->area }}</td>
+                                    @elseif ($producto->area == null)
+                                      <td scope="col">0</td>
+                                    @endif
                                     <td scope="col">{{ $producto->pesoKg }}</td>
                                 </tr>
                                 @endforeach

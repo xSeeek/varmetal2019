@@ -27,6 +27,7 @@
                                     <th>Prioridad</th>
                                     <th>Estado</th>
                                     <th>Cantidad</th>
+                                    <th>Área Total(m<sup>2</sup>)</th>
                                     <th>Peso Total(Kg)</th>
                                     <th>Opciones</th>
                                 </tr>
@@ -75,6 +76,11 @@
                                             @break
                                     @endswitch
                                     <td scope="col">{{ $producto->cantProducto }}</td>
+                                    @if ($producto->area != null)
+                                      <td scope="col">{{ $producto->area * $producto->cantProducto }}</td>
+                                    @elseif ($producto->area == null)
+                                      <td scope="col">0</td>
+                                    @endif
                                     <td scope="col">{{ $producto->pesoKg * $producto->cantProducto }}</td>
                                     <td><a class="btn btn-outline-success my-2 my-sm-0" href="{{url('productoControl', [$producto->idProducto])}}" role="button" style="cursor: pointer;">Ver Detalles</a></td>
                                 </tr>

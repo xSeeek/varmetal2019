@@ -31,6 +31,12 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label class="col-md-4 col-form-label text-md-right">Área (en metros cuadrados):</label>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" aria-describedby="areaProducto" placeholder="Área del Producto" name="areaProducto" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label class="col-md-4 col-form-label text-md-right">Peso unitario de la Pieza (en Kilogramos):</label>
                             <div class="col-md-6">
                                 <input type="text" class="form-control" aria-describedby="pesoProducto" placeholder="Peso del Producto" name="pesoProducto" required>
