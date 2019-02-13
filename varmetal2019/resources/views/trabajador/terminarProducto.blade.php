@@ -32,7 +32,7 @@
             </div>
             <br>
             <div class="row justify-content-center">
-              <a class="btn btn-primary btn-lg" role="button" href="{{url('/homepage/trabajador')}}"><b>Volver</b></a>
+              <a class="btn btn-primary btn-lg" role="button" href="{{url('/homepage/Trabajador')}}"><b>Volver</b></a>
             </div>
         </div>
     </div>
@@ -45,15 +45,15 @@
     datos = Array();
     datos[0] = document.getElementById('codigoProducto').value;
     datos[1] = document.getElementById('cantidadProducto').value;
+    datos[2] = '{{$user->id}}';
 
-    if((datos[0] || datos[1]) == "")
+    if((datos[0] == "") || (datos[1] == ""))
     {
+      console.log('2');
       return 2;
     }
 
     json_text = JSON.stringify(datos);
-
-    return;
 
     $.ajax({
         headers: {
@@ -63,11 +63,18 @@
         data: {DATA:json_text},
         url: "{{url('/productoTerminado')}}",
         success: function(response){
-            if(response != 1)
+            if(response == 'La pieza ya fue finalizada')
                 showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR,response);
-            }
-        });
-
+            if(response == 'No Existe el trabajador')
+                showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR,response);
+            if(response == 'No Existe el producto')
+                showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR,response);
+            if(response == 1)
+                showMensajeSwal(MSG_SUCCESS, BTN_SUCCESS, COLOR_SUCCESS, 'Se actualizó la cantidad');
+            else
+                showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR,response);
+        }
+      });
     return 1;
   }
 

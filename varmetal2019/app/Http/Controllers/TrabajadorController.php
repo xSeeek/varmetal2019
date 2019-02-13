@@ -328,9 +328,107 @@ class TrabajadorController extends Controller
                 ->with('obras', $obras);
     }
 
-    public function terminarProducto()
+    public function terminarProducto(Request $request)
     {
-      return view('trabajador.terminarProducto');
+      $usuarioActual = Auth::user();
+      return view('trabajador.terminarProducto')
+                ->with('user',$usuarioActual);
+    }
+
+    public function productoTerminado(Request $request)
+    {
+      $response = json_decode($request->DATA);
+
+      $cantidad = 0;
+      $codigo = $response[0];
+      $cantidad += $response[1];
+      $idUser = $response[2];
+      $cont=0;
+
+      $productosRealizados = 0;
+
+      $user = User::find($idUser);
+      $trabajador = $user->trabajador;
+      $productos = Producto::get();
+
+      if($trabajador==NULL)
+        return 'No existe el trabajador';
+
+      if($productos==NULL)
+        return 'No existe el producto';
+
+      if($trabajador->producto!=NULL)
+      {
+        foreach ($trabajador->producto as $key => $producto)
+        {
+          if($producto->nombre == $codigo)
+          {
+            $cont=1;
+            $dataProducto = $producto->trabajadorWithAtributtes()->where('trabajador_id_trabajador', '=', $trabajador->idTrabajador)->get()->first();
+            $trabajadores = $producto->trabajadorWithAtributtes;
+
+            foreach($trabajadores as $worker)
+                if($worker->tipo=="Soldador")
+                  $productosRealizados += $worker->pivot->productosRealizados;
+
+            if($producto->cantProducto <= $productosRealizados)
+            return 'La pieza ya fue finalizada';
+
+            if(($productosRealizados + $cantidad) > ($producto->cantProducto))
+            {
+              echo 'La cantidad ingresada supera a la cantidad requerida actual: ';
+              echo $dataProducto->pivot->productosRealizados;
+              echo ' de: ';
+              echo $producto->cantProducto;
+              return;
+            }
+                $dataProducto->pivot->productosRealizados = ($dataProducto->pivot->productosRealizados) + $cantidad;
+                $dataProducto->pivot->kilosTrabajados = ($dataProducto->pivot->productosRealizados) * $producto->pesoKg;
+
+                $dataProducto->pivot->save();
+                $dataProducto->save();
+                return 1;
+          }
+        }
+      }
+      if($cont==0)
+      {
+        foreach ($productos as $key => $producto)
+        {
+          if($producto !=NULL)
+          {
+            if($producto->nombre == $codigo)
+            {
+              $cont=1;
+              $trabajador->producto()->attach($producto->idProducto);
+              $dataProducto = $producto->trabajadorWithAtributtes()->where('trabajador_id_trabajador', '=', $trabajador->idTrabajador)->get()->first();
+              $trabajadores = $producto->trabajadorWithAtributtes;
+
+              foreach($trabajadores as $worker)
+                  if($worker->user->type=="Soldador")
+                    $productosRealizados += $worker->pivot->productosRealizados;
+
+              if($producto->cantProducto <= $productosRealizados)
+              return 'La pieza ya fue finalizada';
+
+              if(($productosRealizados + $cantidad) > ($producto->cantProducto))
+              {
+                echo 'La cantidad ingresada supera a la cantidad requerida actual: ';
+                echo $dataProducto->pivot->productosRealizados;
+                echo ' de: ';
+                echo $producto->cantProducto;
+                return;
+              }
+                  $dataProducto->pivot->productosRealizados = ($dataProducto->pivot->productosRealizados) + $cantidad;
+                  $dataProducto->pivot->kilosTrabajados = ($dataProducto->pivot->productosRealizados) * $producto->pesoKg;
+
+                  $dataProducto->pivot->save();
+                  $dataProducto->save();
+                  return 1;
+            }
+          }
+        }
+      }
     }
 
     public function setStartTime(Request $request)

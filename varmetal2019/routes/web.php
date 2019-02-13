@@ -317,6 +317,6 @@ Route::get('/admin', 'AdminController@admin')
                     ->middleware('is_trabajador')
                     ->name('materialesGastados');
 
-        Route::post('/productoTerminado', [' uses' => 'MaterialController@productoTerminado'])
+        Route::post('/productoTerminado', ['uses' => 'TrabajadorController@productoTerminado'])
                     ->middleware('is_trabajador')
                     ->name('productoTerminado');
