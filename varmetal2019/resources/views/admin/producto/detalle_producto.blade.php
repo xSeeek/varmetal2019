@@ -39,6 +39,10 @@
                                 <input type="text" readonly id="fechaFinProducto" class="form-control-plaintext" value="{{$producto->fechaFin}}">
                             @endif
                         </div>
+                        <b>Área unitaria en Metros Cuadrados: (Editable)</b>
+                        <div class="col-sm-10">
+                            <input type="text" readonly id="areaProducto" class="form-control-plaintext" value="{{$producto->area}}">
+                        </div>
                         <b>Peso unitario en Kilogramos: (Editable)</b>
                         <div class="col-sm-10">
                             <input type="text" readonly id="pesoProducto" class="form-control-plaintext" value="{{$producto->pesoKg}}">
@@ -309,10 +313,12 @@
     nombreProducto = document.getElementById('nombreProducto');
     pesoProducto = document.getElementById('pesoProducto');
     prioridad = document.getElementById('prioridad');
+    areaProducto = document.getElementById('areaProducto');
     prioridadEdit= document.getElementById('prioridadEdit');
     nuevaCantidad= document.getElementById('nuevaCantidad');
     nombreProducto.removeAttribute("readonly");
     pesoProducto.removeAttribute("readonly");
+    areaProducto.removeAttribute("readonly");
     prioridad.setAttribute("style","display:none;")
     prioridadEdit.removeAttribute("style");
     nuevaCantidad.removeAttribute("style");
@@ -328,6 +334,7 @@
     var datos, json_text,nuevaCantidad, cantidadProductoNuevo,select, nombreProducto, pesoProducto, prioridad, prioridadEdit;
 
     nombreProducto = document.getElementById('nombreProducto');
+    areaProducto = $('#areaProducto');
     pesoProducto = document.getElementById('pesoProducto');
     prioridadEdit = document.getElementById('prioridadEdit');
     prioridad = document.getElementById('prioridad');
@@ -343,6 +350,7 @@
     datos[2]= select.value;
     datos[3]= cantidadProductoNuevo.value;
     datos[4]='{{$producto->idProducto}}';
+    datos[5] = areaProducto.val();
 
     json_text = JSON.stringify(datos);
     $.ajax({
@@ -359,6 +367,7 @@
           prioridadEdit.setAttribute("style","display:none;");
           prioridad.removeAttribute("style");
           nuevaCantidad.setAttribute("style","display:none;");
+          areaProducto.attr('readonly', '');
           enableChangesButton.innerText="Habilitar/Deshabilitar";
           enableChangesButton.setAttribute("onclick","changeStatus()");
           enableChangesButton.setAttribute("readonly","");

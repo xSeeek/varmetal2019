@@ -20,6 +20,7 @@
                                     <thead>
                                         <tr>
                                             <th>Código</th>
+                                            <th>Área (m<sup>2</sup>)</th>
                                             <th>Peso (Kg)</th>
                                             <th>Estado</th>
                                             <th>Prioridad</th>
@@ -33,6 +34,11 @@
                                             @php $cont++ @endphp
                                             <tr id="id_producto{{ $producto->idProducto }}">
                                                 <td scope="col">{{ $producto->codigo }}</td>
+                                                @if ($producto->area != null)
+                                                  <td scope="col">{{ $producto->area }}</td>
+                                                @elseif ($producto->area == null)
+                                                  <td scope="col">0</td>
+                                                @endif
                                                 <td scope="col">{{ $producto->pesoKg }}</td>
                                                 @if($producto->pausa != NULL)
                                                     @foreach($producto->pausa as $key => $pausa)

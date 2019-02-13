@@ -124,6 +124,7 @@
                             <th>Fecha Inicio</th>
                             <th>Fecha Fin</th>
                             <th>Estado</th>
+                            <th>Área (m<sup>2</sup>)</th>
                             <th>Peso (kg)</th>
                             <th>Ficha</th>
                             <th>Eliminar</th>
@@ -157,6 +158,11 @@
                                         <td scope="col">Sin estado definido</td>
                                         @break
                                 @endswitch
+                                @if ($productos->area != null)
+                                  <td scope="col">{{ $productos->area }}</td>
+                                @elseif ($productos->area == null)
+                                  <td scope="col">0</td>
+                                @endif
                                 <td scope="col">{{ $productos->pesoKg }} Kg</td>
                                 <td scope="col"><a class="btn btn-outline-success btn-sm" href="{{url('productoControl', [$productos->idProducto])}}" role="button"><b>Ficha</b></a>
                                 <td scope="col"><a class="btn btn-outline-secondary btn-sm" onclick="eliminarProducto({{$productos->idProducto}})" role="button"><b>Eliminar</b></a>

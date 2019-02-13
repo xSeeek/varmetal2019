@@ -26,12 +26,14 @@ class ProductoController extends Controller
       $prioridad = $response[2];
       $cantidad = $response[3];
       $idProducto = $response[4];
+      $areaProducto = $response[5];
 
       $producto = Producto::find($idProducto);
 
       $producto->nombre = $nombre;
       $producto->pesoKg = $peso;
       $producto->prioridad = $prioridad;
+      $producto->area = $areaProducto;
       if($cantidad!=NULL)
         $producto->cantProducto = $cantidad;
       $producto->save();
@@ -183,6 +185,7 @@ class ProductoController extends Controller
         $producto = new Producto;
         $producto->nombre = $request->nombreProducto;
         $producto->codigo = $request->codigoProducto;
+        $producto->area = $request->areaProducto;
         $producto->pesoKg = $request->pesoProducto;
         $producto->cantPausa = 0;
         $producto->prioridad = $request->inputPrioridad;
