@@ -64,6 +64,7 @@
                                 <select class="custom-select" id="inputClass" aria-describedby="inputClass" name="class" required>
                                   <option value="1">Operador</option>
                                   <option value="2">Soldador</option>
+                                  <option value="4">Pintor</option>
                                 </select>
                             </div>
                         </div>
@@ -86,6 +87,7 @@ function clasesDiponibles()
   var selectClass = document.getElementById("inputClass");
   var operador = document.createElement("option");
   var soldador = document.createElement("option");
+  var pintor = document.createElement("option");
   var admin = document.createElement("option");
   var gerente = document.createElement("option");
   var supervisor = document.createElement("option");
@@ -105,6 +107,9 @@ function clasesDiponibles()
     soldador.text = "Soldador";
     soldador.value = 2;
     selectClass.add(soldador);
+    pintor.text = "Pintor";
+    pintor.value = 4;
+    selectClass.add(pintor);
   }
   if(selectType.value == 3)
   {
@@ -122,6 +127,9 @@ function clasesDiponibles()
     soldador.text = "Soldador";
     soldador.value = 2;
     selectClass.add(soldador);
+    pintor.text = "Pintor";
+    pintor.value = 4;
+    selectClass.add(pintor);
   }
 }
 
