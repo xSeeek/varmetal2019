@@ -21,9 +21,6 @@ class MaterialController extends Controller
       $idAlambre = $response[4];
       $idGas = $response[3];
 
-      $contGas=0;
-      $contAla=0;
-
       $user = User::find($idUser);
       $gas = Material::find($idGas);
 
@@ -60,15 +57,15 @@ class MaterialController extends Controller
             echo $producto->cantProducto-$dataProducto->pivot->productosRealizados;
             echo ' por hacer de la pieza: ';
             echo $producto->codigo;
+            return;
           }
-            //return var_dump($gas->productoWithAttributes()->where('producto_id_producto','=',$producto->idProducto)->where('trabajador_id_trabajador','=',$trabajador->idTrabajador)->where('material_id_material','=',$gas->idMaterial)->orderBy('producto_id_producto','desc')->first());
             if($gas->productoWithAttributes()->where('producto_id_producto','=',$producto->idProducto)->where('trabajador_id_trabajador','=',$trabajador->idTrabajador)->where('material_id_material','=',$gas->idMaterial)->orderBy('producto_id_producto','desc')->get()->first()==NULL)
             {
-              $gas->producto()->attach($producto->idProducto);
+              $gas->producto()->attach($producto->idProducto, ['trabajador_id_trabajador' => $trabajador->idTrabajador]);
             }
             if($alambre->productoWithAttributes()->where('producto_id_producto','=',$producto->idProducto)->where('trabajador_id_trabajador','=',$trabajador->idTrabajador)->where('material_id_material','=',$gas->idMaterial)->orderBy('producto_id_producto','desc')->get()->first()==NULL)
             {
-              $alambre->producto()->attach($producto->idProducto);
+              $alambre->producto()->attach($producto->idProducto, ['trabajador_id_trabajador' => $trabajador->idTrabajador]);
             }
             $gases = $gas->productoWithAttributes;
             $alambres = $alambre->productoWithAttributes;
@@ -169,7 +166,7 @@ class MaterialController extends Controller
         {
           if($producto !=NULL)
           {
-            if($producto->nombre == $codigo)
+            if($producto->codigo == $codigo)
             {
               $cont=1;
               $trabajador->producto()->attach($producto->idProducto);
