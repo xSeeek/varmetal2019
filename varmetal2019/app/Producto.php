@@ -33,4 +33,12 @@ class Producto extends Model
     {
         return $this->belongsTo('Varmetal\Tipo', 'tipo_id_tipo');
     }
+    public function material()
+    {
+       return $this->belongsToMany('Varmetal\Material', 'materiales_gastados', 'producto_id_producto', 'material_id_material');
+    }
+    public function materialWithAtributes()
+    {
+        return $this->belongsToMany('Varmetal\Material', 'materiales_gastados', 'producto_id_producto', 'material_id_material')->withPivot('gastado', 'fechaTermino','trabajador_id_trabajador');
+    }
 }

@@ -28,7 +28,32 @@
             </div>
             <br>
             <div class="row justify-content-center">
-              <a class="btn btn-outline-success my-2 my-sm-0" onclick="finalizarDia()" role="button" style="cursor: pointer;">Finalizar Día</a>
+              <a data-target="#exampleModal" data-toggle="modal" class="btn btn-outline-success my-2 my-sm-0" role="button" style="cursor: pointer;">Finalizar Día</a>
+              <!-- Modal -->
+              <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Materiales Gastados</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      Ingrese la cantidad de alambre en metros gastado:
+                      <select class="custom-select" id="alambre" aria-describedby="alambre" name="type" onchange="clasesDiponibles()" required><select><br><br>
+                      <input type="number" min="0" pattern="^[0-9]+" id="alambreGastado" class="form-control" placeholder="Alambre gastado"></input><br>
+                      Ingrese la cantidad de gas gastado:
+                      <select class="custom-select" id="gas" aria-describedby="pintura" name="type" onchange="clasesDiponibles()" required></select><br><br>
+                      <input type="number" min="0" pattern="^[0-9]+" id="gasGastado" class="form-control" placeholder="Gas gastado"></input><br>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                      <button type="button" onclick="finalizarDia()" class="btn btn-primary">Confirmar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
             <br>
             <div class="row justify-content-center">
@@ -37,6 +62,37 @@
         </div>
     </div>
 <script type="text/javascript">
+
+window.onload(cargarSelect());
+
+  function cargarSelect()
+  {
+    var selectAlambre = document.getElementById('alambre');
+    var selectGas = document.getElementById('gas');
+    var option = document.createElement('option');
+    var cont = 0;
+
+    @php
+      foreach($materiales as $key => $material)
+      {
+    @endphp
+        var option = document.createElement('option');
+        if('{{$material->nombre}}'=='Alambre')
+        {
+          option.text = '{{$material->codigo}}';
+          option.value = '{{$material->idMaterial}}';
+          selectAlambre.add(option);
+        }
+        if('{{$material->nombre}}'=='Gas')
+        {
+          option.text = '{{$material->codigo}}';
+          option.value = '{{$material->idMaterial}}';
+          selectGas.add(option);
+        }
+    @php
+      }
+    @endphp
+  }
 
   function productoTerminado()
   {
@@ -49,7 +105,7 @@
 
     if((datos[0] == "") || (datos[1] == ""))
     {
-      console.log('2');
+      showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR, 'Faltan datos');
       return 2;
     }
 
@@ -64,16 +120,16 @@
         url: "{{url('/productoTerminado')}}",
         success: function(response){
             if(response == 'La pieza ya fue finalizada')
-                showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR,response);
+                showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR, response);
             if(response == 'No Existe el trabajador')
-                showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR,response);
+                showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR, response);
             if(response == 'No Existe el producto')
-                showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR,response);
+                showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR, response);
             if(response == 1)
                 showMensajeSwal(MSG_SUCCESS, BTN_SUCCESS, COLOR_SUCCESS, 'Se actualizó la cantidad');
             else
-                showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR,response);
-        }
+                showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR, response);
+      }
       });
     return 1;
   }
@@ -83,50 +139,39 @@
     var datos, json_text;
 
     datos = Array();
+    datos[0] = document.getElementById('gasGastado').value;
+    datos[1] = document.getElementById('alambreGastado').value;
+    datos[2] = '{{$user->id}}';
+    datos[3] = document.getElementById('alambre').value;
+    datos[4] = document.getElementById('gas').value;
 
-    swal({
-      title: 'Gastos',
-      html:
-      '<h4>Alambre en metros</h4>'+
-      '<input id="swal-input1" min="1" pattern="^[0-9]+" type="number" class="swal2-input" autofocus placeholder="Alambre Gastado">' +
-      '<h4>Gas</h4>'+
-      '<input id="swal-input2" min="1" pattern="^[0-9]+" type="number" class="swal2-input" placeholder="Gas Gastado">',
-      preConfirm: function() {
-          return new Promise(function(resolve) {
-          if (true) {
-          resolve([
-           datos[0] = document.getElementById('swal-input1').value,
-           datos[1] = document.getElementById('swal-input2').value
-          ]);
-          }
-          });
-      }
-      }).then(function(result) {
-          if((datos[0] || datos[1]) != "")
+    if(((datos[0] || datos[1]) != "") || ((datos[3] || datos[4]) != ""))
+    {
+      json_text = JSON.stringify(datos);
+      $.ajax(
+        {
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          type: "POST",
+          data: {DATA:json_text},
+          url: "{{url('/materialesGastados')}}",
+          success: function(response)
           {
-            json_text = JSON.stringify(datos);
-
-            return;
-
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                type: "POST",
-                data: {DATA:json_text},
-                url: "{{url('/materialesGastados')}}",
-                success: function(response){
-                    if(response != 1)
-                        showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR,response);
-                    }
-                });
-          }else {
-            return 2;
+              if(response != 1)
+              {
+                  showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR,response);
+              }
+              if(response==1)
+              {
+                showMensajeSwal(MSG_SUCCESS, BTN_SUCCESS, COLOR_SUCCESS, 'Se Finalizó el Día Completamente');
+              }
           }
-      })
-      return 1;
+        });
+    }else {
+      return 2;
+    }
   }
-
 </script>
 
 @endsection
