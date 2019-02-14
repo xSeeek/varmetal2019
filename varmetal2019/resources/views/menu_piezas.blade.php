@@ -19,6 +19,16 @@
                         </tr>
 
                         <tr>
+                            <th>Piezas en Soldadura</th>
+                            <td><a class="btn btn-outline-success my-2 my-sm-0" href="{{url('adminProducto', ['soldadura'])}}" role="button" style="cursor: pointer;">Ingresar</a></td>
+                        </tr>
+
+                        <tr>
+                            <th>Piezas en Pintura</th>
+                            <td><a class="btn btn-outline-success my-2 my-sm-0" href="{{url('adminProducto', ['pintura'])}}" role="button" style="cursor: pointer;">Ingresar</a></td>
+                        </tr>
+
+                        <tr>
                             <th>Piezas Finalizadas</th>
                             <td><a class="btn btn-outline-success my-2 my-sm-0" href="{{url('adminProducto', ['terminados'])}}" role="button" style="cursor: pointer;">Ingresar</a></td>
                         </tr>

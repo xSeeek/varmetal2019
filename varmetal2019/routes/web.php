@@ -312,7 +312,7 @@ Route::get('/admin', 'AdminController@admin')
                     ->middleware('is_supervisor');
 
 /* [**Materiales**]*/
-    /*[**Trbajador**]*/
+    /*[**Trabajador**]*/
         Route::post('/materialesGastados', ['uses' => 'MaterialController@materialesGastados'])
                     ->middleware('is_trabajador')
                     ->name('materialesGastados');
@@ -320,3 +320,31 @@ Route::get('/admin', 'AdminController@admin')
         Route::post('/productoTerminado', ['uses' => 'MaterialController@productoTerminado'])
                     ->middleware('is_trabajador')
                     ->name('productoTerminado');
+/* [**Pintado**] */
+    /* [**Administrador**] */
+        /* [** GET **] */
+            Route::get('/pintadasPendientes/{id}', ['uses' => 'PinturaController@piezasPendientes'])
+                        ->middleware('is_supervisor')
+                        ->name('pintadasPendientes');
+            Route::get('/detallesPintado/{id}', ['uses' => 'PinturaController@detallePiezaPintada'])
+                        ->middleware('is_supervisor')
+                        ->name('detallesPintado');
+            Route::get('/pintado/pintadoControl/{id}', ['uses' => 'PinturaController@pintadoControl'])
+                        ->middleware('is_supervisor')
+                        ->name('pintado/pintadoControl');
+            Route::get('/detalleRevision/{id}', ['uses' => 'PinturaController@detallePintadoControl'])
+                        ->middleware('is_supervisor')
+                        ->name('detalleRevision');
+        /* [** POST **] */
+            Route::post('/pintadoControl/revisarPintado', ['uses' => 'PinturaController@revisarPintado'])
+                        ->middleware('is_supervisor')
+                        ->name('pintadoControl/revisarPintado');
+    /* [**Trabajador**] */
+        /* [** GET **] */
+            Route::get('/actualizarPintado', 'PinturaController@homePintor')
+                        ->middleware('is_trabajador')
+                        ->name('actualizarPintado');
+        /* [** POST **] */
+            Route::post('/pintarPieza', ['uses' => 'PinturaController@pintarPieza'])
+                        ->middleware('is_trabajador')
+                        ->name('pintarPieza');

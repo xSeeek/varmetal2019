@@ -77,7 +77,11 @@ class TrabajadorController extends Controller
                   ->with('trabajador', $trabajadorActual)
                   ->with('ayudantes_almacenados', $ayudantes);
       }
-
+    if($trabajadorActual->tipo=="Pintor")
+            return view('pintor')
+            ->with('user', $usuarioActual)
+            ->with('trabajador', $trabajadorActual)
+            ->with('ayudantes_almacenados', $ayudantes);
     }
 
     public function adminTrabajadores($type)

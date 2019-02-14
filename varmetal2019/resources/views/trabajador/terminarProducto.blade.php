@@ -4,10 +4,10 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Producto en desarrollo</div>
+                <div class="card-header">Pieza en desarrollo</div>
                 <div class="card-body">
                   <h4>
-                    <b>Ingrese el codigo del Producto:</b>
+                    <b>Ingrese el codigo de la Pieza:</b>
                   </h4>
                     <div class="col-sm-10">
                       <h2>

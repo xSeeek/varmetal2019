@@ -36,7 +36,7 @@ class HomeController extends Controller
         $usuarioActual = Auth::user();
 
         if($usuarioActual->trabajador == NULL)
-            return redirect()->route('/home');
+            return redirect()->route('/');
 
         $datos_trabajador = $usuarioActual->trabajador;
         $ayudantes = $datos_trabajador->ayudante;
