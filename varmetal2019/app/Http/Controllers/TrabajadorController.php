@@ -110,6 +110,13 @@ class TrabajadorController extends Controller
             if($producto->pivot->kilosTrabajados!=0)
               $toneladas += ($producto->tipo->factorKilo*$producto->pivot->kilosTrabajados);
         }
+        $fecha=NULL;
+        $ultimo_material_gastado = $trabajadorActual->materialWithAtributes()->where('trabajador_id_trabajador','=',$trabajadorActual->idTrabajador)->orderBy('fechaTermino','desc')->get()->first();
+        if($ultimo_material_gastado!=NULL)
+          $fecha= Carbon::parse($ultimo_material_gastado->pivot->fechaTermino);
+
+
+
         $toneladas /= 1000;
         $datos_trabajador = $usuarioActual->trabajador;
         $ayudantes = $datos_trabajador->ayudante;
@@ -119,7 +126,8 @@ class TrabajadorController extends Controller
                   ->with('ayudantes_almacenados', $ayudantes)
                   ->with('kilosTrabajados',$kilosTrabajados)
                   ->with('gastoAla',$gastoAla)
-                  ->with('gastoGas',$gastoGas);
+                  ->with('gastoGas',$gastoGas)
+                  ->with('fecha',$fecha);
       }
 
     }
@@ -383,9 +391,18 @@ class TrabajadorController extends Controller
     {
       $materiales = Material::get();
       $usuarioActual = Auth::user();
+      $trabajadorActual = $usuarioActual->trabajador;
+
+      $fecha=NULL;
+      $ultimo_material_gastado = $trabajadorActual->materialWithAtributes()->where('trabajador_id_trabajador','=',$trabajadorActual->idTrabajador)->orderBy('fechaTermino','desc')->get()->first();
+      if($ultimo_material_gastado!=NULL)
+        $fecha= Carbon::parse($ultimo_material_gastado->pivot->fechaTermino)->day;
+      $fechaActual=now();
       return view('trabajador.terminarProducto')
                 ->with('user',$usuarioActual)
-                ->with('materiales',$materiales);
+                ->with('materiales',$materiales)
+                ->with('fecha',$fecha)
+                ->with('fechaActual',$fechaActual->day);
     }
 
     public function setStartTime(Request $request)

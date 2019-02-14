@@ -51,7 +51,8 @@
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                      <button type="button" onclick="finalizarDia()" class="btn btn-primary">Confirmar</button>
+                      <button type="button" id="confirmar" onclick="finalizarDia()" class="btn btn-primary">Confirmar</button>
+                      <button type="button" style="display:none;" id="confirmado" class="btn btn-primary">Ya Finalizó el Día</button>
                     </div>
                   </div>
                 </div>
@@ -66,6 +67,22 @@
 <script type="text/javascript">
 
 window.onload(cargarSelect());
+window.onload(aparecerBoton());
+
+  function aparecerBoton()
+  {
+    var botonConfirmar = document.getElementById('confirmar');
+    var botonConfirmado = document.getElementById('confirmado');
+    if('{{$fecha}}'=='{{$fechaActual}}')
+    {
+      botonConfirmar.setAttribute("style","display:none;");
+      botonConfirmado.removeAttribute("style");
+    }
+    else {
+      botonConfirmado.setAttribute("style","display:none;");
+      botonConfirmar.removeAttribute("style");
+    }
+  }
 
   function cargarSelect()
   {

@@ -342,7 +342,7 @@
     nombreProducto.removeAttribute("readonly");
     pesoProducto.removeAttribute("readonly");
     areaProducto.removeAttribute("readonly");
-    prioridad.setAttribute("style","display:none;")
+    prioridad.setAttribute("style","display:none;");
     prioridadEdit.removeAttribute("style");
     nuevaCantidad.removeAttribute("style");
 
