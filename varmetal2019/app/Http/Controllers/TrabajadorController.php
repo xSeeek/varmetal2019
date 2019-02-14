@@ -246,6 +246,8 @@ class TrabajadorController extends Controller
           $newTrabajador->tipo = 'Soldador';
         if($data->class == 3)
           $newTrabajador->tipo = 'Gerente';
+        if($data->class == 4)
+          $newTrabajador->tipo = 'Pintor';
 
         if($newTrabajador->validateData($data->nameTrabajador) == false)
             return "Tiene que ingresar el nombre para el trabajador.";
