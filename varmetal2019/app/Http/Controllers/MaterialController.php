@@ -20,7 +20,6 @@ class MaterialController extends Controller
       $idUser = $response[2];
       $idAlambre = $response[4];
       $idGas = $response[3];
-      $productosRealizados=0;
 
       $cont=NULL;
 
@@ -51,6 +50,8 @@ class MaterialController extends Controller
       }
       foreach ($productos as $key => $producto)
       {
+        $cont2=0;
+        $productosRealizados=0;
         $foraneaGas=$gas->idMaterial*100+$producto->idProducto*10+$trabajador->idTrabajador;
         $foraneaAlambre=$alambre->idMaterial*100+$producto->idProducto*10+$trabajador->idTrabajador;
         if($producto->trabajadorSoldadorWithAtributtes()->where('trabajador_id_trabajador', '=', $trabajador->idTrabajador)->get()->first()!=NULL)
@@ -74,20 +75,25 @@ class MaterialController extends Controller
             if($gas->productoWithAttributes()->where('foranea', '=', $foraneaGas)->get()->first()==NULL)
             {
                 $gas->producto()->attach($producto->idProducto, ['trabajador_id_trabajador' => $trabajador->idTrabajador,'gastado' => $gastoGas, 'fechaTermino' => $producto->fechaFin, 'foranea' => $foraneaGas, 'fechaTermino' => $dataProducto->pivot->fechaComienzo]);
+                $cont2++;
             }
             if($alambre->productoWithAttributes()->where('foranea', '=', $foraneaAlambre)->get()->first()==NULL)
             {
                 $alambre->producto()->attach($producto->idProducto, ['trabajador_id_trabajador' => $trabajador->idTrabajador,'gastado' => $gastoAlambre, 'fechaTermino' => $producto->fechaFin, 'foranea' => $foraneaAlambre, 'fechaTermino' => $dataProducto->pivot->fechaComienzo]);
+                $cont2++;
             }
           }
         }
+        if($cont2==2)
+        {
+          $producto->zona=2;
+          $producto->save();
+        }
       }
-      if($cont==NULL)
-      {
+      if($cont=='Faltante')
+        return '<br>Día Finalizado Con Exito';
+      else
         return 1;
-      }else {
-        return;
-      }
     }
 
     public function productoTerminado(Request $request)
@@ -118,38 +124,43 @@ class MaterialController extends Controller
         {
           if($producto->codigo == $codigo)
           {
-            $cont=1;
-            $dataProducto = $producto->trabajadorSoldadorWithAtributtes()->where('trabajador_id_trabajador', '=', $trabajador->idTrabajador)->get()->first();
-            $trabajadores = $producto->trabajadorSoldadorWithAtributtes;
-
-            foreach($trabajadores as $worker)
-                if($worker->tipo=="Soldador")
-                  $productosRealizados += $worker->pivot->productosRealizados;
-
-            if($producto->cantProducto <= $productosRealizados)
+            if($producto->zona==1)
             {
-              echo $producto->cantProducto;
-              echo '-';
-              echo $productosRealizados;
-              return '| La pieza ya fue finalizada';
-            }
+              $cont=1;
+              $dataProducto = $producto->trabajadorSoldadorWithAtributtes()->where('trabajador_id_trabajador', '=', $trabajador->idTrabajador)->get()->first();
+              $trabajadores = $producto->trabajadorSoldadorWithAtributtes;
 
-            if(($productosRealizados + $cantidad) > ($producto->cantProducto))
-            {
-              echo 'La cantidad ingresada supera a la cantidad requerida actual: ';
-              echo $productosRealizados;
-              echo ' de ';
-              echo $producto->cantProducto;
-              return;
-            }
-                $dataProducto->pivot->productosRealizados = ($dataProducto->pivot->productosRealizados) + $cantidad;
-                $dataProducto->pivot->kilosTrabajados = ($dataProducto->pivot->productosRealizados) * $producto->pesoKg;
-                if($dataProducto->pivot->productosRealizados == $producto->cantProducto)
-                  $dataProducto->pivot->fechaTermino = now();
+              foreach($trabajadores as $worker)
+                  if($worker->tipo=="Soldador")
+                    $productosRealizados += $worker->pivot->productosRealizados;
 
-                $dataProducto->pivot->save();
-                $dataProducto->save();
-                return 1;
+              if($producto->cantProducto <= $productosRealizados)
+              {
+                echo $producto->cantProducto;
+                echo '-';
+                echo $productosRealizados;
+                return '| La pieza ya fue finalizada';
+              }
+
+              if(($productosRealizados + $cantidad) > ($producto->cantProducto))
+              {
+                echo 'La cantidad ingresada supera a la cantidad requerida actual: ';
+                echo $productosRealizados;
+                echo ' de ';
+                echo $producto->cantProducto;
+                return;
+              }
+              $dataProducto->pivot->productosRealizados = ($dataProducto->pivot->productosRealizados) + $cantidad;
+              $dataProducto->pivot->kilosTrabajados = ($dataProducto->pivot->productosRealizados) * $producto->pesoKg;
+              if($dataProducto->pivot->productosRealizados == $producto->cantProducto)
+                $dataProducto->pivot->fechaComienzo = now();
+
+              $dataProducto->pivot->save();
+              $dataProducto->save();
+              return 1;
+            }else {
+              return 2;
+            }
           }
         }
       }
@@ -183,7 +194,8 @@ class MaterialController extends Controller
               }
                   $dataProducto->pivot->productosRealizados = ($dataProducto->pivot->productosRealizados) + $cantidad;
                   $dataProducto->pivot->kilosTrabajados = ($dataProducto->pivot->productosRealizados) * $producto->pesoKg;
-
+                  if($dataProducto->pivot->productosRealizados == $producto->cantProducto)
+                    $dataProducto->pivot->fechaComienzo = now();
                   $dataProducto->pivot->save();
                   $dataProducto->save();
                   return 1;

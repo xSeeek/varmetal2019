@@ -127,9 +127,13 @@ window.onload(cargarSelect());
                 showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR, response);
             if(response == 'No Existe el producto')
                 showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR, response);
+            if(response == 'No se encontró el producto')
+                showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR, response);
             if(response == 1)
                 showMensajeSwal(MSG_SUCCESS, BTN_SUCCESS, COLOR_SUCCESS, 'Se actualizó la cantidad');
-            else
+            if(response == 2)
+                showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR, 'Esta pieza aún no está lista para soldarse');
+            elseif(response!=1)
                 showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR, response);
       }
       });
