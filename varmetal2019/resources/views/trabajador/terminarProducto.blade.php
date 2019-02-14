@@ -157,7 +157,7 @@ window.onload(cargarSelect());
           data: {DATA:json_text},
           url: "{{url('/materialesGastados')}}",
           success: function(response)
-          {
+          { 
               if(response != 1)
               {
                   showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR,response);

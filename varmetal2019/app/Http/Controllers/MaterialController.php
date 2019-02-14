@@ -21,8 +21,7 @@ class MaterialController extends Controller
       $idAlambre = $response[4];
       $idGas = $response[3];
 
-      $contGas=0;
-      $contAla=0;
+      $cont=0;
 
       $user = User::find($idUser);
       $gas = Material::find($idGas);
@@ -44,65 +43,41 @@ class MaterialController extends Controller
       {
         return 'No existe el trabajador';
       }
-      $productos = $trabajador->producto;
-      if($productos==NULL)
+      $productos = $trabajador->productoSoldador;
+      if(count($productos)==0)
       {
         return 'No posees productos terminados';
       }
       foreach ($productos as $key => $producto)
       {
-        if($producto->trabajadorWithAtributtes()->where('trabajador_id_trabajador', '=', $trabajador->idTrabajador)->get()->first()!=NULL)
+        $foraneaGas=$gas->idMaterial*100+$producto->idProducto*10+$trabajador->idTrabajador;
+        $foraneaAlambre=$alambre->idMaterial*100+$producto->idProducto*10+$trabajador->idTrabajador;
+        if($producto->trabajadorSoldadorWithAtributtes()->where('trabajador_id_trabajador', '=', $trabajador->idTrabajador)->get()->first()!=NULL)
         {
-          $dataProducto = $producto->trabajadorWithAtributtes()->where('trabajador_id_trabajador', '=', $trabajador->idTrabajador)->get()->first();
+          $dataProducto = $producto->trabajadorSoldadorWithAtributtes()->where('trabajador_id_trabajador', '=', $trabajador->idTrabajador)->get()->first();
           if($dataProducto->pivot->productosRealizados < $producto->cantProducto)
           {
-            echo 'Faltan ';
+            if($cont==0)
+              echo 'Piezas Faltantes:';
+            $cont++;
+            echo ' | ';
             echo $producto->cantProducto-$dataProducto->pivot->productosRealizados;
             echo ' por hacer de la pieza: ';
             echo $producto->codigo;
-          }
-            //return var_dump($gas->productoWithAttributes()->where('producto_id_producto','=',$producto->idProducto)->where('trabajador_id_trabajador','=',$trabajador->idTrabajador)->where('material_id_material','=',$gas->idMaterial)->orderBy('producto_id_producto','desc')->first());
-            if($gas->productoWithAttributes()->where('producto_id_producto','=',$producto->idProducto)->where('trabajador_id_trabajador','=',$trabajador->idTrabajador)->where('material_id_material','=',$gas->idMaterial)->orderBy('producto_id_producto','desc')->get()->first()==NULL)
+          }else {
+            if($gas->productoWithAttributes()->where('foranea', '=', $foraneaGas)->orderBy('producto_id_producto','desc')->get()->first()==NULL)
             {
-              $gas->producto()->attach($producto->idProducto);
+                $gas->producto()->attach($producto->idProducto, ['trabajador_id_trabajador' => $trabajador->idTrabajador,'gastado' => $gastoGas, 'fechaTermino' => now(), 'foranea' => $foraneaGas]);
             }
-            if($alambre->productoWithAttributes()->where('producto_id_producto','=',$producto->idProducto)->where('trabajador_id_trabajador','=',$trabajador->idTrabajador)->where('material_id_material','=',$gas->idMaterial)->orderBy('producto_id_producto','desc')->get()->first()==NULL)
+            if($alambre->productoWithAttributes()->where('foranea', '=', $foraneaAlambre)->get()->first()==NULL)
             {
-              $alambre->producto()->attach($producto->idProducto);
-            }
-            $gases = $gas->productoWithAttributes;
-            $alambres = $alambre->productoWithAttributes;
-            foreach ($gases as $key => $mg)
-            {
-              if($mg->pivot->fechaTermino==NULL)
-              {
-                $mg->pivot->trabajador_id_trabajador = $trabajador->idTrabajador;
-                $mg->pivot->save();
-                $mg->save();
-                $mg->pivot->gastado = $gastoGas;
-                $mg->pivot->fechaTermino = now();
-                $mg->pivot->save();
-                $mg->save();
-                break;
-              }
-            }
-            foreach ($alambres as $key => $ag)
-            {
-                if($ag->pivot->fechaTermino==NULL)
-                {
-                  $ag->pivot->trabajador_id_trabajador = $trabajador->idTrabajador;
-                  $ag->pivot->save();
-                  $ag->save();
-                  $ag->pivot->gastado = $gastoAlambre;
-                  $ag->pivot->fechaTermino = now();
-                  $ag->pivot->save();
-                  $ag->save();
-                  break;
-                }
+              if($alambre->producto()->attach($producto->idProducto, ['trabajador_id_trabajador' => $trabajador->idTrabajador,'gastado' => $gastoAlambre, 'fechaTermino' => now(), 'foranea' => $foraneaAlambre]))
+                $alambre->producto()->attach($producto->idProducto, ['trabajador_id_trabajador' => $trabajador->idTrabajador,'gastado' => $gastoAlambre, 'fechaTermino' => now(), 'foranea' => $foraneaAlambre]);
             }
           }
+        }
       }
-      return "Piezas Registradas";
+      return 1;
     }
 
     public function productoTerminado(Request $request)
@@ -134,8 +109,8 @@ class MaterialController extends Controller
           if($producto->nombre == $codigo)
           {
             $cont=1;
-            $dataProducto = $producto->trabajadorWithAtributtes()->where('trabajador_id_trabajador', '=', $trabajador->idTrabajador)->get()->first();
-            $trabajadores = $producto->trabajadorWithAtributtes;
+            $dataProducto = $producto->trabajadorSoldadorWithAtributtes()->where('trabajador_id_trabajador', '=', $trabajador->idTrabajador)->get()->first();
+            $trabajadores = $producto->trabajadorSoldadorWithAtributtes;
 
             foreach($trabajadores as $worker)
                 if($worker->tipo=="Soldador")
@@ -156,7 +131,6 @@ class MaterialController extends Controller
                 $dataProducto->pivot->kilosTrabajados = ($dataProducto->pivot->productosRealizados) * $producto->pesoKg;
                 $dataProducto->pivot->fechaComienzo = now();
 
-
                 $dataProducto->pivot->save();
                 $dataProducto->save();
                 return 1;
@@ -172,9 +146,9 @@ class MaterialController extends Controller
             if($producto->nombre == $codigo)
             {
               $cont=1;
-              $trabajador->producto()->attach($producto->idProducto);
-              $dataProducto = $producto->trabajadorWithAtributtes()->where('trabajador_id_trabajador', '=', $trabajador->idTrabajador)->get()->first();
-              $trabajadores = $producto->trabajadorWithAtributtes;
+              $trabajador->productoSoldador()->attach($producto->idProducto, ['fechaComienzo' => now()]);
+              $dataProducto = $producto->trabajadorSoldadorWithAtributtes()->where('trabajador_id_trabajador', '=', $trabajador->idTrabajador)->get()->first();
+              $trabajadores = $producto->trabajadorSoldadorWithAtributtes;
 
               foreach($trabajadores as $worker)
                   if($worker->user->type=="Soldador")
