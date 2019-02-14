@@ -143,7 +143,7 @@ class MaterialController extends Controller
         {
           if($producto !=NULL)
           {
-            if($producto->nombre == $codigo)
+            if($producto->codigo == $codigo)
             {
               $cont=1;
               $trabajador->productoSoldador()->attach($producto->idProducto, ['fechaComienzo' => now()]);

@@ -41,7 +41,11 @@
                         </div>
                         <b>Área unitaria en Metros Cuadrados: (Editable)</b>
                         <div class="col-sm-10">
-                            <input type="text" readonly id="areaProducto" class="form-control-plaintext" value="{{$producto->area}}">
+                            @if($producto->area == 0)
+                                <input type="text" readonly id="areaProducto" class="form-control-plaintext" value="No se ha especificado el área.">
+                            @else
+                                <input type="text" readonly id="areaProducto" class="form-control-plaintext" value="{{$producto->area}}">
+                            @endif
                         </div>
                         <b>Peso unitario en Kilogramos: (Editable)</b>
                         <div class="col-sm-10">
@@ -135,6 +139,25 @@
                                   <option value="5">Alta</option>
                           </select>
                           <br><br>
+                        </div>
+                        <div style="color:darkorange">
+                            <b>Zona encargada actual:</b>
+                            <div class="col-sm-10">
+                                @switch($producto->zona)
+                                    @case(0)
+                                        <input type="text" readonly id="zonaProducto" class="form-control-plaintext" style="color:darkorange" value="Taller">
+                                        @break;
+                                    @case(1)
+                                        <input type="text" readonly id="zonaProducto" class="form-control-plaintext" style="color:darkorange" value="Soldadura">
+                                        @break;
+                                    @case(0)
+                                        <input type="text" readonly id="zonaProducto" class="form-control-plaintext" style="color:darkorange"value="Pintura">
+                                        @break;
+                                    @default:
+                                        <input type="text" readonly id="zonaProducto" class="form-control-plaintext" style="color:darkorange" value="No determinado">
+                                        @break;
+                                    @endswitch
+                            </div>
                         </div>
                         <b>Horas Hombre Requeridas:</b>
                         <div class="col-sm-10">
