@@ -255,6 +255,10 @@ class TrabajadorController extends Controller
         if((Rut::parse($data->rutTrabajador)->validate()) == false)
             return "RUT no válido.";
 
+        $search = Trabajador::where('rut', $data->rutTrabajador)->first();
+        if($search != NULL)
+            return 'El RUT ingresado ya está registrado en el sistema.';
+
         $newUserTrabajador->save();
         $newUserTrabajador->trabajador()->save($newTrabajador);
 

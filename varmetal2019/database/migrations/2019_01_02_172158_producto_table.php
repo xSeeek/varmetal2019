@@ -19,13 +19,14 @@ class ProductoTable extends Migration
             $table->string('codigo')->unique();
             $table->timestamp('fechaInicio')->timestamps();
             $table->timestamp('fechaFin')->nullable();
-            $table->float('area')->nullable();
+            $table->float('area')->default(0);
             $table->float('pesoKg')->nullable();
             $table->integer('cantPausa')->default(0);
             $table->integer('cantProducto')->default(0);
             $table->integer('estado')->default('0');
             $table->integer('prioridad')->default('3');
             $table->boolean('terminado')->default('false');
+            $table->integer('zona')->default(0);
             $table->timestamps();
 
             $table->integer('obras_id_obra')->unsigned()->nullable();
