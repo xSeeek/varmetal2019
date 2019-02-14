@@ -34,6 +34,10 @@ class Trabajador extends Model
     {
         return $this->belongsToMany('Varmetal\Producto', 'productos_trabajador', 'trabajador_id_trabajador', 'producto_id_producto');
     }
+    public function productoSoldador()
+    {
+        return $this->belongsToMany('Varmetal\Producto', 'productos_soldador', 'trabajador_id_trabajador', 'producto_id_producto');
+    }
     public function material()
     {
         return $this->belongsToMany('Varmetal\Material', 'materiales_gastados', 'trabajador_id_trabajador', 'material_id_material');
@@ -42,9 +46,13 @@ class Trabajador extends Model
     {
         return $this->belongsToMany('Varmetal\Producto', 'productos_trabajador', 'trabajador_id_trabajador', 'producto_id_producto')->withPivot('fechaComienzo', 'kilosTrabajados', 'productosRealizados');
     }
+    public function productoSoldadorWithAtributes()
+    {
+        return $this->belongsToMany('Varmetal\Producto', 'productos_soldador', 'trabajador_id_trabajador', 'producto_id_producto')->withPivot('fechaComienzo', 'kilosTrabajados', 'productosRealizados');
+    }
     public function materialWithAtributes()
     {
-        return $this->belongsToMany('Varmetal\Material', 'materiales_gastados', 'trabajador_id_trabajador', 'material_id_material')->withPivot('gastado', 'fechaTermino','producto_id_producto');
+        return $this->belongsToMany('Varmetal\Material', 'materiales_gastados', 'trabajador_id_trabajador', 'material_id_material')->withPivot('gastado', 'fechaTermino','trabajador_id_trabajador','producto_id_producto','material_id_material');
     }
     public function productoIncompleto()
     {

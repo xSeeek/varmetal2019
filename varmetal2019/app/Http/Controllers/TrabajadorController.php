@@ -46,36 +46,88 @@ class TrabajadorController extends Controller
       $kilosTrabajados = 0;
       $toneladas = 0;
       $date = new Carbon();
-
-      $productos_trabajador = $trabajadorActual->productoWithAtributes;
-      foreach($productos_trabajador as $producto)
-      {
-          //if($producto->fechaFin != NULL)
-            if((Carbon::parse($producto->fechaFin)->format('m')) == $date->now()->format('m'))
-                $kilosTrabajados += $producto->pivot->kilosTrabajados;
-          if($producto->pivot->kilosTrabajados!=0)
-            $toneladas += ($producto->tipo->factorKilo*$producto->pivot->kilosTrabajados);
-      }
-      $toneladas /= 1000;
-      $datos_trabajador = $usuarioActual->trabajador;
-      $ayudantes = $datos_trabajador->ayudante;
-
       if($trabajadorActual->tipo=="Operador")
       {
-        return view('trabajador')
-                  ->with('user', $usuarioActual)
-                  ->with('trabajador', $trabajadorActual)
-                  ->with('kilosTrabajados', $kilosTrabajados)
-                  ->with('ayudantes_almacenados',$ayudantes)
-                  ->with('trabajador',$datos_trabajador)
-                  ->with('toneladas', $toneladas);
+        $productos_trabajador = $trabajadorActual->productoWithAtributes;
+        foreach($productos_trabajador as $producto)
+        {
+            if($producto->fechaFin != NULL)
+              if((Carbon::parse($producto->fechaFin)->format('m')) == $date->now()->format('m'))
+                  $kilosTrabajados += $producto->pivot->kilosTrabajados;
+            if($producto->pivot->kilosTrabajados!=0)
+              $toneladas += ($producto->tipo->factorKilo*$producto->pivot->kilosTrabajados);
+        }
+        $toneladas /= 1000;
+        $datos_trabajador = $usuarioActual->trabajador;
+        $ayudantes = $datos_trabajador->ayudante;
+          return view('trabajador')
+                    ->with('user', $usuarioActual)
+                    ->with('trabajador', $trabajadorActual)
+                    ->with('kilosTrabajados', $kilosTrabajados)
+                    ->with('ayudantes_almacenados',$ayudantes)
+                    ->with('trabajador',$datos_trabajador)
+                    ->with('toneladas', $toneladas);
       }
       if($trabajadorActual->tipo=="Soldador")
       {
+        $gastoGas=0;
+        $gastoAla=0;
+        $materiales_gastados = $trabajadorActual->materialWithAtributes;
+        foreach ($materiales_gastados as $key => $materiales)
+        {
+          if($materiales!=NULL)
+          {
+            $material = Material::find($materiales->pivot->material_id_material);
+            if($material->tipo=='Soldador' && $material->nombre=='Gas')
+            {
+              if($materiales->pivot->trabajador_id_trabajador==$trabajadorActual->idTrabajador)
+              {
+                  $gastoGas+=$materiales->pivot->gastado;
+              }
+            }
+            if($material->tipo=='Soldador' && $material->nombre=='Alambre')
+            {
+              if($materiales->pivot->trabajador_id_trabajador==$trabajadorActual->idTrabajador)
+              {
+                  $gastoAla+=$materiales->pivot->gastado;
+              }
+            }
+          }
+        }
+        $productos_soldador = $trabajadorActual->productoSoldadorWithAtributes;
+        foreach($productos_soldador as $producto)
+        {
+              if((Carbon::parse($producto->fechaFin)->format('m')) == $date->now()->format('m'))
+                if($producto->cantProducto==1)
+                {
+                  if(count($producto->trabajadorSoldador)!=0)
+                    $kilosTrabajados += $producto->pivot->kilosTrabajados/count($producto->trabajadorSoldador);
+                }
+                else
+                {
+                  $kilosTrabajados += $producto->pivot->kilosTrabajados;
+                }
+            if($producto->pivot->kilosTrabajados!=0)
+              $toneladas += ($producto->tipo->factorKilo*$producto->pivot->kilosTrabajados);
+        }
+        $fecha=NULL;
+        $ultimo_material_gastado = $trabajadorActual->materialWithAtributes()->where('trabajador_id_trabajador','=',$trabajadorActual->idTrabajador)->orderBy('fechaTermino','desc')->get()->first();
+        if($ultimo_material_gastado!=NULL)
+          $fecha= Carbon::parse($ultimo_material_gastado->pivot->fechaTermino);
+
+
+
+        $toneladas /= 1000;
+        $datos_trabajador = $usuarioActual->trabajador;
+        $ayudantes = $datos_trabajador->ayudante;
         return view('soldador')
                   ->with('user', $usuarioActual)
                   ->with('trabajador', $trabajadorActual)
-                  ->with('ayudantes_almacenados', $ayudantes);
+                  ->with('ayudantes_almacenados', $ayudantes)
+                  ->with('kilosTrabajados',$kilosTrabajados)
+                  ->with('gastoAla',$gastoAla)
+                  ->with('gastoGas',$gastoGas)
+                  ->with('fecha',$fecha);
       }
     if($trabajadorActual->tipo=="Pintor")
             return view('pintor')
@@ -343,9 +395,18 @@ class TrabajadorController extends Controller
     {
       $materiales = Material::get();
       $usuarioActual = Auth::user();
+      $trabajadorActual = $usuarioActual->trabajador;
+
+      $fecha=NULL;
+      $ultimo_material_gastado = $trabajadorActual->materialWithAtributes()->where('trabajador_id_trabajador','=',$trabajadorActual->idTrabajador)->orderBy('fechaTermino','desc')->get()->first();
+      if($ultimo_material_gastado!=NULL)
+        $fecha= Carbon::parse($ultimo_material_gastado->pivot->fechaTermino)->day;
+      $fechaActual=now();
       return view('trabajador.terminarProducto')
                 ->with('user',$usuarioActual)
-                ->with('materiales',$materiales);
+                ->with('materiales',$materiales)
+                ->with('fecha',$fecha)
+                ->with('fechaActual',$fechaActual->day);
     }
 
     public function setStartTime(Request $request)

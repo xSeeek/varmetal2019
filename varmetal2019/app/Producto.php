@@ -17,10 +17,18 @@ class Producto extends Model
     {
        return $this->belongsToMany('Varmetal\Trabajador', 'productos_trabajador', 'producto_id_producto', 'trabajador_id_trabajador');
     }
+    public function trabajadorSoldador()
+    {
+       return $this->belongsToMany('Varmetal\Trabajador', 'productos_soldador', 'producto_id_producto', 'trabajador_id_trabajador');
+    }
    public function trabajadorWithAtributtes()
     {
        return $this->belongsToMany('Varmetal\Trabajador', 'productos_trabajador', 'producto_id_producto', 'trabajador_id_trabajador')->withPivot('fechaComienzo', 'kilosTrabajados', 'productosRealizados');
     }
+    public function trabajadorSoldadorWithAtributtes()
+     {
+        return $this->belongsToMany('Varmetal\Trabajador', 'productos_soldador', 'producto_id_producto', 'trabajador_id_trabajador')->withPivot('fechaComienzo', 'kilosTrabajados', 'productosRealizados');
+     }
     public function pausa()
     {
         return $this->hasMany('Varmetal\Pausa','producto_id_producto');

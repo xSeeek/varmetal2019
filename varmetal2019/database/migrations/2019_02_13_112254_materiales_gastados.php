@@ -14,6 +14,7 @@ class MaterialesGastados extends Migration
     public function up()
     {
       Schema::create('materiales_gastados', function (Blueprint $table) {
+          $table->string('foranea')->unique();
           $table->integer('trabajador_id_trabajador')->unsigned();
           $table->integer('material_id_material')->unsigned();
           $table->integer('producto_id_producto')->unsigned();

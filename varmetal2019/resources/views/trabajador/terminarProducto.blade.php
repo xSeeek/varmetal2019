@@ -40,16 +40,19 @@
                       </button>
                     </div>
                     <div class="modal-body">
-                      Ingrese la cantidad de alambre en metros gastado:
+                      Seleccione el tipo de alambre que a usado:
                       <select class="custom-select" id="alambre" aria-describedby="alambre" name="type" onchange="clasesDiponibles()" required><select><br><br>
+                      Ingrese la cantidad de alambre en metros gastado:
                       <input type="number" min="0" pattern="^[0-9]+" id="alambreGastado" class="form-control" placeholder="Alambre gastado"></input><br>
-                      Ingrese la cantidad de gas gastado:
+                      Seleccione el tipo de gas que a usado:
                       <select class="custom-select" id="gas" aria-describedby="pintura" name="type" onchange="clasesDiponibles()" required></select><br><br>
+                      Ingrese la cantidad de gas en tubos gastado:
                       <input type="number" min="0" pattern="^[0-9]+" id="gasGastado" class="form-control" placeholder="Gas gastado"></input><br>
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                      <button type="button" onclick="finalizarDia()" class="btn btn-primary">Confirmar</button>
+                      <button type="button" id="confirmar" onclick="finalizarDia()" class="btn btn-primary">Confirmar</button>
+                      <button type="button" style="display:none;" id="confirmado" class="btn btn-primary">Ya Finalizó el Día</button>
                     </div>
                   </div>
                 </div>
@@ -64,6 +67,22 @@
 <script type="text/javascript">
 
 window.onload(cargarSelect());
+window.onload(aparecerBoton());
+
+  function aparecerBoton()
+  {
+    var botonConfirmar = document.getElementById('confirmar');
+    var botonConfirmado = document.getElementById('confirmado');
+    if('{{$fecha}}'=='{{$fechaActual}}')
+    {
+      botonConfirmar.setAttribute("style","display:none;");
+      botonConfirmado.removeAttribute("style");
+    }
+    else {
+      botonConfirmado.setAttribute("style","display:none;");
+      botonConfirmar.removeAttribute("style");
+    }
+  }
 
   function cargarSelect()
   {
@@ -125,9 +144,13 @@ window.onload(cargarSelect());
                 showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR, response);
             if(response == 'No Existe el producto')
                 showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR, response);
+            if(response == 'No se encontró el producto')
+                showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR, response);
             if(response == 1)
                 showMensajeSwal(MSG_SUCCESS, BTN_SUCCESS, COLOR_SUCCESS, 'Se actualizó la cantidad');
-            else
+            if(response == 2)
+                showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR, 'Esta pieza aún no está lista para soldarse');
+            elseif(response!=1)
                 showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR, response);
       }
       });
@@ -158,14 +181,27 @@ window.onload(cargarSelect());
           url: "{{url('/materialesGastados')}}",
           success: function(response)
           {
-              if(response != 1)
+            if(response == 1)
+            {
+              showMensajeSwal(MSG_SUCCESS, BTN_SUCCESS, COLOR_SUCCESS, 'Se Finalizó el Día Completamente');
+            }
+            else
+            {
+              if(response=='No existe el tipo de alambre')
               {
-                  showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR,response);
+                showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR, response);
               }
-              if(response==1)
+              if(response=='No existe el trabajador')
               {
-                showMensajeSwal(MSG_SUCCESS, BTN_SUCCESS, COLOR_SUCCESS, 'Se Finalizó el Día Completamente');
+                showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR, response);
               }
+              if(response=='No posees productos terminados')
+              {
+                showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR, response);
+              }else{
+                showMensajeSwal(MSG_SUCCESS, BTN_SUCCESS, COLOR_SUCCESS, response);
+              }
+            }
           }
         });
     }else {
