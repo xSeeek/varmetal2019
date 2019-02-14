@@ -40,11 +40,13 @@
                       </button>
                     </div>
                     <div class="modal-body">
-                      Ingrese la cantidad de alambre en metros gastado:
+                      Seleccione el tipo de alambre que a usado:
                       <select class="custom-select" id="alambre" aria-describedby="alambre" name="type" onchange="clasesDiponibles()" required><select><br><br>
+                      Ingrese la cantidad de alambre en metros gastado:
                       <input type="number" min="0" pattern="^[0-9]+" id="alambreGastado" class="form-control" placeholder="Alambre gastado"></input><br>
-                      Ingrese la cantidad de gas gastado:
+                      Seleccione el tipo de gas que a usado:
                       <select class="custom-select" id="gas" aria-describedby="pintura" name="type" onchange="clasesDiponibles()" required></select><br><br>
+                      Ingrese la cantidad de gas en tubos gastado:
                       <input type="number" min="0" pattern="^[0-9]+" id="gasGastado" class="form-control" placeholder="Gas gastado"></input><br>
                     </div>
                     <div class="modal-footer">
@@ -157,15 +159,28 @@ window.onload(cargarSelect());
           data: {DATA:json_text},
           url: "{{url('/materialesGastados')}}",
           success: function(response)
-          { 
-              if(response != 1)
+          {
+            if(response == 1)
+            {
+              showMensajeSwal(MSG_SUCCESS, BTN_SUCCESS, COLOR_SUCCESS, 'Se Finalizó el Día Completamente');
+            }
+            else
+            {
+              if(response=='No existe el tipo de alambre')
               {
-                  showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR,response);
+                showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR, response);
               }
-              if(response==1)
+              if(response=='No existe el trabajador')
               {
-                showMensajeSwal(MSG_SUCCESS, BTN_SUCCESS, COLOR_SUCCESS, 'Se Finalizó el Día Completamente');
+                showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR, response);
               }
+              if(response=='No posees productos terminados')
+              {
+                showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR, response);
+              }else{
+                showMensajeSwal(MSG_SUCCESS, BTN_SUCCESS, COLOR_SUCCESS, response);
+              }
+            }
           }
         });
     }else {

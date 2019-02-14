@@ -19,6 +19,11 @@
                     Bienvenido, <b>{{$trabajador->nombre}}</b>.
                     <br>RUT: {{$trabajador->rut}}
                     <br>Tipo: {{$trabajador->tipo}}<br>
+                    <h4>
+                      <br>Kilos Totales Realizados: <b>{{$kilosTrabajados}} Kg.</b>
+                      <br>Gas Total Gastado: <b>{{$gastoGas}} Tubos.</b>
+                      <br>Alambre Total Gastado: <b>{{$gastoAla}} Metros.</b>
+                    </h4>
 
                 </div>
             </div>

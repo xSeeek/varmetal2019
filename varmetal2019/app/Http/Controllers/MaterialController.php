@@ -20,8 +20,9 @@ class MaterialController extends Controller
       $idUser = $response[2];
       $idAlambre = $response[4];
       $idGas = $response[3];
+      $productosRealizados=0;
 
-      $cont=0;
+      $cont=NULL;
 
       $user = User::find($idUser);
       $gas = Material::find($idGas);
@@ -54,30 +55,39 @@ class MaterialController extends Controller
         $foraneaAlambre=$alambre->idMaterial*100+$producto->idProducto*10+$trabajador->idTrabajador;
         if($producto->trabajadorSoldadorWithAtributtes()->where('trabajador_id_trabajador', '=', $trabajador->idTrabajador)->get()->first()!=NULL)
         {
+          $trabajadores = $producto->trabajadorSoldadorWithAtributtes;
+
+          foreach($trabajadores as $worker)
+              if($worker->tipo=="Soldador")
+                $productosRealizados += $worker->pivot->productosRealizados;
           $dataProducto = $producto->trabajadorSoldadorWithAtributtes()->where('trabajador_id_trabajador', '=', $trabajador->idTrabajador)->get()->first();
-          if($dataProducto->pivot->productosRealizados < $producto->cantProducto)
+          if($productosRealizados < $producto->cantProducto)
           {
-            if($cont==0)
+            if($cont==NULL)
               echo 'Piezas Faltantes:';
-            $cont++;
+            $cont='Faltante';
             echo ' | ';
-            echo $producto->cantProducto-$dataProducto->pivot->productosRealizados;
+            echo $producto->cantProducto-$productosRealizados;
             echo ' por hacer de la pieza: ';
             echo $producto->codigo;
           }else {
-            if($gas->productoWithAttributes()->where('foranea', '=', $foraneaGas)->orderBy('producto_id_producto','desc')->get()->first()==NULL)
+            if($gas->productoWithAttributes()->where('foranea', '=', $foraneaGas)->get()->first()==NULL)
             {
-                $gas->producto()->attach($producto->idProducto, ['trabajador_id_trabajador' => $trabajador->idTrabajador,'gastado' => $gastoGas, 'fechaTermino' => now(), 'foranea' => $foraneaGas]);
+                $gas->producto()->attach($producto->idProducto, ['trabajador_id_trabajador' => $trabajador->idTrabajador,'gastado' => $gastoGas, 'fechaTermino' => $producto->fechaFin, 'foranea' => $foraneaGas, 'fechaTermino' => $dataProducto->pivot->fechaComienzo]);
             }
             if($alambre->productoWithAttributes()->where('foranea', '=', $foraneaAlambre)->get()->first()==NULL)
             {
-              if($alambre->producto()->attach($producto->idProducto, ['trabajador_id_trabajador' => $trabajador->idTrabajador,'gastado' => $gastoAlambre, 'fechaTermino' => now(), 'foranea' => $foraneaAlambre]))
-                $alambre->producto()->attach($producto->idProducto, ['trabajador_id_trabajador' => $trabajador->idTrabajador,'gastado' => $gastoAlambre, 'fechaTermino' => now(), 'foranea' => $foraneaAlambre]);
+                $alambre->producto()->attach($producto->idProducto, ['trabajador_id_trabajador' => $trabajador->idTrabajador,'gastado' => $gastoAlambre, 'fechaTermino' => $producto->fechaFin, 'foranea' => $foraneaAlambre, 'fechaTermino' => $dataProducto->pivot->fechaComienzo]);
             }
           }
         }
       }
-      return 1;
+      if($cont==NULL)
+      {
+        return 1;
+      }else {
+        return;
+      }
     }
 
     public function productoTerminado(Request $request)
@@ -102,11 +112,11 @@ class MaterialController extends Controller
       if($productos==NULL)
         return 'No existe el producto';
 
-      if($trabajador->producto!=NULL)
+      if($trabajador->productoSoldador!=NULL)
       {
-        foreach ($trabajador->producto as $key => $producto)
+        foreach ($trabajador->productoSoldador as $key => $producto)
         {
-          if($producto->nombre == $codigo)
+          if($producto->codigo == $codigo)
           {
             $cont=1;
             $dataProducto = $producto->trabajadorSoldadorWithAtributtes()->where('trabajador_id_trabajador', '=', $trabajador->idTrabajador)->get()->first();
@@ -117,19 +127,25 @@ class MaterialController extends Controller
                   $productosRealizados += $worker->pivot->productosRealizados;
 
             if($producto->cantProducto <= $productosRealizados)
-            return 'La pieza ya fue finalizada';
+            {
+              echo $producto->cantProducto;
+              echo '-';
+              echo $productosRealizados;
+              return '| La pieza ya fue finalizada';
+            }
 
             if(($productosRealizados + $cantidad) > ($producto->cantProducto))
             {
               echo 'La cantidad ingresada supera a la cantidad requerida actual: ';
-              echo $dataProducto->pivot->productosRealizados;
-              echo ' de: ';
+              echo $productosRealizados;
+              echo ' de ';
               echo $producto->cantProducto;
               return;
             }
                 $dataProducto->pivot->productosRealizados = ($dataProducto->pivot->productosRealizados) + $cantidad;
                 $dataProducto->pivot->kilosTrabajados = ($dataProducto->pivot->productosRealizados) * $producto->pesoKg;
-                $dataProducto->pivot->fechaComienzo = now();
+                if($dataProducto->pivot->productosRealizados == $producto->cantProducto)
+                  $dataProducto->pivot->fechaTermino = now();
 
                 $dataProducto->pivot->save();
                 $dataProducto->save();
