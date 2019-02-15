@@ -45,9 +45,9 @@ class ProductoController extends Controller
             $productos = Producto::orderBy('prioridad', 'DESC')->where('terminado', 'false')->get();
         elseif($data == 'terminados')
             $productos = Producto::orderBy('prioridad', 'DESC')->where('terminado', 'true')->get();
-        elseif($data == 'pintura')
-            $productos = Producto::orderBy('prioridad', 'DESC')->where('terminado', 'false')->where('zona', 1)->get();
         elseif($data == 'soldadura')
+            $productos = Producto::orderBy('prioridad', 'DESC')->where('terminado', 'false')->where('zona', 1)->get();
+        elseif($data == 'pintura')
             $productos = Producto::orderBy('prioridad', 'DESC')->where('terminado', 'false')->where('zona', 2)->get();
         else
             $productos = Producto::orderBy('prioridad', 'DESC')->where('terminado', 'false')->where('estado', '1')->get();
