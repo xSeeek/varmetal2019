@@ -140,25 +140,27 @@
                           </select>
                           <br><br>
                         </div>
-                        <div style="color:darkorange">
-                            <b>Zona encargada actual:</b>
-                            <div class="col-sm-10">
-                                @switch($producto->zona)
-                                    @case(0)
-                                        <input type="text" readonly id="zonaProducto" class="form-control-plaintext" style="color:darkorange" value="Taller">
-                                        @break;
-                                    @case(1)
-                                        <input type="text" readonly id="zonaProducto" class="form-control-plaintext" style="color:darkorange" value="Soldadura">
-                                        @break;
-                                    @case(0)
-                                        <input type="text" readonly id="zonaProducto" class="form-control-plaintext" style="color:darkorange"value="Pintura">
-                                        @break;
-                                    @default:
-                                        <input type="text" readonly id="zonaProducto" class="form-control-plaintext" style="color:darkorange" value="No determinado">
-                                        @break;
-                                    @endswitch
+                        @if($producto->zona != 3)
+                            <div style="color:darkorange">
+                                <b>Zona encargada actual:</b>
+                                <div class="col-sm-10">
+                                    @switch($producto->zona)
+                                        @case(0)
+                                            <input type="text" readonly id="zonaProducto" class="form-control-plaintext" style="color:darkorange" value="Taller">
+                                            @break;
+                                        @case(1)
+                                            <input type="text" readonly id="zonaProducto" class="form-control-plaintext" style="color:darkorange" value="Soldadura">
+                                            @break;
+                                        @case(2)
+                                            <input type="text" readonly id="zonaProducto" class="form-control-plaintext" style="color:darkorange"value="Pintura">
+                                            @break;
+                                        @default:
+                                            <input type="text" readonly id="zonaProducto" class="form-control-plaintext" style="color:darkorange" value="No determinado">
+                                            @break;
+                                        @endswitch
+                                </div>
                             </div>
-                        </div>
+                        @endif
                         <b>Horas Hombre Requeridas:</b>
                         <div class="col-sm-10">
                             @if($horasHombre != 0)
@@ -196,6 +198,17 @@
                             <b style="color:red">Información Importante:</b>
                             <div class="col-sm-10">
                                 <input type="text" readonly id="pesoProducto" style="color:red" class="form-control-plaintext" value="Este producto se marcó como terminado.">
+                            </div>
+                        @endif
+                        @if(count($producto->pintado) != 0 && $pendientes != 0)
+                            <br>
+                            <b style="color:red">Información Importante:</b>
+                            <div class="col-sm-10">
+                                <input type="text" readonly id="pesoProducto" style="color:red" class="form-control-plaintext" value="Algunas piezas ya fueron pintadas.">
+                            </div>
+                            <br>
+                            <div class="row justify-content-center">
+                                    <a class="btn btn-outline-danger btn-lg" role="button" href="{{url('pintadasPendientes', [$producto->idProducto])}}"><b>Revisar piezas pintadas</b></a>
                             </div>
                         @endif
                     </h5>
@@ -300,6 +313,14 @@
                         <a class="btn btn-outline-success btn-md" id="insertButton" role="button" disabled>Debe asignar el producto a un OT primero</a>
                     @endif
                 </h5>
+                <br>
+                @if($producto->zona >= 2)
+                <h5>
+                    Detalles de Pintado:
+                </br>
+                    <a class="btn btn-outline-success btn-md" id="detallesPintadoButton" role="button" href="{{url('pintado/pintadoControl', [$producto->idProducto])}}">Asignar</a>
+                </h5>
+                @endif
                 @if($producto->terminado == false)
                     @if($producto->estado == 1)
                         <br>

@@ -44,7 +44,11 @@ class ProductoController extends Controller
         if($data == 'pendientes')
             $productos = Producto::orderBy('prioridad', 'DESC')->where('terminado', 'false')->get();
         elseif($data == 'terminados')
-            $productos = Producto::orderBy('prioridad', 'DESC')->where('terminado', 'true')->get();
+            $productos = Producto::orderBy('prioridad', 'DESC')->where('terminado', 'true')->where('zona', 3)->get();
+        elseif($data == 'soldadura')
+            $productos = Producto::orderBy('prioridad', 'DESC')->where('terminado', 'true')->where('zona', 1)->get();
+        elseif($data == 'pintura')
+            $productos = Producto::orderBy('prioridad', 'DESC')->where('terminado', 'true')->where('zona', 2)->get();
         else
             $productos = Producto::orderBy('prioridad', 'DESC')->where('terminado', 'false')->where('estado', '1')->get();
 
@@ -97,6 +101,18 @@ class ProductoController extends Controller
             $horasHombre += (new GerenciaController)->calcularHorasHombre(Carbon::parse($fechaInicio), Carbon::parse($fechaFin));
         }
 
+        if($producto->terminado == true && $producto->zona == 0)
+        {
+            $producto->zona = 1;
+            $producto->save();
+        }
+
+        $pintadas = $producto->pintado;
+        $pendientes = 0;
+        foreach($pintadas as $piezaPintada)
+            if($piezaPintada->revisado == false)
+                $pendientes++;
+
         return view('admin.producto.detalle_producto')
                 ->with('producto', $producto)
                 ->with('tiempoPausa', $tiempoPausa)
@@ -105,7 +121,8 @@ class ProductoController extends Controller
                 ->with('cantidadProducida', $cantidadProducida)
                 ->with('obra', $obra)
                 ->with('tipo', $tipo)
-                ->with('horasHombre', $horasHombre);
+                ->with('horasHombre', $horasHombre)
+                ->with('pendientes', $pendientes);
     }
 
     public function detalleProducto($id)
@@ -337,9 +354,9 @@ class ProductoController extends Controller
         if($producto->terminado == false)
         {
             $date = new Carbon();
-            $producto->estado = 1;
             $producto->fechaFin = $date->now();
             $producto->terminado = true;
+            $producto->zona = 1;
 
             $producto->save();
             return 1;
@@ -356,6 +373,7 @@ class ProductoController extends Controller
         $producto->estado = 2;
         $producto->fechaFin = NULL;
         $producto->terminado = false;
+        $producto->zona = 0;
 
         foreach($trabajadores as $trabajador)
         {

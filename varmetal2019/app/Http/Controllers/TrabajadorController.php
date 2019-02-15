@@ -46,6 +46,7 @@ class TrabajadorController extends Controller
       $kilosTrabajados = 0;
       $toneladas = 0;
       $date = new Carbon();
+      $ayudantes = $trabajadorActual->ayudante;
       if($trabajadorActual->tipo=="Operador")
       {
         $productos_trabajador = $trabajadorActual->productoWithAtributes;
@@ -129,7 +130,11 @@ class TrabajadorController extends Controller
                   ->with('gastoGas',$gastoGas)
                   ->with('fecha',$fecha);
       }
-
+    if($trabajadorActual->tipo=="Pintor")
+            return view('pintor')
+            ->with('user', $usuarioActual)
+            ->with('trabajador', $trabajadorActual)
+            ->with('ayudantes_almacenados', $ayudantes);
     }
 
     public function adminTrabajadores($type)

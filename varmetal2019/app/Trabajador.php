@@ -71,6 +71,14 @@ class Trabajador extends Model
     {
         return $this->hasMany('Varmetal\Ayudante', 'lider_id_trabajador');
     }
+    public function piezasPintadas()
+    {
+        return $this->hasMany('Varmetal\Pintado', 'pintor_id_trabajador');
+    }
+    public function piezasPintadasSupervisadas()
+    {
+        return $this->hasMany('Varmetal\Pintado', 'supervisor');
+    }
     public function validateData($var)
     {
         if($var == NULL)

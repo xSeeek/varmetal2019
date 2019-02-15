@@ -15,6 +15,7 @@
                                     <th>Nombre</th>
                                     <th>Estado</th>
                                     <th>Cargo</th>
+                                    <th>Tipo</th>
                                     <th>Opciones</th>
                                 </tr>
                             </thead>
@@ -33,6 +34,7 @@
                                     @else
                                         <td scope="col">Ayudante</td>
                                     @endif
+                                    <td scope="col">{{ $trabajador->tipo }}</td>
                                     <td><a class="btn btn-outline-success my-2 my-sm-0" href="{{url('trabajadorControl', [$trabajador->idTrabajador])}}" role="button" style="cursor: pointer;">Ver Detalles</a></td>
                                 </tr>
                                 @endforeach
