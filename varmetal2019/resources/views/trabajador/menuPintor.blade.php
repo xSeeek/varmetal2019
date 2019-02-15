@@ -60,7 +60,7 @@
             url: "{{url('/pintarPieza')}}",
             success: function(response){
                 if(response == 1)
-                    showMensajeSwal(MSG_SUCCESS, BTN_SUCCESS, COLOR_SUCCESS, 'Se pintó' + datos[1] + ' pieza(s)');
+                    showMensajeSwal(MSG_SUCCESS, BTN_SUCCESS, COLOR_SUCCESS, 'Se pintó ' + datos[1] + ' pieza(s)');
                 else
                     showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR, response);
             }

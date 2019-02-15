@@ -19,7 +19,7 @@ class ProductoTable extends Migration
             $table->string('codigo')->unique();
             $table->timestamp('fechaInicio')->timestamps();
             $table->timestamp('fechaFin')->nullable();
-            $table->float('area')->default(0);
+            $table->float('area')->nullable()->default(0);
             $table->float('pesoKg')->nullable();
             $table->integer('cantPausa')->default(0);
             $table->integer('cantProducto')->default(0);

@@ -101,7 +101,7 @@ class ProductoController extends Controller
             $horasHombre += (new GerenciaController)->calcularHorasHombre(Carbon::parse($fechaInicio), Carbon::parse($fechaFin));
         }
 
-        if($producto->fechaFin != NULL && $producto->zona == 0)
+        if($producto->terminado == true && $producto->zona == 0)
         {
             $producto->zona = 1;
             $producto->save();
@@ -354,7 +354,6 @@ class ProductoController extends Controller
         if($producto->terminado == false)
         {
             $date = new Carbon();
-            $producto->estado = 1;
             $producto->fechaFin = $date->now();
             $producto->terminado = true;
             $producto->zona = 1;
