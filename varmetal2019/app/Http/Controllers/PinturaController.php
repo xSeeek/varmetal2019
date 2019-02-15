@@ -63,12 +63,6 @@ class PinturaController extends Controller
         if($response[1] <= 0 || ($piezasPintadas + $response[1]) > $pieza->cantProducto)
             return 'La cantidad ingresada no es válida';
 
-        if(($piezasPintadas + $response[1]) == $pieza->cantProducto)
-        {
-            $pieza->zona = 3;
-            $pieza->save();
-        }
-
         $pintado = new Pintado;
         $pintado->piezasPintadas = $response[1];
         $pintado->dia = now();
@@ -120,6 +114,18 @@ class PinturaController extends Controller
         $detallePintado->espesor = $request->espesorPintura;
         $detallePintado->revisado = true;
         $detallePintado->supervisor = $usuarioActual->trabajador->idTrabajador;
+
+        $pinturas = $pieza->pintado;
+        $cantPintada = 0;
+        foreach($pinturas as $pintura)
+          $cantPintada += $pintura->piezasPintadas;
+
+        if($cantPintada >= $pieza->cantProducto)
+        {
+            $pieza->zona = 3;
+            $pieza->estado = 1;
+            $pieza->save();
+        }
 
         $detallePintado->save();
         return 1;

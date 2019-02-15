@@ -46,6 +46,7 @@ class TrabajadorController extends Controller
       $kilosTrabajados = 0;
       $toneladas = 0;
       $date = new Carbon();
+      $ayudantes = $trabajadorActual->ayudante;
       if($trabajadorActual->tipo=="Operador")
       {
         $productos_trabajador = $trabajadorActual->productoWithAtributes;
