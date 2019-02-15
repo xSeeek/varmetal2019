@@ -51,12 +51,35 @@
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                      <button type="button" id="confirmar" onclick="finalizarDia()" class="btn btn-primary">Confirmar</button>
-                      <button type="button" style="display:none;" id="confirmado" class="btn btn-primary">Ya Finalizó el Día</button>
+                      <button type="button" id="confirmar" onclick="comprobrarDatos(this.id)" data-toggle="modal" class="btn btn-primary" role="button" style="cursor: pointer;">Confirmar</button>
+                      <button type="button" style="display:none;" id="confirmado" class="btn btn-primary" data-dismiss="modal">Ya Finalizó el Día</button>
                     </div>
                   </div>
                 </div>
               </div>
+              <!-- Modal 2 -->
+                  <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h2 class="modal-title" id="exampleModalLabel">¡Atencíon!</h2>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <h3>
+                            Solo puedes finalizar el día una vez al día.<br>
+                            ¿Estás seguro/a de que deseas continuar?
+                          </h3>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                          <button id="si" onclick="comprobrarDatos(id)" type="button" data-target="#exampleModal2" data-toggle="modal" class="btn btn-primary" role="button" style="cursor: pointer;">Si</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
             </div>
             <br>
             <div class="row justify-content-center">
@@ -157,6 +180,35 @@ window.onload(aparecerBoton());
     return 1;
   }
 
+  function comprobrarDatos(boton)
+  {
+    var datos, json_text, botonPro;
+
+    datos = Array();
+    datos[0] = document.getElementById('gasGastado').value;
+    datos[1] = document.getElementById('alambreGastado').value;
+    datos[2] = '{{$user->id}}';
+    datos[3] = document.getElementById('alambre').value;
+    datos[4] = document.getElementById('gas').value;
+
+    botonPro= document.getElementById(boton);
+
+    if(((datos[0] && datos[1]) != "") && ((datos[3] && datos[4]) != ""))
+    {
+      if(boton!='confirmar')
+      {
+        finalizarDia();
+      }else {
+        botonPro.setAttribute("data-target","#exampleModal2");
+        return '1';
+      }
+    }else {
+      botonPro.removeAttribute("data-target");
+      showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR, 'Faltan Datos');
+      return '2';
+    }
+  }
+
   function finalizarDia()
   {
     var datos, json_text;
@@ -168,8 +220,6 @@ window.onload(aparecerBoton());
     datos[3] = document.getElementById('alambre').value;
     datos[4] = document.getElementById('gas').value;
 
-    if(((datos[0] || datos[1]) != "") || ((datos[3] || datos[4]) != ""))
-    {
       json_text = JSON.stringify(datos);
       $.ajax(
         {
@@ -204,9 +254,6 @@ window.onload(aparecerBoton());
             }
           }
         });
-    }else {
-      return 2;
-    }
   }
 </script>
 
