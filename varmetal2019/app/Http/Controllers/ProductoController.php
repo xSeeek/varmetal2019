@@ -374,6 +374,7 @@ class ProductoController extends Controller
         $producto->estado = 2;
         $producto->fechaFin = NULL;
         $producto->terminado = false;
+        $producto->zona = 0;
 
         foreach($trabajadores as $trabajador)
         {
