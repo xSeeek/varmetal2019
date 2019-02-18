@@ -24,11 +24,12 @@
                       </h3>
                     </div>
                 </div>
-                <a class="btn btn-outline-success my-2 my-sm-0" onclick="productoTerminado()" role="button" style="cursor: pointer;">Producto Terminado</a>
+                <a class="btn btn-outline-success my-2 my-sm-0" onclick="productoTerminado()" role="button" style="cursor: pointer;">Terminar Pieza</a>
             </div>
             <br>
             <div class="row justify-content-center">
-              <a data-target="#exampleModal" data-toggle="modal" class="btn btn-outline-success my-2 my-sm-0" role="button" style="cursor: pointer;">Finalizar Día</a>
+              <a data-target="#exampleModal" data-toggle="modal" id="confirmar" class="btn btn-outline-success my-2 my-sm-0" role="button" style="cursor: pointer;">Finalizar Día</a>
+              <a data-toggle="modal" style="display:none;" id="confirmado" class="btn btn-outline-success my-2 my-sm-0" role="button" style="cursor: pointer;">Ya Finalizó el Día</a>
               <!-- Modal -->
               <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
@@ -51,8 +52,7 @@
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                      <button type="button" id="confirmar" onclick="comprobrarDatos(this.id)" data-toggle="modal" class="btn btn-primary" role="button" style="cursor: pointer;">Confirmar</button>
-                      <button type="button" style="display:none;" id="confirmado" class="btn btn-primary" data-dismiss="modal">Ya Finalizó el Día</button>
+                      <button type="button" onclick="comprobrarDatos(this.id)" data-toggle="modal" class="btn btn-primary" role="button" style="cursor: pointer;">Confirmar</button>
                     </div>
                   </div>
                 </div>
@@ -254,6 +254,7 @@ window.onload(aparecerBoton());
             }
           }
         });
+        aparecerBoton();
   }
 </script>
 
