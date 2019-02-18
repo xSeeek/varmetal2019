@@ -318,7 +318,13 @@
                 <h5>
                     Detalles de Pintado:
                 </br>
-                    <a class="btn btn-outline-success btn-md" id="detallesPintadoButton" role="button" href="{{url('pintado/pintadoControl', [$producto->idProducto])}}">Asignar</a>
+                    <a class="btn btn-outline-success btn-md" id="detallesPintadoButton" role="button" href="{{url('pintado/pintadoControl', [$producto->idProducto])}}">Ingresar</a>
+                </h5>
+                <br>
+                <h5>
+                    Detalles de Soldadura:
+                </br>
+                    <a class="btn btn-outline-success btn-md" id="detallesPintadoButton" role="button" href="{{url('soldadura/soldaduraControl', [$producto->idProducto])}}">Ingresar</a>
                 </h5>
                 @endif
                 @if($producto->terminado == false)

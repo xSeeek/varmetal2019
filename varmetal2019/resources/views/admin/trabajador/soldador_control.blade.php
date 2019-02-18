@@ -10,7 +10,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    Información del Operador
+                    Información del Soldador
                     <button type="button" class="btn btn-primary float-sm-right" data-toggle="modal" data-target="#modalOpciones"><i class="fas fa-cogs"></i></button>
                 </div>
                 <div class="card-body">
@@ -45,26 +45,6 @@
                             </div>
                         </h5>
                         <h4>
-                            <b>Horas en Pausa:</b>
-                            <div class="col-sm-10">
-                              @if($tiempoPausa != 0)
-                                  <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="{{$tiempoPausa}} Horas">
-                              @elseif($tiempoPausa == 0 && $trabajador->pausa == NULL)
-                                  <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="No ha solicitado pausas">
-                              @elseif($tiempoPausa == 0 && $trabajador->pausa != NULL)
-                                  <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="El Operador aún no está 1 hora en pausa">
-                              @endif
-                            </div>
-                            <b>Horas en SetUp: </b>
-                            <div class="col-sm-10">
-                              @if($tiempoSetUp != 0)
-                                  <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="{{$tiempoSetUp}} Horas">
-                              @elseif($tiempoSetUp == 0 && $trabajador->pausa == NULL)
-                                  <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="No se han producido cambios de pieza">
-                              @elseif($tiempoSetUp == 0 && $trabajador->pausa != NULL)
-                                  <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="El Operador aún no está 1 hora en SetUp">
-                              @endif
-                            </div>
                             <b>Horas Hombre: </b>
                             <div class="col-sm-10">
                                 @if($horasHombre != 0)
@@ -79,109 +59,18 @@
                             <div class="col-sm-10">
                               <input type="text" readonly id="kilosTrabajados" class="form-control-plaintext" value="{{$kilosTrabajados}} Kg.">
                             </div>
+                            <b>Gas gastado:</b><br>
+                            <div class="col-sm-10">
+                              <input type="text" readonly id="kilosTrabajados" class="form-control-plaintext" value="{{$gastoGas}} Tubos.">
+                            </div>
+                            <b>Alambre gastado:</b><br>
+                            <div class="col-sm-10">
+                              <input type="text" readonly id="kilosTrabajados" class="form-control-plaintext" value="{{$gastoAla}} Metros.">
+                            </div>
                         </h2>
                     @endif
                 </div>
-            </div>
-            @if($usuario_trabajador->isTrabajador())
-                <br>
-                <div class="card">
-                    <div class="card-header">Piezas a Realizar</div>
-                    <div class="card-body">
-
-                    @if(($productos_trabajador != NULL) && (count($productos_trabajador)>0))
-                    <table id="tablaAdministracion" style="width:100%" align="center">
-                        <thead>
-                            <tr>
-                                <th>Código</th>
-                                <th>Fecha Inicio</th>
-                                <th>Fecha Fin</th>
-                                <th>Estado</th>
-                                <th>Área (m<sup>2</sup>)</th>
-                                <th>Peso (kg)</th>
-                                <th>Opciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($productos_trabajador as $key => $productos)
-                                <tr id="id_productoTrabajador{{ $productos->idProductos }}">
-                                    <td scope="col">{{ $productos->codigo }}</td>
-                                    <td scope="col">{{ $productos->fechaInicio }}</td>
-                                    @if($productos->fechaFin != NULL)
-                                        <td scope="col">{{ $productos->fechaFin }}</td>
-                                    @else
-                                        <td scope="col">No determinada</td>
-                                    @endif
-                                    @switch($productos->estado)
-                                        @case(0)
-                                            <td scope="col">Por realizar</td>
-                                            @break
-                                        @case(1)
-                                            <td scope="col">Finalizado</td>
-                                            @break
-                                        @case(2)
-                                            <td scope="col">En realización</td>
-                                            @break
-                                        @default
-                                            <td scope="col">Sin estado definido</td>
-                                            @break
-                                    @endswitch
-                                    @if ($productos->area != null)
-                                      <td scope="col">{{ $productos->area }}</td>
-                                    @elseif ($productos->area == null)
-                                      <td scope="col">0</td>
-                                    @endif
-                                    <td scope="col">{{ $productos->pesoKg }}</td>
-                                    <td scope="col"><a class="btn btn-outline-secondary btn-sm" onclick="deleteProducto({{ $trabajador->idTrabajador }}, {{ $productos->idProducto }})" role="button"><b>Eliminar</b></a>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                    @else
-                    </br>
-                        <h4 align="center">El Operador no tiene ningún trabajo en desarrollo.</h4>
-                    </br>
-                    @endif
-                    </div>
-                </div>
-                <br>
-                <div class="card">
-                    <div class="card-header">Productos realizados en el mes actual</div>
-                    <div class="card-body">
-
-                    @if(($productosCompletos != NULL) && (count($productosCompletos)>0))
-                    <table id="tablaProductosFinalizados" class="display" style="width:100%" align="center">
-                        <thead>
-                            <tr>
-                                <th>Código</th>
-                                <th>Piezas Realizadas</th>
-                                <th>Kilos Realizados</th>
-                                <th>Área (m<sup>2</sup>)</th>
-                                <th>Peso (kg)</th>
-                                <th>Opciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($productosCompletos as $key => $productos)
-                                <tr id="id_productoTrabajador{{ $productos->idProductos }}">
-                                    <td scope="col">{{ $productos->codigo }}</td>
-                                    <td scope="col">{{ $productos->pivot->productosRealizados }}</td>
-                                    <td scope="col">{{ $productos->pivot->kilosTrabajados }}</td>
-                                    <td scope="col">{{ $productos->area }}</td>
-                                    <td scope="col">{{ $productos->pesoKg }}</td>
-                                    <td scope="col"><a class="btn btn-outline-primary btn-sm" href="{{url('productoControl', [$productos->idProducto])}}" role="button" style="cursor: pointer;"><b>Detalles Pieza</b></a>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                    @else
-                    </br>
-                        <h4 align="center">El Operador no ha realizado ninguna pieza este mes.</h4>
-                    </br>
-                    @endif
-                    </div>
-                </div>
-            @endif
+            </div class="row">
         </br>
             <a class="btn btn-primary btn-lg" role="button" href="{{url('menuTrabajador')}}"><b>Volver</b></a>
         </div>

@@ -152,6 +152,7 @@ class TrabajadorController extends Controller
         $datos_trabajador = Trabajador::find($data);
         $userTrabajador = $datos_trabajador->user;
 
+
         $kilosTrabajados = 0;
         $toneladas = 0;
         $tiempoPausa = 0;
@@ -166,81 +167,155 @@ class TrabajadorController extends Controller
         $array_productos = array();
         $productosAyuda = array();
 
-        $productos_trabajador = $datos_trabajador->productoWithAtributes;
-        foreach($productos_trabajador as $producto)
+        if($datos_trabajador->tipo=="Operador")
         {
-            if($producto->fechaFin != NULL)
+          $productos_trabajador = $datos_trabajador->productoWithAtributes;
+          foreach($productos_trabajador as $producto)
+          {
+              if($producto->fechaFin != NULL)
+                if((Carbon::parse($producto->fechaFin)->format('m')) == $date->now()->format('m'))
+                    $kilosTrabajados += $producto->pivot->kilosTrabajados;
+              if($producto->pivot->kilosTrabajados!=0)
+                $toneladas += ($producto->tipo->factorKilo*$producto->pivot->kilosTrabajados);
+
               if((Carbon::parse($producto->fechaFin)->format('m')) == $date->now()->format('m'))
-                  $kilosTrabajados += $producto->pivot->kilosTrabajados;
-            if($producto->pivot->kilosTrabajados!=0)
-              $toneladas += ($producto->tipo->factorKilo*$producto->pivot->kilosTrabajados);
+              {
+                  if($producto->pausa !=NULL)
+                  {
+                      $pausas_almacenadas = $producto->pausa;
+                      foreach ($pausas_almacenadas as $key => $pausa)
+                          if($pausa->fechaFin!=NULL)
+                              if($pausa->motivo=='Cambio de pieza')
+                                  $tiempoSetUp += (new PausaController)->calcularHorasHombre(Carbon::parse($pausa->fechaInicio),Carbon::parse($pausa->fechaFin));
+                              else
+                                  $tiempoPausa += (new PausaController)->calcularHorasHombre(Carbon::parse($pausa->fechaInicio),Carbon::parse($pausa->fechaFin));
+                  }
 
-            if((Carbon::parse($producto->fechaFin)->format('m')) == $date->now()->format('m'))
-            {
-                if($producto->pausa !=NULL)
-                {
-                    $pausas_almacenadas = $producto->pausa;
-                    foreach ($pausas_almacenadas as $key => $pausa)
-                        if($pausa->fechaFin!=NULL)
-                            if($pausa->motivo=='Cambio de pieza')
-                                $tiempoSetUp += (new PausaController)->calcularHorasHombre(Carbon::parse($pausa->fechaInicio),Carbon::parse($pausa->fechaFin));
-                            else
-                                $tiempoPausa += (new PausaController)->calcularHorasHombre(Carbon::parse($pausa->fechaInicio),Carbon::parse($pausa->fechaFin));
-                }
+                  if(((new GerenciaController)->isOnArray($array_productos, $producto->conjunto_id_conjunto, 1) == -1) && ($this->hasConjunto($producto->conjunto_id_conjunto, $datos_trabajador->conjunto) == true))
+                  {
+                      $array_productos[$j] = array();
+                      $data_trabajador = array();
+                      $data_trabajador[0] = $producto->conjunto->fechaInicio;
+                      $data_trabajador[1] = $producto->conjunto_id_conjunto;
 
-                if(((new GerenciaController)->isOnArray($array_productos, $producto->conjunto_id_conjunto, 1) == -1) && ($this->hasConjunto($producto->conjunto_id_conjunto, $datos_trabajador->conjunto) == true))
-                {
-                    $array_productos[$j] = array();
-                    $data_trabajador = array();
-                    $data_trabajador[0] = $producto->conjunto->fechaInicio;
-                    $data_trabajador[1] = $producto->conjunto_id_conjunto;
+                      $fechaFin = $producto->conjunto->fechaFin;
+                      if($fechaFin == NULL)
+                          $data_trabajador[2] = $date->now();
+                      else
+                          $data_trabajador[2] = $fechaFin;
 
-                    $fechaFin = $producto->conjunto->fechaFin;
-                    if($fechaFin == NULL)
-                        $data_trabajador[2] = $date->now();
-                    else
-                        $data_trabajador[2] = $fechaFin;
+                      $array_productos[$j] = $data_trabajador;
+                      $j++;
+                  }
+                  if($producto->pivot->fechaComienzo != NULL)
+                  {
+                      $data_producto = array();
+                      $data_producto[0] = $producto->idProducto;
+                      $data_producto[1] = $datos_trabajador->idTrabajador;
+                      $data_producto[2] = $producto->pivot->fechaComienzo;
+                      $productosAyuda[$k] = $data_producto;
+                      $k++;
+                  }
+              }
+          }
 
-                    $array_productos[$j] = $data_trabajador;
-                    $j++;
-                }
-                if($producto->pivot->fechaComienzo != NULL)
-                {
-                    $data_producto = array();
-                    $data_producto[0] = $producto->idProducto;
-                    $data_producto[1] = $datos_trabajador->idTrabajador;
-                    $data_producto[2] = $producto->pivot->fechaComienzo;
-                    $productosAyuda[$k] = $data_producto;
-                    $k++;
-                }
-            }
+          for($i = 0; $i < count($array_productos); $i++)
+              $horasHombre += (new GerenciaController)->calcularHorasHombre(Carbon::parse($array_productos[$i][0]), Carbon::parse($array_productos[$i][2]));
+
+          $horasHombre += (new GerenciaController)->productosEnAyuda($productosAyuda);
+
+          $toneladas /= 1000;
+          $bono = $toneladas*5500;
+
+          if($datos_trabajador->cargo=='M1')
+            $sueldo = 385000;
+
+          $productos = $datos_trabajador->productoIncompleto;
+          $productosCompletos = $datos_trabajador->productosCompletosMesActual;
+          return view('admin.trabajador.trabajador_control')
+                                  ->with('trabajador', $datos_trabajador)
+                                  ->with('usuario_trabajador', $userTrabajador)
+                                  ->with('productos_trabajador', $productos)
+                                  ->with('bono', $bono)
+                                  ->with('kilosTrabajados',$kilosTrabajados)
+                                  ->with('sueldo',$sueldo)
+                                  ->with('tiempoPausa', $tiempoPausa)
+                                  ->with('tiempoSetUp', $tiempoSetUp)
+                                  ->with('horasHombre', $horasHombre)
+                                  ->with('productosCompletos', $productosCompletos);
         }
+        if($datos_trabajador->tipo=="Soldador")
+        {
+          if($userTrabajador->trabajador == NULL)
+              return redirect()->route('/home');
 
-        for($i = 0; $i < count($array_productos); $i++)
-            $horasHombre += (new GerenciaController)->calcularHorasHombre(Carbon::parse($array_productos[$i][0]), Carbon::parse($array_productos[$i][2]));
+          $trabajadorActual = $datos_trabajador;
+          $usuarioActual = $trabajadorActual->user;
 
-        $horasHombre += (new GerenciaController)->productosEnAyuda($productosAyuda);
+          $kilosTrabajados = 0;
+          $toneladas = 0;
+          $date = new Carbon();
 
-        $toneladas /= 1000;
-        $bono = $toneladas*5500;
+          $gastoGas=0;
+          $gastoAla=0;
+          $materiales_gastados = $trabajadorActual->materialWithAtributes;
+          foreach ($materiales_gastados as $key => $materiales)
+          {
+            if($materiales!=NULL)
+            {
+              $material = Material::find($materiales->pivot->material_id_material);
+              if($material->tipo=='Soldador' && $material->nombre=='Gas')
+              {
+                if($materiales->pivot->trabajador_id_trabajador==$trabajadorActual->idTrabajador)
+                {
+                    $gastoGas+=$materiales->pivot->gastado;
+                }
+              }
+              if($material->tipo=='Soldador' && $material->nombre=='Alambre')
+              {
+                if($materiales->pivot->trabajador_id_trabajador==$trabajadorActual->idTrabajador)
+                {
+                    $gastoAla+=$materiales->pivot->gastado;
+                }
+              }
+            }
+          }
+          $productos_soldador = $trabajadorActual->productoSoldadorWithAtributes;
+          foreach($productos_soldador as $producto)
+          {
+                if((Carbon::parse($producto->fechaFin)->format('m')) == $date->now()->format('m'))
+                  if($producto->cantProducto==1)
+                  {
+                    if(count($producto->trabajadorSoldador)!=0)
+                      $kilosTrabajados += $producto->pivot->kilosTrabajados/count($producto->trabajadorSoldador);
+                  }
+                  else
+                  {
+                    $kilosTrabajados += $producto->pivot->kilosTrabajados;
+                  }
+              if($producto->pivot->kilosTrabajados!=0)
+                $toneladas += ($producto->tipo->factorKilo*$producto->pivot->kilosTrabajados);
+          }
+          $fecha=NULL;
+          $ultimo_material_gastado = $trabajadorActual->materialWithAtributes()->where('trabajador_id_trabajador','=',$trabajadorActual->idTrabajador)->orderBy('fechaTermino','desc')->get()->first();
+          if($ultimo_material_gastado!=NULL)
+            $fecha= Carbon::parse($ultimo_material_gastado->pivot->fechaTermino);
 
-        if($datos_trabajador->cargo=='M1')
-          $sueldo = 385000;
 
-        $productos = $datos_trabajador->productoIncompleto;
-        $productosCompletos = $datos_trabajador->productosCompletosMesActual;
 
-        return view('admin.trabajador.trabajador_control')
-                                ->with('trabajador', $datos_trabajador)
-                                ->with('usuario_trabajador', $userTrabajador)
-                                ->with('productos_trabajador', $productos)
-                                ->with('bono', $bono)
-                                ->with('kilosTrabajados',$kilosTrabajados)
-                                ->with('sueldo',$sueldo)
-                                ->with('tiempoPausa', $tiempoPausa)
-                                ->with('tiempoSetUp', $tiempoSetUp)
-                                ->with('horasHombre', $horasHombre)
-                                ->with('productosCompletos', $productosCompletos);
+          $toneladas /= 1000;
+          $datos_trabajador = $usuarioActual->trabajador;
+          $ayudantes = $datos_trabajador->ayudante;
+          return view('admin.trabajador.soldador_control')
+                                  ->with('productos_trabajador', $productos_soldador)
+                                  ->with('horasHombre', $horasHombre)
+                                  ->with('usuario_trabajador', $usuarioActual)
+                                  ->with('trabajador', $trabajadorActual)
+                                  ->with('kilosTrabajados',$kilosTrabajados)
+                                  ->with('gastoAla',$gastoAla)
+                                  ->with('gastoGas',$gastoGas)
+                                  ->with('fecha',$fecha);
+        }
     }
 
     private function hasConjunto($idConjunto, $array)

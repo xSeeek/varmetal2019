@@ -348,3 +348,7 @@ Route::get('/admin', 'AdminController@admin')
             Route::post('/pintarPieza', ['uses' => 'PinturaController@pintarPieza'])
                         ->middleware('is_trabajador')
                         ->name('pintarPieza');
+
+            Route::get('/soldadura/soldaduraControl/{id}', ['uses' => 'SoldaduraController@soldaduraControl'])
+                        ->middleware('is_supervisor')
+                        ->name('soldadura/soldaduraControl');

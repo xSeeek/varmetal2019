@@ -47,7 +47,7 @@ class Producto extends Model
     }
     public function materialWithAtributes()
     {
-        return $this->belongsToMany('Varmetal\Material', 'materiales_gastados', 'producto_id_producto', 'material_id_material')->withPivot('gastado', 'fechaTermino','trabajador_id_trabajador');
+        return $this->belongsToMany('Varmetal\Material', 'materiales_gastados', 'producto_id_producto', 'material_id_material')->withPivot('gastado', 'fechaTermino','trabajador_id_trabajador', 'material_id_material');
     }
     public function pintado()
     {

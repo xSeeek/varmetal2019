@@ -24,7 +24,7 @@
                       </h3>
                     </div>
                 </div>
-                <a class="btn btn-outline-success my-2 my-sm-0" onclick="productoTerminado()" role="button" style="cursor: pointer;">Terminar Pieza</a>
+                <a id="terminar" class="btn btn-outline-success my-2 my-sm-0" onclick="productoTerminado()" role="button" style="cursor: pointer;">Terminar Pieza</a>
             </div>
             <br>
             <div class="row justify-content-center">
@@ -96,14 +96,18 @@ window.onload(aparecerBoton());
   {
     var botonConfirmar = document.getElementById('confirmar');
     var botonConfirmado = document.getElementById('confirmado');
+    var botonTerminar = document.getElementById("terminar");
+
     if('{{$fecha}}'=='{{$fechaActual}}')
     {
       botonConfirmar.setAttribute("style","display:none;");
       botonConfirmado.removeAttribute("style");
+      botonTerminar.setAttribute("style","display:none;");
     }
     else {
       botonConfirmado.setAttribute("style","display:none;");
       botonConfirmar.removeAttribute("style");
+      botonTerminar.removeAttribute("style");
     }
   }
 
@@ -173,7 +177,8 @@ window.onload(aparecerBoton());
                 showMensajeSwal(MSG_SUCCESS, BTN_SUCCESS, COLOR_SUCCESS, 'Se actualizó la cantidad');
             if(response == 2)
                 showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR, 'Esta pieza aún no está lista para soldarse');
-            elseif(response!=1)
+            else
+              if(response!=1)
                 showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR, response);
       }
       });
