@@ -52,7 +52,7 @@
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                      <button type="button" onclick="comprobrarDatos(this.id)" data-toggle="modal" class="btn btn-primary" role="button" style="cursor: pointer;">Confirmar</button>
+                      <button type="button" id="confirmar2" onclick="comprobrarDatos(this.id)" data-toggle="modal" class="btn btn-primary" role="button" style="cursor: pointer;">Confirmar</button>
                     </div>
                   </div>
                 </div>
@@ -74,7 +74,7 @@
                           </h3>
                         </div>
                         <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                          <button id="no" type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
                           <button id="si" onclick="comprobrarDatos(id)" type="button" data-target="#exampleModal2" data-toggle="modal" class="btn btn-primary" role="button" style="cursor: pointer;">Si</button>
                         </div>
                       </div>
@@ -191,15 +191,19 @@ window.onload(aparecerBoton());
     datos[3] = document.getElementById('alambre').value;
     datos[4] = document.getElementById('gas').value;
 
-    botonPro= document.getElementById(boton);
+    botonPro = document.getElementById(boton);
+    botonProAbajo = document.getElementById('no');
 
     if(((datos[0] && datos[1]) != "") && ((datos[3] && datos[4]) != ""))
     {
-      if(boton!='confirmar')
+      if(boton!='confirmar2' && boton!='confirmar')
       {
         finalizarDia();
       }else {
+        if(boton=='confirmar2')
         botonPro.setAttribute("data-target","#exampleModal2");
+        botonPro.setAttribute("data-dismiss","modal");
+        botonProAbajo.setAttribute("data-target","#exampleModal");
         return '1';
       }
     }else {
@@ -234,6 +238,7 @@ window.onload(aparecerBoton());
             if(response == 1)
             {
               showMensajeSwal(MSG_SUCCESS, BTN_SUCCESS, COLOR_SUCCESS, 'Se Finalizó el Día Completamente');
+              aparecerBoton();
             }
             else
             {
@@ -250,11 +255,11 @@ window.onload(aparecerBoton());
                 showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR, response);
               }else{
                 showMensajeSwal(MSG_SUCCESS, BTN_SUCCESS, COLOR_SUCCESS, response);
+                aparecerBoton();
               }
             }
           }
         });
-        aparecerBoton();
   }
 </script>
 
