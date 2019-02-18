@@ -307,7 +307,7 @@ class TrabajadorController extends Controller
           $datos_trabajador = $usuarioActual->trabajador;
           $ayudantes = $datos_trabajador->ayudante;
           return view('admin.trabajador.soldador_control')
-                                  ->with('productos_trabajador', $productos_soldador)
+                                  ->with('productos_soldador', $productos_soldador)
                                   ->with('horasHombre', $horasHombre)
                                   ->with('usuario_trabajador', $usuarioActual)
                                   ->with('trabajador', $trabajadorActual)

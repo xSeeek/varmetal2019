@@ -70,6 +70,42 @@
                         </h2>
                     @endif
                 </div>
+                <div class="card">
+                    <div class="card-header">Productos realizados en el mes actual</div>
+                    <div class="card-body">
+
+                    @if(($productos_soldador != NULL) && (count($productos_soldador)>0))
+                    <table id="tablaProductosFinalizados" class="display" style="width:100%" align="center">
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Piezas Realizadas</th>
+                                <th>Kilos Realizados</th>
+                                <th>Área (m<sup>2</sup>)</th>
+                                <th>Peso (kg)</th>
+                                <th>Opciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($productos_soldador as $key => $productos)
+                                <tr id="id_productoTrabajador{{ $productos->idProductos }}">
+                                    <td scope="col">{{ $productos->codigo }}</td>
+                                    <td scope="col">{{ $productos->pivot->productosRealizados }}</td>
+                                    <td scope="col">{{ $productos->pivot->kilosTrabajados }}</td>
+                                    <td scope="col">{{ $productos->area }}</td>
+                                    <td scope="col">{{ $productos->pesoKg }}</td>
+                                    <td scope="col"><a class="btn btn-outline-primary btn-sm" href="{{url('productoControl', [$productos->idProducto])}}" role="button" style="cursor: pointer;"><b>Detalles Pieza</b></a>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    @else
+                    </br>
+                        <h4 align="center">El Operador no ha realizado ninguna pieza este mes.</h4>
+                    </br>
+                    @endif
+                    </div>
+                </div>
             </div class="row">
         </br>
             <a class="btn btn-primary btn-lg" role="button" href="{{url('menuTrabajador')}}"><b>Volver</b></a>
@@ -94,18 +130,11 @@
                 <br>
                 @if(Auth::user()->isAdmin())
                     <h5>
-                        Borrar Operador:
+                        Borrar Soldador:
                     <br>
                         <a class="btn btn-outline-success btn-md" role="button" onclick="deleteTrabajador({{$trabajador->idTrabajador}})">Borrar</a>
                     </h5>
                     <br>
-                @endif
-                @if($usuario_trabajador->type == Varmetal\User::DEFAULT_TYPE)
-                    <h5>
-                        Asignar nuevas Piezas:
-                    <br>
-                        <a class="btn btn-outline-success btn-md" id="deleteButton" role="button" href="{{url('trabajador/asignarProducto', [$trabajador->idTrabajador])}}">Asignar</a>
-                    </h5>
                 @endif
             </div>
         </div>
@@ -199,9 +228,8 @@
           });
         }
       });
-
-
     }
+
     function deleteProducto(idTrabajador, idProducto)
     {
       swal({
