@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Varmetal\User;
 
 class UserSeeder extends Seeder
 {
@@ -11,10 +12,12 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->insert([
-            'email' => 'admin@localhost.com',
-            'type' => 'Admin',
-            'password' => bcrypt('abc123456'),
-        ]);
+      $user = new User();
+      $user->email = 'admin@localhost.com';
+      $user->type = User::ADMIN_TYPE;
+      $user->password = bcrypt('abc123456');
+      $user->save();
+
+
     }
 }
