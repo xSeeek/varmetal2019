@@ -17,7 +17,7 @@ class TrabajadorSeeder extends Seeder
       $user = User::find(1);
       $trabajador = new Trabajador();
       $trabajador->nombre = 'Administrador';
-      $trabajador->rut = '11.111.111-1';
+      $trabajador->rut = '9.999.999-3';
       $trabajador->cargo = 'MK1';
       $trabajador->tipo = 'Administrador';
       $trabajador->estado = true;
