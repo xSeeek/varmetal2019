@@ -69,6 +69,7 @@ class PinturaController extends Controller
         $pintado->pintor_id_trabajador = $userTrabajador->idTrabajador;
         $pintado->producto_id_producto = $pieza->idProducto;
         $pintado->save();
+        $pieza->trabajador()->attach($userTrabajador->trabajador->idTrabajador);
 
         return 1;
     }
