@@ -94,7 +94,7 @@
                                     <td scope="col">{{ $productos->pivot->kilosTrabajados }}</td>
                                     <td scope="col">{{ $productos->area }}</td>
                                     <td scope="col">{{ $productos->pesoKg }}</td>
-                                    <td scope="col"><a class="btn btn-outline-primary btn-sm" href="{{url('productoControl', [$productos->idProducto])}}" role="button" style="cursor: pointer;"><b>Detalles Pieza</b></a>
+                                    <td scope="col"><a class="btn btn-outline-primary btn-sm" href="{{url('soldadura/soldaduraControl', [$productos->idProducto])}}" role="button" style="cursor: pointer;"><b>Detalles Pieza</b></a>
                                 </tr>
                             @endforeach
                         </tbody>
