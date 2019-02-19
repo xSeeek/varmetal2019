@@ -75,7 +75,7 @@
                                 <input type="text" readonly id="pesoProducto" style="color:red" class="form-control-plaintext" value="Este producto se marcó como terminado.">
                             </div>
                         @endif
-                        <h3>
+                        <!--h3>
                           <b>Gas Gastado:</b>
                           <div class="col-sm-10">
                               <b>{{$gas}} Tubos</b>
@@ -85,7 +85,7 @@
                           <div class="col-sm-10">
                               <b>{{$alambre}} Metros</b>
                           </div>
-                        </h3>
+                        </h3-->
                     </h5>
                 </div>
             </div>
