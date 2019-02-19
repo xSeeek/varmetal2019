@@ -337,16 +337,18 @@
                 </h5>
                 <br>
                 @endif
-                <h5>
-                    Asignar más Operadores:
-                </br>
-                    @if($obra != NULL)
-                        <a class="btn btn-outline-success btn-md" id="insertButton" role="button" href="{{url('producto/asignarTrabajo', [$producto->idProducto])}}">Asignar</a>
-                    @else
-                        <a class="btn btn-outline-success btn-md" id="insertButton" role="button" disabled>Debe asignar el producto a un OT primero</a>
-                    @endif
-                </h5>
-                <br>
+                @if($producto->terminado == false)
+                    <h5>
+                        Asignar más Operadores:
+                    </br>
+                        @if($obra != NULL)
+                            <a class="btn btn-outline-success btn-md" id="insertButton" role="button" href="{{url('producto/asignarTrabajo', [$producto->idProducto])}}">Asignar</a>
+                        @else
+                            <a class="btn btn-outline-success btn-md" id="insertButton" role="button" disabled>Debe asignar el producto a un OT primero</a>
+                        @endif
+                    </h5>
+                    <br>
+                @endif
                 @if($producto->zona >= 2)
                 <h5>
                     Detalles de Pintado:
