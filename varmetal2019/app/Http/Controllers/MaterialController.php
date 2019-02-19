@@ -50,8 +50,6 @@ class MaterialController extends Controller
       }
       foreach ($productos as $key => $producto)
       {
-        if($producto->zona==1)
-        {
           $cont2=0;
           $productosRealizados=0;
           $foraneaGas=$gas->idMaterial*100+$producto->idProducto*10+$trabajador->idTrabajador;
@@ -94,7 +92,6 @@ class MaterialController extends Controller
             $producto->zona=1;
             $producto->save();
           }
-        }
       }
       if($cont=='Faltante')
         return '<br>Día Finalizado Con Exito';
