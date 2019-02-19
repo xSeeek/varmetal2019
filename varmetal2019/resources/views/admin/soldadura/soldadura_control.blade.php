@@ -24,7 +24,15 @@
                             @if($producto->fechaFin == NULL)
                                 <input type="text" readonly id="fechaFinProducto" class="form-control-plaintext" value="Aún no se finaliza">
                             @else
-                                <input type="text" readonly id="fechaFinProducto" class="form-control-plaintext" value="{{$fechaTermino}}">
+                              @if($fechaTermino==NULL && $producto->zona>'1')
+                                <input type="text" readonly id="fechaFinProducto" class="form-control-plaintext" value="Esta pieza se saltó la soldadura">
+                              @else
+                                @if($fechaTermino==NULL && $producto->zona<'1')
+                                  <input type="text" readonly id="fechaFinProducto" class="form-control-plaintext" value="Esta pieza aún no está lista para soldarse">
+                                @else
+                                  <input type="text" readonly id="fechaFinProducto" class="form-control-plaintext" value="{{$fechaTermino}}">
+                                @endif
+                              @endif
                             @endif
                         </div>
                         <b>Peso unitario en Kilogramos: (Editable)</b>
