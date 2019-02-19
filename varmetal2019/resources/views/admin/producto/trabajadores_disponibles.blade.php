@@ -20,6 +20,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach($trabajadores_almacenados as $key => $trabajador)
+                                    @if($trabajador->tipo=='Operador')
                                     <tr id="id_trabajador{{ $trabajador->idTrabajador }}">
                                         <td scope="col"><button class="btn btn-success" onclick="asignarTrabajo({{$idProducto}}, {{$trabajador->idTrabajador}})"><i class="far fa-check-square success"></i></button></td>
                                         <td scope="col">{{ $trabajador->rut }}</td>
@@ -30,6 +31,7 @@
                                             <td scope="col">Inactivo</td>
                                         @endif
                                     </tr>
+                                    @endif
                                     @endforeach
                                 </tbody>
                             </table>
