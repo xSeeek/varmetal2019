@@ -69,6 +69,19 @@ class SoldaduraController extends Controller
         $trabajador->productoSoldador()->detach($response[1]);
         $producto = Producto::find($response[1]);
         $trabajadores_producto = $producto->trabajadorSoldador;
+        $materiales_gastados = $producto->materialWithAtributes;
+        $fechaTermino=NULL;
+
+        foreach ($materiales_gastados as $key => $materiales)
+        {
+          if($fechaTermino==NULL)
+          {
+            $fechaTermino=$materiales->pivot->fechaTermino;
+          }else
+            if($materiales->pivot->fechaTermino!=NULL && $fechaTermino<$materiales->pivot->fechaTermino);
+              $fechaTermino=$materiales->pivot->fechaTermino;
+        }
+
         $productosRealizados=0;
 
         if($producto->trabajadorSoldadorWithAtributtes()->where('trabajador_id_trabajador', '=', $trabajador->idTrabajador)->get()->first()!=NULL)
@@ -86,10 +99,11 @@ class SoldaduraController extends Controller
               $producto->estado = 0;
             else
               $producto->estado = 2;
-            if($productosRealizados>=$producto->cantProducto)
+            if($productosRealizados>=$producto->cantProducto && $fechaTermino!=NULL)
               $producto->zona = 2;
             else
-              $producto->zona = 1;
+              if($fechaTermino!=NULL)
+                $producto->zona = 1;
             $producto->save();
         }
         return 1;
@@ -105,6 +119,18 @@ class SoldaduraController extends Controller
 
         $producto = Producto::find($response[1]);
         $trabajadores_producto = $producto->trabajadorSoldador;
+        $materiales_gastados = $producto->materialWithAtributes;
+        $fechaTermino=NULL;
+
+        foreach ($materiales_gastados as $key => $materiales)
+        {
+          if($fechaTermino==NULL)
+          {
+            $fechaTermino=$materiales->pivot->fechaTermino;
+          }else
+            if($materiales->pivot->fechaTermino!=NULL && $fechaTermino<$materiales->pivot->fechaTermino);
+              $fechaTermino=$materiales->pivot->fechaTermino;
+        }
 
         if($producto->trabajadorSoldadorWithAtributtes()->where('trabajador_id_trabajador', '=', $trabajador->idTrabajador)->get()->first()!=NULL)
         {
@@ -118,10 +144,11 @@ class SoldaduraController extends Controller
         if(($trabajadores_producto == NULL) || (count($trabajadores_producto) <= 0))
         {
             $trabajador->productoSoldador()->attach($producto->idProducto);
-            if($producto->cantProducto<=$productosRealizados)
+            if($producto->cantProducto<=$productosRealizados && $fechaTermino!=NULL)
               $producto->zona=2;
             else
-              $producto->zona=1;
+              if($fechaTermino!=NULL)
+                $producto->zona=1;
             $producto->estado = 2;
             $producto->save();
         }

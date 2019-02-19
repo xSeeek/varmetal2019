@@ -30,7 +30,11 @@
                                 @if($fechaTermino==NULL && $producto->zona<'1')
                                   <input type="text" readonly id="fechaFinProducto" class="form-control-plaintext" value="Esta pieza aún no está lista para soldarse">
                                 @else
-                                  <input type="text" readonly id="fechaFinProducto" class="form-control-plaintext" value="{{$fechaTermino}}">
+                                  @if($fechaTermino!=NULL)
+                                    <input type="text" readonly id="fechaFinProducto" class="form-control-plaintext" value="{{$fechaTermino}}">
+                                  @else
+                                    <input type="text" readonly id="fechaFinProducto" class="form-control-plaintext" value="Aún no se a soldado esta pieza">
+                                  @endif
                                 @endif
                               @endif
                             @endif
