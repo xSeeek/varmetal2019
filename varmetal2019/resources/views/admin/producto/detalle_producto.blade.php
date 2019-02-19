@@ -328,14 +328,29 @@
                 </br>
                     <a class="btn btn-outline-success btn-md" id="deleteButton" role="button" onclick="deleteProducto({{$producto->idProducto}})">Eliminar</a>
                 </h5>
-                <br>
                 @if($obra == NULL)
-                <h5>
-                    Asignar OT:
-                </br>
-                    <a class="btn btn-outline-danger btn-md" id="asignarButton" role="button" href="{{url('producto/asignarObra', [$producto->idProducto])}}">Asignar</a>
-                </h5>
-                <br>
+                    <br>
+                    <h5>
+                        Asignar OT:
+                    </br>
+                        <a class="btn btn-outline-danger btn-md" id="asignarButton" role="button" href="{{url('producto/asignarObra', [$producto->idProducto])}}">Asignar</a>
+                    </h5>
+                    <br>
+                @endif
+                @if(($producto->zona == 1) || ($producto->zona == 2))
+                    <br>
+                    <h5>
+                        @php
+                            $zona = 'No Especificada';
+                            if($producto->zona == 1)
+                                $zona = 'Soldadura';
+                            elseif ($producto->zona == 2)
+                                $zona = 'Pintado';
+                        @endphp
+                        Saltar proceso de {{$zona}}
+                    </br>
+                        <a class="btn btn-outline-danger btn-md" id="saltarZona" role="button" onclick="saltarZona({{$producto->idProducto}})">Saltar {{$zona}}</a>
+                    </h5>
                 @endif
                 @if($producto->terminado == false)
                     <h5>
@@ -350,17 +365,18 @@
                     <br>
                 @endif
                 @if($producto->zona >= 2)
-                <h5>
-                    Detalles de Pintado:
-                </br>
-                    <a class="btn btn-outline-success btn-md" id="detallesPintadoButton" role="button" href="{{url('pintado/pintadoControl', [$producto->idProducto])}}">Ingresar</a>
-                </h5>
-                <br>
-                <h5>
-                    Detalles de Soldadura:
-                </br>
-                    <a class="btn btn-outline-success btn-md" id="detallesPintadoButton" role="button" href="{{url('soldadura/soldaduraControl', [$producto->idProducto])}}">Ingresar</a>
-                </h5>
+                    <br>
+                    <h5>
+                        Detalles de Pintado:
+                    </br>
+                        <a class="btn btn-outline-success btn-md" id="detallesPintadoButton" role="button" href="{{url('pintado/pintadoControl', [$producto->idProducto])}}">Ingresar</a>
+                    </h5>
+                    <br>
+                    <h5>
+                        Detalles de Soldadura:
+                    </br>
+                        <a class="btn btn-outline-success btn-md" id="detallesPintadoButton" role="button" href="{{url('soldadura/soldaduraControl', [$producto->idProducto])}}">Ingresar</a>
+                    </h5>
                 @endif
                 @if($producto->terminado == false)
                     @if($producto->estado == 1)
@@ -577,6 +593,20 @@
             url: "{{url('/productoControl/resetProducto')}}",
             success: function(response){
                 window.location.href = "{{url('productoControl', [$producto->idProducto])}}";
+            }
+        });
+    }
+    function saltarZona(idProducto)
+    {
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: "POST",
+            data: {DATA:idProducto},
+            url: "{{url('/producto/saltarProceso')}}",
+            success: function(response){
+                window.location.reload();
             }
         });
     }

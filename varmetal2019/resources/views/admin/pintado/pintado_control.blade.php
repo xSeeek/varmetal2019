@@ -30,7 +30,11 @@
                         </table>
                         @else
                         <br>
-                            <h4 align="center">No se ha revisado ninguna pieza pintada.</h4>
+                            @if($producto->zona == 3)
+                                <h4 align="center">La pieza no pasó por el proceso de pintado.</h4>
+                            @elseif($producto->zona == 2)
+                                <h4 align="center">No se ha revisado ninguna pieza pintada.</h4>
+                            @endif
                         <br>
                         @endif
                     </div>

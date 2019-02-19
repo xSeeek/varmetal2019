@@ -463,4 +463,12 @@ class ProductoController extends Controller
             ->with('obras_disponibles', $obras_disponibles)
             ->with('idProducto', $data);
     }
+
+    public function saltarProceso(Request $request)
+    {
+        $producto = Producto::find($request->DATA);
+
+        $producto->zona = $producto->zona + 1;
+        $producto->save();
+    }
 }

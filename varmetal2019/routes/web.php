@@ -157,6 +157,9 @@ Route::get('/admin', 'AdminController@admin')
         Route::post('/obraControl/addProducto', ['uses' => 'ObraController@addProducto'])
                     ->middleware('is_supervisor')
                     ->name('/obraControl/addProducto');
+        Route::post('/producto/saltarProceso', ['uses' => 'ProductoController@saltarProceso'])
+                    ->middleware('is_supervisor')
+                    ->name('/producto/saltarProceso');
     /* [** VISTA GENERAL **] */
         /* [** GET **] */
         Route::get('/detalleProducto/{id}', ['uses' => 'ProductoController@detalleProducto'])
@@ -187,9 +190,6 @@ Route::get('/admin', 'AdminController@admin')
         Route::get('/adminPausasAlmacenadas/{id_producto}', ['uses' => 'PausaController@adminPausasDeProducto'])
                     ->middleware('is_supervisor')
                     ->name('adminPausasAlmacenadas');
-        /*Route::get('/detallesPausaGet/{id}', ['uses' => 'PausaController@pausaControl'])
-                    ->middleware('is_trabajador')
-                    ->name('pausaControlGet');*/
         Route::get('/adminDetallesPausaGet/{id}', ['uses' => 'PausaController@pausaControl'])
                     ->middleware('is_admin')
                     ->name('adminPausaControlGet');
@@ -221,9 +221,6 @@ Route::get('/admin', 'AdminController@admin')
         Route::post('/trabajadorUpdateFechaFinPost', ['uses' =>'PausaController@trabajadorUpdateFechaFin'])
                     ->middleware('is_trabajador')
                     ->name('trabajadorUpdateFechaFinPost');
-        /*Route::get('/SuperPausaControl', ['uses' =>'PausaController@insertPausa'])
-                    ->middleware('is_trabajador')
-                  ->name('pausaControlGet');*/
         Route::post('/trabajadorDeletePausa', ['uses' => 'PausaController@deletePausa'])
                     ->name('trabajadorDeletePausa');
         Route::post('/adminDeletePausa', ['uses' => 'PausaController@deletePausa'])
@@ -232,7 +229,6 @@ Route::get('/admin', 'AdminController@admin')
         Route::post('/pausaControlEditar', ['uses' => 'PausaController@editarPausa'])
                     ->name('pausaControlEditar')
                     ->middleware('is_supervisor');
-
 /* [** Obra Controller **] */
     /* [** ADMINISTRACIÓN **] */
         /* [** GET **] */
@@ -261,32 +257,28 @@ Route::get('/admin', 'AdminController@admin')
 
 /* [** Email Controller **] */
     /* [** GENERAL **] */
-      /* [** POST **] */
-        Route::post('/enviarEmail', ['uses' => 'EmailController@sendEmailPausas'])
-                    ->name('enviarEmail'); //PAUSAS
-        Route::post('/enviarEmailProducto', ['uses' => 'EmailController@sendEmailProducto'])
-                    ->name('enviarEmailProducto'); //cada 5 productos
-        Route::post('/enviarEmailTerminado', ['uses' => 'EmailController@sendEmailProductoTerminado'])
-                    ->name('enviarEmailTerminado'); //producto terminado
-        Route::post('/enviarEmailRegistrado',['uses' => 'EmailController@sendEmailRegistro'])
-                    ->name('enviarEmailRegistrado'); //nuevo registro
-        Route::post('/emailPausaEliminada',['uses' => 'EmailController@emailPausaEliminada'])
-                    ->name('emailPausaEliminada'); //pausa pendiente eliminada
-        Route::post('/nuevaContraseña', ['uses' => 'UserController@postProfilePassword'])
-                    ->name('nuevaContraseña'); //cambio de contraseña
-        Route::post('/nuevoEmail', ['uses' => 'UserController@postProfileEmail'])
-                    ->name('nuevoEmail'); //cambo de email
-        Route::post('/emailFinPausa', ['uses' => 'EmailController@emailFinPausa'])
-                    ->name('emailFinPausa'); //Pausa eliminada
-
-/* [** Cambiar Email **] */
-    /*[** GENERAL **] */
-      /* [** GET**] */
-        Route::get('/cambiarContraseña', ['uses' => 'UserController@getProfilePassword'])
+        /* [** GET**] */
+            Route::get('/cambiarContraseña', ['uses' => 'UserController@getProfilePassword'])
                     ->name('cambiarContraseña');//vista cambio de contraseña
-        Route::get('/cambiarEmail', ['uses' => 'UserController@getProfileEmail'])
+            Route::get('/cambiarEmail', ['uses' => 'UserController@getProfileEmail'])
                     ->name('cambiarEmail'); //vista cambio de email
-
+        /* [** POST **] */
+            Route::post('/enviarEmail', ['uses' => 'EmailController@sendEmailPausas'])
+                    ->name('enviarEmail'); //PAUSAS
+            Route::post('/enviarEmailProducto', ['uses' => 'EmailController@sendEmailProducto'])
+                    ->name('enviarEmailProducto'); //cada 5 productos
+            Route::post('/enviarEmailTerminado', ['uses' => 'EmailController@sendEmailProductoTerminado'])
+                    ->name('enviarEmailTerminado'); //producto terminado
+            Route::post('/enviarEmailRegistrado',['uses' => 'EmailController@sendEmailRegistro'])
+                    ->name('enviarEmailRegistrado'); //nuevo registro
+            Route::post('/emailPausaEliminada',['uses' => 'EmailController@emailPausaEliminada'])
+                    ->name('emailPausaEliminada'); //pausa pendiente eliminada
+            Route::post('/nuevaContraseña', ['uses' => 'UserController@postProfilePassword'])
+                    ->name('nuevaContraseña'); //cambio de contraseña
+            Route::post('/nuevoEmail', ['uses' => 'UserController@postProfileEmail'])
+                    ->name('nuevoEmail'); //cambo de email
+            Route::post('/emailFinPausa', ['uses' => 'EmailController@emailFinPausa'])
+                    ->name('emailFinPausa'); //Pausa eliminada
 
 /* [** Gerencia Controller **] */
     /* [** ADMINISTRACIÓN **] */
@@ -294,6 +286,7 @@ Route::get('/admin', 'AdminController@admin')
         Route::get('/gerencia', 'GerenciaController@showObras')
                     ->name('gerencia')
                     ->middleware('is_gerente');
+                    
     /* [** Editar **] */
 /* [** ADMINISTRACIÓN **] */
     /* [** POST **] */
