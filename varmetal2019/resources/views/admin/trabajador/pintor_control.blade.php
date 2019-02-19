@@ -172,7 +172,7 @@
                 <br>
                 @if(Auth::user()->isAdmin())
                     <h5>
-                        Borrar Operador:
+                        Borrar Pintor:
                     <br>
                         <a class="btn btn-outline-success btn-md" role="button" onclick="deleteTrabajador({{$trabajador->idTrabajador}})">Borrar</a>
                     </h5>

@@ -19,7 +19,7 @@
                             <tbody>
                                 @foreach($pendientes as $key => $pendiente)
                                 <tr id="id_pintura{{ $pendiente->idPintura }}">
-                                    <td scope="col">{{ $pendiente->dia }}</td>
+                                    <td scope="col">{{ Carbon\Carbon::parse($pendiente->dia)->format('d / M / Y') }}</td>
                                     <td scope="col">{{ $pendiente->piezasPintadas }}</td>
                                     <td><a class="btn btn-outline-success my-2 my-sm-0" href="{{url('detallesPintado', [$pendiente->idPintura])}}" role="button" style="cursor: pointer;">Revisar Pintado</a></td>
                                 </tr>
