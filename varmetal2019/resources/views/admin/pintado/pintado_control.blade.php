@@ -20,7 +20,7 @@
                             <tbody>
                                 @foreach($pintado_revisado as $key => $pintado)
                                 <tr id="id_pintura{{ $pintado->idPintura }}">
-                                    <td scope="col">{{ $pintado->dia }}</td>
+                                    <td scope="col">{{ Carbon\Carbon::parse($pintado->dia)->format('d / M / Y') }}</td>
                                     <td scope="col">{{ $pintado->piezasPintadas }}</td>
                                     <td scope="col">{{ $pintado->litrosGastados }}</td>
                                     <td><a class="btn btn-outline-success my-2 my-sm-0" href="{{url('detalleRevision', [$pintado->idPintura])}}" role="button" style="cursor: pointer;">Detalle Revisión</a></td>

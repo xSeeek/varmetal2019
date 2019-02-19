@@ -14,21 +14,21 @@
                     <form method="POST" name="revisarPintadoForm" id="revisarPintadoForm">
                         <input type="text" class="form-control" aria-describedby="idPintura" name="idPintura" value = "{{$idPintura}}" hidden>
                         <div class="form-group row">
-                            <label class="col-md-4 col-form-label text-md-right">Área Pintada:</label>
+                            <label class="col-md-4 col-form-label text-md-right">Área Pintada (m2):</label>
                             <div class="col-md-6">
-                                <input type="text" class="form-control" aria-describedby="areaPintada" placeholder="Área pintada del producto" name="areaPintada" required>
+                                <input type="text" class="form-control" aria-describedby="areaPintada" placeholder="Área pintada del producto en metros cuadrados" name="areaPintada" required>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-4 col-form-label text-md-right">Litros de pintura gastados:</label>
+                            <label class="col-md-4 col-form-label text-md-right">Litros de pintura gastados (L):</label>
                             <div class="col-md-6">
-                                <input type="text" class="form-control" aria-describedby="pinturaGastada" placeholder="Litros de pintura gastados" name="pinturaGastada" required>
+                                <input type="text" class="form-control" aria-describedby="pinturaGastada" placeholder="Litros de pintura gastados en litros" name="pinturaGastada" required>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-4 col-form-label text-md-right">Espesor de la pintura:</label>
+                            <label class="col-md-4 col-form-label text-md-right">Espesor de la pintura (mm.):</label>
                             <div class="col-md-6">
-                                <input type="text" class="form-control" aria-describedby="espesorPintura" placeholder="Espesor de la Pintura" name="espesorPintura" required>
+                                <input type="text" class="form-control" aria-describedby="espesorPintura" placeholder="Espesor de la Pintura de milímetros" name="espesorPintura" required>
                             </div>
                         </div>
                     </form>

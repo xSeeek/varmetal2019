@@ -44,12 +44,12 @@
                             @if($producto->area == 0)
                                 <input type="text" readonly id="areaProducto" class="form-control-plaintext" value="No se ha especificado el área.">
                             @else
-                                <input type="text" readonly id="areaProducto" class="form-control-plaintext" value="{{$producto->area}}">
+                                <input type="text" readonly id="areaProducto" class="form-control-plaintext" value="{{$producto->area}} m2">
                             @endif
                         </div>
                         <b>Peso unitario en Kilogramos: (Editable)</b>
                         <div class="col-sm-10">
-                            <input type="text" readonly id="pesoProducto" class="form-control-plaintext" value="{{$producto->pesoKg}}">
+                            <input type="text" readonly id="pesoProducto" class="form-control-plaintext" value="{{$producto->pesoKg}} Kg.">
                         </div>
                         <b>OT a la que pertenece:</b>
                         <div class="col-sm-10">
@@ -216,7 +216,7 @@
             </div>
             <br>
             <div class="card">
-                <div class="card-header">Operadores activos</div>
+                <div class="card-header">Operadores</div>
                 <div class="card-body">
 
                 @if(($trabajadores != NULL) && (count($trabajadores)>0))
@@ -261,6 +261,39 @@
                 @endif
                 </div>
             </div>
+            @if($pintores != NULL)
+                <br>
+                <div class="card">
+                    <div class="card-header">Pintores</div>
+                    <div class="card-body">
+
+                    @if(sizeof($pintores)>0)
+                    <table id="tablaAdministracion" class="display" style="width:100%" align="center">
+                        <thead>
+                            <tr>
+                                <th>RUT</th>
+                                <th>Nombre</th>
+                                <th>Ficha</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($pintores as $pintor)
+                            <tr id="id_Trabajador{{ $pintor[0]->idTrabajador }}">
+                                <td scope="col">{{ $pintor[0]->rut }}</td>
+                                <td scope="col">{{ $pintor[0]->nombre }}</td>
+                                <td scope="col"><a class="btn btn-outline-secondary btn-sm" href="{{url('trabajadorControl', [$pintor[0]->idTrabajador])}}" role="button"><b>Ficha Trabajador</b></a>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    @else
+                    </br>
+                        <h4 align="center">La pieza no pasó por pintado.</h4>
+                    </br>
+                    @endif
+                    </div>
+                </div>
+            @endif
         </div>
     </div>
     </br>
@@ -355,6 +388,15 @@
     </div>
 </div>
 <script type="text/javascript">
+
+    $(document).ready(function() {
+        $('table.display').DataTable({
+            "language":{
+                "url":"//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+            },
+            "scrollX": true,
+       });
+    } );
 
   function changeStatus()
   {

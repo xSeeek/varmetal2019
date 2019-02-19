@@ -10,6 +10,10 @@ class Trabajador extends Model
     public $primaryKey = 'idTrabajador';
     protected $table = 'trabajador';
 
+    const OPERADOR_TYPE = 'Operador';
+    const SOLDADOR_TYPE = 'Soldador';
+    const PINTOR_TYPE = 'Pintor';
+
     public function obra()
     {
         return $this->belongsToMany('Varmetal\Obra', 'obra_supervisor', 'trabajador_id_trabajador', 'obras_id_obra');
