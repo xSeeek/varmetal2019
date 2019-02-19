@@ -113,6 +113,15 @@ class ProductoController extends Controller
             if($piezaPintada->revisado == false)
                 $pendientes++;
 
+        $pintores = Array();
+        $indexPintores = 0;
+        $pintado = $producto->pintado()->select('pintor_id_trabajador')->groupBy('pintor_id_trabajador')->get();
+        foreach($pintado as $pintor)
+        {
+            $pintores[$indexPintores] = Trabajador::find($pintor);
+            $indexPintores++;
+        }
+
         return view('admin.producto.detalle_producto')
                 ->with('producto', $producto)
                 ->with('tiempoPausa', $tiempoPausa)
@@ -122,7 +131,8 @@ class ProductoController extends Controller
                 ->with('obra', $obra)
                 ->with('tipo', $tipo)
                 ->with('horasHombre', $horasHombre)
-                ->with('pendientes', $pendientes);
+                ->with('pendientes', $pendientes)
+                ->with('pintores', $pintores);
     }
 
     public function detalleProducto($id)
@@ -148,7 +158,7 @@ class ProductoController extends Controller
 
         if($trabajador->tipo=="Operador")
         {
-          return view('producto.detalle_producto')
+            return view('producto.detalle_producto')
                   ->with('producto', $producto)
                   ->with('trabajadores', $trabajadores)
                   ->with('cantidadProducida', $cantidadProducida)
@@ -159,7 +169,7 @@ class ProductoController extends Controller
         }
         if($trabajador->tipo=="Soldador")
         {
-          return view('producto.detalle_producto_soldador')
+            return view('producto.detalle_producto_soldador')
                   ->with('producto', $producto)
                   ->with('trabajadores', $trabajadores)
                   ->with('cantidadProducida', $cantidadProducida)

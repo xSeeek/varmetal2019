@@ -167,7 +167,7 @@ class TrabajadorController extends Controller
         $array_productos = array();
         $productosAyuda = array();
 
-        if($datos_trabajador->tipo=="Operador")
+        if($datos_trabajador->tipo == Trabajador::OPERADOR_TYPE)
         {
           $productos_trabajador = $datos_trabajador->productoWithAtributes;
           foreach($productos_trabajador as $producto)
@@ -315,6 +315,40 @@ class TrabajadorController extends Controller
                                   ->with('gastoAla',$gastoAla)
                                   ->with('gastoGas',$gastoGas)
                                   ->with('fecha',$fecha);
+        }
+        if($datos_trabajador->tipo == Trabajador::PINTOR_TYPE)
+        {
+            $date = new Carbon();
+            $diasPintado = $datos_trabajador->piezasPintadas()->whereMonth('dia', $date->now()->month)->get();
+
+            $pinturaGastada = 0;
+            $superficiePintada = 0;
+            $piezasPintadasMes = 0;
+            foreach($diasPintado as $dia)
+                if($dia->revisado == true)
+                {
+                    $pinturaGastada += $dia->litrosGastados;
+                    $superficiePintada += $dia->areaPintada;
+                    $piezasPintadasMes += $dia->piezasPintadas;
+                }
+
+            $piezasPintadas = Array();
+            $indexPiezasPintadas = 0;
+            $dataPintor = $datos_trabajador->piezasPintadas;
+            foreach($dataPintor as $data)
+            {
+                $piezasPintadas[$indexPiezasPintadas][0] = Producto::find($data->producto_id_producto);
+                $piezasPintadas[$indexPiezasPintadas][1] = Carbon::parse($data->dia);
+                $indexPiezasPintadas++;
+            }
+
+            return view('admin.trabajador.pintor_control')
+                                    ->with('trabajador', $datos_trabajador)
+                                    ->with('usuario_trabajador', $userTrabajador)
+                                    ->with('pinturaGastada', $pinturaGastada)
+                                    ->with('superficiePintada', $superficiePintada)
+                                    ->with('cantPiezasPintadas', $piezasPintadasMes)
+                                    ->with('piezasPintadas', $piezasPintadas);
         }
     }
 
