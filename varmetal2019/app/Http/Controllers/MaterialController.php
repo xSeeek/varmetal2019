@@ -50,44 +50,50 @@ class MaterialController extends Controller
       }
       foreach ($productos as $key => $producto)
       {
-        $cont2=0;
-        $productosRealizados=0;
-        $foraneaGas=$gas->idMaterial*100+$producto->idProducto*10+$trabajador->idTrabajador;
-        $foraneaAlambre=$alambre->idMaterial*100+$producto->idProducto*10+$trabajador->idTrabajador;
-        if($producto->trabajadorSoldadorWithAtributtes()->where('trabajador_id_trabajador', '=', $trabajador->idTrabajador)->get()->first()!=NULL)
+        if($producto->zona==1)
         {
-          $trabajadores = $producto->trabajadorSoldadorWithAtributtes;
-
-          foreach($trabajadores as $worker)
-              if($worker->tipo=="Soldador")
-                $productosRealizados += $worker->pivot->productosRealizados;
-          $dataProducto = $producto->trabajadorSoldadorWithAtributtes()->where('trabajador_id_trabajador', '=', $trabajador->idTrabajador)->get()->first();
-          if($productosRealizados < $producto->cantProducto)
+          $cont2=0;
+          $productosRealizados=0;
+          $foraneaGas=$gas->idMaterial*100+$producto->idProducto*10+$trabajador->idTrabajador;
+          $foraneaAlambre=$alambre->idMaterial*100+$producto->idProducto*10+$trabajador->idTrabajador;
+          if($producto->trabajadorSoldadorWithAtributtes()->where('trabajador_id_trabajador', '=', $trabajador->idTrabajador)->get()->first()!=NULL)
           {
-            if($cont==NULL)
-              echo 'Piezas Faltantes:';
-            $cont='Faltante';
-            echo ' | ';
-            echo $producto->cantProducto-$productosRealizados;
-            echo ' por hacer de la pieza: ';
-            echo $producto->codigo;
-          }else {
-            if($gas->productoWithAttributes()->where('foranea', '=', $foraneaGas)->get()->first()==NULL)
+            $trabajadores = $producto->trabajadorSoldadorWithAtributtes;
+
+            foreach($trabajadores as $worker)
+                if($worker->tipo=="Soldador")
+                  $productosRealizados += $worker->pivot->productosRealizados;
+            $dataProducto = $producto->trabajadorSoldadorWithAtributtes()->where('trabajador_id_trabajador', '=', $trabajador->idTrabajador)->get()->first();
+            if($productosRealizados < $producto->cantProducto)
             {
-                $gas->producto()->attach($producto->idProducto, ['trabajador_id_trabajador' => $trabajador->idTrabajador,'gastado' => $gastoGas, 'fechaTermino' => $producto->fechaFin, 'foranea' => $foraneaGas, 'fechaTermino' => $dataProducto->pivot->fechaComienzo]);
-                $cont2++;
-            }
-            if($alambre->productoWithAttributes()->where('foranea', '=', $foraneaAlambre)->get()->first()==NULL)
-            {
-                $alambre->producto()->attach($producto->idProducto, ['trabajador_id_trabajador' => $trabajador->idTrabajador,'gastado' => $gastoAlambre, 'fechaTermino' => $producto->fechaFin, 'foranea' => $foraneaAlambre, 'fechaTermino' => $dataProducto->pivot->fechaComienzo]);
-                $cont2++;
+              if($cont==NULL)
+                echo 'Piezas Faltantes:';
+              $cont='Faltante';
+              echo ' | ';
+              echo $producto->cantProducto-$productosRealizados;
+              echo ' por hacer de la pieza: ';
+              echo $producto->codigo;
+            }else {
+              if($gas->productoWithAttributes()->where('foranea', '=', $foraneaGas)->get()->first()==NULL)
+              {
+                  $gas->producto()->attach($producto->idProducto, ['trabajador_id_trabajador' => $trabajador->idTrabajador,'gastado' => $gastoGas, 'fechaTermino' => $producto->fechaFin, 'foranea' => $foraneaGas, 'fechaTermino' => $dataProducto->pivot->fechaComienzo]);
+                  $cont2++;
+              }
+              if($alambre->productoWithAttributes()->where('foranea', '=', $foraneaAlambre)->get()->first()==NULL)
+              {
+                  $alambre->producto()->attach($producto->idProducto, ['trabajador_id_trabajador' => $trabajador->idTrabajador,'gastado' => $gastoAlambre, 'fechaTermino' => $producto->fechaFin, 'foranea' => $foraneaAlambre, 'fechaTermino' => $dataProducto->pivot->fechaComienzo]);
+                  $cont2++;
+              }
             }
           }
-        }
-        if($cont2==2)
-        {
-          $producto->zona=2;
-          $producto->save();
+          if($cont2==2 && $productosRealizados>=$producto->cantProducto)
+          {
+            $producto->zona=2;
+            $producto->save();
+          }else{
+            $producto->zona=1;
+            $producto->save();
+          }
         }
       }
       if($cont=='Faltante')
@@ -153,8 +159,15 @@ class MaterialController extends Controller
               $dataProducto->pivot->productosRealizados = ($dataProducto->pivot->productosRealizados) + $cantidad;
               $dataProducto->pivot->kilosTrabajados = ($dataProducto->pivot->productosRealizados) * $producto->pesoKg;
               if($dataProducto->pivot->productosRealizados == $producto->cantProducto)
+              {
+                $producto->zona = 2;
+                $producto->save();
                 $dataProducto->pivot->fechaComienzo = now();
-
+                $dataProducto->pivot->fechaComienzo = now();
+              }else {
+                $producto->zona = 1;
+                $producto->save();
+              }
               $dataProducto->pivot->save();
               $dataProducto->save();
               return 1;
@@ -192,13 +205,20 @@ class MaterialController extends Controller
                 echo $producto->cantProducto;
                 return;
               }
-                  $dataProducto->pivot->productosRealizados = ($dataProducto->pivot->productosRealizados) + $cantidad;
-                  $dataProducto->pivot->kilosTrabajados = ($dataProducto->pivot->productosRealizados) * $producto->pesoKg;
-                  if($dataProducto->pivot->productosRealizados == $producto->cantProducto)
-                    $dataProducto->pivot->fechaComienzo = now();
-                  $dataProducto->pivot->save();
-                  $dataProducto->save();
-                  return 1;
+                $dataProducto->pivot->productosRealizados = ($dataProducto->pivot->productosRealizados) + $cantidad;
+                $dataProducto->pivot->kilosTrabajados = ($dataProducto->pivot->productosRealizados) * $producto->pesoKg;
+                if($dataProducto->pivot->productosRealizados == $producto->cantProducto)
+                {
+                  $producto->zona = 2;
+                  $producto->save();
+                  $dataProducto->pivot->fechaComienzo = now();
+                }else {
+                  $producto->zona = 1;
+                  $producto->save();
+                }
+                $dataProducto->pivot->save();
+                $dataProducto->save();
+                return 1;
             }
           }
         }

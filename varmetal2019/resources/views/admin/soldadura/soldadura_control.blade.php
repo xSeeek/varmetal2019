@@ -104,7 +104,9 @@
                             <th>Kg realizados</th>
                             <th>Estado</th>
                             <th>Ficha</th>
+                            <th>Reiniciar Piezas</th>
                             <th>Eliminar</th>
+                            <th>Añadir piezas</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -124,14 +126,16 @@
                                 @endif
                             @endif
                             <td scope="col"><a class="btn btn-outline-secondary btn-sm" href="{{url('trabajadorControl', [$soldador->idTrabajador])}}" role="button"><b>Ficha Trabajador</b></a>
+                            <td scope="col"><a class="btn btn-outline-secondary btn-sm" onclick="reiniciarWorker({{ $soldador->idTrabajador }}, {{ $producto->idProducto }})" role="button"><b>Reiniciar</b></a>
                             <td scope="col"><a class="btn btn-outline-secondary btn-sm" onclick="deleteWorker({{ $soldador->idTrabajador }}, {{ $producto->idProducto }})" role="button"><b>Eliminar</b></a>
+                            <td scope="col"><a class="btn btn-outline-secondary btn-sm" onclick="añadirPiezas({{ $soldador->idTrabajador }}, '{{ $producto->codigo }}')" role="button"><b>Añadir</b></a>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
                 @else
                 </br>
-                    <h4 align="center">No hay Operadores asignados.</h4>
+                    <h4 align="center">No hay Soldadores asignados.</h4>
                 </br>
                 @endif
                 </div>
@@ -172,12 +176,22 @@
                 </h5>
                 <br>
                 @if($producto->zona >= 2)
-                <h5>
-                    Detalles de Pintado:
-                </br>
-                    <a class="btn btn-outline-success btn-md" id="detallesPintadoButton" role="button" href="{{url('pintado/pintadoControl', [$producto->idProducto])}}">Ingresar</a>
-                </h5>
+                  <h5>
+                      Detalles de Pintado:
+                  </br>
+                      <a class="btn btn-outline-success btn-md" id="detallesPintadoButton" role="button" href="{{url('pintado/pintadoControl', [$producto->idProducto])}}">Ingresar</a>
+                  </h5>
+                  <br>
                 @endif
+                <h5>
+                    Asignar Soldadores:
+                </br>
+                    @if($producto->obra != NULL)
+                        <a class="btn btn-outline-success btn-md" id="insertButton" role="button" href="{{url('producto/asignarTrabajoSoldador', [$producto->idProducto])}}">Asignar</a>
+                    @else
+                        <a class="btn btn-outline-success btn-md" id="insertButton" role="button" disabled>Debe asignar el producto a un OT primero</a>
+                    @endif
+                </h5>
                 @if($producto->terminado == false)
                     @if($producto->estado == 1)
                         <br>
@@ -205,3 +219,133 @@
         </div>
     </div>
 </div>
+<script>
+
+function deleteWorker(idTrabajador, idProducto)
+{
+  swal({
+    title: "Confirmación",
+    text: '¿Desea desvincular a este soldador?',
+    type: MSG_QUESTION,
+    showCancelButton: true,
+    confirmButtonColor: COLOR_SUCCESS,
+    confirmButtonText: "Si",
+    cancelButtonText: "No",
+    cancelButtonColor: COLOR_ERROR,
+  }).then((result) =>
+  {
+    if (result.value) {
+
+      var data, json_data;
+
+      data = Array();
+      data[0] = idTrabajador;
+      data[1] = idProducto;
+
+      json_data = JSON.stringify(data);
+
+      $.ajax({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        type: "POST",
+        data: {DATA:json_data},
+        url: "{{url('/productoControlSoldadura/removeWorker')}}",
+        success: function(response){
+          window.location.href = "{{url('/soldadura/soldaduraControl', [$producto->idProducto])}}";
+        }
+      });
+    }
+  });
+}
+function reiniciarWorker(idTrabajador, idProducto)
+{
+  swal({
+    title: "Confirmación",
+    text: '¿Desea reiniciar las piezas de este soldador?',
+    type: MSG_QUESTION,
+    showCancelButton: true,
+    confirmButtonColor: COLOR_SUCCESS,
+    confirmButtonText: "Si",
+    cancelButtonText: "No",
+    cancelButtonColor: COLOR_ERROR,
+  }).then((result) =>
+  {
+    if (result.value) {
+
+
+      var data, json_data;
+
+      data = Array();
+      data[0] = idTrabajador;
+      data[1] = idProducto;
+
+      json_data = JSON.stringify(data);
+
+      $.ajax({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        type: "POST",
+        data: {DATA:json_data},
+        url: "{{url('/productoControlSoldadura/reiniciarWorker')}}",
+        success: function(response){
+          window.location.href = "{{url('/soldadura/soldaduraControl', [$producto->idProducto])}}";
+        }
+      });
+
+    }
+  });
+}
+function añadirPiezas(idTrabajador, codigo)
+{
+  swal({
+  title: "Confirmación",
+  input: 'text',
+  inputAttributes: {
+      autocapitalize: 'off'
+  },
+  text: "Ingrese la cantidad de piezas a asignar:",
+  type: "warning",
+  showCancelButton: true,
+  confirmButtonColor: "#6A9944",
+  confirmButtonText: "Continuar",
+  cancelButtonText: "Salir",
+  cancelButtonColor: "#d71e1e",
+  }).then((result) =>
+  {
+    if (result.value && result.value>0) {
+
+
+      var data, json_data;
+
+      data = Array();
+      data[0] = idTrabajador;
+      data[1] = codigo;
+      data[2] = result.value;
+
+      json_data = JSON.stringify(data);
+
+      $.ajax({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        type: "POST",
+        data: {DATA:json_data},
+        url: "{{url('/productoControlSoldadura/añadirPiezas')}}",
+        success: function(response){
+          if(response==1)
+            window.location.href = "{{url('/soldadura/soldaduraControl', [$producto->idProducto])}}";
+          if(response==2)
+            showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR, 'La pieza aún no está lista para soldarse');
+          else
+            if(response!=1)
+              showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR, response);
+        }
+      });
+
+    }
+  });
+}
+</script>
+@endsection

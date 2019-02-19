@@ -114,6 +114,9 @@ Route::get('/admin', 'AdminController@admin')
         Route::get('/producto/asignarTrabajo/{id}', ['uses' => 'ProductoController@asignarTrabajo'])
                     ->middleware('is_supervisor')
                     ->name('/producto/asignarTrabajo');
+        Route::get('producto/asignarTrabajoSoldador/{id}', ['uses' => 'SoldaduraController@asignarTrabajo'])
+                    ->middleware('is_supervisor')
+                    ->name('/producto/asignarTrabajoSoldador');
         Route::get('/producto/asignarObra/{id}', ['uses' => 'ProductoController@asignarObra'])
                     ->middleware('is_supervisor')
                     ->name('/producto/asignarObra');
@@ -127,12 +130,24 @@ Route::get('/admin', 'AdminController@admin')
         Route::post('/productoControl/addWorker', ['uses' => 'ProductoController@addWorker'])
                     ->middleware('is_supervisor')
                     ->name('/productoControl/addWorker');
+        Route::post('/productoControl/addWorkerSoldador', ['uses' => 'SoldaduraController@addWorker'])
+                    ->middleware('is_supervisor')
+                    ->name('/productoControl/addWorkerSoldador');
         Route::post('/productoControl/removeWorker', ['uses' => 'ProductoController@removeWorker'])
                     ->middleware('is_supervisor')
                     ->name('/productoControl/removeWorker');
+        Route::post('/productoControlSoldadura/removeWorker', ['uses' => 'SoldaduraController@removeWorker'])
+                    ->middleware('is_supervisor')
+                    ->name('/productoControlSoldadura/removeWorker');
+        Route::post('/productoControlSoldadura/reiniciarWorker', ['uses' => 'SoldaduraController@reiniciarWorker'])
+                    ->middleware('is_supervisor')
+                    ->name('/productoControlSoldadura/reiniciarWorker');
         Route::post('/productoControl/resetProduccion', ['uses' => 'ProductoController@unmarkAsFinished'])
                     ->middleware('is_supervisor')
                     ->name('/productoControl/resetProduccion');
+        Route::post('/productoControlSoldadura/añadirPiezas', ['uses' => 'SoldaduraController@añadirPiezas'])
+                    ->middleware('is_supervisor')
+                    ->name('/productoControlSoldadura/añadirPiezas');
         Route::post('/productoControl/finishProduccion', ['uses' => 'ProductoController@finishProducto'])
                     ->middleware('is_supervisor')
                     ->name('/productoControl/finishProduccion');
