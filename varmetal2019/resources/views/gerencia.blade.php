@@ -23,6 +23,7 @@
                                     <th>Horas Hombre </th>
                                     <th>Horas en Pausa</th>
                                     <th>Horas en SetUp</th>
+                                    <th>Metros Cuadrados Pintados</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -43,6 +44,7 @@
                                     @else
                                       <td scope="col" align="center">00:00</td>
                                     @endif
+                                    <td scope="col" align="center">{{ $obra[8] }}</td>
                                 </tr>
                                 @endforeach
                             </tbody>

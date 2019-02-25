@@ -26,6 +26,7 @@ class GerenciaController extends Controller
         $fechaConjunto = NULL;
         $productosAuxiliar = array();
         $k = 0;
+        $m2pintados = 0;
 
         $obras_reporte = array();
         $index = 0;
@@ -103,6 +104,11 @@ class GerenciaController extends Controller
 
                 /* Acumular peso en kilogramos de los productos */
                 $kilosObra += ($producto->pesoKg * $producto->cantProducto);
+
+                if(count($producto->pintado) > 0)
+                    foreach($producto->pintado as $piezasPintadas)
+                        if($piezasPintadas->revisado == true)
+                            $m2pintados += $piezasPintadas->areaPintada;
             }
 
             $diffHoras += $this->productosEnAyuda($productosAuxiliar);
@@ -119,6 +125,7 @@ class GerenciaController extends Controller
             $obra[5] = $diffHoras;
             $obra[6] = $tiempoPausa;
             $obra[7] = $tiempoSetUp;
+            $obra[8] = $m2pintados;
 
             // Actualización y asignación de datos a los indices //
             $obras_reporte[$index] = $obra;
@@ -130,6 +137,7 @@ class GerenciaController extends Controller
             $tiempoSetUp = 0;
             $kilosObra = 0;
             $diffHoras = 0;
+            $m2pintados = 0;
             $j = 0;
 
             for($i = 0; $i < count($array_trabajadores); $i++)
