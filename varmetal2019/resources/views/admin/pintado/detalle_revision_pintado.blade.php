@@ -16,15 +16,20 @@
                     <h5>
                         <b>Área total:</b>
                         <div class="col-sm-10">
-                            <input type="text" readonly id="nombreProducto" class="form-control-plaintext" value="{{$pintado->areaPintada}} m2">
+                            <input type="text" readonly class="form-control-plaintext" value="{{$pintado->areaPintada * $pintado->piezasPintadas}} m2">
                         </div>
                         <b>Litros de pintura utilizados:</b>
                         <div class="col-sm-10">
-                            <input type="text" readonly id="nombreProducto" class="form-control-plaintext" value="{{$pintado->litrosGastados}} L">
+                            <input type="text" readonly class="form-control-plaintext" value="{{$pintado->litrosGastados}} L">
                         </div>
                         <b>Espesor de la pintura:</b>
                         <div class="col-sm-10">
-                            <input type="text" readonly id="fechaInicioProducto" class="form-control-plaintext" value="{{$pintado->espesor}} mm.">
+                            <input type="text" readonly class="form-control-plaintext" value="{{$pintado->espesor}} mm.">
+                        </div>
+                        <br>
+                        <b style="color:red">Rendimiento:</b>
+                        <div class="col-sm-10">
+                            <input type="text" style="color:red" readonly class="form-control-plaintext" value="{{$rendimiento}}">
                         </div>
                     </h5>
                         <br>
@@ -34,11 +39,11 @@
                     <h5>
                         <b>Nombre:</b>
                         <div class="col-sm-10">
-                                <input type="text" readonly id="fechaFinProducto" class="form-control-plaintext" value="{{$supervisor->nombre}}">
+                                <input type="text" readonly class="form-control-plaintext" value="{{$supervisor->nombre}}">
                         </div>
                         <b>RUT</b>
                         <div class="col-sm-10">
-                                <input type="text" readonly id="areaProducto" class="form-control-plaintext" value="{{$supervisor->rut}}">
+                                <input type="text" readonly class="form-control-plaintext" value="{{$supervisor->rut}}">
                         </div>
                     </h5>
                     <br>
@@ -48,11 +53,11 @@
                 <h5>
                     <b>Nombre:</b>
                     <div class="col-sm-10">
-                            <input type="text" readonly id="fechaFinProducto" class="form-control-plaintext" value="{{$pintor->nombre}}">
+                            <input type="text" readonly class="form-control-plaintext" value="{{$pintor->nombre}}">
                     </div>
                     <b>RUT</b>
                     <div class="col-sm-10">
-                            <input type="text" readonly id="areaProducto" class="form-control-plaintext" value="{{$pintor->rut}}">
+                            <input type="text" readonly class="form-control-plaintext" value="{{$pintor->rut}}">
                     </div>
                 </h5>
                 </div>

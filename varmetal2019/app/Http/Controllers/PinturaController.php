@@ -36,11 +36,17 @@ class PinturaController extends Controller
         $pieza = $detallePintado->producto;
         $pintor = $detallePintado->pintor;
 
+        $rendimiento = 0;
+        $firstMult = ($detallePintado->areaPintada * $detallePintado->piezasPintadas)/$detallePintado->litrosGastados;
+        $secondMult = 1/($detallePintado->espesor * 1000);
+        $rendimiento = $firstMult * $secondMult;
+
         return view('admin.pintado.detalle_revision_pintado')
                 ->with('supervisor', $supervisor)
                 ->with('pintado', $detallePintado)
                 ->with('pieza', $pieza)
-                ->with('pintor', $pintor);
+                ->with('pintor', $pintor)
+                ->with('rendimiento', $rendimiento);
     }
 
     public function pintarPieza(Request $request)
@@ -100,16 +106,12 @@ class PinturaController extends Controller
         $detallePintado = Pintado::find($request->idPintura);
         $pieza = $detallePintado->producto;
 
-        if($request->areaPintada <= 0)
-            return 'El área pintada no puede ser menor a 0';
-        if($request->areaPintada > $pieza->area)
-            return 'El área pintada supera al área total de la pieza';
         if($request->pinturaGastada <= 0)
             return 'Litros de pintura utilizados no válido';
         if($request->espesorPintura <= 0)
             return 'Espesor de pintura ingresado no válido';
 
-        $detallePintado->areaPintada = $request->areaPintada;
+        $detallePintado->areaPintada = $pieza->area;
         $detallePintado->litrosGastados = $request->pinturaGastada;
         $detallePintado->espesor = $request->espesorPintura;
         $detallePintado->revisado = true;
