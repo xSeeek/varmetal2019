@@ -67,19 +67,23 @@
                   @endif
                   </td>
                 <td class="text-center">
-                  <form action="{!! route('administrador.desvincular' ,['rut'=>$trabajador->rut, 'idObra'=>$obra->idObra]) !!}" method="post" id="form_desvincular_{{$trabajador->idTrabajador}}">
-                    <div class="btn-group-vertical" role="group">
-                      <a role="button" class="btn btn-primary font-weight-bold text-light" href="{!! route('supervisor.verAsistencia', ['rut'=>$trabajador->rut]) !!}">Ver Asistencia</a>
-                      @if (Auth::user()->isAdmin())
-                        @csrf
-                        <button type="submit" class="btn btn-danger"
-                          data-toggle="tooltip" data-placement="top"
-                          title="Desvincular de la obra">
-                          <i class="fas fa-user-slash"></i>
-                        </button>
-                      @endif
-                    </div>
-                </form>
+                  @if(($trabajador->user != null))
+                    <a role="button" class="btn btn-primary font-weight-bold text-light" href="{!! route('supervisor.verAsistencia', ['rut'=>$trabajador->rut]) !!}">Ver Asistencia</a>
+                  @else
+                    <form action="{!! route('administrador.desvincular' ,['rut'=>$trabajador->rut, 'idObra'=>$obra->idObra]) !!}" method="post" id="form_desvincular_{{$trabajador->idTrabajador}}">
+                      <div class="btn-group-vertical" role="group">
+                        <a role="button" class="btn btn-primary font-weight-bold text-light" href="{!! route('supervisor.verAsistencia', ['rut'=>$trabajador->rut]) !!}">Ver Asistencia</a>
+                        @if ((Auth::user()->isAdmin()))
+                          @csrf
+                          <button type="submit" class="btn btn-danger"
+                            data-toggle="tooltip" data-placement="top"
+                            title="Desvincular de la obra">
+                            <i class="fas fa-user-slash"></i>
+                          </button>
+                        @endif
+                      </div>
+                    </form>
+                  @endif
                 </td>
               </tr>
             @endforeach
