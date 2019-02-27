@@ -7,9 +7,6 @@
         <div class="col">
           <h3 class="card-tittle">Agregar nuevo trabajador</h3>
         </div>
-        <div class="col">
-          <button class="btn btn-success float-right">Importar</button>
-        </div>
       </div>
       <div class="card-body">
         <form method="post" action="{!! route('administrador.insertTrabajador') !!}" id="form_agregar">
