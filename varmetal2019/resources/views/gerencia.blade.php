@@ -24,6 +24,7 @@
                                     <th>Horas en Pausa</th>
                                     <th>Horas en SetUp</th>
                                     <th>Metros Cuadrados Pintados</th>
+                                    <th>Kilogramos Soldados</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -45,6 +46,7 @@
                                       <td scope="col" align="center">00:00</td>
                                     @endif
                                     <td scope="col" align="center">{{ $obra[8] }}</td>
+                                    <td scope="col" align="center">{{ $obra[9] }}</td>
                                 </tr>
                                 @endforeach
                             </tbody>

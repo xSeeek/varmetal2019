@@ -71,17 +71,24 @@ class MaterialController extends Controller
               echo $producto->cantProducto-$productosRealizados;
               echo ' por hacer de la pieza: ';
               echo $producto->codigo;
-            }else {
-              if($gas->productoWithAttributes()->where('foranea', '=', $foraneaGas)->get()->first()==NULL)
-              {
-                  $gas->producto()->attach($producto->idProducto, ['trabajador_id_trabajador' => $trabajador->idTrabajador,'gastado' => $gastoGas, 'fechaTermino' => $producto->fechaFin, 'foranea' => $foraneaGas, 'fechaTermino' => $dataProducto->pivot->fechaComienzo]);
-                  $cont2++;
-              }
-              if($alambre->productoWithAttributes()->where('foranea', '=', $foraneaAlambre)->get()->first()==NULL)
-              {
-                  $alambre->producto()->attach($producto->idProducto, ['trabajador_id_trabajador' => $trabajador->idTrabajador,'gastado' => $gastoAlambre, 'fechaTermino' => $producto->fechaFin, 'foranea' => $foraneaAlambre, 'fechaTermino' => $dataProducto->pivot->fechaComienzo]);
-                  $cont2++;
-              }
+            }
+            if($gas->productoWithAttributes()->where('foranea', '=', $foraneaGas)->get()->first()==NULL)
+            {
+                $gas->producto()->attach($producto->idProducto, ['trabajador_id_trabajador' => $trabajador->idTrabajador,'gastado' => $gastoGas, 'foranea' => $foraneaGas, 'fechaTermino' => $dataProducto->pivot->fechaComienzo]);
+                $cont2++;
+            }else
+            {
+              $gas->productoWithAttributes()->where('foranea', '=', $foraneaGas)->get()->first()->pivot->gastado+=$gastoGas;
+              $gas->productoWithAttributes()->where('foranea', '=', $foraneaGas)->get()->first()->pivot->fechaTermino=$dataProducto->pivot->fechaComienzo;
+            }
+            if($alambre->productoWithAttributes()->where('foranea', '=', $foraneaAlambre)->get()->first()==NULL)
+            {
+              $alambre->producto()->attach($producto->idProducto, ['trabajador_id_trabajador' => $trabajador->idTrabajador,'gastado' => $gastoAlambre, 'foranea' => $foraneaAlambre, 'fechaTermino' => $dataProducto->pivot->fechaComienzo]);
+              $cont2++;
+            }else
+            {
+              $alambre->productoWithAttributes()->where('foranea', '=', $foraneaAlambre)->get()->first()->pivot->gastado+=$gastoAlambre;
+              $alambre->productoWithAttributes()->where('foranea', '=', $foraneaAlambre)->get()->first()->pivot->fechaTermino=$dataProducto->pivot->fechaComienzo;
             }
           }
           if($cont2==2 && $productosRealizados>=$producto->cantProducto)
@@ -159,7 +166,6 @@ class MaterialController extends Controller
               {
                 $producto->zona = 2;
                 $producto->save();
-                $dataProducto->pivot->fechaComienzo = now();
                 $dataProducto->pivot->fechaComienzo = now();
               }else {
                 $producto->zona = 1;

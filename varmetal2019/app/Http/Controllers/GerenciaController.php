@@ -16,6 +16,7 @@ class GerenciaController extends Controller
         $obras_almacenadas = Obra::get();
         $carbon = new Carbon();
         $kilosTerminados = 0;
+        $kilosSoldados = 0;
         $kilosObra = 0;
         $tiempoPausa = 0;
         $tiempoSetUp = 0;
@@ -42,7 +43,12 @@ class GerenciaController extends Controller
             {
                 /* Obtener trabajadores de los productos de la obra */
                 $trabajadores = $producto->trabajadorWithAtributtes;
+                $trabajadoresSoldadores = $producto->trabajadorSoldadorWithAtributtes;
 
+                foreach ($trabajadoresSoldadores as $key => $soldador) {
+                  $kilosSoldados += $soldador->pivot->kilosTrabajados;
+                }
+                
                 if($producto->fechaFin > $fechaFin)
                     $fechaFin = $producto->fechaFin;
                 if($producto->fechaFin == NULL && $fechaFin == NULL)
@@ -126,6 +132,7 @@ class GerenciaController extends Controller
             $obra[6] = $tiempoPausa;
             $obra[7] = $tiempoSetUp;
             $obra[8] = $m2pintados;
+            $obra[9] = $kilosSoldados;
 
             // Actualización y asignación de datos a los indices //
             $obras_reporte[$index] = $obra;

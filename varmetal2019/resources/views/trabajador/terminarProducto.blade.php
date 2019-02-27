@@ -244,23 +244,28 @@ window.onload(aparecerBoton());
             {
               showMensajeSwal(MSG_SUCCESS, BTN_SUCCESS, COLOR_SUCCESS, 'Se Finalizó el Día Completamente');
               aparecerBoton();
+              window.location.reload();
             }
             else
             {
               if(response=='No existe el tipo de alambre')
               {
                 showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR, response);
+                return;
               }
               if(response=='No existe el trabajador')
               {
                 showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR, response);
+                return;
               }
               if(response=='No posees productos terminados')
               {
                 showMensajeSwal(MSG_ERROR, BTN_ERROR, COLOR_ERROR, response);
+                return;
               }else{
                 showMensajeSwal(MSG_SUCCESS, BTN_SUCCESS, COLOR_SUCCESS, response);
                 aparecerBoton();
+                window.location.reload();
               }
             }
           }
