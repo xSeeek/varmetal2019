@@ -371,6 +371,8 @@
                     </br>
                         <a class="btn btn-outline-success btn-md" id="detallesPintadoButton" role="button" href="{{url('pintado/pintadoControl', [$producto->idProducto])}}">Ingresar</a>
                     </h5>
+                @endif
+                @if($producto->zona >= 1)
                     <br>
                     <h5>
                         Detalles de Soldadura:
