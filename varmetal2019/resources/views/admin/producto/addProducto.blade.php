@@ -15,13 +15,13 @@
                         <div class="form-group row">
                             <label class="col-md-4 col-form-label text-md-right">Código de la Pieza:</label>
                             <div class="col-md-6">
-                                <input type="text" class="form-control" aria-describedby="codigoProducto" placeholder="Código del Producto" name="codigoProducto" required>
+                                <input type="text" class="form-control" aria-describedby="codigoProducto" placeholder="Código de la Pieza" name="codigoProducto" required>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-4 col-form-label text-md-right">Descripcion:</label>
                             <div class="col-md-6">
-                                <input type="text" class="form-control" aria-describedby="nombreProducto" placeholder="Nombre del Producto" name="nombreProducto" required>
+                                <input type="text" class="form-control" aria-describedby="nombreProducto" placeholder="Nombre de la Pieza" name="nombreProducto" required>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -33,19 +33,19 @@
                         <div class="form-group row">
                             <label class="col-md-4 col-form-label text-md-right">Área (en metros cuadrados):</label>
                             <div class="col-md-6">
-                                <input type="text" class="form-control" aria-describedby="areaProducto" placeholder="Área del Producto" name="areaProducto" required>
+                                <input type="text" class="form-control" aria-describedby="areaProducto" placeholder="Área de la Pieza" name="areaProducto" required>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-4 col-form-label text-md-right">Peso unitario de la Pieza (en Kilogramos):</label>
                             <div class="col-md-6">
-                                <input type="text" class="form-control" aria-describedby="pesoProducto" placeholder="Peso del Producto" name="pesoProducto" required>
+                                <input type="text" class="form-control" aria-describedby="pesoProducto" placeholder="Peso de la Pieza" name="pesoProducto" required>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-4 col-form-label text-md-right">Cantidad:</label>
                             <div class="col-md-6">
-                                <input type="number" class="form-control" aria-describedby="cantidadProducto" placeholder="Cantidad del Producto" name="cantidadProducto" required>
+                                <input type="number" class="form-control" aria-describedby="cantidadProducto" placeholder="Cantidad de la Pieza" name="cantidadProducto" required>
                             </div>
                         </div>
                         <div class="form-group row">
