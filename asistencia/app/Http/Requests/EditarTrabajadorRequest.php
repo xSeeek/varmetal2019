@@ -24,7 +24,7 @@ class EditarTrabajadorRequest extends FormRequest
   public function attributes()
   {
       return [
-          'nombre_completo' => 'Nombre Completo',
+          'nombre_completo' => 'Nombre',
           'rut' => 'Rut',
           'cargo'=>'Cargo del trabajador'
       ];

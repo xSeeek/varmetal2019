@@ -40,15 +40,26 @@
             <div class="form-group">
               <button type="button" class="btn btn-outline-info" onclick="habilitarEdicion()">Habilitar Edición</button>
               <button class="btn btn-success" type="submit" id="btn_editar" hidden>Editar</button>
+
             </div>
           </form>
+
           <div class="form-group">
             @if(count($trabajador->asistencias)==0)
               <h2>No registran asistencias para {{$trabajador->nombre}}</h2>
             @else
-              <a role="button" class="btn btn-primary font-weight-bold text-light" href="{!! route('supervisor.verAsistencia', ['rut'=>$trabajador->rut]) !!}">Ver Asistencia</a>
+              <div class="btn-group">
+                <a role="button" class="btn btn-primary font-weight-bold text-light" href="{!! route('supervisor.verAsistencia', ['rut'=>$trabajador->rut]) !!}">Ver Asistencia</a>
+              </div>
             @endif
           </div>
+        </div>
+        <div class="form-group">
+          <form id="form_id_eliminar" method="post" action="{!! route('administrador.eliminarTrabajador') !!}">
+            @csrf
+            <input type="hidden" name="rut" value="{{$trabajador->rut}}">
+            <button type="submit" name="button" class="btn btn-danger" id='btn_eliminar'>Eliminar</button>
+          </form>
         </div>
       </div>
     </div>
@@ -81,6 +92,14 @@
       e.preventDefault();
     }
     confirmMensajeSwal(MSG_INFO, 'Seguro que desea editar este trabajador?', e);
+  });
+
+  $('#form_id_eliminar').submit(function (e, params) {
+    var localParams = params || {};
+    if (!localParams.send) {
+      e.preventDefault();
+    }
+    confirmMensajeSwal(MSG_INFO, 'Seguro que desea eliminar este trabajador?', e);
   });
 
   function verificarEstado(object) {

@@ -48,6 +48,10 @@
     ->middleware('is_admin')
     ->name('administrador.editarTrabajador');
 
+  Route::post('/menuAdministrador/detallesTrabajador/eliminar', ['uses'=>'TrabajadorController@eliminar'])
+    ->middleware('is_admin')
+    ->name('administrador.eliminarTrabajador');
+
 /**
  * [[Rutas Controlador AsistenciaController]]
  */

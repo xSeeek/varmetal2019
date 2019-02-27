@@ -28,9 +28,30 @@ class TrabajadorController extends Controller
       ->with('trabajador', Trabajador::where('rut', $rut)->first());
   }
 
+  public function eliminar (Request $request)
+  {
+    $trabajador = Trabajador::where('rut', $request->rut)->first();
+    if(!$trabajador == null)
+    {
+      $asistencias = $trabajador->asistencias;
+      foreach ($asistencias as $asistencia)
+        $asistencia->delete();
+
+      $trabajador->delete();
+
+      return redirect()
+      ->route('administrador.menuAdministrador')
+      ->with('success', 'Trabajador eliminado con éxito');
+
+    }
+    return redirect()->back()
+      ->withInput()
+      ->with('error', 'Error desconocido, contacte con el soporte técnico');
+  }
+
   public function editar(EditarTrabajadorRequest $request)
   {
-    $trabajador = Trabajador::where('rut', $request->$request->rut)->first();
+    $trabajador = Trabajador::where('rut', $request->rut)->first();
     $trabajador->nombre = $request->nombre_completo;
     $trabajador->rut = $request->rut;
     $trabajador->cargo = $request->cargo;
