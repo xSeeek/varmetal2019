@@ -378,28 +378,30 @@
                         <a class="btn btn-outline-success btn-md" id="detallesPintadoButton" role="button" href="{{url('soldadura/soldaduraControl', [$producto->idProducto])}}">Ingresar</a>
                     </h5>
                 @endif
-                @if($producto->terminado == false)
-                    @if($producto->estado == 1)
+                @if($producto->zona == 0)
+                    @if($producto->terminado == false)
+                        @if($producto->estado == 1)
+                            <br>
+                            <h5>
+                                Anular Termino:
+                            </br>
+                                <a class="btn btn-warning btn-md" id="resetButton" role="button" onclick="resetProduccion({{$producto->idProducto}})">Reiniciar</a>
+                            </h5>
+                            <br>
+                            <h5>
+                                Terminar Pieza:
+                            </br>
+                                <a class="btn btn-outline-danger btn-md" id="finishButton" role="button" onclick="finishProduccion({{$producto->idProducto}})">Terminar</a>
+                            </h5>
+                        @endif
+                    @else
                         <br>
                         <h5>
-                            Anular Termino:
+                            Reiniciar Pieza:
                         </br>
-                            <a class="btn btn-warning btn-md" id="resetButton" role="button" onclick="resetProduccion({{$producto->idProducto}})">Reiniciar</a>
-                        </h5>
-                        <br>
-                        <h5>
-                            Terminar Pieza:
-                        </br>
-                            <a class="btn btn-outline-danger btn-md" id="finishButton" role="button" onclick="finishProduccion({{$producto->idProducto}})">Terminar</a>
+                            <a class="btn btn-warning btn-md" id="resetButton" role="button" onclick="resetProducto({{$producto->idProducto}})">Reiniciar</a>
                         </h5>
                     @endif
-                @else
-                    <br>
-                    <h5>
-                        Reiniciar Pieza:
-                    </br>
-                        <a class="btn btn-warning btn-md" id="resetButton" role="button" onclick="resetProducto({{$producto->idProducto}})">Reiniciar</a>
-                    </h5>
                 @endif
             </div>
         </div>
