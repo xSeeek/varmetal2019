@@ -111,6 +111,10 @@ Route::post('menuAdministrador/detallesObra/{idObra}/desvincular/{rut}', ['uses'
   ->name('administrador.desvincular')
   ->middleware('is_admin');
 
+Route::get('menuAdministrador/detallesObra/{idObra}/cambiarSupervisor', ['uses'=>'ObraController@cambiarSupervisorVista'])
+  ->name('administrador.cambiarSupervisor')
+  ->middleware('is_admin');
+
 Route::post('menuAdministrador/detallesObra/{idObra}/cambiarSupervisor', ['uses'=>'ObraController@cambiarSupervisor'])
   ->name('administrador.cambiarSupervisor')
   ->middleware('is_admin');

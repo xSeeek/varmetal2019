@@ -8,6 +8,7 @@ use Asistencia\User;
 use Asistencia\Http\Requests\InsertObraRequest;
 use Asistencia\Http\Requests\InsertTrabajadorObraRequest;
 use Asistencia\Http\Requests\EditarObraRequest;
+use Asistencia\Http\Requests\CambiarSupervisorRequest;
 use Asistencia\Trabajador;
 use Asistencia\Obra;
 
@@ -47,15 +48,58 @@ class ObraController extends Controller
       ->with('error', 'El encargado seleccionado ya posee una obra asignada');
   }
 
+  public function cambiarSupervisorVista($idObra)
+  {
+    $encargadosTodos = Trabajador::all();
+    $encargados = array();
+    foreach ($encargadosTodos as $encargado) {
+      if($encargado->user != null)
+        if($encargado->user->isSupervisor())
+          if($encargado->obra == null)
+            $encargados[] = $encargado;
+    }
+
+    if(count($encargados) > 0)
+      return view('obra.cambiarSupervisor')
+        ->with('obra',Obra::find($idObra))
+        ->with('encargados', $encargados);
+    else
+      return redirect()->route('administrador.detallesObra', ['idObra'=>$idObra])
+        ->with('error', 'No hay ningun encargado sin obras asignadas');
+
+  }
+
+  public function cambiarSupervisor(CambiarSupervisorRequest $request, $idObra)
+  {
+    $obra = Obra::find($idObra);
+    $nuevoSupervisor = Trabajador::where('rut', $request->encargado)->first();
+
+    foreach ($obra->trabajadores as $trabajador) {
+      if($trabajador->user != null)
+        if($trabajador->user->isSupervisor())
+        {
+          $encargado_antiguo = $trabajador;
+          $encargado_antiguo->obra()->dissociate();
+          $encargado_antiguo->save();
+          $obra->trabajadores()->save($nuevoSupervisor);
+        }
+    }
+
+    return redirect()->route('administrador.detallesObra', ['idObra'=>$idObra])
+      ->with('success', 'Supervisor cambiado con éxito');
+
+  }
+
   public function detallesObra($id)
   {
     $obra = Obra::find($id);
     $trabajadores = $obra->trabajadores;
     foreach ($trabajadores as $trabajador) {
-      if($trabajador->user->isSupervisor()){
-        $encargado = $trabajador;
-        break;
-      }
+      if($trabajador->user != null)
+        if($trabajador->user->isSupervisor()){
+          $encargado = $trabajador;
+          break;
+        }
     }
 
     $trabajadoresTodos = Trabajador::all();

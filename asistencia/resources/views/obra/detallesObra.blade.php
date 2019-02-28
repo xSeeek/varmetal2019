@@ -25,11 +25,9 @@
           <div class="form-group">
             <div class="form-group">
               <button type="button" class="btn btn-outline-info" onclick="habilitarEdicion()">Habilitar Edición</button>
-              <button class="btn btn-primary" data-toggle='modal'
-              data-target='#cambiarSupervisor'
-              type="button" disabled>
+              <a role="button" class="btn btn-primary" href="{!! route('administrador.cambiarSupervisor', ['idObra'=>$obra->idObra]) !!}">
                 Cambiar Supervisor
-              </button>
+              </a>
             </div>
             <div class="form-group">
               <button class="btn btn-success" type="submit" id="btn_editar" hidden>Editar</button>
