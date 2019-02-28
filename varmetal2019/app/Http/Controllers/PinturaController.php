@@ -55,6 +55,10 @@ class PinturaController extends Controller
         $userTrabajador = (User::find($response[2]))->trabajador;
 
         $pieza = Producto::where('codigo', $response[0])->first();
+
+        if($pieza == NULL)
+            return 'La pieza con el código ingresado no está registrada en el sistema';
+
         if($pieza->zona != 2)
             return 'La pieza aún no está disponible para el pintado';
 
