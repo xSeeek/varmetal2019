@@ -103,7 +103,7 @@
             </div>
             <br>
             <div class="card">
-                <div class="card-header">Operadores activos</div>
+                <div class="card-header">Soldadores activos</div>
                 <div class="card-body">
 
                 @if(($soldadores != NULL) && (count($soldadores)>0))
@@ -172,7 +172,7 @@
                 <h5>
                     Edicion de datos:
                 </br>
-                    <a class="btn btn-outline-success btn-md" id="enableChangesButton" role="button" onclick="changeStatus()">Habilitar/Deshabilitar</a>
+                    <a class="btn btn-outline-success btn-md" id="enableChangesButton" role="button" onclick="changeStatus()">Habilitar/Deshabilitar (Sin Terminar)</a>
                 </h5>
                 <br>
                 <h5>
@@ -221,11 +221,11 @@
                     @endif
                 @else
                     <br>
-                    <h5>
+                    <!--h5>
                         Reiniciar Pieza:
                     </br>
                         <a class="btn btn-warning btn-md" id="resetButton" role="button" onclick="resetProducto({{$producto->idProducto}})">Reiniciar</a>
-                    </h5>
+                    </h5-->
                 @endif
             </div>
         </div>

@@ -35,16 +35,18 @@
                                 <input type="text" readonly id="fechaFinPausa" class="form-control-plaintext" value="Pausa pendiente">
                             @else
                                 <input type="text" readonly id="fechaFinPausa" class="form-control-plaintext" value="{{$pausa->fechaFin}}" readonly="readonly">
-                        </div>
-                                <div id="divFechaFinEdit" style="display:none;">
-                                  <b>Nueva Fecha de Fin:</b>
-                                  <div class="col-sm-10">
-                                    <br>
-                                    <input class="form-control"  type="datetime-local" id="fechaFinEdit" name="fechaInicio">
-                                    <br>
-                                  </div>
-                                </div>
                             @endif
+                            @if($pausa->fechaFin != NULL)
+                              <div id="divFechaFinEdit" style="display:none;">
+                                <b>Nueva Fecha de Fin:</b>
+                                <div class="col-sm-10">
+                                  <br>
+                                  <input class="form-control"  type="datetime-local" id="fechaFinEdit" name="fechaInicio">
+                                  <br>
+                                </div>
+                              </div>
+                            @endif
+                        </div>
                         @if(Auth::user()->type!='Trabajador')
                           <b>Nombre de la Pieza:</b>
                           <div class="col-sm-10">
@@ -96,13 +98,14 @@
               <div class="modal-body" align="center">
                 <h5>
                     @if($pausa->fechaFin==NULL)
-                        @if($usuarioActual->type == 'Supervisor')
+                        @if($usuarioActual->type != 'Trabajador')
                           <a class="btn btn-outline-success btn-md" id="finPausa" role="button" onclick="adminUpdateFechaFin()">Finalizar Pausa</a>
+                          <hr>
                         @endif
                     @else
                         <b>Pausa Finalizada</b>
+                        <hr>
                     @endif
-                    <hr>
                     @if($usuarioActual->type != 'Trabajador')
                       <a class="btn btn-outline-success btn-md" id="enableChangesButton" role="button" onclick="changeStatus()">Habilitar Edición</a>
                       <br><br>
@@ -150,11 +153,12 @@ function changeStatus()
   motivoEdit = document.getElementById('motivoEdit');
   descripcion= document.getElementById('descripcion');
   divFechaInicioEdit.removeAttribute("style");
-  divFechaFinEdit.removeAttribute("style");
+  if('{{$pausa->fechaFin}}' != '')
+    divFechaFinEdit.removeAttribute("style");
   motivoEdit.removeAttribute("style");
   descripcion.removeAttribute("readonly");
 
-  enableChangesButton = document.getElementById('enableChangesButton');
+  enableChangesButton = document.getElementById("enableChangesButton");
   enableChangesButton.innerText="Guardar Cambios";
   enableChangesButton.setAttribute("onclick","postChangeData()");
   return 'boton cambiado';

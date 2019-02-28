@@ -180,12 +180,15 @@
             {
               var alarma, boton;
               boton = document.getElementById('boton');
-              boton.style.display="";
-              boton.removeAttribute("readonly");
-              alarma = document.getElementById('alarma');
-              alarma.setAttribute("src","/music/bleep.mp3");
-              alarma.setAttribute("autoplay","");
-              alarma.setAttribute("loop","");
+              if(boton)
+              {
+                boton.style.display="";
+                boton.removeAttribute("readonly");
+                alarma = document.getElementById('alarma');
+                alarma.setAttribute("src","/music/bleep.mp3");
+                alarma.setAttribute("autoplay","");
+                alarma.setAttribute("loop","");
+              }
             }
         }
     });
